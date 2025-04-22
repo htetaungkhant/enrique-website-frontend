@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://db.onlinewebfonts.com/c/ea709917a350fdad9ff3bd0d86f0af9a?family=Reforma+2018+Gris");
 @import "tailwindcss";
+
+html {
+	scroll-behavior: smooth;
+}
 
 body {
 	background: #212a63;
@@ -8,8 +14,10 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-html {
-	scroll-behavior: smooth;
+.reforma-2018 {
+	font-family: "Reforma 2018 Gris", sans-serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
 .poppins-thin {
@@ -64,6 +72,91 @@ html {
 	font-family: "Poppins", sans-serif;
 	font-weight: 900;
 	font-style: normal;
+}
+
+.inter-font {
+	font-family: "Inter", sans-serif;
+}
+
+.inter-thin {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-variation-settings:
+	"wdth" 100;
+}
+
+.inter-extralight {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  font-variation-settings:
+	"wdth" 100;
+}
+
+.inter-light {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings:
+	"wdth" 100;
+}
+
+.inter-regular {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+	"wdth" 100;
+}
+
+.inter-medium {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings:
+	"wdth" 100;
+}
+
+.inter-semibold {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings:
+	"wdth" 100;
+}
+
+.inter-bold {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-variation-settings:
+	"wdth" 100;
+}
+
+.inter-extrabold {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  font-variation-settings:
+	"wdth" 100;
+}
+
+.inter-black {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+  font-variation-settings:
+	"wdth" 100;
 }
 
 
