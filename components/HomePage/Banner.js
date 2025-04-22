@@ -4,99 +4,99 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Button from "../common/Button";
-import { useRouter } from "next/router";
+import { LinkButton } from "../common/Button";
+import Image from "next/image";
 
 const slides = [
 	{
-		bgImage: "/banner.png",
+		bgImage: "/image/banner.png",
 		text: "Safe and Comfortable",
 		description:
 			"Let us help you transform your space into a haven of safety and comfort.",
 		button: "Learn More",
-        logo: "/banner-logo.png",
-        link: "/",
+		logo: "/image/banner-logo.png",
+		link: "/",
 	},
 	{
-		bgImage: "/banner.png",
+		bgImage: "/image/banner.png",
 		text: "Expert Guidance and Healers",
 		description: "Discover our transformative healing therapies and expert guidance from seasoned practitioners.",
 		button: "Learn More",
-        logo: "/banner-logo.png",
-        link: "/",
+		logo: "/image/banner-logo.png",
+		link: "/",
 	},
 	{
-		bgImage: "/banner.png",
+		bgImage: "/image/banner.png",
 		text: "Small Groups, Big Transformation",
 		description: "Unlock a transformative journey through the power of intimate, supportive small groups.",
 		button: "Learn More",
-        logo: "/banner-logo.png",
-        link: "/",
-    },
-    {
-		bgImage: "/banner.png",
+		logo: "/image/banner-logo.png",
+		link: "/",
+	},
+	{
+		bgImage: "/image/banner.png",
 		text: "VIP Destination Flight Services",
 		description: "Experience a private, luxury healing retreat tailored to your unique spiritual journey.",
 		button: "Learn More",
-        logo: "/banner-logo.png",
-        link: "/",
+		logo: "/image/banner-logo.png",
+		link: "/",
 	},
 ];
 
 const Banner = () => {
-	const router = useRouter();
+
 	return (
 		<Swiper
 			modules={[Navigation, Pagination, Autoplay]}
 			spaceBetween={0}
 			slidesPerView={1}
-			pagination={{ clickable: true }}
+			loop={true}
+			speed={1000}
 			autoplay={{ delay: 5000 }}
-			className="w-full h-[100vh] "
+			// pagination={{ clickable: true }}
+			className="w-full h-[100vh]"
 		>
 			{slides.map((slide, index) => (
-				<SwiperSlide key={index} className="">
+				<SwiperSlide key={index}>
 					<div
-						className="relative w-full h-full flex flex-col items-center justify-center text-white p-10"
+						className={`relative w-full h-full flex flex-col items-center justify-center text-white p-10 bg-center bg-cover bg-no-repeat`}
 						style={{
 							backgroundImage: `url(${slide.bgImage})`,
-							backgroundSize: "cover",
-							backgroundPosition: "center",
 						}}
 					>
 						{/* Overlay */}
-						<div className="absolute inset-0 bg-black opacity-55"></div>
+						{/* <div className="absolute inset-0 bg-black opacity-55"></div> */}
 
 						{/* Content Container */}
-						<div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-12 gap-8 justify-between ">
-							<div className="relative text-center flex flex-col lg:items-start  items-center justify-center lg:pl-12">
-								<h2 className="lg:text-4xl text-2xl font-bold mb-4 poppins-bold lg:text-left lg:max-w-lg">
+						<div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-12 gap-8 w-full">
+							<div className="order-2 lg:order-1 relative text-center flex flex-col lg:items-start items-center justify-center lg:pl-12">
+								<h2 className="text-2xl font-bold mb-4 poppins-bold text-left lg:text-4xl lg:max-w-lg">
 									{slide.text}
 								</h2>
-								<p className="text-md lg:text-lg mb-6 merriweather-semibold lg:text-left lg:max-w-xl">
+								<p className="text-md mb-6 poppins-regular text-left lg:text-lg lg:max-w-xl">
 									{slide.description}
 								</p>
-								{slide.button && (
-									<Button
-										name={slide.button}
-										onClick={() => router.push(slide.link)}
-									/>
-								)}
+								<div className="w-full flex mt-3 justify-start md:mt-0 md:justify-center lg:justify-start">
+									{slide.button && (
+										<LinkButton name={slide.button} href={slide.link} />
+									)}
+								</div>
 							</div>
 
 							{/* Logo */}
-							<div className="relative flex items-center justify-center -mt-8">
-								<img
+							<div className="order-1 lg:order-2 relative flex items-center justify-center">
+								<Image
 									src={slide.logo}
+									width={367}
+									height={384}
 									alt="logo"
-									className="h-[350px] w-auto object-contain"
+									className="h-96 w-auto object-contain"
 								/>
 							</div>
 						</div>
 					</div>
 				</SwiperSlide>
-            )) }
-            
+			))}
 		</Swiper>
 	);
 };
