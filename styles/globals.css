@@ -180,13 +180,14 @@ body {
 
 
 
- .swiper-pagination-bullet {
-    background-color: #D7F2D5 !important; /* Change bullet color */
-    width: 30px !important; /* Make bullets wider */
-    height: 5px !important; /* Adjust bullet height */
-    border-radius: 5px !important; /* Make it rounded */
-  }
+.banner .swiper-pagination-bullet {
+  background-color: #D7F2D5; /* Change bullet color */
+  width: 30px; /* Make bullets wider */
+  height: 5px; /* Adjust bullet height */
+  border-radius: 5px; /* Make it rounded */
+}
 
-  .swiper-pagination {
-    bottom: 20px !important; /* Move bullets up */
-  }
+.banner .swiper-pagination,
+.banner .swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: 20px; /* Move bullets up */
+}
