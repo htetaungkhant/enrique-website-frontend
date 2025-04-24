@@ -129,10 +129,10 @@ const FirstCRSection = () => {
                     </AnimatedCard>
                 </div>
                 <div className="relative flex justify-center mt-6">
-                    <button onClick={handleLeftArrowClick} className="px-4 py-2 bg-white rounded-l-2xl">
+                    <button onClick={handleLeftArrowClick} className="px-4 py-2 bg-white cursor-pointer rounded-l-2xl">
                         <FaArrowLeft className="text-[#545454]" />
                     </button>
-                    <button onClick={handleRightArrowClick} className="px-4 py-2 bg-white rounded-r-2xl">
+                    <button onClick={handleRightArrowClick} className="px-4 py-2 bg-white cursor-pointer rounded-r-2xl">
                         <FaArrowRight className="text-[#545454]" />
                     </button>
                 </div>
