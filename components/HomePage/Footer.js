@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Footer = () => {
     return (
-        <section className="bg-[url(/image/footer-bg.jpeg)] bg-no-repeat bg-cover bg-center relative">
+        <section className="bg-[url(/image/footer-bg.jpeg)] bg-no-repeat bg-cover bg-center border-t-[1px] border-white relative">
             <div className="px-4 py-12 md:p-8 lg:p-16 bg-[#143C58D6] flex flex-col justify-center items-center gap-4 inter-font">
                 <Image 
                     src="/logo/logo-white.png" 
