@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import Banner from "@/components/HomePage/Banner";
 import PageHeader from "@/components/common/PageHeader";
 import InfoSection from "@/components/HomePage/InfoSection";
@@ -8,6 +9,7 @@ import FirstCRSection from "@/components/HomePage/CardsRow/FirstCRSection";
 import SecondCRSection from "@/components/HomePage/CardsRow/SecondCRSection";
 import ThirdCRSection from "@/components/HomePage/CardsRow/ThirdCRSection";
 import Footer from "@/components/HomePage/Footer";
+import FirstCGSection from "@/components/HomePage/CardsGrid/FirstCGSection";
 
 export default function Home() {
 	return (
@@ -54,6 +56,7 @@ export default function Home() {
 				<p className="text-white inter-font">The venom of the Bufo Alvarius toad is carefully extracted through a process known as “milking,” then dried for use. When smoked through a pipe, the heat neutralizes toxic components, allowing the user to inhale only the active 5-MeO-DMT vapor.</p>
 				<p className="text-white inter-font">This method induces a short yet intensely powerful psychedelic experience, often described as more profound than traditional DMT. To ensure safety and maximize the benefits, it is essential to have an experienced guide and follow well-established safety protocols.</p>
 			</InfoSection>
+			<FirstCGSection />
 			<InfoSection image="/image/Bufo.png" reverse={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Spiritual Awakening Through <strong className="font-semibold">Bufo</strong></h2>
 				<p className="text-white inter-font">Many individuals describe their Bufo ceremony as a deeply spiritual experience, often marked by a profound sense of unity with the universe—transcending conventional perceptions of time and space.</p>
