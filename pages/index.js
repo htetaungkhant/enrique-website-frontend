@@ -10,6 +10,7 @@ import SecondCRSection from "@/components/HomePage/CardsRow/SecondCRSection";
 import ThirdCRSection from "@/components/HomePage/CardsRow/ThirdCRSection";
 import Footer from "@/components/HomePage/Footer";
 import FirstCGSection from "@/components/HomePage/CardsGrid/FirstCGSection";
+import GallerySection from "@/components/HomePage/Gallery/GallerySection";
 
 export default function Home() {
 	return (
@@ -18,21 +19,21 @@ export default function Home() {
 				<PageHeader />
 			</div>
 			<Banner />
-			<QuoteSection 
-				normal={false} 
-				image="/image/dalai-lama.png" 
-				description="The purpose of our lives is to be happy" 
-				author="— Dalai Lama XIV" 
+			<QuoteSection
+				normal={false}
+				image="/image/dalai-lama.png"
+				description="The purpose of our lives is to be happy"
+				author="— Dalai Lama XIV"
 			/>
 			<InfoSection image="/image/SacredGuidance.png" reverse={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Transform Your Journey with <strong className="font-semibold">Sacred Guidance</strong></h2>
 				<p className="text-white inter-font">Discover the profound wisdom and preparation steps for your sacred medicine journey with the <Link href="" target="_blank" className="text-[#fef15c]">Sacred Ceremonial Guide</Link>. This comprehensive guide provides essential insights on emotional, mental, physical, and spiritual preparation, integration practices, and the healing power of 5-MeO-DMT. Whether you are new to the experience or looking to deepen your understanding, this guide will help you navigate the path with clarity and intention.</p>
 				<Button name="Download Now" />
 			</InfoSection>
-			<QuoteSection 
+			<QuoteSection
 				descriptionTextClass="text-base"
-				description="What would you give to know, absolutely know beyond any doubt, that everything really is all right, that there is no reason to fear. That there is no need to feel despair or loss or uncertainty. That all the pain and hurt and evil we have seen truly is only an illusion, and that the most beautiful things we have experienced are only a glimpse, a small taste, of what is truly real, and truly ours. This is what I see, and what I know…" 
-				author="— David Carse, PERFECT BRILLIANT STILLNESS" 
+				description="What would you give to know, absolutely know beyond any doubt, that everything really is all right, that there is no reason to fear. That there is no need to feel despair or loss or uncertainty. That all the pain and hurt and evil we have seen truly is only an illusion, and that the most beautiful things we have experienced are only a glimpse, a small taste, of what is truly real, and truly ours. This is what I see, and what I know…"
+				author="— David Carse, PERFECT BRILLIANT STILLNESS"
 			/>
 			<FirstCRSection />
 			<InfoSection image="/image/BufosPotential.png">
@@ -57,6 +58,7 @@ export default function Home() {
 				<p className="text-white inter-font">This method induces a short yet intensely powerful psychedelic experience, often described as more profound than traditional DMT. To ensure safety and maximize the benefits, it is essential to have an experienced guide and follow well-established safety protocols.</p>
 			</InfoSection>
 			<FirstCGSection />
+			<GallerySection />
 			<InfoSection image="/image/Bufo.png" reverse={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Spiritual Awakening Through <strong className="font-semibold">Bufo</strong></h2>
 				<p className="text-white inter-font">Many individuals describe their Bufo ceremony as a deeply spiritual experience, often marked by a profound sense of unity with the universe—transcending conventional perceptions of time and space.</p>
