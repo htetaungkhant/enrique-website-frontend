@@ -41,7 +41,7 @@ const AnimatedCard = ({ title, description, children }) => {
 
     return (
         <motion.div initial="initial" whileHover="hover" variants={parentVariants}>
-            <div className="relative h-80 sm:h-70 md:h-[26rem] lg:h-[24rem] xl:h-72 bg-gradient-to-b from-[#D7F2D5] to-[#5C8959] flex flex-col items-start gap-5 rounded-3xl px-4 py-6 lg:px-6 lg:py-8 inter-font text-[#212A63] overflow-hidden">
+            <div className="relative h-80 sm:h-70 md:h-[26rem] lg:h-[24rem] xl:h-84 bg-gradient-to-b from-[#D7F2D5] to-[#5C8959] flex flex-col items-start gap-5 rounded-3xl px-4 py-6 lg:px-6 lg:py-8 inter-font text-[#212A63] overflow-hidden">
                 {title && <motion.h2 variants={textColorVariants} transition={{ duration: 0.5 }} className="z-10 font-semibold text-xl md:text-2xl lg:text-3xl">{title}</motion.h2>}
                 {description && <motion.p variants={textColorVariants} transition={{ duration: 0.5 }} className="z-10 font-medium text-sm">{description}</motion.p>}
                 {children}

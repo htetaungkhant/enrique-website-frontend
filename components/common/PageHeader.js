@@ -13,7 +13,7 @@ const PageHeader = () => {
     };
 
   return (
-    <div className="relative xl:bg-[#301D26B2] xl:rounded-[40px] px-8 py-6 flex items-baseline xl:items-center justify-between gap-2 flex-wrap">
+    <div className="relative xl:bg-[#301D26B2] xl:rounded-[40px] px-6 py-4 flex items-baseline xl:items-center justify-between gap-2 flex-wrap">
         <div className="z-10">
             <Link href="/">
                 <Image
@@ -21,7 +21,7 @@ const PageHeader = () => {
                     alt="Logo"
                     width={300}
                     height={100}
-                    className="w-auto h-13"
+                    className="w-30 h-auto"
                 />
             </Link>
         </div>
@@ -30,7 +30,7 @@ const PageHeader = () => {
             <RxHamburgerMenu className={`absolute top-0 left-0 w-full h-full p-1 duration-300 ${hamburgerDisplay ? "opacity-0" : "opacity-100"}`} />
         </button>
         <nav className="hidden xl:block">
-            <ul className="flex justify-center space-x-8">
+            <ul className="flex justify-center space-x-8 text-sm">
                 <li className="text-white merriweather-medium">
                     <HeaderDropdown title="HEALING">
                         <ul className="p-2 bg-white rounded-lg shadow-lg">

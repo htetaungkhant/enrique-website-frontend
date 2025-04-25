@@ -14,7 +14,7 @@ import GallerySection from "@/components/HomePage/Gallery/GallerySection";
 
 export default function Home() {
 	return (
-		<div className="bg-gradient-to-b from-[#171F3F] to-[#020105]">
+		<div className="bg-gradient-to-b from-[#171F3F] to-[#020105] ">
 			<div className="absolute top-0 left-0 w-full z-100 xl:p-12">
 				<PageHeader />
 			</div>
