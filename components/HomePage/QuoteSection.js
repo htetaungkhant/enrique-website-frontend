@@ -2,8 +2,8 @@ import Image from "next/image";
 
 const QuoteSection = ({ image, description, descriptionTextClass = "", author, authorTextClass = "", normal = true }) => {
     return (
-        <section className="relative -mt-1">
-            <div className={`px-12 py-6 lg:flex lg:flex-row flex flex-col items-center lg:space-x-8 justify-center ${!normal ? "absolute -top-20 left-0 right-0 z-10 bg-transparent" : ""}`}>
+        <section className={`relative -mt-1 ${!normal ? "pb-20 md:pb-0" : ""}`}>
+            <div className={`px-12 py-6 lg:flex lg:flex-row flex flex-col items-center lg:space-x-8 justify-center ${!normal ? "absolute md:-top-20 left-0 right-0 z-10 bg-transparent" : ""}`}>
                 {image && (
                     <Image
                         src={image}
