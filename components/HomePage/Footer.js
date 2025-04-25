@@ -34,7 +34,7 @@ const Footer = () => {
                         <FaLinkedinIn className="bg-[#FDE3FE] rounded-sm w-8 h-8 p-1" />
                     </Link>
                 </div>
-                <p className="text-white text-center font-medium text-xs md:text-sm border-b-[1px] pb-2">Copyright © 2024 Arise. All rights reserved. Arise® and the Arise logo design are registered trademarks of Arise Inc. All other trademarks and logos are the property of their respective owners.</p>
+                <p className="text-white text-center font-medium text-xs md:text-sm border-b-[1px] pb-2">Copyright © 2025 Arise. All rights reserved. Arise® and the Arise logo design are registered trademarks of Arise Inc. All other trademarks and logos are the property of their respective owners.</p>
                 <span className="text-white text-xs md:text-sm flex p-2">
                     <Link href="#" className="px-2 border-r-[1px]">Privacy Policy</Link>
                     <Link href="#" className="px-2">Website Terms of Use </Link>
