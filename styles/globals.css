@@ -22,9 +22,23 @@ html {
 }
 
 body {
-  background: #212a63;
+  /* background: #212a63; */
+  background: linear-gradient(to bottom, #171F3F, #020105);
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.inter-font {
+  font-family: "Inter", sans-serif;
+}
+
+.merriweather-font {
+  font-family: "Merriweather", serif;
+}
+
+.poppins-font {
+  font-family: "Poppins", sans-serif;
 }
 
 .poppins-thin {
@@ -79,10 +93,6 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 900;
   font-style: normal;
-}
-
-.inter-font {
-  font-family: "Inter", sans-serif;
 }
 
 .inter-thin {
@@ -165,7 +175,6 @@ body {
   font-variation-settings:
     "wdth" 100;
 }
-
 
 .merriweather-medium {
   font-family: "Merriweather", serif;
