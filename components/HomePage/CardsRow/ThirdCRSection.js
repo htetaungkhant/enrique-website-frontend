@@ -1,8 +1,9 @@
 import Card from "./Card";
+import UPSection from "@/components/common/UniformPaddingSection";
 
 const ThirdCRSection = () => {
     return (
-        <section className="p-8 flex flex-col gap-6 lg:p-12">
+        <UPSection className="flex flex-col gap-6">
             <h2 className="text-white text-2xl inter-font font-light lg:text-4xl">The Importance of <strong className="font-semibold">Integration</strong></h2>
             <p className="text-white">Integrating a Bufo ceremony is key to lasting growth and well-being. Practice mindfulness, self-reflection, and grounding techniques. Apply insights through daily intention and conscious living.</p>
             <div className="flex flex-wrap justify-between gap-4 ">
@@ -37,7 +38,7 @@ const ThirdCRSection = () => {
                     </div>
                 </Card>
             </div>
-        </section>
+        </UPSection>
     );
 }
 

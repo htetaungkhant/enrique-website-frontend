@@ -2,19 +2,19 @@ import Link from "next/link";
 
 import Banner from "@/components/HomePage/Banner";
 import PageHeader from "@/components/common/PageHeader";
-import InfoSection from "@/components/HomePage/InfoSection";
+import InfoSection from "@/components/common/InfoSection";
 import QuoteSection from "@/components/HomePage/QuoteSection";
 import Button from "@/components/common/Button";
 import FirstCRSection from "@/components/HomePage/CardsRow/FirstCRSection";
 import SecondCRSection from "@/components/HomePage/CardsRow/SecondCRSection";
 import ThirdCRSection from "@/components/HomePage/CardsRow/ThirdCRSection";
-import Footer from "@/components/HomePage/Footer";
+import Footer from "@/components/common/Footer";
 import FirstCGSection from "@/components/HomePage/CardsGrid/FirstCGSection";
 import GallerySection from "@/components/HomePage/Gallery/GallerySection";
 
 export default function Home() {
 	return (
-		<div className="bg-gradient-to-b from-[#171F3F] to-[#020105] ">
+		<main>
 			<div className="absolute top-0 left-0 w-full z-100 xl:p-12">
 				<PageHeader />
 			</div>
@@ -74,6 +74,6 @@ export default function Home() {
 			</InfoSection>
 			<ThirdCRSection />
 			<Footer />
-		</div>
+		</main>
 	);
 }

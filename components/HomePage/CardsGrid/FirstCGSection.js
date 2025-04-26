@@ -1,7 +1,9 @@
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import AnimatedCard from "./AnimatedCard";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+
+import AnimatedCard from "./AnimatedCard";
+import UPSection from "@/components/common/UniformPaddingSection";
 
 const data = [
     {
@@ -52,9 +54,8 @@ const CustomNavigation = () => {
 };
 
 const FirstCGSection = () => {
-
     return (
-        <section className="fristCgSection p-8 flex flex-col gap-6 lg:p-12">
+        <UPSection className="flex flex-col gap-6">
             <h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Key Elements of a <strong className="font-semibold">Bufo Ceremony</strong></h2>
             <div className="relative">
                 <Swiper
@@ -83,7 +84,7 @@ const FirstCGSection = () => {
                     <CustomNavigation />
                 </Swiper>
             </div>
-        </section>
+        </UPSection>
     )
 }
 

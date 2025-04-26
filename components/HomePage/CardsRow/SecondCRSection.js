@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+
 import AnimatedCard from "./AnimatedCard";
+import UPSection from "@/components/common/UniformPaddingSection";
 
 const SecondCRSection = () => {
     const scrollContainerRef = useRef(null);
@@ -64,7 +66,7 @@ const SecondCRSection = () => {
     }
 
     return (
-        <section className="p-8 flex flex-col gap-6 lg:p-12">
+        <UPSection className="flex flex-col gap-6">
             <h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Potential Challenges of a <strong className="font-semibold">Bufo Ceremony</strong></h2>
             <div
                 ref={scrollContainerRef}
@@ -100,7 +102,7 @@ const SecondCRSection = () => {
                 </AnimatedCard>
             </div>
             <div className="lg:hidden">
-                <div 
+                <div
                     ref={mobileScrollContainerRef}
                     className="flex gap-4 overflow-x-scroll overflow-y-hidden lg:gap-8 cursor-grab active:cursor-grabbing select-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     <AnimatedCard isDragging={isDragging} badgeText="Drawbacks" index={1} animate={false}>
@@ -137,7 +139,7 @@ const SecondCRSection = () => {
                     </button>
                 </div>
             </div>
-        </section>
+        </UPSection>
     );
 }
 
