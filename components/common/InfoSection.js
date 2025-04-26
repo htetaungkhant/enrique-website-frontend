@@ -1,6 +1,8 @@
 import Image from "next/image";
 
-const InfoSection = ({ image, children, smallImage = false, imageAspectRatio= "square", reverse = false }) => {
+import UPSection from "./UniformPaddingSection";
+
+const InfoSection = ({ image, children, smallImage = false, imageAspectRatio = "square", reverse = false }) => {
 
     // "square", "landscape", "portrait"
     const imageClasses = {
@@ -10,7 +12,7 @@ const InfoSection = ({ image, children, smallImage = false, imageAspectRatio= "s
     };
 
     return (
-        <section className={`flex justify-center items-center md:justify-between gap-10 p-8 lg:gap-20 lg:p-12 flex-col lg:items-start ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"}`}>
+        <UPSection className={`flex justify-center items-center md:justify-between gap-10 lg:gap-20 flex-col lg:items-start ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"}`}>
             <div className="order-2 flex flex-col gap-6">
                 {children}
             </div>
@@ -27,7 +29,7 @@ const InfoSection = ({ image, children, smallImage = false, imageAspectRatio= "s
                     </div>
                 )
             }
-        </section>
+        </UPSection>
     );
 }
 
