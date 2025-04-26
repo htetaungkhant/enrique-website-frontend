@@ -73,7 +73,7 @@ export default function Home() {
 				</p>
 			</InfoSection>
 			<ThirdCRSection />
-			<Footer />
+			<Footer className="mt-10" />
 		</main>
 	);
 }

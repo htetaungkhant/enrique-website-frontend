@@ -6,9 +6,11 @@ import { FaYoutube } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import Link from "next/link";
 
-const Footer = () => {
+import { cn } from "@/lib/utils";
+
+const Footer = ({ className }) => {
     return (
-        <section className="bg-[url(/image/footer-bg.jpeg)] bg-no-repeat bg-cover bg-center border-t-[1px] border-white relative">
+        <section className={cn("bg-[url(/image/footer-bg.jpeg)] bg-no-repeat bg-cover bg-center border-t-[1px] border-white relative", className)}>
             <div className="px-4 py-12 md:p-8 lg:p-12 bg-[#143C58D6] flex flex-col justify-center items-center gap-4 inter-font">
                 <Image
                     src="/logo/logo-white.png"
