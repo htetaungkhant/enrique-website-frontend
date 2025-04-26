@@ -1,4 +1,4 @@
-import Card from "./Card";
+import Card from "../../common/Card";
 import UPSection from "@/components/common/UniformPaddingSection";
 
 const ThirdCRSection = () => {
