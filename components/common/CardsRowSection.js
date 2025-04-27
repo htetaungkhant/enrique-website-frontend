@@ -13,7 +13,7 @@ const CardsRowSection = ({ title, description, cardList }) => {
                             cardList.map((item, index) => (
                                 <Card className="flex-1" badgeText={item.badgeText} key={index}>
                                     <div className="flex flex-col gap-4 inter-font text-[#022645]">
-                                        {item.title && <h2 dangerouslySetInnerHTML={{ __html: item.title }} className="font-semibold text-xl md:text-2xl lg:text-3xl"></h2>}
+                                        {item.title && <h2 dangerouslySetInnerHTML={{ __html: item.title }} className="font-semibold text-xl lg:text-2xl"></h2>}
                                         {item.description && <p className="text-xs md:text-sm font-medium">{item.description}</p>}
                                     </div>
                                 </Card>
