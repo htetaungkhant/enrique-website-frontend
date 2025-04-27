@@ -7,10 +7,42 @@ import QuoteSection from "@/components/HomePage/QuoteSection";
 import Button from "@/components/common/Button";
 import FirstCRSection from "@/components/HomePage/CardsRow/FirstCRSection";
 import SecondCRSection from "@/components/HomePage/CardsRow/SecondCRSection";
-import ThirdCRSection from "@/components/HomePage/CardsRow/ThirdCRSection";
+import CardsRowSection from "@/components/common/CardsRowSection";
 import Footer from "@/components/common/Footer";
 import FirstCGSection from "@/components/HomePage/CardsGrid/FirstCGSection";
 import GallerySection from "@/components/HomePage/Gallery/GallerySection";
+
+const thirdCRSectionData = {
+	title: 'The Importance of <strong class="font-600">Integration</strong>',
+	description: 'Integrating a Bufo ceremony is key to lasting growth and well-being. Practice mindfulness, self-reflection, and grounding techniques. Apply insights through daily intention and conscious living.',
+	cardList: [
+		{
+			badgeText: "Integration",
+			title: "<strong>Grounding</strong> <br />Practices",
+			description: "Engage in physical activity, meditation, or breathwork to reconnect with your body and process emotions.",
+		},
+		{
+			badgeText: "Integration",
+			title: "<strong>Time for</strong> <br />Reflection",
+			description: "Allow space for rest and introspection, giving the experience time to settle naturally.",
+		},
+		{
+			badgeText: "Integration",
+			title: "<strong>Creative</strong> <br />Expression",
+			description: "Explore journaling, art therapy, or nonverbal expression to extract deeper meaning from your journey.",
+		},
+		{
+			badgeText: "Integration",
+			title: "<strong>Daily</strong> <br />Self-Care",
+			description: "Maintain a personal practice that nurtures your connection to the insights gained during the ceremony.",
+		},
+		{
+			badgeText: "Integration",
+			title: "<strong>Community</strong> <br />& Support",
+			description: "Join integration circles or seek professional guidance to share experiences and receive support in a safe and understanding environment.",
+		}
+	]
+}
 
 export default function Home() {
 	return (
@@ -72,7 +104,7 @@ export default function Home() {
 					<span className="font-bold">A Deeply Personal Experience –</span> Each journey is unique, reflecting the inner world of the participant. Many describe it as a life-changing moment of emotional, psychological, and spiritual evolution.
 				</p>
 			</InfoSection>
-			<ThirdCRSection />
+			<CardsRowSection title={thirdCRSectionData.title} description={thirdCRSectionData.description} cardList={thirdCRSectionData.cardList} />
 			<Footer className="mt-10" />
 		</main>
 	);
