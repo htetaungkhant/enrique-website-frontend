@@ -13,32 +13,32 @@ import FirstCGSection from "@/components/HomePage/CardsGrid/FirstCGSection";
 import GallerySection from "@/components/HomePage/Gallery/GallerySection";
 
 const thirdCRSectionData = {
-	title: 'The Importance of <strong class="font-600">Integration</strong>',
+	title: '<span class="font-300">The Importance of </span><strong class="font-600">Integration</strong>',
 	description: 'Integrating a Bufo ceremony is key to lasting growth and well-being. Practice mindfulness, self-reflection, and grounding techniques. Apply insights through daily intention and conscious living.',
 	cardList: [
 		{
 			badgeText: "Integration",
-			title: "<strong>Grounding</strong> <br />Practices",
+			title: 'Grounding <br /><span class="font-400">Practices</span>',
 			description: "Engage in physical activity, meditation, or breathwork to reconnect with your body and process emotions.",
 		},
 		{
 			badgeText: "Integration",
-			title: "<strong>Time for</strong> <br />Reflection",
+			title: 'Time for <br /><span class="font-400">Reflection</span>',
 			description: "Allow space for rest and introspection, giving the experience time to settle naturally.",
 		},
 		{
 			badgeText: "Integration",
-			title: "<strong>Creative</strong> <br />Expression",
+			title: 'Creative <br /><span class="font-400">Expression</span>',
 			description: "Explore journaling, art therapy, or nonverbal expression to extract deeper meaning from your journey.",
 		},
 		{
 			badgeText: "Integration",
-			title: "<strong>Daily</strong> <br />Self-Care",
+			title: 'Daily <br /><span class="font-400">Self-Care</span>',
 			description: "Maintain a personal practice that nurtures your connection to the insights gained during the ceremony.",
 		},
 		{
 			badgeText: "Integration",
-			title: "<strong>Community</strong> <br />& Support",
+			title: 'Community <br /><span class="font-400">& Support</span>',
 			description: "Join integration circles or seek professional guidance to share experiences and receive support in a safe and understanding environment.",
 		}
 	]
