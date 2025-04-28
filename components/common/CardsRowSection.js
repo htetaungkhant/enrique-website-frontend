@@ -1,7 +1,9 @@
 import Card from "./Card";
 import UPSection from "@/components/common/UniformPaddingSection";
 
-const CardsRowSection = ({ title, description, cardList }) => {
+const CardsRowSection = ({ title, description, cardList, cardColor }) => {
+    const twCardColor = `bg-${cardColor}`;
+
     return (
         <UPSection className="flex flex-col gap-6">
             {title && <h2 className="text-white text-2xl inter-font font-medium lg:text-4xl" dangerouslySetInnerHTML={{ __html: title }}></h2>}
@@ -11,7 +13,7 @@ const CardsRowSection = ({ title, description, cardList }) => {
                     <div className="flex flex-wrap justify-between gap-4 ">
                         {
                             cardList.map((item, index) => (
-                                <Card className="flex-1" badgeText={item.badgeText} key={index}>
+                                <Card className={`flex-1 ${cardColor ? twCardColor : ""}`} badgeText={item.badgeText} key={index}>
                                     <div className="flex flex-col gap-4 inter-font text-[#022645]">
                                         {item.title && <h2 dangerouslySetInnerHTML={{ __html: item.title }} className="font-semibold text-xl lg:text-2xl"></h2>}
                                         {item.description && <p className="text-xs md:text-sm font-medium">{item.description}</p>}
