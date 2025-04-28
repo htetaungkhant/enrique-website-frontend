@@ -34,23 +34,23 @@ const PageHeader = () => {
                     <li className="text-white merriweather-medium">
                         <HeaderDropdown title="HEALING">
                             <ul className="p-2 bg-white rounded-lg shadow-lg">
-                                <li className="py-1 px-3 rounded-md text-black hover:bg-gray-100">
-                                    <Link href="/kambo">Kambo</Link>
+                                <li className="flex rounded-md text-black hover:bg-gray-100">
+                                    <Link href="/kambo" className="w-full py-1 px-3">Kambo</Link>
                                 </li>
-                                <li className="py-1 px-3 rounded-md whitespace-nowrap text-black hover:bg-gray-100">
-                                    <Link href="/bufo-alvarius">Bufo Alvarius</Link>
+                                <li className="flex rounded-md whitespace-nowrap text-black hover:bg-gray-100">
+                                    <Link href="/bufo-alvarius" className="w-full py-1 px-3">Bufo Alvarius</Link>
                                 </li>
-                                <li className="py-1 px-3 rounded-md text-black hover:bg-gray-100">
-                                    <Link href="/ayahuasca">Ayahuasca</Link>
+                                <li className="flex rounded-md text-black hover:bg-gray-100">
+                                    <Link href="/ayahuasca" className="w-full py-1 px-3">Ayahuasca</Link>
                                 </li>
-                                <li className="py-1 px-3 rounded-md text-black hover:bg-gray-100">
-                                    <Link href="/breathwork">Breathwork</Link>
+                                <li className="flex rounded-md text-black hover:bg-gray-100">
+                                    <Link href="/breathwork" className="w-full py-1 px-3">Breathwork</Link>
                                 </li>
-                                <li className="py-1 px-3 rounded-md text-black hover:bg-gray-100">
-                                    <Link href="/yoga">Yoga</Link>
+                                <li className="flex rounded-md text-black hover:bg-gray-100">
+                                    <Link href="/yoga" className="w-full py-1 px-3">Yoga</Link>
                                 </li>
-                                <li className="py-1 px-3 rounded-md text-black hover:bg-gray-100">
-                                    <Link href="/ayurveda">Ayurveda</Link>
+                                <li className="flex rounded-md text-black hover:bg-gray-100">
+                                    <Link href="/ayurveda" className="w-full py-1 px-3">Ayurveda</Link>
                                 </li>
                             </ul>
                         </HeaderDropdown>
@@ -88,23 +88,23 @@ const PageHeader = () => {
                 <div className="text-white merriweather-medium">
                     <HeaderDropdown title="HEALING">
                         <ul className="rounded-lg shadow-lg">
-                            <li className="py-1 px-3 rounded-md text-center">
-                                <Link href="/kambo">Kambo</Link>
+                            <li className="flex rounded-md text-center">
+                                <Link href="/kambo" className="w-full py-1 px-3">Kambo</Link>
                             </li>
-                            <li className="py-1 px-3 rounded-md text-center whitespace-nowrap">
-                                <Link href="/bufo-alvarius">Bufo Alvarius</Link>
+                            <li className="flex rounded-md text-center whitespace-nowrap">
+                                <Link href="/bufo-alvarius" className="w-full py-1 px-3">Bufo Alvarius</Link>
                             </li>
-                            <li className="py-1 px-3 rounded-md text-center">
-                                <Link href="/ayahuasca">Ayahuasca</Link>
+                            <li className="flex rounded-md text-center">
+                                <Link href="/ayahuasca" className="w-full py-1 px-3">Ayahuasca</Link>
                             </li>
-                            <li className="py-1 px-3 rounded-md text-center">
-                                <Link href="/breathwork">Breathwork</Link>
+                            <li className="flex rounded-md text-center">
+                                <Link href="/breathwork" className="w-full py-1 px-3">Breathwork</Link>
                             </li>
-                            <li className="py-1 px-3 rounded-md text-center">
-                                <Link href="/yoga">Yoga</Link>
+                            <li className="flex rounded-md text-center">
+                                <Link href="/yoga" className="w-full py-1 px-3">Yoga</Link>
                             </li>
-                            <li className="py-1 px-3 rounded-md text-center">
-                                <Link href="/ayurveda">Ayurveda</Link>
+                            <li className="flex rounded-md text-center">
+                                <Link href="/ayurveda" className="w-full py-1 px-3">Ayurveda</Link>
                             </li>
                         </ul>
                     </HeaderDropdown>

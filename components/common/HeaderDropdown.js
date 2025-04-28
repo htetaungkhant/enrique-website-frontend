@@ -25,7 +25,7 @@ const HeaderDropdown = ({ title, children }) => {
     }, []);
     
     return (
-        <div ref={constainerRef} className="relative">
+        <div ref={constainerRef} className="relative z-10">
             <button onClick={handleClick} className="w-full flex items-center justify-center gap-2 poppins-medium cursor-pointer">
                 {title}
                 <FaAngleDown className="text-white" />
