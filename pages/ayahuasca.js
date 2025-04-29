@@ -38,7 +38,7 @@ const Ayahuasca = () => {
                         </div>
                         <div className="min-h-80 max-sm:w-full sm:min-h-64 max-lg:w-1/2 lg:min-h-44 order-1 lg:order-1 relative">
                             <Image
-                                src="/image/ayahuasca-2.png"
+                                src="/image/2.png"
                                 fill
                                 alt="Info"
                                 className={`object-cover rounded-tl-[65px] rounded-br-[80px] shadow-lg shadow-[#8A888840]`}
