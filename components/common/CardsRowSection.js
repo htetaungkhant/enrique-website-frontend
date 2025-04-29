@@ -69,7 +69,20 @@ export const SwiperCardsRowSection = ({
                                     >
                                         <div className="flex flex-col gap-4">
                                             {item.title && <h2 className="font-semibold text-xl lg:text-2xl">{item.title}</h2>}
-                                            {item.description && <p className="text-xs md:text-sm font-medium">{item.description}</p>}
+                                            {item.description && (
+                                                Array.isArray(item.description) ? (
+                                                    <div className="text-xs md:text-sm font-medium flex flex-col gap-3">
+                                                        {
+                                                            item.description.map((innerItem, innerIndex) => (
+                                                                <p key={innerIndex}>{innerItem}</p>
+                                                            ))
+                                                        }
+                                                    </div>
+                                                )
+                                                    : (
+                                                        <p className="text-xs md:text-sm font-medium">{item.description}</p>
+                                                    )
+                                            )}
                                         </div>
                                     </Card>
                                 </SwiperSlide>
