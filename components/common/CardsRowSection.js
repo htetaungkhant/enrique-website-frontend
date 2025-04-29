@@ -80,7 +80,10 @@ export const SwiperCardsRowSection = ({
                                                     </div>
                                                 )
                                                     : (
-                                                        <p className="text-xs md:text-sm font-medium">{item.description}</p>
+                                                        typeof item.description === 'string' ?
+                                                            <p className="text-xs md:text-sm font-medium">{item.description}</p>
+                                                            :
+                                                            <div className="text-xs md:text-sm font-medium">{item.description}</div>
                                                     )
                                             )}
                                         </div>
