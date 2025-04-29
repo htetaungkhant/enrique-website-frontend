@@ -12,6 +12,7 @@ export const SwiperWrapper = ({
     breakpoints,
     className,
     swiperClassName,
+    navigationClassName,
     children
 }) => {
     return (
@@ -29,7 +30,7 @@ export const SwiperWrapper = ({
                 className={cn("w-full h-full", swiperClassName)}
             >
                 {children}
-                <CustomSwiperNavigation />
+                <CustomSwiperNavigation className={navigationClassName} />
             </Swiper>
         </div>
     )

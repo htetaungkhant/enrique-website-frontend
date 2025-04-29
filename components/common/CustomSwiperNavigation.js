@@ -1,11 +1,13 @@
+import { cn } from "@/lib/utils";
+
 import { useSwiper } from "swiper/react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
-const CustomSwiperNavigation = () => {
+const CustomSwiperNavigation = ({ className }) => {
     const swiper = useSwiper();
 
     return (
-        <div className="relative flex justify-center mt-6 md:hidden">
+        <div className={cn("relative flex justify-center mt-6 md:hidden", className)}>
             <button onClick={() => swiper.slidePrev()} className="px-4 py-2 bg-white rounded-l-2xl cursor-pointer">
                 <FaArrowLeft className="text-[#545454]" />
             </button>
