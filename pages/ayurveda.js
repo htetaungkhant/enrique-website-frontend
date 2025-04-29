@@ -138,7 +138,6 @@ const Ayurveda = () => {
                         </Card>
                     </SwiperSlide>
                 </SwiperWrapper>
-                {/* </div> */}
             </UPSection>
             <SwiperCardsRowSection
                 title={cardsRowSectionData.title}
