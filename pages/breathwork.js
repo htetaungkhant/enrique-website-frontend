@@ -1,4 +1,6 @@
 import { SwiperSlide, } from "swiper/react";
+import Image from "next/image";
+import Link from "next/link";
 
 import { SwiperCardsRowSection, SwiperWrapper } from "@/components/common/CardsRowSection";
 import Footer from "@/components/common/Footer";
@@ -7,7 +9,6 @@ import ListCard from "@/components/common/ListCard";
 import { PageHeaderWithBanner } from "@/components/common/PageHeader";
 import UPSection from "@/components/common/UniformPaddingSection";
 import Card from "@/components/common/Card";
-import Image from "next/image";
 
 const cardsRowSectionData1 = {
     title: 'Preparation for Your Yoga Journey',
@@ -119,7 +120,7 @@ const Breathwork = () => {
             <UniformInfoSection image="/image/OtherSomaticPractices.png" reverse={true}>
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">The Roots of Shamanic Breathwork</h2>
                 <div className="text-white inter-font flex flex-col gap-6">
-                    <p className="text-sm">Shamanic Breathwork has been practiced for thousands of years in various spiritual traditions:</p>
+                    <p className="text-sm"><Link href="https://www.webmd.com/balance/what-is-breathwork" target="_blank" className="text-[#fef15c]">Shamanic Breathwork</Link> has been practiced for thousands of years in various spiritual traditions:</p>
                     <ul className="pl-3 list-disc ">
                         <li><strong>India</strong>: Yogic Pranayama teaches breath control for purification and spiritual balance.</li>
                         <li><strong>China</strong>: Taoist practices like Qigong and Tai Chi integrate breath to promote vitality.</li>
