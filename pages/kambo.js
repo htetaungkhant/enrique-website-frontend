@@ -10,6 +10,7 @@ import ListCard from "@/components/common/ListCard";
 import Footer from "@/components/common/Footer";
 import Card from "@/components/common/Card";
 import CustomSwiperNavigation from "@/components/common/CustomSwiperNavigation";
+import { SwiperCardsRowSection, SwiperWrapper } from "@/components/common/CardsRowSection";
 
 const listCardData = {
     title: "11 Essential Things to Know About a Kambo Ceremony",
@@ -82,6 +83,52 @@ const cardsGridSectionData = {
         },
     ],
     footer: 'Due to its intense effects, Kambo should only be taken under the guidance of an experienced practitioner, and participants are encouraged to consult a healthcare professional beforehand.'
+}
+
+const cardsRowSectionData1 = {
+    cardList: [
+        {
+            image: "/icon/kambo-icon-1.png",
+            title: 'Kambo’s Integration into Modern Healing',
+        },
+        {
+            image: "/icon/kambo-icon-1.png",
+            title: 'Scientific Insights: The Benefits of Kambo',
+        },
+        {
+            image: "/icon/kambo-icon-1.png",
+            title: 'The Non-Psychedelic Nature of Kambo',
+        },
+    ]
+}
+
+const cardsRowSectionData2 = {
+    title: 'Understanding the Effects of a Kambo Ritual',
+    description: 'Once applied, Kambo induces a rapid reaction, including increased heart rate, nausea, facial swelling, and a strong urge to purge. These effects are considered a release of toxins and emotional blockages, typically lasting 30 to 40 minutes. Practitioners closely monitor participants to ensure safety, making proper guidance crucial for a successful ceremony.',
+    cardList: [
+        {
+            title: 'Controversies and Health Risks',
+            description: "Despite its reported benefits, Kambo remains controversial due to the lack of extensive clinical research. Some skeptics argue that the placebo effect and ceremonial setting influence perceived benefits. Additionally, Kambo is not suitable for everyone—those with heart conditions, blood pressure issues, or certain medical conditions should avoid it. Given the risks, working with a trained practitioner is essential for safety.",
+        },
+        {
+            title: 'Enhancing a Bufo Ceremony with Kambo',
+            description: "Kambo serves as an excellent preparatory cleanse before engaging in other entheogenic experiences, such as Ayahuasca or Bufo. By detoxifying the body and clearing emotional blockages, Kambo helps individuals enter these profound spiritual experiences with greater clarity and openness. This preparation enhances the depth and effectiveness of the journey, allowing for a more meaningful and transformative experience.",
+        },
+    ]
+}
+
+const cardsRowSectionData3 = {
+    cardList: [
+        {
+            title: 'Physical and Emotional Purification with Kambo',
+        },
+        {
+            title: 'The Importance of Professional Guidance',
+        },
+        {
+            title: 'Kambo’s Legal and Regulatory Status',
+        },
+    ]
 }
 
 const KamboPage = () => {
@@ -173,122 +220,43 @@ const KamboPage = () => {
                 <p className="text-white inter-font"><Link href="https://amazonexplorer.com/culture-of-indigenous-matses-people-the-frog-medicine-kambo/" target="_blank" className="text-[#fef15c]">Kambo</Link> has been a sacred medicine among Amazonian tribes for generations. Traditionally, indigenous hunters used it to increase stamina, mental clarity, and physical strength by clearing ‘panema,’ or negative energy. More than just a detoxification ritual, Kambo symbolizes a deep connection between the tribe and the natural world, reflecting a holistic approach to health and spirituality.</p>
             </UniformInfoSection>
             <UPSection className="text-white inter-font flex flex-col gap-6">
-                <div className="relative">
-                    <Swiper
-                        modules={[Navigation, Pagination]}
-                        spaceBetween={20}
-                        slidesPerView={1}
-                        breakpoints={{
-                            768: {
-                                slidesPerView: 3,
-                            },
-                        }}
-                        navigation={false}
-                        className="w-full h-full"
-                    >
-                        <SwiperSlide>
-                            <Card className="bg-radial-[at_50%_90%] from-[#35A92C] from-10%  to-[#76FBCB] to-90% h-48 md:h-60 lg:h-72 overflow-x-hidden">
-                                <div className="h-full flex flex-col gap-4 justify-between">
-                                    <Image src="/icon/kambo-icon-1.png" className="w-20 h-20 lg:w-28 lg:h-28 object-contain" width={120} height={120} alt="icon" />
-                                    <h2 className="font-semibold text-xl lg:text-2xl">Kambo’s Integration into Modern Healing</h2>
-                                </div>
-                            </Card>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card className="bg-radial-[at_50%_90%] from-[#35A92C] from-10%  to-[#76FBCB] to-90% h-48 md:h-60 lg:h-72 overflow-x-hidden">
-                                <div className="h-full flex flex-col gap-4 justify-between">
-                                    <Image src="/icon/kambo-icon-1.png" className="w-20 h-20 lg:w-28 lg:h-28 object-contain" width={120} height={120} alt="icon" />
-                                    <h2 className="font-semibold text-xl lg:text-2xl">Scientific Insights: The Benefits of Kambo</h2>
-                                </div>
-                            </Card>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card className="bg-radial-[at_50%_90%] from-[#35A92C] from-10%  to-[#76FBCB] to-90% h-48 md:h-60 lg:h-72 overflow-x-hidden">
-                                <div className="h-full flex flex-col gap-4 justify-between">
-                                    <Image src="/icon/kambo-icon-1.png" className="w-20 h-20 lg:w-28 lg:h-28 object-contain" width={120} height={120} alt="icon" />
-                                    <h2 className="font-semibold text-xl lg:text-2xl">The Non-Psychedelic Nature of Kambo</h2>
-                                </div>
-                            </Card>
-                        </SwiperSlide>
-                        <CustomSwiperNavigation />
-                    </Swiper>
-                </div>
+                <SwiperWrapper
+                    breakpoints={{
+                        768: {
+                            slidesPerView: 3,
+                        },
+                    }}
+                >
+                    {
+                        cardsRowSectionData1.cardList.map((item, index) => (
+                            <SwiperSlide key={index}>
+                                <Card className="bg-radial-[at_50%_90%] from-[#35A92C] from-10%  to-[#76FBCB] to-90% h-48 md:h-60 lg:h-72 overflow-x-hidden">
+                                    <div className="h-full flex flex-col gap-4 justify-between">
+                                        {item.image && <Image src={item.image} className="w-20 h-20 lg:w-28 lg:h-28 object-contain" width={120} height={120} alt="icon" />}
+                                        {item.title && <h2 className="font-semibold text-xl lg:text-2xl">{item.title}</h2>}
+                                    </div>
+                                </Card>
+                            </SwiperSlide>
+                        ))
+                    }
+                </SwiperWrapper>
             </UPSection>
-            <UPSection className="text-white inter-font flex flex-col gap-6">
-                <h2 className="text-2xl font-medium lg:text-4xl">Understanding the Effects of a Kambo Ritual</h2>
-                <p>Once applied, Kambo induces a rapid reaction, including increased heart rate, nausea, facial swelling, and a strong urge to purge. These effects are considered a release of toxins and emotional blockages, typically lasting 30 to 40 minutes. Practitioners closely monitor participants to ensure safety, making proper guidance crucial for a successful ceremony.</p>
-                <div className="relative">
-                    <Swiper
-                        modules={[Navigation, Pagination]}
-                        spaceBetween={20}
-                        slidesPerView={1}
-                        breakpoints={{
-                            768: {
-                                slidesPerView: 2,
-                            },
-                        }}
-                        navigation={false}
-                        className="w-full h-full"
-                    >
-                        <SwiperSlide>
-                            <Card className="text-[#394885] h-72 overflow-x-hidden" >
-                                <div className="flex flex-col gap-4">
-                                    <h2 className="font-semibold text-xl lg:text-2xl">Controversies and Health Risks</h2>
-                                    <p className="text-xs md:text-sm font-medium">Despite its reported benefits, Kambo remains controversial due to the lack of extensive clinical research. Some skeptics argue that the placebo effect and ceremonial setting influence perceived benefits. Additionally, Kambo is not suitable for everyone—those with heart conditions, blood pressure issues, or certain medical conditions should avoid it. Given the risks, working with a trained practitioner is essential for safety.</p>
-                                </div>
-                            </Card>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card className="text-[#394885] h-72 overflow-x-hidden">
-                                <div className="flex flex-col gap-4">
-                                    <h2 className="font-semibold text-xl lg:text-2xl">Enhancing a Bufo Ceremony with Kambo</h2>
-                                    <p className="text-xs md:text-sm font-medium">Kambo serves as an excellent preparatory cleanse before engaging in other entheogenic experiences, such as Ayahuasca or Bufo. By detoxifying the body and clearing emotional blockages, Kambo helps individuals enter these profound spiritual experiences with greater clarity and openness. This preparation enhances the depth and effectiveness of the journey, allowing for a more meaningful and transformative experience.</p>
-                                </div>
-                            </Card>
-                        </SwiperSlide>
-                        <CustomSwiperNavigation />
-                    </Swiper>
-                </div>
-            </UPSection>
-            <UPSection className="text-white inter-font flex flex-col gap-6 pt-3 lg:pt-6">
-                <div className="relative">
-                    <Swiper
-                        modules={[Navigation, Pagination]}
-                        spaceBetween={20}
-                        slidesPerView={1}
-                        breakpoints={{
-                            768: {
-                                slidesPerView: 3,
-                            },
-                        }}
-                        navigation={false}
-                        className="w-full h-full"
-                    >
-                        <SwiperSlide>
-                            <Card className="bg-gradient-to-r from-[#1B7857] to-[#59A331] h-48 overflow-x-hidden">
-                                <div className="flex justify-center items-center h-full">
-                                    <h2 className="font-semibold text-xl lg:text-2xl">Physical and Emotional Purification with Kambo</h2>
-                                </div>
-                            </Card>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card className="bg-gradient-to-r from-[#1B7857] to-[#59A331] h-48 overflow-x-hidden">
-                                <div className="flex justify-center items-center h-full">
-                                    <h2 className="font-semibold text-xl lg:text-2xl">The Importance of Professional Guidance</h2>
-                                </div>
-                            </Card>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Card className="bg-gradient-to-r from-[#1B7857] to-[#59A331] h-48 overflow-x-hidden">
-                                <div className="flex justify-center items-center h-full">
-                                    <h2 className="font-semibold text-xl lg:text-2xl">Kambo’s Legal and Regulatory Status</h2>
-                                </div>
-                            </Card>
-                        </SwiperSlide>
-                        <CustomSwiperNavigation />
-                    </Swiper>
-                </div>
-            </UPSection>
+            <SwiperCardsRowSection
+                title={cardsRowSectionData2.title}
+                description={cardsRowSectionData2.description}
+                cardList={cardsRowSectionData2.cardList}
+                twCardClassName="text-[#394885] h-56 md:h-64 lg:h-72 overflow-x-hidden"
+            />
+            <SwiperCardsRowSection
+                breakpoints={{
+                    768: {
+                        slidesPerView: 3,
+                    },
+                }}
+                cardList={cardsRowSectionData3.cardList}
+                twCardClassName="bg-gradient-to-r from-[#1B7857] to-[#59A331] h-48 justify-center overflow-x-hidden"
+                className="text-white inter-font flex flex-col gap-6 pt-3 lg:pt-6"
+            />
             <UniformInfoSection image="/image/OtherSomaticPractices.png">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">Experiencing Kambo with Arise Retreats</h2>
                 <p className="text-white inter-font">Rooted in Amazonian tradition, Kambo has been used for centuries as a sacred healing tool. While it offers numerous benefits, it is not a casual practice and requires preparation and professional supervision. At Arise Retreats, we provide a safe and supportive environment for experiencing Kambo under the guidance of experienced practitioners. Our ceremonies emphasize respect for the tradition, participant safety, and the full potential of Kambo as a transformative healing experience.</p>

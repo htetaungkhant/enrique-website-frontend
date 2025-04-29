@@ -1,5 +1,7 @@
+import { SwiperSlide, } from "swiper/react";
+
 import Card from "@/components/common/Card";
-import CardsRowSection from "@/components/common/CardsRowSection";
+import { SwiperCardsRowSection, SwiperWrapper } from "@/components/common/CardsRowSection";
 import Explanation from "@/components/common/Explanation";
 import Footer from "@/components/common/Footer";
 import { UniformInfoSection } from "@/components/common/InfoSection";
@@ -109,31 +111,51 @@ const Ayurveda = () => {
                 </div>
             </Explanation>
             <UPSection>
-                <div className="text-white inter-font grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8">
-                    <Card className="bg-gradient-to-r from-[#1B7857] to-[#59A331]">
-                        <h2 className="font-semibold text-xl md:text-2xl lg:text-3xl">Potential Drawbacks of Ayurveda</h2>
-                        <p>Although Ayurveda is a profound healing system, awareness of certain aspects is crucial:<br />
-                            ❌ <strong>Misuse of Herbs</strong> – Without guidance, incorrect dosages can be ineffective or harmful.<br />
-                            ❌ <strong>Slow Healing Process</strong> – Ayurveda works holistically, which means results take consistent effort.<br />
-                            ❌ <strong>Lack of Standardization</strong> – Some Ayurvedic products in the market lack quality control.<br />
-                            ❌ <strong>Detox Reactions</strong> – Some people experience mild cleansing symptoms (e.g., fatigue, skin breakouts) as the body eliminates toxins. When practiced under qualified Ayurvedic guidance, these concerns are minimal.
-                        </p>
-                    </Card>
-                    <Card className="bg-gradient-to-r from-[#1B7857] to-[#59A331]">
-                        <h2 className="font-semibold text-xl md:text-2xl lg:text-3xl">Understanding the Ayurvedic Lifestyle</h2>
-                        <p>Ayurveda isn’t just about taking herbal medicines; it’s a way of life that includes:</p>
-                        <ul className="list-disc pl-3">
-                            <li><strong>Diet (Ahara)</strong>: Eating according to your dosha and seasonal needs.</li>
-                            <li><strong>Daily Routine (Dinacharya)</strong>: Establishing consistent self-care habits.</li>
-                            <li><strong>Digestion (Agni)</strong>: Maintaining a strong metabolic fire for optimal health.</li>
-                            <li><strong>Detoxification (Panchakarma)</strong>: Cleansing the body of accumulated toxins.</li>
-                            <li><strong>Yoga & Meditation</strong>: Integrating movement and mindfulness.</li>
-                        </ul>
-                        <p>These principles promote balance, vitality, and longevity.</p>
-                    </Card>
-                </div>
+                <SwiperWrapper className="text-white inter-font">
+                    <SwiperSlide>
+                        <Card className="h-[35rem] xl:h-96 overflow-x-hidden bg-gradient-to-r from-[#1B7857] to-[#59A331]">
+                            <h2 className="font-semibold text-xl md:text-2xl lg:text-3xl">Potential Drawbacks of Ayurveda</h2>
+                            <p>Although Ayurveda is a profound healing system, awareness of certain aspects is crucial:<br />
+                                ❌ <strong>Misuse of Herbs</strong> – Without guidance, incorrect dosages can be ineffective or harmful.<br />
+                                ❌ <strong>Slow Healing Process</strong> – Ayurveda works holistically, which means results take consistent effort.<br />
+                                ❌ <strong>Lack of Standardization</strong> – Some Ayurvedic products in the market lack quality control.<br />
+                                ❌ <strong>Detox Reactions</strong> – Some people experience mild cleansing symptoms (e.g., fatigue, skin breakouts) as the body eliminates toxins. When practiced under qualified Ayurvedic guidance, these concerns are minimal.
+                            </p>
+                        </Card>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Card className="h-[35rem] xl:h-96 overflow-x-hidden bg-gradient-to-r from-[#1B7857] to-[#59A331]">
+                            <h2 className="font-semibold text-xl md:text-2xl lg:text-3xl">Understanding the Ayurvedic Lifestyle</h2>
+                            <p>Ayurveda isn’t just about taking herbal medicines; it’s a way of life that includes:</p>
+                            <ul className="list-disc pl-3">
+                                <li><strong>Diet (Ahara)</strong>: Eating according to your dosha and seasonal needs.</li>
+                                <li><strong>Daily Routine (Dinacharya)</strong>: Establishing consistent self-care habits.</li>
+                                <li><strong>Digestion (Agni)</strong>: Maintaining a strong metabolic fire for optimal health.</li>
+                                <li><strong>Detoxification (Panchakarma)</strong>: Cleansing the body of accumulated toxins.</li>
+                                <li><strong>Yoga & Meditation</strong>: Integrating movement and mindfulness.</li>
+                            </ul>
+                            <p>These principles promote balance, vitality, and longevity.</p>
+                        </Card>
+                    </SwiperSlide>
+                </SwiperWrapper>
+                {/* </div> */}
             </UPSection>
-            <CardsRowSection title={cardsRowSectionData.title} description={cardsRowSectionData.description} cardList={cardsRowSectionData.cardList} />
+            <SwiperCardsRowSection
+                title={cardsRowSectionData.title}
+                description={cardsRowSectionData.description}
+                cardList={cardsRowSectionData.cardList}
+                breakpoints={{
+                    768: {
+                        slidesPerView: 3
+                    },
+                    1280: {
+                        slidesPerView: 5
+                    }
+                }}
+                twBadgeBorderColor="border-[#022645]"
+                twBadgeTextColor="text-[#022645]"
+                twCardClassName="text-[#022645] h-56 md:h-64 lg:h-80 overflow-x-hidden"
+            />
             <Explanation title="Spiritual Awakening in Ayurveda">
                 <div className="flex flex-col gap-4 text-sm font-medium">
                     <p>Ayurveda isn’t just about physical health—it also nurtures the soul’s journey.</p>
