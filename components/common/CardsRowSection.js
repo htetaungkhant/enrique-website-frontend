@@ -42,6 +42,7 @@ export const SwiperCardsRowSection = ({
     breakpoints,
     title,
     description,
+    footer,
     cardList,
     twBadgeBorderColor = "border-white",
     twBadgeTextColor = "text-white",
@@ -77,6 +78,7 @@ export const SwiperCardsRowSection = ({
                     </SwiperWrapper>
                 )
             }
+            {footer && <p>{footer}</p>}
         </UPSection>
     )
 }
