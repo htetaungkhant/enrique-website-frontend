@@ -71,14 +71,14 @@ const Ayurveda = () => {
             </UniformInfoSection>
             <UniformInfoSection image="/image/OtherSomaticPractices.png">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">What is Ayurveda?</h2>
-                <div className="flex flex-col gap-6">
-                    <p className="text-white inter-font">Ayurveda, which means "<strong>The Science of Life</strong>", is a 5,000-year-old holistic healing system from India. Unlike Western medicine, which focuses on treating symptoms, Ayurveda emphasizes preventative care and restoring balance within the body, mind, and spirit.<br />Ayurveda is based on the principle that each individual is unique, and health is achieved when there is balance between the three doshas (bio-energies):</p>
-                    <ul className="pl-3 list-disc text-white inter-font">
+                <div className="text-white inter-font flex flex-col gap-6">
+                    <p>Ayurveda, which means "<strong>The Science of Life</strong>", is a 5,000-year-old holistic healing system from India. Unlike Western medicine, which focuses on treating symptoms, Ayurveda emphasizes preventative care and restoring balance within the body, mind, and spirit.<br />Ayurveda is based on the principle that each individual is unique, and health is achieved when there is balance between the three doshas (bio-energies):</p>
+                    <ul className="pl-3 list-disc">
                         <li><strong>Vata (Air & Space)</strong> – Governs movement, creativity, and nervous system functions.</li>
                         <li><strong>Pitta (Fire & Water)</strong> – Controls metabolism, digestion, and transformation.</li>
                         <li><strong>Kapha (Earth & Water)</strong> – Maintains stability, immunity, and nourishment.</li>
                     </ul>
-                    <p className="text-white inter-font">Understanding your unique dosha constitution helps determine the right diet, lifestyle, and treatments for optimal health.</p>
+                    <p>Understanding your unique dosha constitution helps determine the right diet, lifestyle, and treatments for optimal health.</p>
                 </div>
             </UniformInfoSection>
             <Explanation title="What If True Wellness Was Already Within You?">
