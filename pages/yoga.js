@@ -205,9 +205,9 @@ const Yoga = () => {
                         slidesPerView: 5
                     }
                 }}
-                twBadgeBorderColor="border-[#022645]"
-                twBadgeTextColor="text-[#022645]"
-                twCardClassName="text-[#022645] h-56 md:h-64 lg:h-80 overflow-x-hidden"
+                twBadgeBorderColor="border-[#212A63]"
+                twBadgeTextColor="text-[#212A63]"
+                twCardClassName="text-[#212A63] h-56 md:h-64 lg:h-80 overflow-x-hidden"
             />
             <Explanation title="What Happens During Yoga?">
                 <div className="flex flex-col gap-4 text-sm font-medium">
@@ -227,9 +227,9 @@ const Yoga = () => {
                         slidesPerView: 4
                     }
                 }}
-                twBadgeBorderColor="border-[#022645]"
-                twBadgeTextColor="text-[#022645]"
-                twCardClassName="text-[#022645] h-48 md:h-60 lg:h-72 overflow-x-hidden"
+                twBadgeBorderColor="border-[#212A63]"
+                twBadgeTextColor="text-[#212A63]"
+                twCardClassName="text-[#212A63] h-48 md:h-60 lg:h-72 overflow-x-hidden"
             />
             <UniformInfoSection image="/image/OtherSomaticPractices.png">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">Embracing the Yoga Path</h2>
