@@ -53,7 +53,12 @@ export const SwiperCardsRowSection = ({
     return (
         <UPSection className={cn("text-white inter-font flex flex-col gap-6", className)}>
             {title && <h2 className="text-2xl font-medium lg:text-4xl">{title}</h2>}
-            {description && <p>{description}</p>}
+            {description && (
+                typeof description === 'string' ?
+                    <p>{description}</p>
+                    :
+                    <div>{description}</div>
+            )}
             {
                 cardList && (
                     <SwiperWrapper spaceBetween={spaceBetween} slidesPerView={slidesPerView} breakpoints={breakpoints}>
@@ -68,13 +73,16 @@ export const SwiperCardsRowSection = ({
                                         className={twCardClassName}
                                     >
                                         <div className="flex flex-col gap-4">
-                                            {item.title && <h2 className="min-h-16 font-semibold text-xl lg:text-2xl">{item.title}</h2>}
+                                            {item.title && <h2 className="font-semibold text-xl lg:text-2xl">{item.title}</h2>}
                                             {item.description && (
                                                 Array.isArray(item.description) ? (
                                                     <div className="text-xs md:text-sm font-medium flex flex-col gap-3">
                                                         {
                                                             item.description.map((innerItem, innerIndex) => (
-                                                                <p key={innerIndex}>{innerItem}</p>
+                                                                typeof innerItem === 'string' ?
+                                                                    <p key={innerIndex}>{innerItem}</p>
+                                                                    :
+                                                                    <div key={innerIndex}>{innerItem}</div>
                                                             ))
                                                         }
                                                     </div>
@@ -94,7 +102,12 @@ export const SwiperCardsRowSection = ({
                     </SwiperWrapper>
                 )
             }
-            {footer && <p>{footer}</p>}
+            {footer && (
+                typeof footer === 'string' ?
+                    <p>{footer}</p>
+                    :
+                    <div>{footer}</div>
+            )}
         </UPSection>
     )
 }
