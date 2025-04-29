@@ -1,10 +1,14 @@
 import Link from "next/link";
+import { SwiperSlide, } from "swiper/react";
+import Image from "next/image";
 
 import { UniformInfoSection } from "@/components/common/InfoSection";
 import { PageHeaderWithBanner } from "@/components/common/PageHeader";
-import { SwiperCardsRowSection } from "@/components/common/CardsRowSection";
+import { SwiperCardsRowSection, SwiperWrapper } from "@/components/common/CardsRowSection";
 import Footer from "@/components/common/Footer";
 import Explanation from "@/components/common/Explanation";
+import UPSection from "@/components/common/UniformPaddingSection";
+import Card from "@/components/common/Card";
 
 const cardsRowSectionData1 = {
     title: 'Exploring the Therapeutic Potential of 5-MeO-DMT',
@@ -98,22 +102,30 @@ const cardsRowSectionData5 = {
     title: 'Cognitive and Physical Effects of 5-MeO-DMT',
     cardList: [
         {
-            title: 'Cognitive Effects',
+            image: '/image/11.png',
+            title: 'N,N-Dimethyltryptamine',
             description: [
-                <p><strong>Profound Spiritual Awareness</strong> – Many individuals report deep, transformative realizations, often describing a heightened sense of connection with the universe or moments of pure consciousness. These experiences can lead to long-lasting shifts in perception and personal growth.</p>,
-                <p><strong>Intense Euphoria and Emotional Uplift</strong> – Users frequently experience overwhelming joy, inner peace, and a heightened sense of well-being, often leaving them with a renewed perspective on life.</p>,
-                <p><strong>Altered Reality Perception</strong> – The experience often involves a dissolution of time, space, and self-identity, with many struggling to put the intensity of the journey into words.</p>
+                <p>DMT and 5-MeO-DMT are both naturally occurring psychedelic compounds found in various plants and animals. However, they differ significantly in their chemical structure, effects, and therapeutic potential.</p>,
+                <p><strong>Chemical Structure</strong> – DMT (N,N-Dimethyltryptamine) and 5-MeO-DMT (5-Methoxy-N,N-Dimethyltryptamine) share a similar molecular framework, but the presence of a methoxy (-OCH₃) group in 5-MeO-DMT alters its effects on the brain and body.</p>,
+                <p><strong>Psychedelic Effects</strong> – DMT is best known for its vivid, immersive visual hallucinations, often described as transporting users to alternate dimensions or otherworldly realms</p>
             ],
         },
         {
-            title: 'Physical Effects:',
+            image: '/image/10.png',
+            title: '5-Methoxy-N,N-Dimethyltryptamine',
             description: [
-                <p><strong>Brief but Powerful Duration</strong> –While the impact of 5-MeO-DMT is profound, its physiological effects typically last between 30 and 90 minutes. This makes it one of the most intense yet short-lived psychedelics, allowing users to undergo deep transformative experiences within a brief timeframe.</p>,
-                <p><strong>Heightened Sensory Awareness</strong> – Activation of serotonin receptors leads to enhanced perception, affecting visual, auditory, and tactile senses, often creating a deeply immersive experience.</p>,
-                <p><strong>Varied Bodily Sensations</strong>– S Individuals may feel physical effects such as an increased heart rate, sensations of floating or heaviness, and other unique bodily experiences.</p>
+                <p><strong>Unique Psychoactive Experience</strong> – Unlike DMT, 5-MeO-DMT induces a state of ego dissolution and a deep sense of unity with existence, rather than producing intense visual effects. Many describe it as a powerful experience of interconnectedness and self-transcendence.</p>,
+                <p><strong>Potential Therapeutic Uses</strong> – Both compounds are being investigated for their possible benefits in addressing mental health conditions such as depression, PTSD, and anxiety. Some researchers believe that 5-MeO-DMT’s capacity to dissolve the ego and enhance feelings of oneness could make it particularly valuable in therapeutic applications.</p>,
             ],
         },
-    ]
+    ],
+    footer: {
+        title: "Other Key Differences",
+        description: [
+            <p className="text-xs md:text-sm font-medium"><strong>Presence in the Human Body</strong> – DMT has been detected in the human pineal gland, suggesting a potential endogenous role, while 5-MeO-DMT has yet to be identified within the body through scientific studies or conclusive research on its natural presence and function.</p>,
+            <p className="text-xs md:text-sm font-medium"><strong>Legal and Safety Considerations</strong> – While both substances vary in potency, effects, and potential risks, their legal status differs across regions. Anyone considering their use should thoroughly research their properties and approach them with mindfulness and caution</p>
+        ]
+    }
 }
 
 const BufoAlvarius = () => {
@@ -206,6 +218,66 @@ const BufoAlvarius = () => {
                 cardList={cardsRowSectionData4.cardList}
                 twCardClassName="text-[#212A63] h-[25rem] md:h-[30rem] xl:h-80 overflow-x-hidden"
             />
+            <UPSection className="text-white inter-font flex flex-col gap-6">
+                {cardsRowSectionData5.title && <h2 className="text-2xl font-medium lg:text-4xl">{cardsRowSectionData5.title}</h2>}
+                {
+                    cardsRowSectionData5.cardList && (
+                        <SwiperWrapper>
+                            {
+                                cardsRowSectionData5.cardList.map((item, index) => (
+                                    <SwiperSlide key={index}>
+                                        <Card className="text-[#212A63] h-[35rem] md:h-[40rem]">
+                                            <div className="flex flex-col gap-4">
+                                                {item.image && <Image src={item.image} width={611} height={324} className="w-full h-auto" alt="formula" />}
+                                                {item.title && <h2 className="text-black text-center font-semibold text-xl lg:text-2xl">{item.title}</h2>}
+                                                {item.description && (
+                                                    Array.isArray(item.description) ? (
+                                                        <div className="text-xs md:text-sm font-medium flex flex-col gap-3">
+                                                            {
+                                                                item.description.map((innerItem, innerIndex) => (
+                                                                    typeof innerItem === 'string' ?
+                                                                        <p key={innerIndex}>{innerItem}</p>
+                                                                        :
+                                                                        <div key={innerIndex}>{innerItem}</div>
+                                                                ))
+                                                            }
+                                                        </div>
+                                                    )
+                                                        : (
+                                                            typeof item.description === 'string' ?
+                                                                <p className="text-xs md:text-sm font-medium">{item.description}</p>
+                                                                :
+                                                                <div className="text-xs md:text-sm font-medium">{item.description}</div>
+                                                        )
+                                                )}
+                                            </div>
+                                        </Card>
+                                    </SwiperSlide>
+                                ))
+                            }
+                        </SwiperWrapper>
+                    )
+                }
+                {
+                    cardsRowSectionData5.footer && (
+                        <div>
+                            {cardsRowSectionData5.footer.title && <h4 className="font-semibold">{cardsRowSectionData5.footer.title}</h4>}
+                            {cardsRowSectionData5.footer.description && (
+                                Array.isArray(cardsRowSectionData5.footer.description) ? (
+                                    <div className="flex flex-col gap-2">
+                                        {
+                                            cardsRowSectionData5.footer.description.map((item, index) => (
+                                                <div key={index}>{item}</div>
+                                            ))
+                                        }
+                                    </div>
+                                ) :
+                                    <p>{cardsRowSectionData5.footer.description}</p>
+                            )}
+                        </div>
+                    )
+                }
+            </UPSection>
             <UniformInfoSection image="/image/7.png" reverse={true}>
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">Navigating the Legal Status of 5-MeO-DMT</h2>
                 <div className="text-white inter-font flex flex-col gap-6">
