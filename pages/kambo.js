@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 
-import InfoSection from "@/components/common/InfoSection";
+import { UniformInfoSection } from "@/components/common/InfoSection";
 import { PageHeaderWithBanner } from "@/components/common/PageHeader";
 import UPSection from "@/components/common/UniformPaddingSection";
 import ListCard from "@/components/common/ListCard";
@@ -89,13 +89,13 @@ const KamboPage = () => {
         <main>
             <PageHeaderWithBanner title="Kambo" />
             <div className="h-32 bg-gradient-to-b from-[#000000] to-[#00000000]" />
-            <InfoSection image="/image/ayahuasca-cut.png" reverse={true} className="-mt-24">
+            <UniformInfoSection image="/image/ayahuasca-cut.png" reverse={true} className="-mt-24">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">The Power of Kambo: A Fire Energy for Body and Mind</h2>
                 <div className="flex flex-col gap-6">
                     <p className="text-white inter-font">A Kambo ceremony is a revered healing ritual known for its profound cleansing properties. Derived from the secretion of the Amazonian giant monkey frog (Phyllomedusa bicolor), Kambo is an ancient medicine that has been used for centuries by indigenous tribes. Whether experienced in a dedicated Kambo retreat or as part of a broader healing journey with Ayahuasca and Bufo, Kambo enhances spiritual openness and deepens the transformative process.</p>
                     <p className="text-white inter-font">Whether taken in the serenity of a Kambo retreat or integrated into a broader healing journey with <Link href="" target="_blank" className="text-[#fef15c]">Ayahuasca</Link> and <Link href="" target="_blank" className="text-[#fef15c]">Bufo</Link> , Kambo can significantly enhance your openness to spiritual experiences. Discover how this ancient practice can enrich your path to wellness or just give you a deeper trip.</p>
                 </div>
-            </InfoSection>
+            </UniformInfoSection>
             <UPSection className="text-white inter-font flex flex-col gap-6">
                 {cardsGridSectionData.title && <h2 className="text-2xl font-medium lg:text-4xl">{cardsGridSectionData.title}</h2>}
                 {cardsGridSectionData.description && <p>{cardsGridSectionData.description}</p>}
@@ -153,7 +153,7 @@ const KamboPage = () => {
             <UPSection>
                 <ListCard title={listCardData.title} list={listCardData.list} />
             </UPSection>
-            <InfoSection image="/image/OtherSomaticPractices.jpeg" reverse={true}>
+            <UniformInfoSection image="/image/OtherSomaticPractices.png" reverse={true}>
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">Why Kambo is a Key Part of a Retreat</h2>
                 <div className="flex flex-col gap-6">
                     <p className="text-white inter-font">
@@ -163,15 +163,15 @@ const KamboPage = () => {
                         This blend of spiritual and physical rejuvenation makes Kambo ceremonies a revered practice among various cultures, particularly within Amazonian tribes and increasingly in Western holistic health circles.<br />
                     </p>
                 </div>
-            </InfoSection>
-            <InfoSection image="/image/OtherSomaticPractices.jpeg" imageAspectRatio="landscape">
+            </UniformInfoSection>
+            <UniformInfoSection image="/image/OtherSomaticPractices.png">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">The Rising Interest in Kambo</h2>
                 <p className="text-white inter-font">In recent years, Kambo has gained popularity in Western cultures as an alternative medicine, attracting individuals seeking solutions beyond conventional treatments. It is increasingly explored for its potential to address chronic pain, depression, addiction, and autoimmune conditions. While scientific studies remain limited, anecdotal evidence suggests that Kambo may reset the immune system and promote overall well-being.</p>
-            </InfoSection>
-            <InfoSection image="/image/OtherSomaticPractices.jpeg" imageAspectRatio="landscape" reverse={true}>
+            </UniformInfoSection>
+            <UniformInfoSection image="/image/OtherSomaticPractices.png" reverse={true}>
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">The Cultural Significance of Kambo</h2>
                 <p className="text-white inter-font"><Link href="https://amazonexplorer.com/culture-of-indigenous-matses-people-the-frog-medicine-kambo/" target="_blank" className="text-[#fef15c]">Kambo</Link> has been a sacred medicine among Amazonian tribes for generations. Traditionally, indigenous hunters used it to increase stamina, mental clarity, and physical strength by clearing ‘panema,’ or negative energy. More than just a detoxification ritual, Kambo symbolizes a deep connection between the tribe and the natural world, reflecting a holistic approach to health and spirituality.</p>
-            </InfoSection>
+            </UniformInfoSection>
             <UPSection className="text-white inter-font flex flex-col gap-6">
                 <div className="relative">
                     <Swiper
@@ -289,10 +289,10 @@ const KamboPage = () => {
                     </Swiper>
                 </div>
             </UPSection>
-            <InfoSection image="/image/OtherSomaticPractices.jpeg" imageAspectRatio="landscape">
+            <UniformInfoSection image="/image/OtherSomaticPractices.png">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">Experiencing Kambo with Arise Retreats</h2>
                 <p className="text-white inter-font">Rooted in Amazonian tradition, Kambo has been used for centuries as a sacred healing tool. While it offers numerous benefits, it is not a casual practice and requires preparation and professional supervision. At Arise Retreats, we provide a safe and supportive environment for experiencing Kambo under the guidance of experienced practitioners. Our ceremonies emphasize respect for the tradition, participant safety, and the full potential of Kambo as a transformative healing experience.</p>
-            </InfoSection>
+            </UniformInfoSection>
             <Footer className="mt-10" />
         </main>
     )
