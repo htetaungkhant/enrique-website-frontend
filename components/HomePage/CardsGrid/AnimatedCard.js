@@ -1,4 +1,4 @@
-import { hover, motion } from "motion/react"
+import { motion } from "motion/react"
 import Image from "next/image";
 
 const AnimatedCard = ({ title, description, children }) => {
