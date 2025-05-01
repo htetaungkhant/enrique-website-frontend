@@ -4,10 +4,10 @@ import UPSection from "./UniformPaddingSection";
 import { cn } from "@/lib/utils";
 
 export const UniformInfoSection = ({ image, children, imageAspectRatio = "default", reverse = false, className }) => {
-    const gridCols = {
-        default: reverse ? "lg:grid-cols-[70%_25%]" : "lg:grid-cols-[25%_70%]",
-        portrait: reverse ? "lg:grid-cols-[75%_20%]" : "lg:grid-cols-[20%_75%]",
-        landscape: reverse ? "lg:grid-cols-[65%_30%]" : "lg:grid-cols-[30%_65%]",
+    const gridCols = { // 2xl:flex
+        default: reverse ? "lg:grid-cols-[70%_25%] 2xl:grid-cols-[82%_15%] 2xl:justify-between 2xl:gap-10" : "lg:grid-cols-[25%_70%] 2xl:grid-cols-[15%_82%] 2xl:justify-between 2xl:gap-10",
+        portrait: reverse ? "lg:grid-cols-[75%_20%] 2xl:grid-cols-[85%_12%] 2xl:justify-between 2xl:gap-10" : "lg:grid-cols-[20%_75%] 2xl:grid-cols-[12%_85%] 2xl:justify-between 2xl:gap-10",
+        landscape: reverse ? "lg:grid-cols-[65%_30%] 2xl:grid-cols-[77%_20%] 2xl:justify-between 2xl:gap-10" : "lg:grid-cols-[30%_65%] 2xl:grid-cols-[20%_77%] 2xl:justify-between 2xl:gap-10",
     }
 
     return (
@@ -18,15 +18,38 @@ export const UniformInfoSection = ({ image, children, imageAspectRatio = "defaul
             {
                 image && (
                     <div
-                        className={`min-h-80 max-sm:w-full sm:min-h-64 max-lg:w-1/2 lg:min-h-44 order-1 ${reverse ? "lg:order-2" : "lg:order-1"} relative`}
+                        className={`min-h-80 max-sm:w-full sm:min-h-64 max-lg:w-1/2 lg:min-h-40 3xl:min-h-[26rem] order-1 ${reverse ? "lg:order-2" : "lg:order-1"} relative`} // 2xl:min-h-80 
                     >
                         <Image
                             src={image}
                             fill
                             alt="Info"
-                            className={`object-cover rounded-tl-[65px] rounded-br-[80px] shadow-lg shadow-[#8A888840]`}
+                            className={`object-cover rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-lg shadow-lg shadow-[#8A888840]`}
                         />
                     </div>
+                    // <>
+                    //     <div
+                    //         className={`block 2xl:hidden min-h-80 max-sm:w-full sm:min-h-64 max-lg:w-1/2 lg:min-h-44 order-1 ${reverse ? "lg:order-2" : "lg:order-1"} relative`}
+                    //     >
+                    //         <Image
+                    //             src={image}
+                    //             fill
+                    //             alt="Info"
+                    //             className={`object-cover rounded-tl-[65px] rounded-br-[80px] shadow-lg shadow-[#8A888840]`}
+                    //         />
+                    //     </div>
+                    //     <div
+                    //         className={`hidden 2xl:block min-h-80 max-sm:w-full sm:min-h-64 max-lg:w-1/2 lg:min-h-44 w-1/4 order-1 ${reverse ? "lg:order-2" : "lg:order-1"} relative`}
+                    //     >
+                    //         <Image
+                    //             src={image}
+                    //             width={300}
+                    //             height={300}
+                    //             alt="Info"
+                    //             className={`w-full h-full object-cover rounded-tl-[65px] rounded-br-[80px] shadow-lg shadow-[#8A888840]`}
+                    //         />
+                    //     </div>
+                    // </>
                 )
             }
         </UPSection>

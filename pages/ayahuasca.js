@@ -28,7 +28,7 @@ const Ayahuasca = () => {
             </Explanation>
             <UPSection>
                 <div className="text-white flex flex-col gap-6">
-                    <div className="lg:grid-cols-[25%_70%] max-lg:flex max-lg:flex-col max-lg:justify-center max-lg:items-center lg:grid gap-10 lg:gap-16">
+                    <div className="lg:grid-cols-[25%_70%] 2xl:grid-cols-[15%_82%] 2xl:justify-between 2xl:gap-10 max-lg:flex max-lg:flex-col max-lg:justify-center max-lg:items-center lg:grid gap-10 lg:gap-16">
                         <div className="order-2 lg:order-2 flex flex-col gap-6">
                             <h2 className="text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">The Evolving Traditions of Ayahuasca</h2>
                             <div className="inter-font flex flex-col gap-6">
@@ -36,12 +36,12 @@ const Ayahuasca = () => {
                                 <p>In recent years, the practice of vegetalismo has gained significant recognition as a distinctive form of folk healing that merges various cultural influences. This tradition is primarily carried forward by mestizo shamans, who incorporate ayahuasca, a powerful psychoactive brew, as a fundamental part of their healing rituals. These healers utilize ayahuasca not only to identify illnesses but also to develop holistic treatment approaches, guided by their profound belief in the spiritual essence of plants, each thought to carry its own unique energy and wisdom.</p>
                             </div>
                         </div>
-                        <div className="min-h-80 max-sm:w-full sm:min-h-64 max-lg:w-1/2 lg:min-h-44 order-1 lg:order-1 relative">
+                        <div className="min-h-80 max-sm:w-full sm:min-h-64 max-lg:w-1/2 lg:min-h-40 order-1 lg:order-1 relative">
                             <Image
                                 src="/image/2.png"
                                 fill
                                 alt="Info"
-                                className={`object-cover rounded-tl-[65px] rounded-br-[80px] shadow-lg shadow-[#8A888840]`}
+                                className={`object-cover rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-lg shadow-lg shadow-[#8A888840]`}
                             />
                         </div>
                     </div>
