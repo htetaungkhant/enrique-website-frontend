@@ -233,7 +233,7 @@ const KamboPage = () => {
                                 <Card className="bg-radial-[at_50%_90%] from-[#35A92C] from-10%  to-[#76FBCB] to-90% h-56 md:h-72 overflow-x-hidden">
                                     <div className="h-full flex flex-col gap-4 justify-between">
                                         {item.image && <Image src={item.image} className="w-28 h-28 lg:w-32 lg:h-32 object-contain" width={120} height={120} alt="icon" />}
-                                        {item.title && <h2 className="font-semibold text-xl lg:text-2xl">{item.title}</h2>}
+                                        {item.title && <h2 className="font-semibold text-xl lg:text-2xl xl:text-3xl">{item.title}</h2>}
                                     </div>
                                 </Card>
                             </SwiperSlide>
