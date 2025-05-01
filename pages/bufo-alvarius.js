@@ -227,8 +227,8 @@ const BufoAlvarius = () => {
                                 cardsRowSectionData5.cardList.map((item, index) => (
                                     <SwiperSlide key={index}>
                                         <Card className="text-[#212A63] h-[35rem] md:h-[40rem]">
-                                            <div className="flex flex-col gap-4">
-                                                {item.image && <Image src={item.image} width={611} height={324} className="w-full h-auto" alt="formula" />}
+                                            <div className="flex flex-col items-center gap-4">
+                                                {item.image && <Image src={item.image} width={611} height={324} className="w-full md:w-4/5 h-auto 2xl:max-w-[33rem]" alt="formula" />}
                                                 {item.title && <h2 className="text-black text-center font-semibold text-xl lg:text-2xl">{item.title}</h2>}
                                                 {item.description && (
                                                     Array.isArray(item.description) ? (
