@@ -97,7 +97,7 @@ const Breathwork = () => {
         <main>
             <PageHeaderWithBanner title="Shamanic Breathwork" />
             <div className="h-32 bg-gradient-to-b from-[#000000] to-[#00000000]" />
-            <UniformInfoSection image="/image/ayahuasca-cut.png" imageAspectRatio="portrait" reverse={true} className="-mt-24">
+            <UniformInfoSection image="/image/ayahuasca-cut.png" reverse={true} className="-mt-24">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">Discover Shamanic Breathwork</h2>
                 <div className="text-white inter-font flex flex-col gap-6">
                     <p>Breathwork is more than just a relaxation technique—it is a powerful tool that helps you fully engage with healing experiences such as Bufo ceremonies. It allows for deep emotional release, self-discovery, and transformation. <br />Shamanic breathwork serves as a bridge between your conscious and subconscious mind, supporting you before, during, and after spiritual ceremonies.</p>

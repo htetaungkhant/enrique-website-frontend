@@ -12,7 +12,7 @@ const Ayahuasca = () => {
         <main>
             <PageHeaderWithBanner title="Ayahuasca" />
             <div className="h-32 bg-gradient-to-b from-[#000000] to-[#00000000]" />
-            <UniformInfoSection image="/image/ayahuasca-cut.png" imageAspectRatio="portrait" reverse={true} className="-mt-24">
+            <UniformInfoSection image="/image/ayahuasca-cut.png" reverse={true} className="-mt-24">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">Ayahuasca: Ancient Wisdom, Modern Discovery</h2>
                 <div className="text-white inter-font flex flex-col gap-6">
                     <p>Ayahuasca, often referred to as "Mother Ayahuasca," has captivated people across the globe. This sacred plant medicine, deeply rooted in the traditions of indigenous Amazonian cultures, has long been used for healing and spiritual exploration.</p>

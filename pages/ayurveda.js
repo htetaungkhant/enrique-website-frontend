@@ -61,7 +61,7 @@ const Ayurveda = () => {
                     When diet is correct, medicine is not needed."</p>
             </PageHeaderWithBanner>
             <div className="h-32 bg-gradient-to-b from-[#000000] to-[#00000000]" />
-            <UniformInfoSection image="/image/ayahuasca-cut.png" imageAspectRatio="portrait" reverse={true} className="-mt-24">
+            <UniformInfoSection image="/image/ayahuasca-cut.png" reverse={true} className="-mt-24">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">The Rising Demand for Ayurveda</h2>
                 <div className="flex flex-col gap-6">
                     <p className="text-white inter-font">As modern lifestyles become increasingly fast-paced, stress, poor diet, and environmental toxins are contributing to chronic diseases and imbalances. People are turning to Ayurveda—the ancient Indian system of natural healing—as a way to restore balance and harmony.</p>

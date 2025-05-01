@@ -106,7 +106,7 @@ const Yoga = () => {
                 </div>
             </PageHeaderWithBanner>
             <div className="h-32 bg-gradient-to-b from-[#000000] to-[#00000000]" />
-            <UniformInfoSection image="/image/ayahuasca-cut.png" imageAspectRatio="portrait" reverse={true} className="-mt-24">
+            <UniformInfoSection image="/image/ayahuasca-cut.png" reverse={true} className="-mt-24">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">The Rising Demand for Yoga</h2>
                 <div className="text-white inter-font flex flex-col gap-6">
                     <p>In today’s fast-paced world, stress, anxiety, and mental fatigue have become the norm. People across the globe are searching for ways to reconnect with themselves, and yoga has emerged as one of the most powerful tools for self-care, wellness, and transformation.</p>
