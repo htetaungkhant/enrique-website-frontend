@@ -56,22 +56,22 @@ const PageHeader = () => {
                         </HeaderDropdown>
                     </li>
                     <li className="text-white poppins-medium">
-                        <Link href="#">
+                        <Link href="/facilitators">
                             FACILITATORS
                         </Link>
                     </li>
                     <li className="text-white poppins-medium">
-                        <Link href="#">
+                        <Link href="/course-offerings">
                             COURSE OFFERINGS
                         </Link>
                     </li>
                     <li className="text-white poppins-medium">
-                        <Link href="#">
+                        <Link href="/ceremonies">
                             CEREMONIES
                         </Link>
                     </li>
                     <li className="text-white poppins-medium">
-                        <Link href="#">
+                        <Link href="/blogs">
                             BLOGS
                         </Link>
                     </li>
@@ -109,16 +109,16 @@ const PageHeader = () => {
                         </ul>
                     </HeaderDropdown>
                 </div>
-                <Link href="#" className="text-white poppins-medium">
+                <Link href="/facilitators" className="text-white poppins-medium">
                     Facilitators
                 </Link>
-                <Link href="#" className="text-white poppins-medium">
+                <Link href="/course-offerings" className="text-white poppins-medium">
                     Course Offerings
                 </Link>
-                <Link href="#" className="text-white poppins-medium">
+                <Link href="/ceremonies" className="text-white poppins-medium">
                     Ceremonies
                 </Link>
-                <Link href="#" className="text-white poppins-medium">
+                <Link href="/blogs" className="text-white poppins-medium">
                     Blogs
                 </Link>
                 <div className="flex gap-4 flex-col md:flex-row items-center justify-center">
