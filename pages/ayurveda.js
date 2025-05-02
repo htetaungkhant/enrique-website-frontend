@@ -140,6 +140,7 @@ const Ayurveda = () => {
                 </SwiperWrapper>
             </UPSection>
             <SwiperCardsRowSection
+                cardAnimate
                 title={cardsRowSectionData.title}
                 cardList={cardsRowSectionData.cardList}
                 breakpoints={{

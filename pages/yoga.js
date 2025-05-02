@@ -140,6 +140,7 @@ const Yoga = () => {
                 </div>
             </Explanation>
             <SwiperCardsRowSection
+                cardAnimate
                 title={cardsRowSectionData1.title}
                 cardList={cardsRowSectionData1.cardList}
                 breakpoints={{
@@ -195,6 +196,7 @@ const Yoga = () => {
                 </SwiperWrapper>
             </UPSection>
             <SwiperCardsRowSection
+                cardAnimate
                 title={cardsRowSectionData3.title}
                 cardList={cardsRowSectionData3.cardList}
                 breakpoints={{
@@ -217,6 +219,7 @@ const Yoga = () => {
                 </div>
             </Explanation>
             <SwiperCardsRowSection
+                cardAnimate
                 title={cardsRowSectionData4.title}
                 cardList={cardsRowSectionData4.cardList}
                 breakpoints={{

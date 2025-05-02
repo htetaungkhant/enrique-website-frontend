@@ -164,6 +164,7 @@ const BufoAlvarius = () => {
                 </div>
             </UniformInfoSection>
             <SwiperCardsRowSection
+                cardAnimate
                 title={cardsRowSectionData1.title}
                 cardList={cardsRowSectionData1.cardList}
                 breakpoints={{
@@ -179,6 +180,7 @@ const BufoAlvarius = () => {
                 twCardClassName="text-[#212A63] h-[25rem] md:h-[30rem] lg:h-[36rem] overflow-x-hidden"
             />
             <SwiperCardsRowSection
+                cardAnimate
                 title={cardsRowSectionData2.title}
                 cardList={cardsRowSectionData2.cardList}
                 breakpoints={{
