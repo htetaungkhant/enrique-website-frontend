@@ -38,8 +38,8 @@ const Footer = ({ className }) => {
                 </div>
                 <p className="text-white text-center font-medium text-xs md:text-sm border-b-[1px] pb-2">Copyright © 2025 Arise. All rights reserved. Arise® and the Arise logo design are registered trademarks of Arise Inc. All other trademarks and logos are the property of their respective owners.</p>
                 <span className="text-white text-xs md:text-sm flex p-2">
-                    <Link href="#" className="px-2 border-r-[1px]">Privacy Policy</Link>
-                    <Link href="#" className="px-2">Website Terms of Use </Link>
+                    <Link href="/privacy-policy" className="px-2 border-r-[1px] hover:underline">Privacy Policy</Link>
+                    <Link href="/terms-and-conditions" className="px-2 hover:underline">Website Terms of Use </Link>
                 </span>
             </div>
         </section>
