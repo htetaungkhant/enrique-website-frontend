@@ -1,5 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FaArrowRight } from "react-icons/fa6";
+
+import { cn } from "@/lib/utils";
+
+export const ReadMoreBtn = ({ title, className, onClick }) => {
+	return (
+		<button onClick={onClick} className={cn("py-2 px-2 md:px-4 bg-white rounded-4xl flex justify-between items-center cursor-pointer", className)}>
+			<span className="text-sm font-medium">{title || 'READ MORE'}</span>
+			<FaArrowRight size={20} />
+		</button>
+	)
+}
 
 export const LinkButton = ({ name, href, outline = false }) => {
 	return (
@@ -14,7 +26,7 @@ export const LinkButton = ({ name, href, outline = false }) => {
 				outline ? (
 					<Image src="/icon/export-white.svg" className="w-auto h-7 lg:h-9 transition duration-300 group-hover:rotate-45" width={46} height={46} alt="icon" />
 				) : (
-					<Image src="/icon/export-black.svg" className="w-auto h-7 lg:h-9 transition duration-300 group-hover:rotate-45" width={46} height={46} alt="icon" />	
+					<Image src="/icon/export-black.svg" className="w-auto h-7 lg:h-9 transition duration-300 group-hover:rotate-45" width={46} height={46} alt="icon" />
 				)
 			}
 		</Link>
@@ -34,7 +46,7 @@ const Button = ({ name, onClick, outline = false }) => {
 				outline ? (
 					<Image src="/icon/export-white.svg" className="w-auto h-7 lg:h-9 transition duration-300 group-hover:rotate-45" width={46} height={46} alt="icon" />
 				) : (
-					<Image src="/icon/export-black.svg" className="w-auto h-7 lg:h-9 transition duration-300 group-hover:rotate-45" width={46} height={46} alt="icon" />	
+					<Image src="/icon/export-black.svg" className="w-auto h-7 lg:h-9 transition duration-300 group-hover:rotate-45" width={46} height={46} alt="icon" />
 				)
 			}
 		</button>
