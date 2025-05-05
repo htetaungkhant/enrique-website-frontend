@@ -75,7 +75,14 @@ export const SwiperCardsRowSection = ({
                                         className={twCardClassName}
                                     >
                                         <div className="flex flex-col gap-4">
-                                            {item.title && <h2 className="font-semibold text-xl lg:text-2xl">{item.title}</h2>}
+                                            {
+                                                item.title && typeof item.title === 'string' ?
+                                                    <h2 className="font-semibold text-xl lg:text-2xl">{item.title}</h2>
+                                                    :
+                                                    typeof item.title === 'object' && Object.keys(item.title).length === 1 && Object.keys(item.title).includes('__html') ?
+                                                        <h2 className="font-semibold text-xl lg:text-2xl" dangerouslySetInnerHTML={item.title}></h2>
+                                                        : null
+                                            }
                                             {item.description && (
                                                 Array.isArray(item.description) ? (
                                                     <div className="text-xs md:text-sm font-medium flex flex-col gap-3">
