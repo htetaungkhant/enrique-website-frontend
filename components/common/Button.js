@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa6";
+import { FaCircleArrowRight } from "react-icons/fa6";
 
 import { cn } from "@/lib/utils";
 
@@ -48,7 +49,7 @@ export const IconButton = ({
 	const s = sizeStyles[size] || sizeStyles.md;
 
 	const classes = cn(
-		`group h-fit flex items-center inter-medium shadow-md cursor-pointer transition 
+		`group h-fit flex items-center justify-between inter-medium shadow-md cursor-pointer transition 
         ${outline ? "bg-transparent text-white border-[1px]" : "bg-white text-black"}`,
 		s.button,
 		className
@@ -57,23 +58,7 @@ export const IconButton = ({
 	const content = (
 		<>
 			<span className={cn("", s.text, textClassName)}>{name}</span>
-			{outline ? (
-				<Image
-					src="/icon/export-white.svg"
-					className={cn("w-auto h-7 lg:h-9 transition duration-300 group-hover:rotate-45", s.icon, iconClassName)}
-					width={s.iconSize}
-					height={s.iconSize}
-					alt="icon"
-				/>
-			) : (
-				<Image
-					src="/icon/export-black.svg"
-					className={cn("w-auto h-7 lg:h-9 transition duration-300 group-hover:rotate-45", s.icon, iconClassName)}
-					width={s.iconSize}
-					height={s.iconSize}
-					alt="icon"
-				/>
-			)}
+			<FaCircleArrowRight size={s.iconSize} className={cn("w-auto transition duration-300 -rotate-45 group-hover:rotate-0", s.icon, iconClassName)} />
 		</>
 	);
 
