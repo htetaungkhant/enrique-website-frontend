@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { RxHamburgerMenu, RxCross2 } from "react-icons/rx";
-import Button, { LinkButton } from "./Button";
+import { IconButton } from "./Button";
 import HeaderDropdown from "./HeaderDropdown";
 
 const PageHeader = () => {
@@ -79,8 +79,8 @@ const PageHeader = () => {
             </nav>
 
             <div className="hidden xl:flex space-x-4">
-                <LinkButton name="Book Now" href="#" />
-                <Button name="Login" outline={true} onClick={() => alert("Button Clicked!")} />
+                <IconButton name="Book Now" size="sm" href="#" />
+                <IconButton name="Login" outline={true} onClick={() => alert("Button Clicked!")} />
             </div>
 
             {/* mobile navigation */}
@@ -122,8 +122,8 @@ const PageHeader = () => {
                     Blogs
                 </Link>
                 <div className="flex gap-4 flex-col md:flex-row items-center justify-center">
-                    <LinkButton name="Book Now" href="#" />
-                    <Button name="Login" outline={true} onClick={() => alert("Button Clicked!")} />
+                    <IconButton name="Book Now" href="#" />
+                    <IconButton name="Login" outline={true} onClick={() => alert("Button Clicked!")} />
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { LinkButton } from "../common/Button";
+import { IconButton } from "../common/Button";
 import Image from "next/image";
 
 const slides = [
@@ -12,7 +12,7 @@ const slides = [
 			"Let us help you transform your space into a haven of safety and comfort.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/",
+		link: "/questionnaire",
 	},
 	{
 		bgImage: "/image/banner.png",
@@ -20,7 +20,7 @@ const slides = [
 		description: "Discover our transformative healing therapies and expert guidance from seasoned practitioners.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/",
+		link: "/questionnaire",
 	},
 	{
 		bgImage: "/image/banner.png",
@@ -28,7 +28,7 @@ const slides = [
 		description: "Unlock a transformative journey through the power of intimate, supportive small groups.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/",
+		link: "/questionnaire",
 	},
 	{
 		bgImage: "/image/banner.png",
@@ -36,7 +36,7 @@ const slides = [
 		description: "Experience a private, luxury healing retreat tailored to your unique spiritual journey.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/",
+		link: "/questionnaire",
 	},
 ];
 
@@ -76,7 +76,7 @@ const Banner = () => {
 									</p>
 									<div className="w-full flex mt-3 justify-start md:mt-0 md:justify-center lg:justify-start">
 										{slide.button && (
-											<LinkButton name={slide.button} href={slide.link} />
+											<IconButton name={slide.button} href={slide.link} />
 										)}
 									</div>
 								</div>
