@@ -1,15 +1,30 @@
-import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaCircleArrowRight } from "react-icons/fa6";
 
 import { cn } from "@/lib/utils";
 
-export const ReadMoreBtn = ({ title, className, onClick }) => {
-	return (
-		<button onClick={onClick} className={cn("py-2 px-2 md:px-4 bg-white rounded-4xl flex justify-between items-center cursor-pointer", className)}>
+export const ReadMoreBtn = ({ title, className, onClick, href, ...props }) => {
+	const classes = cn("py-2 px-2 md:px-4 bg-white rounded-4xl flex justify-between items-center cursor-pointer", className);
+
+	const content = (
+		<>
 			<span className="text-sm font-medium">{title || 'READ MORE'}</span>
 			<FaArrowRight size={20} />
+		</>
+	)
+
+	if (href) {
+		return (
+			<Link href={href} className={classes} {...props}>
+				{content}
+			</Link>
+		);
+	}
+
+	return (
+		<button onClick={onClick} className={classes} {...props}>
+			{content}
 		</button>
 	)
 }
