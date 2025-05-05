@@ -57,7 +57,7 @@ const data = [
     },
 ]
 
-const Blogs = () => {
+const BlogsPage = () => {
 
     return (
         <main>
@@ -88,4 +88,4 @@ const Blogs = () => {
     )
 }
 
-export default Blogs
+export default BlogsPage

@@ -64,7 +64,7 @@ const data = {
     '10. Contact Information': 'For any questions regarding these Terms & Conditions, reach out to us at: info@arisebufo.com',
 }
 
-const TermsAndConditions = () => {
+const TermsAndConditionsPage = () => {
     return (
         <main>
             <PageHeaderWithBanner title="Terms & Conditions" />
@@ -124,4 +124,4 @@ const TermsAndConditions = () => {
     )
 }
 
-export default TermsAndConditions;
+export default TermsAndConditionsPage;

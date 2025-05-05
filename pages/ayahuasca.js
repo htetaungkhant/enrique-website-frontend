@@ -7,7 +7,7 @@ import { PageHeaderWithBanner } from "@/components/common/PageHeader";
 import UPSection from "@/components/common/UniformPaddingSection";
 import Footer from "@/components/common/Footer";
 
-const Ayahuasca = () => {
+const AyahuascaPage = () => {
     return (
         <main>
             <PageHeaderWithBanner title="Ayahuasca" />
@@ -107,4 +107,4 @@ const Ayahuasca = () => {
     )
 }
 
-export default Ayahuasca;
+export default AyahuascaPage;

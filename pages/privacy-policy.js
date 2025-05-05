@@ -62,7 +62,7 @@ const data = {
     'Contact Us': 'For privacy-related inquiries, contact us at: info@arisebufo.com'
 }
 
-const PrivacyPolicy = () => {
+const PrivacyPolicyPage = () => {
     return (
         <main>
             <PageHeaderWithBanner title="Privacy Policy" />
@@ -130,4 +130,4 @@ const PrivacyPolicy = () => {
     )
 }
 
-export default PrivacyPolicy;
+export default PrivacyPolicyPage;

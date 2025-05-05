@@ -53,7 +53,7 @@ const cardsRowSectionData = {
     ]
 }
 
-const Ayurveda = () => {
+const AyurvedaPage = () => {
     return (
         <main>
             <PageHeaderWithBanner title="Ayurveda">
@@ -171,4 +171,4 @@ const Ayurveda = () => {
     )
 }
 
-export default Ayurveda;
+export default AyurvedaPage;

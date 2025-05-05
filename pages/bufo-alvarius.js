@@ -128,7 +128,7 @@ const cardsRowSectionData5 = {
     }
 }
 
-const BufoAlvarius = () => {
+const BufoAlvariusPage = () => {
     return (
         <main>
             <PageHeaderWithBanner title="Bufo Alvarius" />
@@ -329,4 +329,4 @@ const BufoAlvarius = () => {
     )
 }
 
-export default BufoAlvarius;
+export default BufoAlvariusPage;

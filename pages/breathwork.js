@@ -93,7 +93,7 @@ const cardsRowSectionData3 = {
     ]
 }
 
-const Breathwork = () => {
+const BreathworkPage = () => {
     return (
         <main>
             <PageHeaderWithBanner title="Shamanic Breathwork" />
@@ -209,4 +209,4 @@ const Breathwork = () => {
     )
 }
 
-export default Breathwork;
+export default BreathworkPage;

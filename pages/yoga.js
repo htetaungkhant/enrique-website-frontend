@@ -96,7 +96,7 @@ const cardsRowSectionData4 = {
     ]
 }
 
-const Yoga = () => {
+const YogaPage = () => {
     return (
         <main>
             <PageHeaderWithBanner title="Yoga">
@@ -243,4 +243,4 @@ const Yoga = () => {
     )
 }
 
-export default Yoga;
+export default YogaPage;

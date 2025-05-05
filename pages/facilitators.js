@@ -99,7 +99,7 @@ const dummyData = [
     },
 ]
 
-const Facilitators = () => {
+const FacilitatorsPage = () => {
     const [selectedFacilitators, setSelectedFacilitators] = useState();
     const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -230,4 +230,4 @@ const Facilitators = () => {
     // )
 }
 
-export default Facilitators;
+export default FacilitatorsPage;
