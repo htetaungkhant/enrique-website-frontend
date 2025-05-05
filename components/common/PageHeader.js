@@ -79,7 +79,7 @@ const PageHeader = () => {
             </nav>
 
             <div className="hidden xl:flex space-x-4">
-                <IconButton name="Book Now" size="sm" href="#" />
+                <IconButton name="Book Now" href="#" />
                 <IconButton name="Login" outline={true} onClick={() => alert("Button Clicked!")} />
             </div>
 
