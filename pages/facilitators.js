@@ -2,7 +2,7 @@ import { useState } from "react";
 import { HiBadgeCheck } from "react-icons/hi";
 
 import Footer from "@/components/common/Footer";
-import PageHeader from "@/components/common/PageHeader";
+import { PageHeaderWithBanner } from "@/components/common/PageHeader";
 import UPSection from "@/components/common/UniformPaddingSection";
 import FacilitatorsCard from "@/components/FacilitatorsPage/FacilitatorsCard";
 import Modal from "@/components/common/Modal";
@@ -17,17 +17,17 @@ const dummyData = [
         cardList: [
             {
                 badgeText: "Expertise",
-                title: { __html: 'Kambo <span style="font-weight: 400;">Cleansing</span>' },
+                title: { __html: '<span style="color: #212A63">Kambo <span style="font-weight: 400;">Cleansing</span></span>' },
                 description: 'A detoxifying Amazonian frog medicine that purges toxins, strengthens the immune system, and prepares individuals for deeper healing experiences. Kambo serves as a powerful physical and energetic cleanse, laying the groundwork for transformation.',
             },
             {
                 badgeText: "Expertise",
-                title: { __html: 'Bufo Alvarius <span style="font-weight: 400;">Experience</span>' },
+                title: { __html: '<span style="color: #212A63">Bufo Alvarius <span style="font-weight: 400;">Experience</span></span>' },
                 description: "A profound 20- minute journey of ego dissolution and unity facilitated by the 5- MeO- DMT compound. This medicine promotes deep emotional release, self- discovery, and clarity, often described as a rebirth into a higher state of consciousness.",
             },
             {
                 badgeText: "Expertise",
-                title: { __html: 'Ayahuasca <span style="font-weight: 400;">Reintegration</span>' },
+                title: { __html: '<span style="color: #212A63">Ayahuasca <span style="font-weight: 400;">Reintegration</span></span>' },
                 description: "Utilized after Bufo Alvarius, Ayahuasca helps individuals gradually process their profound experiences. This sacred plant medicine nurtures introspection, emotional healing, and a deeper connection to one' s true self.",
             },
         ],
@@ -47,17 +47,17 @@ const dummyData = [
         cardList: [
             {
                 badgeText: "Expertise",
-                title: { __html: 'Kambo <span style="font-weight: 400;">Cleansing</span>' },
+                title: { __html: '<span style="color: #212A63">Kambo <span style="font-weight: 400;">Cleansing</span></span>' },
                 description: 'A detoxifying Amazonian frog medicine that purges toxins, strengthens the immune system, and prepares individuals for deeper healing experiences. Kambo serves as a powerful physical and energetic cleanse, laying the groundwork for transformation.',
             },
             {
                 badgeText: "Expertise",
-                title: { __html: 'Bufo Alvarius <span style="font-weight: 400;">Experience</span>' },
+                title: { __html: '<span style="color: #212A63">Bufo Alvarius <span style="font-weight: 400;">Experience</span></span>' },
                 description: "A profound 20- minute journey of ego dissolution and unity facilitated by the 5- MeO- DMT compound. This medicine promotes deep emotional release, self- discovery, and clarity, often described as a rebirth into a higher state of consciousness.",
             },
             {
                 badgeText: "Expertise",
-                title: { __html: 'Ayahuasca <span style="font-weight: 400;">Reintegration</span>' },
+                title: { __html: '<span style="color: #212A63">Ayahuasca <span style="font-weight: 400;">Reintegration</span></span>' },
                 description: "Utilized after Bufo Alvarius, Ayahuasca helps individuals gradually process their profound experiences. This sacred plant medicine nurtures introspection, emotional healing, and a deeper connection to one' s true self.",
             },
         ],
@@ -76,17 +76,17 @@ const dummyData = [
         cardList: [
             {
                 badgeText: "Expertise",
-                title: { __html: 'Kambo <span style="font-weight: 400;">Cleansing</span>' },
+                title: { __html: '<span style="color: #212A63">Kambo <span style="font-weight: 400;">Cleansing</span></span>' },
                 description: 'A detoxifying Amazonian frog medicine that purges toxins, strengthens the immune system, and prepares individuals for deeper healing experiences. Kambo serves as a powerful physical and energetic cleanse, laying the groundwork for transformation.',
             },
             {
                 badgeText: "Expertise",
-                title: { __html: 'Bufo Alvarius <span style="font-weight: 400;">Experience</span>' },
+                title: { __html: '<span style="color: #212A63">Bufo Alvarius <span style="font-weight: 400;">Experience</span></span>' },
                 description: "A profound 20- minute journey of ego dissolution and unity facilitated by the 5- MeO- DMT compound. This medicine promotes deep emotional release, self- discovery, and clarity, often described as a rebirth into a higher state of consciousness.",
             },
             {
                 badgeText: "Expertise",
-                title: { __html: 'Ayahuasca <span style="font-weight: 400;">Reintegration</span>' },
+                title: { __html: '<span style="color: #212A63">Ayahuasca <span style="font-weight: 400;">Reintegration</span></span>' },
                 description: "Utilized after Bufo Alvarius, Ayahuasca helps individuals gradually process their profound experiences. This sacred plant medicine nurtures introspection, emotional healing, and a deeper connection to one' s true self.",
             },
         ],
@@ -106,49 +106,28 @@ const FacilitatorsPage = () => {
     const onClickFacilitatorsCard = (facilitators) => {
         setSelectedFacilitators(facilitators);
         setIsOpenModal(true);
+        const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+        document.body.style.overflow = 'hidden';
+        document.body.style.paddingRight = `${scrollBarWidth}px`;
     }
 
     const onModalClose = () => {
         setIsOpenModal(false);
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
     }
 
     return (
         <main className="relative">
-            <div className="absolute top-0 left-0 w-full z-100 xl:p-12">
-                <PageHeader />
-            </div>
-            <div>
-                <div className="absolute top-0 left-0 right-0 w-full">
-                    <div className="h-[100vh] bg-center bg-cover bg-no-repeat" style={{ backgroundImage: 'url(/image/banner.png)' }}>
-                    </div>
-                    <div className="h-32 bg-gradient-to-b from-[#000000] to-[#00000000]" />
-                </div>
-                <div className="relative pt-20 xl:pt-40">
-                    <h4 className="text-center max-md:py-10 py-20 pt-10 text-white font-bold merriweather-font uppercase text-2xl xl:text-4xl">Facilitators</h4>
-                    <UPSection>
-                        <div className="p-0 sm:px-4 md:px-10 lg:px-20 flex flex-col gap-5 md:gap-10 lg:gap-20">
-                            {
-                                dummyData.map((item, index, arr) => (
-                                    index === 0 || (arr.length % 2 === 0 && index === arr.length - 1) ?
-                                        <div key={index} className="flex justify-center">
-                                            <FacilitatorsCard onReadMoreBtnClick={() => onClickFacilitatorsCard(item)} image={item.image} name={item.name} className="w-full h-auto min-w-72 md:h-96 md:w-72" />
-                                        </div>
-                                        :
-                                        (index + 1) % 2 === 0 ?
-                                            null
-                                            :
-                                            <div key={index} className="flex gap-5 md:gap-10 lg:gap-20 max-md:flex-col max-md:items-center md:justify-between">
-                                                {
-                                                    [dummyData[index - 1], dummyData[index]].map((innerItem, innerIndex) => (
-                                                        <FacilitatorsCard onReadMoreBtnClick={() => onClickFacilitatorsCard(innerItem)} key={innerIndex} image={innerItem.image} name={innerItem.name} className="w-full h-auto min-w-72 md:h-96 md:w-72" />
-                                                    ))
-                                                }
-                                            </div>
-                                ))
-                            }
-                        </div>
-                    </UPSection>
-                </div>
+            <PageHeaderWithBanner title="Facilitators" />
+            <div className="pt-10" style={{ minHeight: 'calc(100vh - 640px)' }}>
+                <UPSection className="relative grid grid-cols-1 gap-5 md:grid-cols-3 lg:gap-10">
+                    {
+                        dummyData.map((item, index) => (
+                            <FacilitatorsCard key={index} onReadMoreBtnClick={() => onClickFacilitatorsCard(item)} image={item.image} name={item.name} className="w-full h-auto" />
+                        ))
+                    }
+                </UPSection>
             </div>
             <Footer className="mt-10" />
             <Modal isOpen={isOpenModal} onClose={onModalClose} containerClassName="w-[95%]">
@@ -171,8 +150,8 @@ const FacilitatorsPage = () => {
                                             },
                                         }}
                                         cardList={selectedFacilitators.cardList}
-                                        twBadgeBorderColor="border-[#394885]"
-                                        twBadgeTextColor="text-[#394885]"
+                                        twBadgeBorderColor="border-[#212A63]"
+                                        twBadgeTextColor="text-[#212A63]"
                                         twCardClassName="text-[#394885] h-64 md:h-[28rem] lg:h-[24rem] xl:h-[18rem] overflow-x-hidden"
                                         className="p-0 lg:p-0"
                                     />

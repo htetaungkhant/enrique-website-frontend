@@ -19,14 +19,14 @@ const Modal = ({ isOpen, onClose, children, backdropClassName, containerClassNam
 
                     {/* Modal content */}
                     <motion.div
-                        className={cn("absolute inset-0 z-[110] flex items-center justify-center px-0 md:px-6 py-6 md:py-16 overflow-hidden", className)}
+                        className={cn("fixed inset-0 z-[110] flex items-center justify-center px-0 md:px-6 py-6 md:py-16 overflow-hidden", className)}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ duration: 0.1, ease: 'easeInOut' }}
                     >
                         <div
-                            className={cn("relative text-white bg-gradient-to-b from-[#171F3F] to-[#020105] border-2 border-white rounded-2xl shadow-xl px-3 md:px-6 py-9 max-h-full flex flex-col", containerClassName)}
+                            className={cn("px-3 md:px-6 py-9 max-h-[80vh] flex flex-col relative text-white bg-gradient-to-b from-[#171F3F] to-[#020105] border-2 border-white rounded-2xl shadow-xl", containerClassName)}
                             onClick={(e) => e.stopPropagation()}
                         >
                             {/* Close Button */}
