@@ -26,7 +26,7 @@ const Modal = ({ isOpen, onClose, children, backdropClassName, containerClassNam
                         transition={{ duration: 0.1, ease: 'easeInOut' }}
                     >
                         <div
-                            className={cn("px-3 md:px-6 py-9 max-h-[80vh] flex flex-col relative text-white bg-gradient-to-b from-[#171F3F] to-[#020105] border-2 border-white rounded-2xl shadow-xl", containerClassName)}
+                            className={cn("px-3 md:px-6 py-9 max-h-[96vh] md:max-h-[90vh] xl:max-h-[80vh] flex flex-col relative text-white bg-gradient-to-b from-[#171F3F] to-[#020105] border-2 border-white rounded-2xl shadow-xl", containerClassName)}
                             onClick={(e) => e.stopPropagation()}
                         >
                             {/* Close Button */}
