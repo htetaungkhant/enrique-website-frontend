@@ -5,7 +5,7 @@ import { MdArrowOutward } from "react-icons/md";
 import { cn } from "@/lib/utils";
 
 export const ReadMoreBtn = ({ title, className, onClick, href, ...props }) => {
-	const classes = cn("py-2 px-2 md:px-4 bg-white rounded-4xl flex justify-between items-center cursor-pointer", className);
+	const classes = cn("py-2 px-2 md:px-4 bg-white rounded-4xl flex justify-between items-center cursor-pointer hover:shadow-sm", className);
 
 	const content = (
 		<>
