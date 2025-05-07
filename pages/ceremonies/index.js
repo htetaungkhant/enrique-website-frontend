@@ -71,7 +71,7 @@ const CeremoniesPage = () => {
                             <SearchBox placeholder="Search by Course Name" className="md:w-52 lg:w-72 text-sm" />
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-10 xl:gap-20 justify-between">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 md:gap-10 xl:gap-20 justify-between">
                         {
                             data.map((item, index) => (
                                 <CeremonyCard key={index} image={item.image} title={item.title} locations={item.locations} dates={item.dates} time={item.time} learnMoreHref={`/ceremonies/${item.title}`} />
