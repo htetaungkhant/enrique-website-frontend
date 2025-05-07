@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa6";
-import { FaCircleArrowRight } from "react-icons/fa6";
+import { MdArrowOutward } from "react-icons/md";
 
 import { cn } from "@/lib/utils";
 
@@ -73,7 +73,7 @@ export const IconButton = ({
 	const content = (
 		<>
 			<span className={cn("", s.text, textClassName)}>{name}</span>
-			<FaCircleArrowRight size={s.iconSize} className={cn("w-auto transition duration-300 -rotate-45 group-hover:rotate-0", s.icon, iconClassName)} />
+			<MdArrowOutward size={s.iconSize} className={cn(`p-2 rounded-full w-auto transition duration-300 group-hover:rotate-45 ${outline ? "text-black bg-white" : "text-white bg-black"}`, s.icon, iconClassName)} />
 		</>
 	);
 

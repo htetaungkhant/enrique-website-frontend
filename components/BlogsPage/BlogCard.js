@@ -9,7 +9,7 @@ const BlogCard = ({ image, title, learnMoreHref, className }) => {
 
             <h2 className="text-2xl md:text-3xl xl:text-4xl font-bold relative">{title}</h2>
             <div className="relative">
-                <IconButton href={learnMoreHref} name="LEARN MORE" iconClassName="text-white bg-black rounded-full border-[1px] border-black" />
+                <IconButton href={learnMoreHref} name="LEARN MORE" iconClassName="text-black bg-white rounded-full border-[1px] border-black" />
             </div>
         </div>
     )
