@@ -4,7 +4,7 @@ import Banner from "@/components/HomePage/Banner";
 import PageHeader from "@/components/common/PageHeader";
 import InfoSection from "@/components/common/InfoSection";
 import QuoteSection from "@/components/HomePage/QuoteSection";
-import Button from "@/components/common/Button";
+import { IconButton } from "@/components/common/Button";
 import FirstCRSection from "@/components/HomePage/CardsRow/FirstCRSection";
 import SecondCRSection from "@/components/HomePage/CardsRow/SecondCRSection";
 import CardsRowSection from "@/components/common/CardsRowSection";
@@ -60,7 +60,7 @@ export default function HomePage() {
 			<InfoSection image="/image/SacredGuidance.png" reverse={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Transform Your Journey with <strong className="font-semibold">Sacred Guidance</strong></h2>
 				<p className="text-white inter-font">Discover the profound wisdom and preparation steps for your sacred medicine journey with the <Link href="" target="_blank" className="text-[#fef15c]">Sacred Ceremonial Guide</Link>. This comprehensive guide provides essential insights on emotional, mental, physical, and spiritual preparation, integration practices, and the healing power of 5-MeO-DMT. Whether you are new to the experience or looking to deepen your understanding, this guide will help you navigate the path with clarity and intention.</p>
-				<Button name="Download Now" className="w-fit" />
+				<IconButton title="Download Now" className="w-fit" />
 			</InfoSection>
 			<QuoteSection
 				descriptionTextClass="text-base"
