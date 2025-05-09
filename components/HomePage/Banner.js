@@ -12,7 +12,7 @@ const slides = [
 			"Let us help you transform your space into a haven of safety and comfort.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/questionnaire",
+		link: "/survey",
 	},
 	{
 		bgImage: "/image/banner.png",
@@ -20,7 +20,7 @@ const slides = [
 		description: "Discover our transformative healing therapies and expert guidance from seasoned practitioners.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/questionnaire",
+		link: "/survey",
 	},
 	{
 		bgImage: "/image/banner.png",
@@ -28,7 +28,7 @@ const slides = [
 		description: "Unlock a transformative journey through the power of intimate, supportive small groups.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/questionnaire",
+		link: "/survey",
 	},
 	{
 		bgImage: "/image/banner.png",
@@ -36,7 +36,7 @@ const slides = [
 		description: "Experience a private, luxury healing retreat tailored to your unique spiritual journey.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/questionnaire",
+		link: "/flight-service",
 	},
 ];
 
