@@ -4,6 +4,14 @@ import { MdArrowOutward } from "react-icons/md";
 
 import { cn } from "@/lib/utils";
 
+export const SubmitBtn = ({ title = "Submit", className, ...props }) => {
+	return (
+		<button className={cn("max-md:rounded-lg poppins-font font-semibold text-sm text-white bg-black px-4 py-2 rounded-4xl cursor-pointer hover:shadow-lg", className)} {...props}>
+			{title}
+		</button>
+	)
+}
+
 export const ReadMoreBtn = ({ title, className, onClick, href, ...props }) => {
 	const classes = cn("py-2 px-2 md:px-4 bg-white rounded-4xl flex justify-between items-center cursor-pointer hover:shadow-sm", className);
 

@@ -5,6 +5,7 @@ import { PageHeaderWithBanner } from "@/components/common/PageHeader";
 import SearchBox from "@/components/common/SearchBox";
 import UPSection from "@/components/common/UniformPaddingSection";
 import BlogCard from "@/components/BlogsPage/BlogCard";
+import NewsLetter from "@/components/common/NewsLetter";
 
 const data = [
     {
@@ -83,7 +84,8 @@ const BlogsPage = () => {
                     </div>
                 </div>
             </UPSection>
-            <Footer className="mt-10" />
+            <NewsLetter className="mt-10" />
+            <Footer />
         </main>
     )
 }
