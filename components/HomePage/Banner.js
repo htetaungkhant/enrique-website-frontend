@@ -63,7 +63,7 @@ const Banner = () => {
 							}}
 						>
 							{/* Overlay */}
-							 <div className="absolute inset-0 bg-black opacity-55"></div>
+							<div className="absolute inset-0 bg-black opacity-55"></div>
 
 							{/* Content Container */}
 							<div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-12 gap-8 w-full">
@@ -76,7 +76,7 @@ const Banner = () => {
 									</p>
 									<div className="w-full flex mt-3 justify-start md:mt-0 md:justify-center lg:justify-start">
 										{slide.button && (
-											<IconButton name={slide.button} href={slide.link} />
+											<IconButton title={slide.button} href={slide.link} />
 										)}
 									</div>
 								</div>

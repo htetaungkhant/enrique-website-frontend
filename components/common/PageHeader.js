@@ -79,8 +79,8 @@ const PageHeader = () => {
             </nav>
 
             <div className="hidden xl:flex space-x-4">
-                <IconButton name="Book Now" href="#" />
-                <IconButton name="Login" outline={true} onClick={() => alert("Button Clicked!")} />
+                <IconButton title="Book Now" href="#" />
+                <IconButton title="Login" outline={true} onClick={() => alert("Button Clicked!")} />
             </div>
 
             {/* mobile navigation */}
@@ -122,8 +122,8 @@ const PageHeader = () => {
                     Blogs
                 </Link>
                 <div className="flex gap-4 flex-col md:flex-row items-center justify-center">
-                    <IconButton name="Book Now" href="#" />
-                    <IconButton name="Login" outline={true} onClick={() => alert("Button Clicked!")} />
+                    <IconButton title="Book Now" href="#" />
+                    <IconButton title="Login" outline={true} onClick={() => alert("Button Clicked!")} />
                 </div>
             </div>
         </div>

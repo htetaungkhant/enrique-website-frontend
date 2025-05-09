@@ -38,7 +38,7 @@ export const ReadMoreBtn = ({ title, className, onClick, href, ...props }) => {
 }
 
 export const IconButton = ({
-	name,
+	title,
 	onClick,
 	href,
 	outline = false,
@@ -80,7 +80,7 @@ export const IconButton = ({
 
 	const content = (
 		<>
-			<span className={cn("", s.text, textClassName)}>{name}</span>
+			<span className={cn("", s.text, textClassName)}>{title}</span>
 			<MdArrowOutward size={s.iconSize} className={cn(`p-2 rounded-full w-auto transition duration-300 group-hover:rotate-45 ${outline ? "text-black bg-white" : "text-white bg-black"}`, s.icon, iconClassName)} />
 		</>
 	);
