@@ -3,7 +3,7 @@ import PhoneInput from 'react-phone-input-2';
 
 import { cn } from "@/lib/utils";
 
-export const PhoneNumberInput = ({ label, customPlaceholder, value, onChange, className, ...props }) => {
+export const PhoneNumberInput = ({ name, label, customPlaceholder, value, onChange, className, labelClassName, ...props }) => {
     const inputRef = useRef(null);
     const [phone, setPhone] = useState(null);
 
@@ -20,7 +20,7 @@ export const PhoneNumberInput = ({ label, customPlaceholder, value, onChange, cl
 
     return (
         <div className={cn('flex flex-col gap-1 relative', className)}>
-            {label && <span className='text-xs max-md:hidden'>{label}</span>}
+            {label && <span className={cn('text-xs max-md:hidden', labelClassName)}>{label}</span>}
             {!phone && customPlaceholder && <span className='absolute bottom-[0.55rem] left-[5.5rem] text-gray-400 text-sm z-10' onClick={onPlaceholderClick}>{customPlaceholder}</span>}
             <PhoneInput
                 countryCodeEditable={false}
@@ -36,7 +36,7 @@ export const PhoneNumberInput = ({ label, customPlaceholder, value, onChange, cl
                     paddingBottom: '0.345rem',
                 }}
                 inputProps={{
-                    name: 'phone',
+                    name,
                     required: true,
                     ref: inputRef
                 }}
