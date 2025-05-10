@@ -23,7 +23,7 @@ const Card = ({ badgeText, children, className, twBadgeBorderColor = "border-[#0
             variants={variants}
             className={cn("relative bg-gradient-to-b from-[#D7F2D5] to-[#5C8959] flex flex-col items-start gap-5 rounded-3xl px-4 py-6 lg:px-6 lg:py-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]", className)}
         >
-            {badgeText && <span className={`${twBadgeBgColor} block ${twBadgeBorderColor} border-[1px] rounded-4xl px-4 py-1 inter-font font-medium ${twBadgeTextColor} text-xs md:text-base`}>{badgeText}</span>}
+            {badgeText && <span className={`${twBadgeBgColor} block ${twBadgeBorderColor} border-[1px] rounded-4xl px-4 py-1 inter-font font-medium ${twBadgeTextColor} text-xs xl:text-sm`}>{badgeText}</span>}
             {children}
         </motion.div>
     );
