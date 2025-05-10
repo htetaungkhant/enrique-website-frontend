@@ -45,6 +45,7 @@ export const IconButton = ({
 	className,
 	textClassName,
 	iconClassName,
+	iconAnimate = true,
 	size = "md", // "sm", "md", "lg"
 	...props
 }) => {
@@ -81,7 +82,16 @@ export const IconButton = ({
 	const content = (
 		<>
 			<span className={cn("", s.text, textClassName)}>{title}</span>
-			<MdArrowOutward size={s.iconSize} className={cn(`p-2 rounded-full w-auto transition duration-300 group-hover:rotate-45 ${outline ? "text-black bg-white" : "text-white bg-black"}`, s.icon, iconClassName)} />
+			<MdArrowOutward
+				size={s.iconSize}
+				className={cn(
+					`p-2 rounded-full w-auto transition duration-300`,
+					iconAnimate ? "group-hover:rotate-45" : "rotate-45",
+					outline ? "text-black bg-white" : "text-white bg-black",
+					s.icon,
+					iconClassName
+				)}
+			/>
 		</>
 	);
 
