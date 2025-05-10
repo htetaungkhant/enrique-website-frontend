@@ -49,11 +49,20 @@ export const SwiperCardsRowSection = ({
     twBadgeTextColor = "text-white",
     twBadgeBgColor,
     twCardClassName, // bg-gradient-to-r from-[#1B7857] to-[#59A331]
+    cardTitleClassName,
+    cardDescriptionClassName,
     className
 }) => {
     return (
         <UPSection className={cn("text-white inter-font flex flex-col gap-6", className)}>
-            {title && <h2 className="text-2xl font-medium lg:text-4xl">{title}</h2>}
+            {
+                title && typeof title === 'string' ?
+                    <h2 className="text-2xl font-medium lg:text-4xl">{title}</h2>
+                    :
+                    typeof title === 'object' && Object.keys(title).length === 1 && Object.keys(title).includes('__html') ?
+                        <h2 className="text-2xl font-medium lg:text-4xl" dangerouslySetInnerHTML={title}></h2>
+                        : null
+            }
             {description && (
                 typeof description === 'string' ?
                     <p>{description}</p>
@@ -77,15 +86,15 @@ export const SwiperCardsRowSection = ({
                                         <div className="flex flex-col gap-4">
                                             {
                                                 item.title && typeof item.title === 'string' ?
-                                                    <h2 className="font-semibold text-xl lg:text-2xl">{item.title}</h2>
+                                                    <h2 className={cn("font-semibold text-xl lg:text-2xl", cardTitleClassName)}>{item.title}</h2>
                                                     :
                                                     typeof item.title === 'object' && Object.keys(item.title).length === 1 && Object.keys(item.title).includes('__html') ?
-                                                        <h2 className="font-semibold text-xl lg:text-2xl" dangerouslySetInnerHTML={item.title}></h2>
+                                                        <h2 className={cn("font-semibold text-xl lg:text-2xl", cardTitleClassName)} dangerouslySetInnerHTML={item.title}></h2>
                                                         : null
                                             }
                                             {item.description && (
                                                 Array.isArray(item.description) ? (
-                                                    <div className="text-xs md:text-sm font-medium flex flex-col gap-3">
+                                                    <div className={cn("text-xs md:text-sm font-medium flex flex-col gap-3", cardDescriptionClassName)}>
                                                         {
                                                             item.description.map((innerItem, innerIndex) => (
                                                                 typeof innerItem === 'string' ?
@@ -98,9 +107,9 @@ export const SwiperCardsRowSection = ({
                                                 )
                                                     : (
                                                         typeof item.description === 'string' ?
-                                                            <p className="text-xs md:text-sm font-medium">{item.description}</p>
+                                                            <p className={cn("text-xs md:text-sm font-medium", cardDescriptionClassName)}>{item.description}</p>
                                                             :
-                                                            <div className="text-xs md:text-sm font-medium">{item.description}</div>
+                                                            <div className={cn("text-xs md:text-sm font-medium", cardDescriptionClassName)}>{item.description}</div>
                                                     )
                                             )}
                                         </div>
