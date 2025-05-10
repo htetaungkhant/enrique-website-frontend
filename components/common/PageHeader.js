@@ -2,8 +2,10 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { RxHamburgerMenu, RxCross2 } from "react-icons/rx";
+
 import { IconButton } from "./Button";
 import HeaderDropdown from "./HeaderDropdown";
+import { cn } from "@/lib/utils";
 
 const PageHeader = () => {
     const [hamburgerDisplay, setHamburgerDisplay] = useState(false);
@@ -130,22 +132,61 @@ const PageHeader = () => {
     );
 };
 
-export const PageHeaderWithBanner = ({ title, children }) => {
+export const PageHeaderWithBanner = ({
+    title,
+    className,
+    containerClassName,
+    bannerImg = "/image/banner.png",
+    overlay = false,
+    overlayClassName,
+    gradientOverlay = true,
+    children
+}) => {
     return (
-        <section className="min-h-56 pb-2 xl:p-12 xl:pb-4 xl:min-h-80 bg-[url(/image/banner.png)] bg-cover bg-center bg-no-repeat text-white relative">
+        <section className={cn("flex flex-col min-h-56 pb-2 xl:p-12 xl:pb-4 xl:min-h-80 bg-cover bg-center bg-no-repeat text-white relative", className)} style={{ backgroundImage: `url(${bannerImg})` }}>
 
             {/* Overlay */}
-            {/* <div className="absolute inset-0 bg-black opacity-55"></div> */}
+            {overlay && <div className={cn("absolute inset-0 bg-black opacity-55", overlayClassName)}></div>}
 
             {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+            {gradientOverlay && <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>}
 
             <PageHeader />
-            <div className="merriweather-font mt-12 flex flex-col items-center gap-2 md:gap-4 relative">
+            <div className={cn("merriweather-font flex-1 flex flex-col justify-center items-center gap-2 md:gap-4 relative", containerClassName)}>
                 {title && <h2 className="font-bold text-3xl xl:text-5xl">{title}</h2>}
                 {children}
             </div>
         </section>
+    )
+}
+
+export const PageHeaderWithFullBanner = ({
+    title,
+    titleClassName,
+    description,
+    descriptionClassName,
+    bannerImg,
+    children,
+    className,
+    containerClassName,
+    wrapperClassName
+}) => {
+    return (
+        <PageHeaderWithBanner
+            overlay
+            gradientOverlay={false}
+            className={cn("h-screen", className)}
+            bannerImg={bannerImg}
+            overlayClassName="opacity-20"
+        >
+            <div className={cn("h-full flex flex-col justify-center items-center", containerClassName)}>
+                <div className={cn("p-3 w-full md:w-4/5 flex flex-col items-center justify-center gap-5", wrapperClassName)}>
+                    {title && <h2 className={cn("text-5xl text-center font-bold", titleClassName)}>{title}</h2>}
+                    {description && <p className={cn("poppins-font text-center text-xl", descriptionClassName)}>{description}</p>}
+                    {children}
+                </div>
+            </div>
+        </PageHeaderWithBanner>
     )
 }
 
