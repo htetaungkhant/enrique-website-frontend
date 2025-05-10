@@ -9,7 +9,7 @@ import FirstCRSection from "@/components/HomePage/CardsRow/FirstCRSection";
 import SecondCRSection from "@/components/HomePage/CardsRow/SecondCRSection";
 import CardsRowSection from "@/components/common/CardsRowSection";
 import Footer from "@/components/common/Footer";
-import FirstCGSection from "@/components/HomePage/CardsGrid/FirstCGSection";
+import CardGridSection from "@/components/common/AnimatedCardsGridSection";
 import GallerySection from "@/components/HomePage/Gallery/GallerySection";
 
 const thirdCRSectionData = {
@@ -40,6 +40,44 @@ const thirdCRSectionData = {
 			badgeText: "Integration",
 			title: 'Community <br /><span class="font-400">& Support</span>',
 			description: "Join integration circles or seek professional guidance to share experiences and receive support in a safe and understanding environment.",
+		}
+	]
+}
+
+const cardGridSection = {
+	title: {
+		__html: 'Key Elements of a <strong style="font-weight: 600;">Bufo Ceremony</strong>'
+	},
+	data: [
+		{
+			firstRow: {
+				title: "Preparation",
+				description: "Participants undergo physical, mental, and emotional preparation through fasting, meditation, or cleansing rituals. This enhances receptivity, ensuring a transformative experience with greater clarity, focus, and readiness for the journey",
+			},
+			secondRow: {
+				title: "Breathwork",
+				description: "Deep, rhythmic breathing enhances awareness, allowing participants to surrender to the experience. Conscious breath control regulates emotions, deepens psychedelic effects, and promotes relaxation, clarity, and connection to inner wisdom.",
+			},
+		},
+		{
+			firstRow: {
+				title: "Setting",
+				description: "A quiet, peaceful space—such as nature or a sacred room—sets the tone. A calming atmosphere fosters introspection, relaxation, and a safe environment for deep spiritual and emotional exploration.",
+			},
+			secondRow: {
+				title: "Dosage",
+				description: "Administered in precise amounts, the venom is inhaled through smoking or vaporization. Controlled dosing ensures a safe, effective experience, balancing intensity while allowing participants to navigate insights with clarity.",
+			},
+		},
+		{
+			firstRow: {
+				title: "Guidance",
+				description: "A trained facilitator ensures safety, offers support, and navigates challenges during the ceremony. Their experience helps participants stay grounded, process emotions, and maximize the potential benefits of the journey.",
+			},
+			secondRow: {
+				title: "Integration",
+				description: "After the ceremony, reflection and self-exploration help internalize insights. Practices like journaling, meditation, or counseling assist in applying newfound wisdom to daily life for long-term growth.",
+			},
 		}
 	]
 }
@@ -89,7 +127,11 @@ export default function HomePage() {
 				<p className="text-white inter-font">The venom of the Bufo Alvarius toad is carefully extracted through a process known as “milking,” then dried for use. When smoked through a pipe, the heat neutralizes toxic components, allowing the user to inhale only the active 5-MeO-DMT vapor.</p>
 				<p className="text-white inter-font">This method induces a short yet intensely powerful psychedelic experience, often described as more profound than traditional DMT. To ensure safety and maximize the benefits, it is essential to have an experienced guide and follow well-established safety protocols.</p>
 			</InfoSection>
-			<FirstCGSection />
+			<CardGridSection
+				title={cardGridSection.title}
+				data={cardGridSection.data}
+				cardClassName="sm:h-70 md:h-[26rem] lg:h-[24rem] xl:h-84"
+			/>
 			<GallerySection />
 			<InfoSection image="/image/Bufo.png" reverse={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Spiritual Awakening Through <strong className="font-semibold">Bufo</strong></h2>

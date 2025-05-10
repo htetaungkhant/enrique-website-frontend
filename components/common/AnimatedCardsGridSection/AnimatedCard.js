@@ -1,7 +1,17 @@
 import { motion } from "motion/react"
 import Image from "next/image";
 
-const AnimatedCard = ({ title, description, children }) => {
+import { cn } from "@/lib/utils";
+
+const AnimatedCard = ({
+    title,
+    titleClassName,
+    description,
+    descriptionClassName,
+    className,
+    animatedOverlayClassName,
+    children
+}) => {
 
     const parentVariants = {
         initial: {},
@@ -41,13 +51,18 @@ const AnimatedCard = ({ title, description, children }) => {
 
     return (
         <motion.div initial="initial" whileHover="hover" variants={parentVariants}>
-            <div className="relative h-80 sm:h-70 md:h-[26rem] lg:h-[24rem] xl:h-84 bg-gradient-to-b from-[#D7F2D5] to-[#5C8959] flex flex-col items-start gap-5 rounded-3xl px-4 py-6 lg:px-6 lg:py-8 inter-font text-[#212A63] overflow-hidden">
-                {title && <motion.h2 variants={textColorVariants} transition={{ duration: 0.5 }} className="z-10 font-semibold text-xl md:text-2xl lg:text-3xl">{title}</motion.h2>}
-                {description && <motion.p variants={textColorVariants} transition={{ duration: 0.5 }} className="z-10 font-medium text-sm">{description}</motion.p>}
+            <div className={cn("relative h-80 bg-gradient-to-b from-[#D7F2D5] to-[#5C8959] flex flex-col items-start gap-5 rounded-3xl px-4 py-6 lg:px-6 lg:py-8 inter-font text-[#212A63] overflow-hidden", className)}>
+                {title && <motion.h2 variants={textColorVariants} transition={{ duration: 0.5 }} className={cn("z-10 font-semibold text-xl md:text-2xl lg:text-3xl", titleClassName)}>{title}</motion.h2>}
+                {
+                    description && typeof description === 'string' ? (
+                        <motion.p variants={textColorVariants} transition={{ duration: 0.5 }} className={cn("z-10 font-medium text-sm", descriptionClassName)}>{description}</motion.p>
+                    ) :
+                        <motion.div variants={textColorVariants} transition={{ duration: 0.5 }} className={cn("z-10 font-medium text-sm", descriptionClassName)}>{description}</motion.div>
+                }
                 {children}
-                <motion.div variants={childVariants3} transition={{ duration: 0.5 }} className="absolute bottom-10 right-10 w-[1200px] h-[1200px] rounded-full translate-x-1/2 translate-y-1/2">
+                <motion.div variants={childVariants3} transition={{ duration: 0.5 }} className={cn("absolute bottom-10 right-10 w-[1500px] h-[1500px] rounded-[100%] translate-x-1/2 translate-y-1/2", animatedOverlayClassName)}> { /* rounded-full */}
                     <motion.div
-                        className="absolute inset-0 z-0 rounded-full"
+                        className="absolute inset-0 z-0 rounded-[100%]" // rounded-full
                         style={{
                             background: "linear-gradient(to bottom, #2EAC25, #768E74)",
                         }}
