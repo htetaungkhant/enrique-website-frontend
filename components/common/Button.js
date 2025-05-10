@@ -95,6 +95,14 @@ export const IconButton = ({
 		</>
 	);
 
+	if (href && props.download) {
+		return (
+			<a href={href} className={classes} {...props}>
+				{content}
+			</a>
+		);
+	}
+
 	if (href) {
 		return (
 			<Link href={href} className={classes} {...props}>
