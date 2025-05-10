@@ -177,7 +177,7 @@ const BufoAlvariusPage = () => {
                 }}
                 twBadgeBorderColor="border-[#212A63]"
                 twBadgeTextColor="text-[#212A63]"
-                twCardClassName="text-[#212A63] h-[25rem] md:h-[30rem] lg:h-[36rem] overflow-x-hidden"
+                cardClassName="text-[#212A63] h-[25rem] md:h-[30rem] lg:h-[36rem] overflow-x-hidden"
             />
             <SwiperCardsRowSection
                 cardAnimate
@@ -191,13 +191,13 @@ const BufoAlvariusPage = () => {
                         slidesPerView: 4
                     }
                 }}
-                twCardClassName="bg-gradient-to-b from-[#7B0808] to-[#360303] h-60 md:h-72 lg:h-[22rem] overflow-x-hidden"
+                cardClassName="bg-gradient-to-b from-[#7B0808] to-[#360303] h-60 md:h-72 lg:h-[22rem] overflow-x-hidden"
             />
             <SwiperCardsRowSection
                 title={cardsRowSectionData3.title}
                 description={cardsRowSectionData3.description}
                 cardList={cardsRowSectionData3.cardList}
-                twCardClassName="text-[#212A63] h-[25rem] md:h-[30rem] xl:h-80 overflow-x-hidden"
+                cardClassName="text-[#212A63] h-[25rem] md:h-[30rem] xl:h-80 overflow-x-hidden"
             />
             <UniformInfoSection image="/image/5.png" reverse={true}>
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">The History and Modern Revival of 5-MeO-DMT</h2>
@@ -218,7 +218,7 @@ const BufoAlvariusPage = () => {
                 title={cardsRowSectionData4.title}
                 description={cardsRowSectionData4.description}
                 cardList={cardsRowSectionData4.cardList}
-                twCardClassName="text-[#212A63] h-[25rem] md:h-[30rem] xl:h-80 overflow-x-hidden"
+                cardClassName="text-[#212A63] h-[25rem] md:h-[30rem] xl:h-80 overflow-x-hidden"
             />
             <UPSection className="text-white inter-font flex flex-col gap-6">
                 {cardsRowSectionData5.title && <h2 className="text-2xl font-medium lg:text-4xl">{cardsRowSectionData5.title}</h2>}

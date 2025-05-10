@@ -151,7 +151,7 @@ const YogaPage = () => {
                         slidesPerView: 5
                     }
                 }}
-                twCardClassName="bg-gradient-to-r from-[#1B7857] to-[#59A331] h-52 md:h-60 lg:h-72 overflow-x-hidden"
+                cardClassName="bg-gradient-to-r from-[#1B7857] to-[#59A331] h-52 md:h-60 lg:h-72 overflow-x-hidden"
             />
             <UniformInfoSection image="/image/OtherSomaticPractices.png" reverse={true}>
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">Science Backs the Power of Yoga</h2>
@@ -209,7 +209,7 @@ const YogaPage = () => {
                 }}
                 twBadgeBorderColor="border-[#212A63]"
                 twBadgeTextColor="text-[#212A63]"
-                twCardClassName="text-[#212A63] h-56 md:h-64 lg:h-80 overflow-x-hidden"
+                cardClassName="text-[#212A63] h-56 md:h-64 lg:h-80 overflow-x-hidden"
             />
             <Explanation title="What Happens During Yoga?">
                 <div className="flex flex-col gap-4 text-sm font-medium">
@@ -232,7 +232,7 @@ const YogaPage = () => {
                 }}
                 twBadgeBorderColor="border-[#212A63]"
                 twBadgeTextColor="text-[#212A63]"
-                twCardClassName="text-[#212A63] h-48 md:h-60 lg:h-72 overflow-x-hidden"
+                cardClassName="text-[#212A63] h-48 md:h-60 lg:h-72 overflow-x-hidden"
             />
             <UniformInfoSection image="/image/OtherSomaticPractices.png">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">Embracing the Yoga Path</h2>

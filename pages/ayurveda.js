@@ -153,7 +153,7 @@ const AyurvedaPage = () => {
                 }}
                 twBadgeBorderColor="border-[#022645]"
                 twBadgeTextColor="text-[#022645]"
-                twCardClassName="text-[#022645] h-56 md:h-64 lg:h-80 overflow-x-hidden"
+                cardClassName="text-[#022645] h-56 md:h-64 lg:h-80 overflow-x-hidden"
             />
             <Explanation title="Spiritual Awakening in Ayurveda">
                 <div className="flex flex-col gap-4 text-sm font-medium">

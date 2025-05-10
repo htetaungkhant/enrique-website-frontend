@@ -146,13 +146,13 @@ const BreathworkPage = () => {
                 }}
                 twBadgeBorderColor="border-[#212A63]"
                 twBadgeTextColor="text-[#212A63]"
-                twCardClassName="text-[#212A63] h-60 md:h-72 lg:h-80 overflow-x-hidden"
+                cardClassName="text-[#212A63] h-60 md:h-72 lg:h-80 overflow-x-hidden"
             />
             <SwiperCardsRowSection
                 title={cardsRowSectionData2.title}
                 description={cardsRowSectionData2.description}
                 cardList={cardsRowSectionData2.cardList}
-                twCardClassName="text-[#394885] h-80 md:h-[28rem] xl:h-80 overflow-x-hidden"
+                cardClassName="text-[#394885] h-80 md:h-[28rem] xl:h-80 overflow-x-hidden"
             />
             <UniformInfoSection image="/image/OtherSomaticPractices.png" reverse={true}>
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">A Rebirth Experience: Shamanic Breathwork in Nature</h2>

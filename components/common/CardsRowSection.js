@@ -48,7 +48,7 @@ export const SwiperCardsRowSection = ({
     twBadgeBorderColor = "border-white",
     twBadgeTextColor = "text-white",
     twBadgeBgColor,
-    twCardClassName, // bg-gradient-to-r from-[#1B7857] to-[#59A331]
+    cardClassName, // bg-gradient-to-r from-[#1B7857] to-[#59A331]
     cardTitleClassName,
     cardDescriptionClassName,
     className
@@ -81,7 +81,7 @@ export const SwiperCardsRowSection = ({
                                         twBadgeBorderColor={twBadgeBorderColor}
                                         twBadgeTextColor={twBadgeTextColor}
                                         twBadgeBgColor={twBadgeBgColor}
-                                        className={twCardClassName}
+                                        className={cardClassName}
                                     >
                                         <div className="flex flex-col gap-4">
                                             {

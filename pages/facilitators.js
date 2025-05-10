@@ -152,7 +152,7 @@ const FacilitatorsPage = () => {
                                         cardList={selectedFacilitators.cardList}
                                         twBadgeBorderColor="border-[#212A63]"
                                         twBadgeTextColor="text-[#212A63]"
-                                        twCardClassName="text-[#394885] h-64 md:h-[28rem] lg:h-[24rem] xl:h-[18rem] overflow-x-hidden"
+                                        cardClassName="text-[#394885] h-64 md:h-[28rem] lg:h-[24rem] xl:h-[18rem] overflow-x-hidden"
                                         className="p-0 lg:p-0"
                                     />
                                 </div>

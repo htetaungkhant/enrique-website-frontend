@@ -252,7 +252,7 @@ const KamboPage = () => {
                 title={cardsRowSectionData2.title}
                 description={cardsRowSectionData2.description}
                 cardList={cardsRowSectionData2.cardList}
-                twCardClassName="text-[#394885] h-56 md:h-64 lg:h-72 overflow-x-hidden"
+                cardClassName="text-[#394885] h-56 md:h-64 lg:h-72 overflow-x-hidden"
             />
             <SwiperCardsRowSection
                 cardAnimate
@@ -262,7 +262,7 @@ const KamboPage = () => {
                     },
                 }}
                 cardList={cardsRowSectionData3.cardList}
-                twCardClassName="bg-gradient-to-r from-[#1B7857] to-[#59A331] h-48 justify-center overflow-x-hidden"
+                cardClassName="bg-gradient-to-r from-[#1B7857] to-[#59A331] h-48 justify-center overflow-x-hidden"
                 className="text-white inter-font flex flex-col gap-6 pt-3 lg:pt-6"
             />
             <UniformInfoSection image="/image/OtherSomaticPractices.png">
