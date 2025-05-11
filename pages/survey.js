@@ -17,7 +17,7 @@ const SurveyPage = () => {
                 wrapperClassName="md:h-1/2 md:bg-radial md:from-[#2562A7] md:via-[#2562A700] md:via-[70%] md:to-transparent"
             >
                 <div className="md:mt-10">
-                    <IconButton title="Start your Journey" iconAnimate={false} />
+                    <IconButton href="/survey#newsletter" title="Start your Journey" iconAnimate={false} />
                 </div>
             </PageHeaderWithFullBanner>
             <div className="h-48 bg-gradient-to-b from-[#000000] to-[#00000000]" />
@@ -128,7 +128,7 @@ const SurveyPage = () => {
                     </ul>
                 </div>
             </UPSection>
-            <NewsLetter className="mt-10" />
+            <NewsLetter id="newsletter" className="mt-10" />
             <Footer />
         </main>
     )

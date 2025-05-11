@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Input, { PhoneNumberInput } from "./Input";
 import { SubmitBtn } from "./Button";
 
-const NewsLetter = ({ className }) => {
+const NewsLetter = ({ id, className }) => {
     const [errors, setErrors] = useState({});
 
     const handleSubmit = (e) => {
@@ -40,7 +40,7 @@ const NewsLetter = ({ className }) => {
     }
 
     return (
-        <section className={cn("relative px-3 py-9 lg:px-10 lg:py-12 xl:py-16 flex justify-center items-center border-t-[1px] border-white bg-center bg-cover bg-no-repeat", className)} style={{ backgroundImage: "url(/image/newsletter-bg.png)" }}>
+        <section id={id} className={cn("relative px-3 py-9 lg:px-10 lg:py-12 xl:py-16 flex justify-center items-center border-t-[1px] border-white bg-center bg-cover bg-no-repeat", className)} style={{ backgroundImage: "url(/image/newsletter-bg.png)" }}>
 
             {/* Overlay */}
             <div className="absolute inset-0 bg-black opacity-55"></div>
