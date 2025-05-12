@@ -132,7 +132,7 @@ const YogaPage = () => {
                     <p>Regardless of the path chosen, yoga provides a gateway to inner peace, self-awareness, and transformation.</p>
                 </div>
             </UniformInfoSection>
-            <Explanation title="What If True Wellness Was Already Within You?">
+            <Explanation title="What If Inner Peace Was Always Within You?">
                 <div className="flex flex-col gap-4 text-sm font-medium">
                     <p>What if health wasn’t something you had to chase, but something that already existed within you—waiting to be balanced and nourished?</p>
                     <p>What if disease was simply a message from your body, guiding you back to harmony?</p>
