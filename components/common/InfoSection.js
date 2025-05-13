@@ -18,7 +18,7 @@ export const UniformInfoSection = ({ image, children, imageAspectRatio = "defaul
             {
                 image && (
                     <div
-                        className={`min-h-80 max-sm:w-full sm:min-h-64 max-xl:w-1/2 xl:min-h-40 3xl:min-h-[26rem] order-1 ${reverse ? "xl:order-2" : "xl:order-1"} relative`} // 2xl:min-h-80 
+                        className={`min-h-80 min-w-60 max-sm:w-full max-xl:w-1/3 xl:min-h-40 3xl:min-h-[26rem] order-1 ${reverse ? "xl:order-2" : "xl:order-1"} relative`} // 2xl:min-h-80 
                     >
                         <Image
                             src={image}
