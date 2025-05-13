@@ -134,9 +134,9 @@ const YogaPage = () => {
             </UniformInfoSection>
             <Explanation title="What If Inner Peace Was Always Within You?">
                 <div className="flex flex-col gap-4 text-sm font-medium">
-                    <p>What if health wasn’t something you had to chase, but something that already existed within you—waiting to be balanced and nourished?</p>
-                    <p>What if disease was simply a message from your body, guiding you back to harmony?</p>
-                    <p>This is what Ayurveda teaches—your body is your greatest healer when given the right environment to thrive.</p>
+                    <p>What if everything you seek—happiness, fulfillment, clarity—was already inside you?</p>
+                    <p>What if the stress, doubt, and restlessness were only illusions created by the mind?</p>
+                    <p>Imagine discovering that peace is not something to be found but something to be uncovered. <br />This is what yoga reveals—a return to your true nature of balance, joy, and serenity.</p>
                 </div>
             </Explanation>
             <SwiperCardsRowSection
