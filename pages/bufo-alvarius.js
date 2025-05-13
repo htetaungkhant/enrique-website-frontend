@@ -224,7 +224,11 @@ const BufoAlvariusPage = () => {
                 {cardsRowSectionData5.title && <h2 className="text-2xl font-medium lg:text-4xl">{cardsRowSectionData5.title}</h2>}
                 {
                     cardsRowSectionData5.cardList && (
-                        <SwiperWrapper>
+                        <SwiperWrapper breakpoints={{
+                            640: {
+                                slidesPerView: 2,
+                            },
+                        }}>
                             {
                                 cardsRowSectionData5.cardList.map((item, index) => (
                                     <SwiperSlide key={index}>
