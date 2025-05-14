@@ -85,9 +85,7 @@ const cardGridSection = {
 export default function HomePage() {
 	return (
 		<main>
-			<div className="absolute top-0 left-0 w-full z-100 xl:p-12">
-				<PageHeader />
-			</div>
+			<PageHeader />
 			<Banner />
 			<QuoteSection
 				normal={false}

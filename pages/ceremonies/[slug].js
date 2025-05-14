@@ -13,9 +13,7 @@ const CeremonyDetails = () => {
 
     return (
         <main className="relative min-h-screen flex flex-col justify-between">
-            <div className="absolute top-0 left-0 w-full z-100 xl:p-12">
-                <PageHeader />
-            </div>
+            <PageHeader />
             <UPSection className="inter-font text-white pt-28 xl:pt-48">
                 <div className="grid grid-cols-1 gap-10 lg:grid-cols-[65%_30%] justify-between">
                     <div className="flex flex-col gap-10">
