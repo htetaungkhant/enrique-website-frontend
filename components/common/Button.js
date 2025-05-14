@@ -46,6 +46,7 @@ export const IconButton = ({
 	textClassName,
 	iconClassName,
 	iconAnimate = true,
+	reverseIconPosition = false,
 	size = "md", // "sm", "md", "lg"
 	...props
 }) => {
@@ -73,20 +74,23 @@ export const IconButton = ({
 	const s = sizeStyles[size] || sizeStyles.md;
 
 	const classes = cn(
-		`group h-fit flex items-center justify-between inter-medium shadow-md cursor-pointer transition 
-        ${outline ? "bg-transparent text-white border-[1px]" : "bg-white text-black"}`,
+		"group h-fit flex items-center justify-between inter-medium shadow-md cursor-pointer transition",
+		reverseIconPosition && "flex-row-reverse",
+		outline ? "bg-transparent text-white border-[1px]" : "bg-white text-black",
 		s.button,
 		className
 	);
 
 	const content = (
 		<>
-			<span className={cn("", s.text, textClassName)}>{title}</span>
+			<span className={cn("flex-1 text-center", s.text, textClassName)}>{title}</span>
 			<MdArrowOutward
 				size={s.iconSize}
 				className={cn(
 					`p-2 rounded-full w-auto transition duration-300`,
-					iconAnimate ? "group-hover:rotate-45" : "rotate-45",
+					reverseIconPosition ?
+						iconAnimate ? "-rotate-90 group-hover:-rotate-135" : "-rotate-135"
+						: iconAnimate ? "group-hover:rotate-45" : "rotate-45",
 					outline ? "text-black bg-white" : "text-white bg-black",
 					s.icon,
 					iconClassName
