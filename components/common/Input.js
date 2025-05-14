@@ -3,7 +3,17 @@ import PhoneInput from 'react-phone-input-2';
 
 import { cn } from "@/lib/utils";
 
-export const PhoneNumberInput = ({ name, label, customPlaceholder, value, onChange, className, labelClassName, ...props }) => {
+export const PhoneNumberInput = ({
+    name,
+    label,
+    customPlaceholder,
+    customPlaceholderClassName,
+    value,
+    onChange,
+    className,
+    labelClassName,
+    ...props
+}) => {
     const inputRef = useRef(null);
     const [phone, setPhone] = useState(null);
 
@@ -15,33 +25,36 @@ export const PhoneNumberInput = ({ name, label, customPlaceholder, value, onChan
 
     const onPhoneNumberChange = (value, data, event, formattedValue) => {
         setPhone(value.replace(data.dialCode, ""));
-        if (onChange) onChange(value)
+        if (onChange) onChange(value, data, event, formattedValue);
     }
 
     return (
-        <div className={cn('flex flex-col gap-1 relative', className)}>
+        <div className={cn('flex flex-col gap-1', className)}>
             {label && <span className={cn('text-xs max-md:hidden', labelClassName)}>{label}</span>}
-            {!phone && customPlaceholder && <span className='absolute bottom-[0.55rem] left-[5.5rem] text-gray-400 text-sm z-10' onClick={onPlaceholderClick}>{customPlaceholder}</span>}
-            <PhoneInput
-                countryCodeEditable={false}
-                country={'cz'}
-                value={value}
-                onChange={onPhoneNumberChange}
-                containerClass='text-black'
-                inputClass='focus:ring focus:ring-blue-500 focus:border-blue-500'
-                inputStyle={{
-                    width: '100%',
-                    height: 'unset',
-                    paddingTop: '0.345rem',
-                    paddingBottom: '0.345rem',
-                }}
-                inputProps={{
-                    name,
-                    required: true,
-                    ref: inputRef
-                }}
-                {...props}
-            />
+            <div className="relative flex items-center">
+                {!phone && customPlaceholder && <span className={cn('absolute left-[5.5rem] text-gray-400 text-xs md:text-sm z-10', customPlaceholderClassName)} onClick={onPlaceholderClick}>{customPlaceholder}</span>}
+                <PhoneInput
+                    countryCodeEditable={false}
+                    country={'cz'}
+                    value={value}
+                    onChange={onPhoneNumberChange}
+                    containerClass='text-black'
+                    inputProps={{
+                        name,
+                        required: true,
+                        ref: inputRef
+                    }}
+                    {...props}
+                    inputClass={cn('focus:ring focus:ring-blue-500 focus:border-blue-500', props?.inputClass)}
+                    inputStyle={{
+                        width: '100%',
+                        height: 'unset',
+                        paddingTop: '0.345rem',
+                        paddingBottom: '0.345rem',
+                        ...props?.inputStyle
+                    }}
+                />
+            </div>
         </div>
     )
 }
