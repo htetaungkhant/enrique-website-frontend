@@ -54,12 +54,16 @@ const AnimatedCard = ({
             <div className={cn("relative h-80 bg-gradient-to-b from-[#D7F2D5] to-[#5C8959] flex flex-col items-start gap-5 rounded-3xl px-4 py-6 lg:px-6 lg:py-8 inter-font text-[#212A63] overflow-hidden", className)}>
                 {title && <motion.h2 variants={textColorVariants} transition={{ duration: 0.5 }} className={cn("z-10 font-semibold text-xl md:text-2xl lg:text-3xl", titleClassName)}>{title}</motion.h2>}
                 {
-                    description && typeof description === 'string' ? (
-                        <motion.p variants={textColorVariants} transition={{ duration: 0.5 }} className={cn("z-10 font-medium text-sm", descriptionClassName)}>{description}</motion.p>
-                    ) :
-                        <motion.div variants={textColorVariants} transition={{ duration: 0.5 }} className={cn("z-10 font-medium text-sm", descriptionClassName)}>{description}</motion.div>
+                    description && (
+                        typeof description === 'string' ? (
+                            <motion.p variants={textColorVariants} transition={{ duration: 0.5 }} className={cn("z-10 font-medium text-sm", descriptionClassName)}>{description}</motion.p>
+                        ) :
+                            <motion.div variants={textColorVariants} transition={{ duration: 0.5 }} className={cn("z-10 font-medium text-sm", descriptionClassName)}>{description}</motion.div>
+                    )
                 }
-                {children}
+                <motion.div variants={textColorVariants} transition={{ duration: 0.5 }} className="z-10 font-medium text-sm">
+                    {children}
+                </motion.div>
                 <motion.div variants={childVariants3} transition={{ duration: 0.5 }} className={cn("absolute bottom-10 right-10 w-[1500px] h-[1500px] rounded-[100%] translate-x-1/2 translate-y-1/2", animatedOverlayClassName)}> { /* rounded-full */}
                     <motion.div
                         className="absolute inset-0 z-0 rounded-[100%]" // rounded-full
