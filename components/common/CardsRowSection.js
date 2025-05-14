@@ -42,6 +42,7 @@ export const SwiperCardsRowSection = ({
     slidesPerView,
     breakpoints,
     title,
+    titleClassName,
     description,
     footer,
     cardList,
@@ -56,12 +57,17 @@ export const SwiperCardsRowSection = ({
     return (
         <UPSection className={cn("text-white inter-font flex flex-col gap-6", className)}>
             {
-                title && typeof title === 'string' ?
-                    <h2 className="text-2xl font-medium lg:text-4xl">{title}</h2>
-                    :
-                    typeof title === 'object' && Object.keys(title).length === 1 && Object.keys(title).includes('__html') ?
-                        <h2 className="text-2xl font-medium lg:text-4xl" dangerouslySetInnerHTML={title}></h2>
-                        : null
+                title && (
+                    typeof title === 'string' ?
+                        <h2 className={cn("text-2xl font-medium lg:text-4xl", titleClassName)}>{title}</h2>
+                        :
+                        typeof title === 'object' && Object.keys(title).length === 1 && Object.keys(title).includes('__html') ?
+                            <h2 className={cn("text-2xl font-medium lg:text-4xl", titleClassName)} dangerouslySetInnerHTML={title}></h2>
+                            :
+                            <div className={cn("text-2xl font-medium lg:text-4xl", titleClassName)}>
+                                {title}
+                            </div>
+                )
             }
             {description && (
                 typeof description === 'string' ?
@@ -90,7 +96,10 @@ export const SwiperCardsRowSection = ({
                                                     :
                                                     typeof item.title === 'object' && Object.keys(item.title).length === 1 && Object.keys(item.title).includes('__html') ?
                                                         <h2 className={cn("font-semibold text-xl lg:text-2xl", cardTitleClassName)} dangerouslySetInnerHTML={item.title}></h2>
-                                                        : null
+                                                        :
+                                                        <div className={cn("font-semibold text-xl lg:text-2xl", cardTitleClassName)}>
+                                                            {item.title}
+                                                        </div>
                                             }
                                             {item.description && (
                                                 Array.isArray(item.description) ? (
