@@ -1,10 +1,10 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 
-import AnimatedCard from "./AnimatedCard";
 import UPSection from "@/components/common/UniformPaddingSection";
 import CustomSwiperNavigation from "@/components/common/CustomSwiperNavigation";
 import { cn } from "@/lib/utils";
+import AnimatedCard from "../AnimatedCard";
 
 const CardGridSection = ({
     spaceBetween = 20,
