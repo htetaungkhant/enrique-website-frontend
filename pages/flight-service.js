@@ -232,9 +232,9 @@ const FlightServicePage = () => {
                 <div className="flex-1 flex flex-col gap-5 md:gap-8 max-md:items-center">
                     <h1 className="w-full text-3xl xl:text-4xl">Exclusive <strong>High-End Offerings</strong></h1>
                     <ul className="font-medium flex flex-col gap-2 justify-between h-full">
-                        <li><strong className="underline text-xl">Bespoke Excursions</strong> –  Immerse in nature, culture, and private beach experiences designed for relaxation and personal growth.</li>
+                        <li><strong className="underline text-xl">Bespoke Excursions</strong> – Immerse in nature, culture, and private beach experiences designed for relaxation and personal growth.</li>
                         <li><strong className="underline text-xl">Advanced Energy Healing & Somatic Therapies</strong> – Experience specialized treatments that promote deep energetic alignment, emotional release, and holistic well-being.</li>
-                        <li><strong className="underline text-xl">Personal Wellness Concierge</strong> –  A dedicated team ensures personalized attention, catering to your needs for a seamless retreat experience.</li>
+                        <li><strong className="underline text-xl">Personal Wellness Concierge</strong> – A dedicated team ensures personalized attention, catering to your needs for a seamless retreat experience.</li>
                         <li><strong className="underline text-xl">Custom Retreat Schedules</strong> – Tailor your experience with additional healing modalities and exclusive services to enhance transformation.</li>
                     </ul>
                 </div>
