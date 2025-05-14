@@ -247,7 +247,7 @@ body {
 .banner .swiper-pagination,
 .banner .swiper-pagination-bullets.swiper-pagination-horizontal {
   /* Move bullets up */
-  bottom: 50px;
+  bottom: 10px;
 }
 
 .banner .swiper-button-prev::after {
@@ -294,7 +294,7 @@ body {
   .banner .swiper-pagination,
   .banner .swiper-pagination-bullets.swiper-pagination-horizontal {
     /* Move bullets up */
-    bottom: 100px;
+    bottom: 90px;
   }
 
   .banner .swiper-button-prev::after {

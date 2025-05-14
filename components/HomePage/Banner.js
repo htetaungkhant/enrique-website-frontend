@@ -67,12 +67,12 @@ const Banner = () => {
 							<div className="absolute inset-0 bg-black opacity-55"></div>
 
 							{/* Content Container */}
-							<div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-12 gap-8 w-full">
+							<div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-12 gap-4 w-full">
 								<div className="order-2 lg:order-1 relative text-center flex flex-col lg:items-start items-center justify-center lg:pl-24">
-									<h2 className="text-2xl font-bold mb-4 poppins-bold text-left lg:text-4xl lg:max-w-lg">
+									<h2 className="text-2xl font-bold mb-2 sm:mb-4 poppins-bold text-left lg:text-4xl lg:max-w-lg">
 										{slide.text}
 									</h2>
-									<p className="text-md mb-6 poppins-regular text-left lg:text-lg lg:max-w-xl">
+									<p className="text-md mb-3 sm:mb-6 poppins-regular text-left lg:text-lg lg:max-w-xl">
 										{slide.description}
 									</p>
 									<div className="w-full flex mt-3 justify-start md:mt-0 sm:justify-center lg:justify-start">

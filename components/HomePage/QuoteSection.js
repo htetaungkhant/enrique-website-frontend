@@ -5,7 +5,7 @@ import UPSection from "../common/UniformPaddingSection";
 const QuoteSection = ({ image, description, descriptionTextClass = "", author, authorTextClass = "", normal = true }) => {
     return (
         <UPSection className={`relative -mt-1 ${!normal ? "bg-gradient-to-b from-[rgb(3,2,12)] to-[rgb(20,26,54)]" : ""}`}>
-            <div className={`lg:flex lg:flex-row flex flex-col items-center lg:space-x-8 justify-center ${!normal ? "absolute -top-10 md:-top-20 left-6 right-6 z-10 bg-transparent" : ""}`}>
+            <div className={`lg:flex lg:flex-row flex flex-col items-center lg:space-x-8 justify-center ${!normal ? "absolute md:-top-20 left-6 right-6 z-10 bg-transparent" : ""}`}>
                 {image && (
                     <Image
                         src={image}
