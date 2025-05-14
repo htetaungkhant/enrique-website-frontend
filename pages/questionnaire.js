@@ -47,6 +47,7 @@ const QuestionnairePage = () => {
     const [localStart, setLocalStart] = useState(false);
 
     const onGobackToFirst = () => {
+        setLocalStart(false);
         setStart(false);
     }
 
