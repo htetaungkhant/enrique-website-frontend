@@ -39,6 +39,7 @@ const SwiperNavigation = ({ activeIndex, onGobackToFirst, onSubmit }) => {
         step29,
         step30,
         step31,
+        setStart,
         resetAll,
         /*
         resetAllStep,
@@ -127,9 +128,14 @@ const SwiperNavigation = ({ activeIndex, onGobackToFirst, onSubmit }) => {
         const inputBoxErrorMessage = "Please fill the input!";
         const emailErrorMessage = "Please enter a valid email address!";
 
-        if (activeIdx === 1 && step1 === null) {
-            toast.error(selectBoxErrorMessage);
-            return;
+        if (activeIdx === 1) {
+            if (step1 === null) {
+                toast.error(selectBoxErrorMessage);
+                return;
+            }
+            else {
+                setStart(true);
+            }
         }
         else if (activeIdx === 2 && step2 === null) {
             toast.error(ratingErrorMessage);

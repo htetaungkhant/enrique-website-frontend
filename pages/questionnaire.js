@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -43,7 +43,8 @@ import SwiperNavigation from "@/components/QuestionnairePage/SwiperNavigation";
 
 const QuestionnairePage = () => {
     const containerRef = useRef(null);
-    const { start, setStart, end, setEnd, activeIndex, setActiveIndex } = useQuestionnaire();
+    const { start, setStart, step1, end, setEnd, activeIndex, setActiveIndex } = useQuestionnaire();
+    const [localStart, setLocalStart] = useState(false);
 
     const onGobackToFirst = () => {
         setStart(false);
@@ -88,7 +89,7 @@ const QuestionnairePage = () => {
                     {start && !end && ()}
                     {start && end && ()} */}
                     {
-                        !start ? (
+                        !localStart && !start && !step1 ? (
                             <motion.div
                                 key="quest-start"
                                 initial={{
@@ -116,7 +117,7 @@ const QuestionnairePage = () => {
                                 }}
                                 className="relative px-6 py-6 lg:py-20 lg:px-12 w-full flex-1 flex flex-col justify-center"
                             >
-                                <QuestStart />
+                                <QuestStart onStart={() => setLocalStart(true)} />
                             </motion.div>
                         )
                             : !end ? (
