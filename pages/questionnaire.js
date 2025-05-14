@@ -49,7 +49,7 @@ const QuestionnairePage = () => {
         setStart(false);
     }
 
-    const onSubmt = () => {
+    const onSubmit = () => {
         setEnd(true);
         if (containerRef.current) {
             containerRef.current.classList.remove("overflow-hidden");
@@ -322,7 +322,7 @@ const QuestionnairePage = () => {
                                         <SwiperNavigation
                                             activeIndex={activeIndex}
                                             onGobackToFirst={onGobackToFirst}
-                                            onSubmt={onSubmt}
+                                            onSubmit={onSubmit}
                                         />
                                     </Swiper>
                                 </motion.div>

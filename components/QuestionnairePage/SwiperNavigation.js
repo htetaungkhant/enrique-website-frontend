@@ -4,7 +4,7 @@ import { useSwiper } from "swiper/react";
 import { useQuestionnaire } from "@/hooks/useQuestionnaire";
 import IconButton from "@/components/common/Button";
 
-const SwiperNavigation = ({ activeIndex, onGobackToFirst, onSubmt }) => {
+const SwiperNavigation = ({ activeIndex, onGobackToFirst, onSubmit }) => {
     const activeIdx = activeIndex + 1;
 
     const {
@@ -258,7 +258,7 @@ const SwiperNavigation = ({ activeIndex, onGobackToFirst, onSubmt }) => {
                 toast.error(inputBoxErrorMessage);
             }
             else {
-                if (onSubmt) onSubmt();
+                if (onSubmit) onSubmit();
             }
             return;
         }
