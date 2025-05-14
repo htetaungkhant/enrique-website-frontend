@@ -190,8 +190,20 @@ export const PageHeaderWithFullBanner = ({
             overlayClassName="opacity-20"
         >
             <div className={cn("h-full flex flex-col justify-center items-center", containerClassName)}>
-                <div className={cn("p-3 w-full md:w-4/5 flex flex-col items-center justify-center gap-5", wrapperClassName)}>
-                    {title && <h2 className={cn("text-5xl text-center font-bold", titleClassName)}>{title}</h2>}
+                <div className={cn("p-3 w-full md:w-4/5 md:min-w-150 flex flex-col items-center justify-center gap-5", wrapperClassName)}>
+                    {title && (
+                        Array.isArray(title) ?
+                            <div className={cn("text-5xl text-center font-bold", titleClassName)}>{
+                                title.map((eachTitle) => (
+                                    <h2>
+                                        {eachTitle}
+                                    </h2>
+                                ))
+                            }
+                            </div>
+                            :
+                            <h2 className={cn("text-5xl text-center font-bold", titleClassName)}>{title}</h2>
+                    )}
                     {description && <p className={cn("poppins-font text-center text-xl", descriptionClassName)}>{description}</p>}
                     {children}
                 </div>
