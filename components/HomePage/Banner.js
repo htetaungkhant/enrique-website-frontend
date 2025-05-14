@@ -51,7 +51,8 @@ const Banner = () => {
 				loop={true}
 				speed={1000}
 				autoplay={{ delay: 5000 }}
-				// pagination={{ clickable: true }}
+				navigation={true}
+				pagination={{ clickable: true }}
 				className="w-full h-[100vh]"
 			>
 				{slides.map((slide, index) => (

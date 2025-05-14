@@ -247,5 +247,37 @@ body {
 .banner .swiper-pagination,
 .banner .swiper-pagination-bullets.swiper-pagination-horizontal {
   /* Move bullets up */
-  bottom: 20px;
+  bottom: 100px;
+}
+
+.banner .swiper-button-prev::after{
+  margin-left: 56px;
+}
+.banner .swiper-button-next::after {
+  margin-right: 56px;
+}
+
+.banner .swiper-button-prev::after,
+.banner .swiper-button-next::after {
+  border: 1px solid white;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 100%;
+  min-width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+
+
+  .banner .swiper-button-prev::after,
+  .banner .swiper-button-next::after,
+  .banner .swiper-pagination,
+  .banner .swiper-pagination-bullets.swiper-pagination-horizontal {
+    display: none;
+  }
 }
