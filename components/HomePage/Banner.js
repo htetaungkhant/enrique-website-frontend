@@ -50,7 +50,7 @@ const Banner = () => {
 				slidesPerView={1}
 				loop={true}
 				speed={1000}
-				autoplay={{ delay: 5000 }}
+				// autoplay={{ delay: 5000 }}
 				navigation={true}
 				pagination={{ clickable: true }}
 				className="w-full h-[100vh]"
@@ -75,7 +75,7 @@ const Banner = () => {
 									<p className="text-md mb-6 poppins-regular text-left lg:text-lg lg:max-w-xl">
 										{slide.description}
 									</p>
-									<div className="w-full flex mt-3 justify-start md:mt-0 md:justify-center lg:justify-start">
+									<div className="w-full flex mt-3 justify-start md:mt-0 sm:justify-center lg:justify-start">
 										{slide.button && (
 											<IconButton title={slide.button} href={slide.link} />
 										)}
@@ -89,7 +89,7 @@ const Banner = () => {
 										width={367}
 										height={384}
 										alt="logo"
-										className="h-96 w-auto object-contain"
+										className="h-96 w-auto max-sm:max-w-60 max-2xs:max-w-56 object-contain"
 									/>
 								</div>
 							</div>
