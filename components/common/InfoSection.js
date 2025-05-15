@@ -20,9 +20,9 @@ export const UniformInfoSection = ({ image, children, imageAspectRatio = "defaul
                     <div
                         className={cn(
                             "min-h-80 max-sm:w-full max-xl:w-1/3 xl:min-h-40 3xl:min-h-[26rem] order-1 relative",
-                            imageAspectRatio === "portrait" && "min-w-40",
-                            imageAspectRatio === "default" && "min-w-50",
-                            imageAspectRatio === "landscape" && "min-w-60",
+                            (imageAspectRatio === "portrait") && "min-w-40",
+                            (imageAspectRatio === "default") && "min-w-50",
+                            (imageAspectRatio === "landscape") && "min-w-60",
                             reverse ? "xl:order-2" : "xl:order-1",
                         )}
                     >
