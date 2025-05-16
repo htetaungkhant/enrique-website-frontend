@@ -1,17 +1,32 @@
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { IoMdClose } from "react-icons/io";
 
 import { cn } from '@/lib/utils';
 
-const Modal = ({
-    isOpen,
-    onClose,
+const ModalWrapper = ({
     backdrop = false,
+    fixedScreen = true,
+    isOpen,
+    onClick,
     backdropClassName,
-    containerClassName,
     className,
     children,
 }) => {
+    useEffect(() => {
+        if (isOpen && fixedScreen) {
+            // const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+            // document.body.style.paddingRight = `${scrollBarWidth}px`;
+            document.body.style.overflow = 'hidden';
+        } else {
+            // document.body.style.paddingRight = '';
+            document.body.style.overflow = '';
+        }
+        return () => {
+            // document.body.style.paddingRight = '';
+            document.body.style.overflow = '';
+        };
+    }, [isOpen, fixedScreen]);
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -24,35 +39,29 @@ const Modal = ({
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                onClick={onClose}
                             />
                         )
                     }
 
                     {/* Modal content */}
                     <motion.div
-                        className={cn("fixed inset-0 z-[110] flex items-center justify-center px-0 md:px-6 py-6 md:py-16 overflow-hidden", className)}
+                        className={cn(
+                            "inset-0 z-[110] flex items-center justify-center px-0 md:px-6 py-6 md:py-16 overflow-hidden",
+                            fixedScreen ? "fixed" : "absolute",
+                            className,
+                        )}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ duration: 0.1, ease: 'easeInOut' }}
+                        onClick={onClick}
                     >
-                        <div
-                            className={cn("px-3 md:px-6 py-9 max-h-[96vh] md:max-h-[90vh] xl:max-h-[80vh] flex flex-col relative text-white bg-gradient-to-b from-[#171F3F] to-[#020105] border-2 border-white rounded-2xl shadow-xl", containerClassName)}
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            {/* Close Button */}
-                            <IoMdClose size={28} onClick={onClose} className="absolute top-3 right-3 hover:text-gray-400 cursor-pointer transition" />
-
-                            <div className="min-h-28 min-w-28 flex-1 overflow-y-auto mt-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                                {children}
-                            </div>
-                        </div>
+                        {children}
                     </motion.div>
                 </>
             )}
         </AnimatePresence>
-    );
-};
+    )
+}
 
-export default Modal;
+export default ModalWrapper;

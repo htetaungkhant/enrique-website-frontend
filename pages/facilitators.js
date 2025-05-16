@@ -5,7 +5,7 @@ import Footer from "@/components/common/Footer";
 import { PageHeaderWithBanner } from "@/components/common/PageHeader";
 import UPSection from "@/components/common/UniformPaddingSection";
 import FacilitatorsCard from "@/components/FacilitatorsPage/FacilitatorsCard";
-import Modal from "@/components/common/Modal";
+import FacilitatorsModal from "@/components/FacilitatorsPage/FacilitatorsModal";
 import { SwiperCardsRowSection } from "@/components/common/CardsRowSection";
 
 const dummyData = [
@@ -106,15 +106,10 @@ const FacilitatorsPage = () => {
     const onClickFacilitatorsCard = (facilitators) => {
         setSelectedFacilitators(facilitators);
         setIsOpenModal(true);
-        const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-        document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = `${scrollBarWidth}px`;
     }
 
     const onModalClose = () => {
         setIsOpenModal(false);
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
     }
 
     return (
@@ -130,7 +125,7 @@ const FacilitatorsPage = () => {
                 </UPSection>
             </div>
             <Footer className="mt-10" />
-            <Modal backdrop isOpen={isOpenModal} onClose={onModalClose} containerClassName="w-[95%]">
+            <FacilitatorsModal backdrop isOpen={isOpenModal} onClose={onModalClose}>
                 {
                     selectedFacilitators && (
                         <div className="flex flex-col inter-font">
@@ -187,7 +182,7 @@ const FacilitatorsPage = () => {
                         </div>
                     )
                 }
-            </Modal>
+            </FacilitatorsModal>
         </main>
     )
 
