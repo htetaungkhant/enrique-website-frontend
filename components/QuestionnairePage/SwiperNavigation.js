@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { useSwiper } from "swiper/react";
 
 import { useQuestionnaire } from "@/hooks/useQuestionnaire";
-import IconButton from "@/components/common/Button";
+import { IconButton } from "@/components/common/Button";
 
 const SwiperNavigation = ({ activeIndex, onGobackToFirst, onSubmit }) => {
     const activeIdx = activeIndex + 1;

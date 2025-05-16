@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import IconButton from "../common/Button";
+import { IconButton } from "../common/Button";
 
 const QuestStart = ({
     onStart,

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import IconButton from "@/components/common/Button";
+import { IconButton } from "@/components/common/Button";
 import NewsLetter from "@/components/common/NewsLetter";
 import { PageHeaderWithFullBanner } from "@/components/common/PageHeader";
 import Footer from "@/components/common/Footer";

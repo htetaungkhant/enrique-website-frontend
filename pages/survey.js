@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import IconButton from "@/components/common/Button";
+import { IconButton } from "@/components/common/Button";
 import Footer from "@/components/common/Footer";
 import NewsLetter from "@/components/common/NewsLetter";
 import { PageHeaderWithFullBanner } from "@/components/common/PageHeader";

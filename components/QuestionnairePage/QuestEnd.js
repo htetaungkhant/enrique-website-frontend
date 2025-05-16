@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { cn } from "@/lib/utils";
 import { useQuestionnaire } from '@/hooks/useQuestionnaire';
-import IconButton from "../common/Button";
+import { IconButton } from "../common/Button";
 import YouTubeBanner from '../common/YouTubeBanner';
 
 const QuestEnd = ({
