@@ -27,7 +27,7 @@ const FacilitatorsModal = ({
                 onClick={(e) => e.stopPropagation()}
                 className={
                     cn(
-                        "px-3 md:px-6 py-9 w-full max-h-[96vh] md:max-h-[90vh] xl:max-h-[80vh] flex flex-col relative text-white bg-gradient-to-b from-[#171F3F] to-[#020105] border-2 border-white rounded-2xl shadow-xl",
+                        "px-3 md:px-6 py-9 w-[95%] max-h-[96vh] md:max-h-[90vh] xl:max-h-[80vh] flex flex-col relative text-white bg-gradient-to-b from-[#171F3F] to-[#020105] border-2 border-white rounded-2xl shadow-xl",
                         className
                     )}
             >
