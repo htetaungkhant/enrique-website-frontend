@@ -3,19 +3,31 @@ import { IoMdClose } from "react-icons/io";
 
 import { cn } from '@/lib/utils';
 
-const Modal = ({ isOpen, onClose, children, backdropClassName, containerClassName, className }) => {
+const Modal = ({
+    isOpen,
+    onClose,
+    backdrop = false,
+    backdropClassName,
+    containerClassName,
+    className,
+    children,
+}) => {
     return (
         <AnimatePresence>
             {isOpen && (
                 <>
                     {/* Backdrop */}
-                    <motion.div
-                        className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm z-[100]", backdropClassName)}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                    />
+                    {
+                        backdrop && (
+                            <motion.div
+                                className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm z-[100]", backdropClassName)}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                onClick={onClose}
+                            />
+                        )
+                    }
 
                     {/* Modal content */}
                     <motion.div

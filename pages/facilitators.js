@@ -130,7 +130,7 @@ const FacilitatorsPage = () => {
                 </UPSection>
             </div>
             <Footer className="mt-10" />
-            <Modal isOpen={isOpenModal} onClose={onModalClose} containerClassName="w-[95%]">
+            <Modal backdrop isOpen={isOpenModal} onClose={onModalClose} containerClassName="w-[95%]">
                 {
                     selectedFacilitators && (
                         <div className="flex flex-col inter-font">
