@@ -50,7 +50,7 @@ const Banner = () => {
 				slidesPerView={1}
 				loop={true}
 				speed={1000}
-				// autoplay={{ delay: 5000 }}
+				autoplay={{ delay: 5000 }}
 				navigation={true}
 				pagination={{ clickable: true }}
 				className="w-full h-[100vh]"
