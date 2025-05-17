@@ -77,9 +77,9 @@ export const PasswordInput = ({ label, className, labelClassName, inputClassName
                 />
                 {
                     isPassword ?
-                        <HiMiniEyeSlash className="text-lg absolute right-3 rotate-x-180 cursor-pointer" onClick={() => setIsPassword(!isPassword)} />
+                        <HiMiniEyeSlash className="text-lg absolute right-3 rotate-x-180 cursor-pointer text-[#848484] hover:text-gray-600" onClick={() => setIsPassword(!isPassword)} />
                         :
-                        <HiMiniEye className="text-lg absolute right-3 rotate-x-180 cursor-pointer" onClick={() => setIsPassword(!isPassword)} />
+                        <HiMiniEye className="text-lg absolute right-3 rotate-x-180 cursor-pointer text-[#848484] hover:text-gray-600" onClick={() => setIsPassword(!isPassword)} />
                 }
             </div>
         </div>
