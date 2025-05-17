@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import PhoneInput from 'react-phone-input-2';
+import { HiMiniEye, HiMiniEyeSlash } from "react-icons/hi2";
 
 import { cn } from "@/lib/utils";
 
@@ -59,11 +60,37 @@ export const PhoneNumberInput = ({
     )
 }
 
+export const PasswordInput = ({ label, className, labelClassName, inputClassName, ...props }) => {
+    const [isPassword, setIsPassword] = useState(true);
+
+    return (
+        <div className={cn("min-w-16 flex flex-col gap-1 p-[1px]", className)}>
+            {label && <span className={cn("text-xs", labelClassName)}>{label}</span>}
+            <div className="flex items-center relative">
+                <input
+                    type={isPassword ? "password" : "text"}
+                    className={cn(
+                        "w-full p-2 !pr-10 bg-white text-black text-sm rounded-md border border-gray-300 outline-none focus:ring focus:ring-blue-500 focus:border-blue-500",
+                        inputClassName,
+                    )}
+                    {...props}
+                />
+                {
+                    isPassword ?
+                        <HiMiniEyeSlash className="text-lg absolute right-3 rotate-x-180 cursor-pointer" onClick={() => setIsPassword(!isPassword)} />
+                        :
+                        <HiMiniEye className="text-lg absolute right-3 rotate-x-180 cursor-pointer" onClick={() => setIsPassword(!isPassword)} />
+                }
+            </div>
+        </div>
+    )
+}
+
 const Input = ({ label, className, labelClassName, inputClassName, ...props }) => {
     return (
-        <div className={cn("min-w-16 flex flex-col gap-1", className)}>
+        <div className={cn("min-w-16 flex flex-col gap-1 p-[1px]", className)}>
             {label && <span className={cn("text-xs", labelClassName)}>{label}</span>}
-            <input className={cn("bg-white text-black text-sm p-2 rounded-md border border-gray-300 outline-none focus:ring focus:ring-blue-500 focus:border-blue-500", inputClassName)} {...props} />
+            <input className={cn("p-2 bg-white text-black text-sm rounded-md border border-gray-300 outline-none focus:ring focus:ring-blue-500 focus:border-blue-500", inputClassName)} {...props} />
         </div>
     )
 }
