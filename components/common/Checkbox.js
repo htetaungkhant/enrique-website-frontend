@@ -28,7 +28,12 @@ const Checkbox = ({
                     )}
                 </span>
             </span>
-            <span>{label}</span>
+            {label && (
+                typeof label === 'string' ?
+                    <span>{label}</span>
+                    :
+                    label
+            )}
         </label>
     );
 };
