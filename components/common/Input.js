@@ -86,6 +86,21 @@ export const PasswordInput = ({ label, className, labelClassName, inputClassName
     )
 }
 
+export const Textarea = ({ label, className, labelClassName, textareaClassName, ...props }) => {
+    return (
+        <div className={cn("min-w-16 flex flex-col gap-1 p-[1px]", className)}>
+            {label && <span className={cn("text-xs", labelClassName)}>{label}</span>}
+            <textarea
+                className={cn(
+                    "h-20 p-2 bg-white text-black text-sm rounded-md border border-gray-300 outline-none focus:ring focus:ring-blue-500 focus:border-blue-500",
+                    textareaClassName
+                )}
+                {...props}
+            />
+        </div>
+    )
+}
+
 const Input = ({ label, className, labelClassName, inputClassName, ...props }) => {
     return (
         <div className={cn("min-w-16 flex flex-col gap-1 p-[1px]", className)}>
