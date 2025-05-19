@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FaCalendarAlt } from "react-icons/fa";
 import { HiCurrencyDollar } from "react-icons/hi2";
+import { HiBadgeCheck } from "react-icons/hi";
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -12,6 +13,7 @@ const CourseCard = ({
     instructor,
     dates,
     price,
+    purchase = false,
     className,
 }) => {
     return (
@@ -51,8 +53,21 @@ const CourseCard = ({
                     </div>
                 </div>
                 <div className="pt-3 flex gap-2 justify-center items-center">
-                    <HiCurrencyDollar size={28} className="text-[#2A6C4B]" />
-                    <span className="text-lg font-medium">${price}</span>
+                    {
+                        purchase ?
+                            (
+                                <>
+                                    <span className="text-lg font-medium">Purchased</span>
+                                    <HiBadgeCheck size={32} className="text-[#2A6C4B]" />
+                                </>
+                            )
+                            : (
+                                <>
+                                    <HiCurrencyDollar size={28} className="text-[#2A6C4B]" />
+                                    <span className="text-lg font-medium">${price}</span>
+                                </>
+                            )
+                    }
                 </div>
             </div>
         </Link>
