@@ -51,7 +51,7 @@ const NewsLetter = ({ id, className }) => {
                 <div className="max-md:w-10/12 grid grid-cols-1 md:grid-cols-2 gap-y-5 md:gap-y-3 md:gap-x-5">
                     <Input name="first-name" label="First Name" labelClassName="max-md:hidden" placeholder="Enter first name" />
                     <Input name="last-name" label="Last Name" labelClassName="max-md:hidden" placeholder="Enter last name" />
-                    <PhoneNumberInput name="mobile-number" label="Mobile Number" customPlaceholder="Enter Mobile Number" />
+                    <PhoneNumberInput name="mobile-number" label="Mobile Number" labelClassName="max-md:hidden" customPlaceholder="Enter Mobile Number" />
                     <Input name="email" type="email" label="Email ID" labelClassName="max-md:hidden" placeholder="Enter email ID" />
                     {Object.keys(errors).length > 0 && (
                         <div className='md:col-span-2'>
