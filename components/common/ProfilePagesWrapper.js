@@ -15,6 +15,10 @@ const ProfilePagesWrapper = ({
 }) => {
     const router = useRouter();
 
+    const handleLogout = (e) => {
+        e.preventDefault();
+    }
+
     return (
         <main className={cn("", className)}>
             <PageHeader />
@@ -91,10 +95,13 @@ const ProfilePagesWrapper = ({
                                 </div>
                                 <span className={router.pathname.includes("help-and-support") ? "text-[#EFEFEF]" : "text-[#656565]"}>Help & Support</span>
                             </Link>
+                            <button onClick={handleLogout} className="mt-3 w-fit px-4 py-1.5 text-sm text-[#89FFC4] border-2 rounded-4xl cursor-pointer">
+                                Logout
+                            </button>
                         </div>
                         <div className="flex flex-col gap-2 max-md:text-xs max-lg:text-sm max-lg:gap-1">
-                            <Link href="" className="text-[#656565] hover:text-gray-400">PRIVACY POLICY</Link>
-                            <Link href="" className="text-[#656565] hover:text-gray-400">TERMS & CONDITION</Link>
+                            <Link target="_blank" href="/privacy-policy" className="text-[#656565] hover:text-gray-400">PRIVACY POLICY</Link>
+                            <Link target="_blank" href="/terms-and-conditions" className="text-[#656565] hover:text-gray-400">TERMS & CONDITION</Link>
                         </div>
                     </div>
                     <div className="h-full flex-1">
