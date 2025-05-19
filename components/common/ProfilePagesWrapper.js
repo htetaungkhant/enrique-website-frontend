@@ -28,7 +28,7 @@ const ProfilePagesWrapper = ({
                 </div>
                 <div className="min-h-[75vh] flex max-lg:flex-col">
                     <div className="py-4 lg:pr-8 flex lg:border-r max-lg:border-b lg:flex-col justify-between">
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 min-w-40">
                             <Link href="/profile/personal-details" className="flex items-center font-medium">
                                 <div className="w-6 sm:w-9">
                                     {/* <FaRegMessage size={20} /> */}
