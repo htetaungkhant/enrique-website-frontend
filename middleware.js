@@ -7,13 +7,29 @@ export async function middleware(req) {
     // Define public paths that don't need authentication
     const publicPaths = [
         '/admin/login',
+
         '/api/auth',
         '/api/auth/admin',
+
         '/',
         '/facilitators',
         '/course-offerings',
+        '/ceremonies',
+        '/blogs',
+        '/ayahuasca',
+        '/ayurveda',
+        '/breathwork',
+        '/bufo-alvarius',
+        '/flight-service',
+        '/kambo',
+        '/yoga',
+        '/safety',
+        '/survey',
+        '/questionnaire',
+
         '/user-auth-pages',
-        '/user-auth-pages/access-denied-auto-logout',
+        '/privacy-policy',
+        '/terms-and-conditions',
     ];
     const isPublicPath = publicPaths.some(pp =>
         path === pp || path.startsWith(`${pp}/`)
