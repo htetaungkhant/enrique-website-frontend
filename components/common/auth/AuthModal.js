@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { useRouter } from 'next/router';
-import { useSession } from "next-auth/react";
 import { IoMdCloseCircle } from "react-icons/io";
 
 import { cn } from "@/lib/utils";
+import { useUserAuth } from "@/hooks/userAuth";
 import ModalWrapper from "../ModalWrapper";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
@@ -11,7 +11,7 @@ import SignupForm from "./SignupForm";
 const AuthModal = ({
     className,
 }) => {
-    const { data: session } = useSession();
+    const { session } = useUserAuth();
     const router = useRouter();
     const { query: { auth } } = router;
 

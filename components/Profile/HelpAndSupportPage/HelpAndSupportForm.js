@@ -1,16 +1,20 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
-import Input, { PhoneNumberInput, Textarea } from "./Input";
-import Button from "./Button";
-import Checkbox from "./Checkbox";
 import { cn } from "@/lib/utils";
+import Input, { PhoneNumberInput, Textarea } from "../../common/Input";
+import Button from "../../common/Button";
+import Checkbox from "../../common/Checkbox";
 
 const HelpAndSupportForm = ({
     className,
 }) => {
+    const router = useRouter();
     const [agreeTandP, setAgreeTandP] = useState(false);
+
+    console.log(decodeURIComponent(router.query.slug));
 
     const handleOnSubmit = (e) => {
         e.preventDefault();

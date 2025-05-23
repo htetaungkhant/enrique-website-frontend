@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react"; // signIn('credentials', { redirect: false })
 import { useRouter } from 'next/router';
 import Link from "next/link";
 import Image from "next/image";
@@ -8,11 +7,12 @@ import { RxHamburgerMenu, RxCross2 } from "react-icons/rx";
 import { IconButton, UserButton } from "./Button";
 import HeaderDropdown from "./HeaderDropdown";
 import { cn } from "@/lib/utils";
+import { useUserAuth } from "@/hooks/userAuth";
 
 const PageHeader = ({
     className,
 }) => {
-    const { data: session } = useSession();
+    const { session } = useUserAuth();
     const router = useRouter();
 
     const [hamburgerDisplay, setHamburgerDisplay] = useState(false);
@@ -102,7 +102,7 @@ const PageHeader = ({
                     <div className="hidden xl:flex space-x-4">
                         <IconButton title="Book Now" href="/questionnaire" />
                         {
-                            !session ?
+                            !session || session.validationFailed ?
                                 <IconButton title="Login" outline={true} onClick={onLoginBtnClick} />
                                 :
                                 <UserButton title="Robert Jordan" />
@@ -150,7 +150,7 @@ const PageHeader = ({
                         <div className="flex gap-4 flex-col md:flex-row items-center justify-center">
                             <IconButton title="Book Now" href="/questionnaire" />
                             {
-                                !session ?
+                                !session || session.validationFailed ?
                                     <IconButton title="Login" outline={true} onClick={onLoginBtnClick} />
                                     :
                                     <UserButton title="Robert Jordan" />

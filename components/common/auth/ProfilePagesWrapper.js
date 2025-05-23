@@ -8,15 +8,18 @@ import { FaRegMessage } from "react-icons/fa6";
 import PageHeader from "@/components/common/PageHeader";
 import UPSection from "@/components/common/UniformPaddingSection";
 import { cn } from "@/lib/utils";
+import { useUserAuth } from "@/hooks/userAuth";
 
 const ProfilePagesWrapper = ({
     className,
     children,
 }) => {
+    const { signOut } = useUserAuth();
     const router = useRouter();
 
     const handleLogout = (e) => {
         e.preventDefault();
+        signOut();
     }
 
     return (
