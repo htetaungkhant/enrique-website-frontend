@@ -75,6 +75,7 @@ export const authOptions = {
                     // For credentials users
                     token.role = user.role || "user";
                     token.userId = user.id;
+                    token.backendData = { ...user }
                 }
             }
             return token;

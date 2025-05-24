@@ -12,7 +12,7 @@ import { useUserAuth } from "@/hooks/userAuth";
 const PageHeader = ({
     className,
 }) => {
-    const { session } = useUserAuth();
+    const { session, status } = useUserAuth();
     const router = useRouter();
 
     const [hamburgerDisplay, setHamburgerDisplay] = useState(false);
@@ -31,6 +31,16 @@ const PageHeader = ({
         });
     }
 
+    const userButtonHref = () => {
+        const currentUrl = router.asPath;
+        if (currentUrl.startsWith("/profile")) {
+            return null;
+        } else {
+            return "/profile/personal-details";
+        }
+    }
+
+    if (!status || status === "loading") return null;
     return (
         <>
             <section className={cn("max-xl:bg-gradient-to-b from-[#171F3F] to-[#020105] fixed top-0 left-0 w-full z-100 xl:p-12", className)}>
@@ -105,7 +115,7 @@ const PageHeader = ({
                             !session || session.validationFailed ?
                                 <IconButton title="Login" outline={true} onClick={onLoginBtnClick} />
                                 :
-                                <UserButton title="Robert Jordan" />
+                                <UserButton title={session.user.name || `${session.user.backendData?.firstName} ${session.user.backendData?.lastName}`} href={userButtonHref()} />
                         }
                     </div>
 
@@ -153,7 +163,7 @@ const PageHeader = ({
                                 !session || session.validationFailed ?
                                     <IconButton title="Login" outline={true} onClick={onLoginBtnClick} />
                                     :
-                                    <UserButton title="Robert Jordan" />
+                                    <UserButton title={session.user.name || `${session.user.backendData?.firstName} ${session.user.backendData?.lastName}`} href={userButtonHref()} />
                             }
                         </div>
                     </div>
