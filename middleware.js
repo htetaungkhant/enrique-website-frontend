@@ -72,6 +72,23 @@ export async function middleware(req) {
         return NextResponse.redirect(new URL('/', req.url));
     }
 
+    const searchParams = req.nextUrl.searchParams;
+    const comeFrom = searchParams.get('comeFrom');
+    // Redirect if validationFailed
+    if (token.validationFailed) {
+        const callbackUrl = encodeURIComponent(comeFrom || '/');
+        return NextResponse.redirect(
+            new URL(`/user-auth-pages/access-denied-auto-logout?callbackUrl=${callbackUrl}`, req.url)
+        );
+    }
+    else if (comeFrom) {
+        // redirect to path after removing "comeFrom"
+        searchParams.delete('comeFrom');
+        const newUrl = new URL(path, req.url);
+        newUrl.search = searchParams.toString();
+        return NextResponse.redirect(newUrl);
+    }
+
     return NextResponse.next();
 }
 

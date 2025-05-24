@@ -1,24 +1,18 @@
-import { getServerSession } from "next-auth";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TbEdit } from "react-icons/tb";
 
 import ProfilePagesWrapper from "@/components/common/auth/ProfilePagesWrapper";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
-
+/*
 export async function getServerSideProps(context) {
-    // get the current URL
     const { req, res, query } = context;
     const url = req.url;
 
-    // get next-auth server session
     const session = await getServerSession(req, res, authOptions);
 
-    // get the comeFrom from the context query
     const { comeFrom, ...restQuery } = query;
 
     if (session.validationFailed) {
-        // sign out the user and redirect to comeFrom or home page
         // return {
         //     redirect: {
         //         destination: `/api/auth/signout?callbackUrl=${encodeURIComponent(comeFrom || "/")}`,
@@ -41,8 +35,6 @@ export async function getServerSideProps(context) {
         };
     }
     else if (comeFrom) {
-        // remove comeFrom from the URL and redirect
-
         // option 1
         // const baseUrl = req.headers.origin || `http://${req.headers.host}`;
         // const urlObj = new URL(url, baseUrl);
@@ -73,6 +65,7 @@ export async function getServerSideProps(context) {
         props: {},
     };
 }
+*/
 
 const PersonalDetailsPage = () => {
     return (

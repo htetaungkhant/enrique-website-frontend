@@ -1,41 +1,6 @@
 import Link from "next/link";
-import { getServerSession } from "next-auth";
 
 import ProfilePagesWrapper from "@/components/common/auth/ProfilePagesWrapper";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-
-
-export async function getServerSideProps(context) {
-    const { req, res, query } = context;
-    const session = await getServerSession(req, res, authOptions);
-
-    const { comeFrom, ...restQuery } = query;
-
-    if (session.validationFailed) {
-
-        return {
-            redirect: {
-                destination: `/user-auth-pages/access-denied-auto-logout?callbackUrl=${encodeURIComponent(comeFrom || "/")}`,
-                permanent: false,
-            },
-        };
-    }
-    else if (comeFrom) {
-        const params = new URLSearchParams(restQuery).toString();
-        const newUrl = `/profile/help-and-support${params ? `?${params}` : ""}`;
-
-        return {
-            redirect: {
-                destination: newUrl,
-                permanent: false,
-            },
-        };
-    }
-
-    return {
-        props: {},
-    };
-}
 
 const HelpAndSupportPage = () => {
     return (
