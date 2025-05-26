@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import PhoneInput from 'react-phone-input-2';
 import { HiMiniEye, HiMiniEyeSlash } from "react-icons/hi2";
 
@@ -60,7 +60,7 @@ export const PhoneNumberInput = ({
     )
 }
 
-export const PasswordInput = ({ label, className, labelClassName, inputClassName, ...props }) => {
+export const PasswordInput = React.forwardRef(({ label, className, labelClassName, inputClassName, ...props }, ref) => {
     const [isPassword, setIsPassword] = useState(true);
 
     return (
@@ -68,6 +68,7 @@ export const PasswordInput = ({ label, className, labelClassName, inputClassName
             {label && <span className={cn("text-xs", labelClassName)}>{label}</span>}
             <div className="flex items-center relative">
                 <input
+                    ref={ref}
                     type={isPassword ? "password" : "text"}
                     className={cn(
                         "w-full p-2 !pr-10 bg-white text-black text-sm rounded-md border border-gray-300 outline-none focus:ring focus:ring-blue-500 focus:border-blue-500",
@@ -83,8 +84,9 @@ export const PasswordInput = ({ label, className, labelClassName, inputClassName
                 }
             </div>
         </div>
-    )
-}
+    );
+});
+PasswordInput.displayName = "PasswordInput";
 
 export const Textarea = ({ label, className, labelClassName, textareaClassName, ...props }) => {
     return (
@@ -101,13 +103,18 @@ export const Textarea = ({ label, className, labelClassName, textareaClassName, 
     )
 }
 
-const Input = ({ label, className, labelClassName, inputClassName, ...props }) => {
+const Input = React.forwardRef(({ label, className, labelClassName, inputClassName, ...props }, ref) => {
     return (
         <div className={cn("min-w-16 flex flex-col gap-1 p-[1px]", className)}>
             {label && <span className={cn("text-xs", labelClassName)}>{label}</span>}
-            <input className={cn("p-2 bg-white text-black text-sm rounded-md border border-gray-300 outline-none focus:ring focus:ring-blue-500 focus:border-blue-500", inputClassName)} {...props} />
+            <input
+                ref={ref}
+                className={cn("p-2 bg-white text-black text-sm rounded-md border border-gray-300 outline-none focus:ring focus:ring-blue-500 focus:border-blue-500", inputClassName)}
+                {...props}
+            />
         </div>
-    )
-}
+    );
+});
+Input.displayName = "Input";
 
 export default Input;
