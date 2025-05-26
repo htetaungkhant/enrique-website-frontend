@@ -9,18 +9,23 @@ export const useUserAuth = () => {
         // Remove provider from options to avoid duplicate
         const { provider: _, ...restOptions } = options;
 
-        // Add default callbackUrl if not provided
-        if (!restOptions.callbackUrl) {
+        if (typeof restOptions.callbackUrl === "string") {
+            if (restOptions.callbackUrl.startsWith("/profile")) {
+                const url = new URL(restOptions.callbackUrl, window.location.origin);
+                url.searchParams.set("comeFrom", window.location.href);
+                restOptions.callbackUrl = url.toString();
+            }
+            else {
+                const url = new URL(restOptions.callbackUrl, window.location.origin);
+                restOptions.callbackUrl = url.toString();
+            }
+        }
+        else {
             // restOptions.callbackUrl = `/profile/personal-details`;
 
 
             // restOptions.callbackUrl = `/profile/personal-details?comeFrom=${window.location.href}`;
             const url = new URL("/profile/personal-details", window.location.origin);
-            url.searchParams.set("comeFrom", window.location.href);
-            restOptions.callbackUrl = url.toString();
-        }
-        else {
-            const url = new URL(restOptions.callbackUrl, window.location.origin);
             url.searchParams.set("comeFrom", window.location.href);
             restOptions.callbackUrl = url.toString();
         }
