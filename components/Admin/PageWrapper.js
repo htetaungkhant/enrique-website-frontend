@@ -83,7 +83,6 @@ const AdminPagesWrapper = ({
                             <AdminSidebar />
                         </aside>
                         <section className="flex-1">
-                            <h1 className="text-white font-black text-2xl">Content</h1>
                             {children}
                         </section>
                     </div>
