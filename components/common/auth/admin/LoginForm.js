@@ -30,6 +30,10 @@ const LoginForm = () => {
     const { session, status, signIn } = useAdminAuth();
     const form = useForm({
         resolver: zodResolver(schema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
     });
 
     const onSubmit = async (data) => {
