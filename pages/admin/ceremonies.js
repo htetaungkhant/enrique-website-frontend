@@ -1,6 +1,6 @@
 import AdminPagesWrapper from "@/components/Admin/PageWrapper";
 
-const CoursesPurchased = () => {
+const Ceremonies = () => {
     return (
         <AdminPagesWrapper>
 
@@ -8,4 +8,4 @@ const CoursesPurchased = () => {
     )
 }
 
-export default CoursesPurchased;
+export default Ceremonies;
