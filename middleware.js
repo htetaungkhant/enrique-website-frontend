@@ -4,6 +4,27 @@ import { getToken } from 'next-auth/jwt';
 export async function middleware(req) {
     const path = req.nextUrl.pathname;
 
+    const secret = process.env.NEXTAUTH_SECRET;
+    const userToken = await getToken({
+        req,
+        secret,
+        cookieName: "next-auth.session-token.user"
+    });
+
+    if (userToken?.validationFailed) {
+        const searchParams = req.nextUrl.searchParams;
+        const comeFrom = searchParams.get('comeFrom');
+        searchParams.delete('comeFrom');
+        const callbackUrl = searchParams.size > 0 ? `${path}?${searchParams.toString()}` : path;
+        const response = NextResponse.redirect(new URL(comeFrom || callbackUrl || '/', req.url));
+        response.cookies.set('next-auth.session-token.user', '', {
+            httpOnly: true,
+            path: '/',
+            expires: new Date(0), // Expire immediately
+        });
+        return response;
+    }
+
     // Define public paths that don't need authentication
     const publicPaths = [
         '/admin/login',
@@ -41,7 +62,6 @@ export async function middleware(req) {
 
     // Check for admin routes
     const isAdminPath = path.startsWith('/admin');
-    const secret = process.env.NEXTAUTH_SECRET;
 
     // For admin paths, check admin auth token
     if (isAdminPath) {
@@ -61,33 +81,25 @@ export async function middleware(req) {
     }
 
     // For user paths, check user auth token
-    const token = await getToken({
-        req,
-        secret,
-        cookieName: "next-auth.session-token.user"
-    });
-
     // Redirect to login if no token
-    if (!token) {
+    if (!userToken) {
         return NextResponse.redirect(new URL('/', req.url));
     }
 
-    const searchParams = req.nextUrl.searchParams;
-    const comeFrom = searchParams.get('comeFrom');
-    // Redirect if validationFailed
-    if (token.validationFailed) {
-        const callbackUrl = encodeURIComponent(comeFrom || '/');
-        return NextResponse.redirect(
-            new URL(`/user-auth-pages/access-denied-auto-logout?callbackUrl=${callbackUrl}`, req.url)
-        );
-    }
-    else if (comeFrom) {
-        // redirect to path after removing "comeFrom"
-        searchParams.delete('comeFrom');
-        const newUrl = new URL(path, req.url);
-        newUrl.search = searchParams.toString();
-        return NextResponse.redirect(newUrl);
-    }
+    // const searchParams = req.nextUrl.searchParams;
+    // const comeFrom = searchParams.get('comeFrom');
+    // if (userToken.validationFailed) {
+    //     const callbackUrl = encodeURIComponent(comeFrom || '/');
+    //     return NextResponse.redirect(
+    //         new URL(`/user-auth-pages/access-denied-auto-logout?callbackUrl=${callbackUrl}`, req.url)
+    //     );
+    // }
+    // else if (comeFrom) {
+    //     searchParams.delete('comeFrom');
+    //     const newUrl = new URL(path, req.url);
+    //     newUrl.search = searchParams.toString();
+    //     return NextResponse.redirect(newUrl);
+    // }
 
     return NextResponse.next();
 }
