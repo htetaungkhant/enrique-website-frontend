@@ -30,15 +30,25 @@ export const adminAuthOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.role = user.role;
-                token.adminId = user.id;
+                // token = { ...token, ...user }; // This will merge user properties into token
+                // token.role = user.role;
+                // token.adminId = user.id;
+
+                Object.keys(user).forEach(key => {
+                    if (key !== "token") token[key] = user[key];
+                });
             }
             return token;
         },
         async session({ session, token }) {
             if (session.user) {
-                session.user.role = token.role;
-                session.user.id = token.adminId;
+                // session.user = { ...session.user, ...token }; // This will merge token properties into session.user
+                // session.user.role = token.role;
+                // session.user.id = token.adminId;
+
+                Object.keys(token).forEach(key => {
+                    if (key !== "token") session.user[key] = token[key];
+                });
             }
             return session;
         },
