@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { BookOpen, Users, GraduationCap, LibraryBig, ListChecks, LogOut, ChevronDown, ChevronRight, StickyNote } from "lucide-react";
+import { BookOpen, Users, GraduationCap, LibraryBig, ListChecks, LogOut, ChevronDown, ChevronRight, StickyNote, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import { useAdminAuth } from "@/hooks/adminAuth";
 import {
     SidebarContent,
     SidebarHeader,
@@ -14,7 +15,6 @@ import {
     SidebarFooter
 } from "../ui/sidebar";
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "../ui/collapsible";
-import { useAdminAuth } from "@/hooks/adminAuth";
 
 const menuItems = [
     {
@@ -52,6 +52,11 @@ const menuItems = [
         label: "Blogs",
         icon: <StickyNote className="w-4 h-4" />,
         href: "/admin/blogs",
+    },
+    {
+        label: "Newsletter",
+        icon: <Newspaper className="w-4 h-4" />,
+        href: "/admin/newsletter",
     },
 ];
 
