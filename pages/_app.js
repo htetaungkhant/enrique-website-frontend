@@ -11,6 +11,7 @@ import 'react-phone-input-2/lib/style.css'
 
 import { store, persistor } from '@/store';
 import AuthModal from "@/components/common/auth/AuthModal";
+import { Toaster } from "@/components/ui/sonner"
 
 export default function App({
   Component,
@@ -31,6 +32,7 @@ export default function App({
       <PersistGate loading={null} persistor={persistor}>
         <SessionProvider session={pageProps.session} {...authOptions}>
           <ToastContainer />
+          <Toaster />
           <AuthModal />
           <Component {...pageProps} />
         </SessionProvider>
