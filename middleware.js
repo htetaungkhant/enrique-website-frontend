@@ -114,6 +114,6 @@ export const config = {
          * 3. /fonts, /icon, /image, /logo, /pdf (static files)
          * 4. /favicon.ico, /sitemap.xml (public files)
          */
-        '/((?!api/(?!auth)|_next|fonts|icon|image|logo|pdf|favicon.ico|sitemap.xml).*)',
+        '/((?!api/(?!auth)|_next|fonts|dummy-data|icon|image|logo|pdf|favicon.ico|sitemap.xml).*)',
     ],
 };
