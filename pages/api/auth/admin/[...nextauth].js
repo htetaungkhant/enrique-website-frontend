@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { validateAdminCredentials } from "@/lib/inhouseAPI/controllers";
+import { validateAdminCredentials } from "@/lib/inhouseAPI/auth-route";
 
 export const adminAuthOptions = {
     providers: [
