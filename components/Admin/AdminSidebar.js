@@ -114,14 +114,12 @@ export default function AdminSidebar() {
                             <Collapsible key={item.label} open={!!openMenus[item.label]} onOpenChange={() => handleToggle(item.label)}>
                                 <SidebarMenuItem>
                                     <CollapsibleTrigger asChild>
-                                        <SidebarMenuButton className="focus:!ring-0 hover:!bg-transparent hover:!text-white">
-                                            <button className="w-full flex items-center gap-2 text-white focus:outline-none">
-                                                {item.icon}
-                                                <span>{item.label}</span>
-                                                <span className="ml-auto">
-                                                    {openMenus[item.label] ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
-                                                </span>
-                                            </button>
+                                        <SidebarMenuButton className="w-full flex items-center gap-2 text-white focus:!ring-0 hover:!bg-transparent hover:!text-white">
+                                            {item.icon}
+                                            <span>{item.label}</span>
+                                            <span className="ml-auto">
+                                                {openMenus[item.label] ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                                            </span>
                                         </SidebarMenuButton>
                                     </CollapsibleTrigger>
                                 </SidebarMenuItem>
@@ -129,16 +127,15 @@ export default function AdminSidebar() {
                                     <ul className="ml-6 mt-1 flex flex-col gap-1">
                                         {item.subMenus.map((sub) => (
                                             <SidebarMenuItem key={sub.href}>
-                                                <Link href={sub.href} passHref legacyBehavior>
+                                                <Link href={sub.href} className="block">
                                                     <SidebarMenuButton
-                                                        asChild
-                                                        isActive={router.pathname === sub.href}
-                                                        className="text-white focus:!ring-0 hover:bg-transparent hover:text-gray-300 active:bg-transparent active:text-white"
+                                                        isActive={sub.href?.toLowerCase()?.split("/")?.every((seg, i) => seg === router.pathname?.toLowerCase()?.split("/")[i])}
+                                                        className="cursor-pointer text-white focus:!ring-0 hover:bg-transparent hover:text-gray-300 active:bg-transparent active:text-white"
                                                     >
-                                                        <a className="flex items-center gap-2 pl-2">
+                                                        <div className="flex items-center gap-2 pl-2">
                                                             {sub.icon}
                                                             <span>{sub.label}</span>
-                                                        </a>
+                                                        </div>
                                                     </SidebarMenuButton>
                                                 </Link>
                                             </SidebarMenuItem>
@@ -148,16 +145,15 @@ export default function AdminSidebar() {
                             </Collapsible>
                         ) : (
                             <SidebarMenuItem key={item.label}>
-                                <Link href={item.href} passHref legacyBehavior>
+                                <Link href={item.href} className="block">
                                     <SidebarMenuButton
-                                        asChild
-                                        isActive={router.pathname === item.href}
-                                        className="text-white hover:bg-transparent hover:text-gray-300 active:bg-transparent active:text-white"
+                                        isActive={item.href?.toLowerCase()?.split("/")?.every((seg, i) => seg === router.pathname?.toLowerCase()?.split("/")[i])}
+                                        className="cursor-pointer text-white hover:bg-transparent hover:text-gray-300 active:bg-transparent active:text-white"
                                     >
-                                        <a className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2">
                                             {item.icon}
                                             <span>{item.label}</span>
-                                        </a>
+                                        </div>
                                     </SidebarMenuButton>
                                 </Link>
                             </SidebarMenuItem>
