@@ -28,10 +28,10 @@ function DialogClose({
   return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
 }
 
-function DialogOverlay({
-  className,
-  ...props
-}) {
+const DialogOverlay = React.forwardRef(function DialogOverlay(
+  { className, ...props },
+  ref
+) {
   return (
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
@@ -39,9 +39,10 @@ function DialogOverlay({
         "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
         className
       )}
+      ref={ref}
       {...props} />
   );
-}
+});
 
 function DialogContent({
   className,
