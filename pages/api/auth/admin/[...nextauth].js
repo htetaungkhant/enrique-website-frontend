@@ -35,7 +35,7 @@ export const adminAuthOptions = {
                 // token.adminId = user.id;
 
                 Object.keys(user).forEach(key => {
-                    if (key !== "token") token[key] = user[key];
+                    token[key] = user[key];
                 });
             }
             return token;
