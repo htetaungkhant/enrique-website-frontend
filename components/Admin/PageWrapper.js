@@ -51,6 +51,7 @@ const AdminPagesWrapper = ({
                                     height={100}
                                     alt="logo"
                                     className="w-30 h-8 xl:w-40 xl:h-10 object-contain"
+                                    priority
                                 />
                             </div>
 
