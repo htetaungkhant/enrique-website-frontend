@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
 import { SidebarProvider } from "../ui/sidebar";
 import AdminSidebar from "./AdminSidebar";
+import { ScrollArea } from "../ui/scroll-area";
 
 
 const AdminPagesWrapper = ({
@@ -26,8 +27,8 @@ const AdminPagesWrapper = ({
 
     return (
         <SidebarProvider>
-            <main className="w-screen min-h-screen bg-gray-900">
-                <section className="mx-auto max-w-330 lg:border-x border-gray-800">
+            <main className="w-screen h-screen bg-gray-900 overflow-hidden">
+                <section className="h-full mx-auto max-w-330 lg:border-x border-gray-800">
                     {/* Header Bar */}
                     <header className="fixed top-0 left-0 w-full bg-gray-900 border-b border-gray-800 px-6 py-4 flex justify-center z-50">
                         <div className="w-full max-w-330 flex justify-between">
@@ -84,7 +85,9 @@ const AdminPagesWrapper = ({
                             <AdminSidebar />
                         </aside>
                         <section className="flex-1">
-                            {children}
+                            <ScrollArea className="h-[calc(100vh-80px)]">
+                                {children}
+                            </ScrollArea>
                         </section>
                     </div>
                 </section>
