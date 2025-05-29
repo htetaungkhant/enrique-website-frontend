@@ -252,6 +252,7 @@ export function FacilitatorForm() {
                                                     size="icon"
                                                     onClick={() => removeArea(index)}
                                                     disabled={isSubmitting}
+                                                    className="hover:text-red-500"
                                                 >
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
@@ -322,6 +323,7 @@ export function FacilitatorForm() {
                                                     size="icon"
                                                     onClick={() => removeWork(index)}
                                                     disabled={isSubmitting}
+                                                    className="hover:text-red-500"
                                                 >
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
