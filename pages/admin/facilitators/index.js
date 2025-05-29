@@ -1,7 +1,7 @@
 import { getFacilitators } from "@/lib/inhouseAPI/facilitator-route";
 import AdminPagesWrapper from "@/components/Admin/PageWrapper";
 import FacilitatorCard from "@/components/Admin/FacilitatorsPage/FacilitatorCard";
-import NewFacilitatorCard from "@/components/Admin/FacilitatorsPage/NewFacilitatorCard";
+import AddNewCard from "@/components/Admin/AddNewCard";
 
 
 export async function getServerSideProps(context) {
@@ -39,7 +39,10 @@ const Facilitators = ({ facilitators }) => {
                     />
                 ))}
 
-                <NewFacilitatorCard />
+                <AddNewCard
+                    label="Add New Facilitator"
+                    href="/admin/facilitators/create-new-facilitator"
+                />
             </div>
         </AdminPagesWrapper>
     );
