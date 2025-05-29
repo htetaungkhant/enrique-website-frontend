@@ -218,7 +218,7 @@ const FacilitatorCard = ({
                                 <DialogTitle>Edit Facilitator Profile</DialogTitle>
                             </DialogHeader>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-                                <div className="space-y-6">
+                                <div className="space-y-7">
                                     <div>
                                         <Label htmlFor="image">Profile Image</Label>
                                         <div className="mt-2">
@@ -291,41 +291,42 @@ const FacilitatorCard = ({
                                     <div>
                                         <Label>Areas of Expertise</Label>
                                         {areaFields.map((field, index) => (
-                                            <div key={field.id} className="mt-4 space-y-4 p-3 border rounded-lg">
-                                                <div>
-                                                    <Label>Title</Label>
-                                                    <Input
-                                                        {...form.register(`areaOfExpertise.${index}.title`)}
-                                                    />
-                                                    {form.formState.errors.areaOfExpertise?.[index]?.title && (
-                                                        <p className="text-sm text-red-500 mt-1">
-                                                            {form.formState.errors.areaOfExpertise[index].title.message}
-                                                        </p>
-                                                    )}
-                                                </div>
-                                                <div>
-                                                    <Label>Description</Label>
-                                                    <Textarea
-                                                        {...form.register(`areaOfExpertise.${index}.description`)}
-                                                    />
-                                                    {form.formState.errors.areaOfExpertise?.[index]?.description && (
-                                                        <p className="text-sm text-red-500 mt-1">
-                                                            {form.formState.errors.areaOfExpertise[index].description.message}
-                                                        </p>
-                                                    )}
-                                                </div>
+                                            <div key={field.id} className="mt-4 relative p-3 border rounded-lg">
                                                 {index > 0 && (
                                                     <Button
                                                         type="button"
-                                                        variant="outline"
-                                                        size="sm"
+                                                        variant="ghost"
+                                                        size="icon"
                                                         onClick={() => removeArea(index)}
-                                                        className="cursor-pointer"
+                                                        className="absolute -right-3 -top-3 h-6 w-6 border rounded-full bg-white text-gray-500 hover:text-red-500 transition-colors cursor-pointer"
                                                     >
-                                                        <Minus className="h-4 w-4 mr-2" />
-                                                        Remove
+                                                        <Minus className="h-4 w-4" />
                                                     </Button>
                                                 )}
+                                                <div className="space-y-4">
+                                                    <div>
+                                                        <Label>Title</Label>
+                                                        <Input
+                                                            {...form.register(`areaOfExpertise.${index}.title`)}
+                                                        />
+                                                        {form.formState.errors.areaOfExpertise?.[index]?.title && (
+                                                            <p className="text-sm text-red-500 mt-1">
+                                                                {form.formState.errors.areaOfExpertise[index].title.message}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                    <div>
+                                                        <Label>Description</Label>
+                                                        <Textarea
+                                                            {...form.register(`areaOfExpertise.${index}.description`)}
+                                                        />
+                                                        {form.formState.errors.areaOfExpertise?.[index]?.description && (
+                                                            <p className="text-sm text-red-500 mt-1">
+                                                                {form.formState.errors.areaOfExpertise[index].description.message}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                </div>
                                             </div>
                                         ))}
                                         <Button
@@ -336,43 +337,44 @@ const FacilitatorCard = ({
                                             onClick={() => appendArea({ title: "", description: "" })}
                                         >
                                             <Plus className="h-4 w-4 mr-2" />
-                                            Add Area
+                                            Add More
                                         </Button>
                                     </div>
 
                                     <div>
                                         <Label>Work and Impact</Label>
                                         {workFields.map((field, index) => (
-                                            <div key={field.id} className="mt-4 space-y-4 p-3 border rounded-lg">
-                                                <div>
-                                                    <Label>Title (Optional)</Label>
-                                                    <Input
-                                                        {...form.register(`workAndImpact.${index}.title`)}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <Label>Description</Label>
-                                                    <Textarea
-                                                        {...form.register(`workAndImpact.${index}.description`)}
-                                                    />
-                                                    {form.formState.errors.workAndImpact?.[index]?.description && (
-                                                        <p className="text-sm text-red-500 mt-1">
-                                                            {form.formState.errors.workAndImpact[index].description.message}
-                                                        </p>
-                                                    )}
-                                                </div>
+                                            <div key={field.id} className="mt-4 relative p-3 border rounded-lg">
                                                 {index > 0 && (
                                                     <Button
                                                         type="button"
-                                                        variant="outline"
-                                                        size="sm"
+                                                        variant="ghost"
+                                                        size="icon"
                                                         onClick={() => removeWork(index)}
-                                                        className="cursor-pointer"
+                                                        className="absolute -right-3 -top-3 h-6 w-6 border rounded-full bg-white text-gray-500 hover:text-red-500 transition-colors cursor-pointer"
                                                     >
-                                                        <Minus className="h-4 w-4 mr-2" />
-                                                        Remove
+                                                        <Minus className="h-4 w-4" />
                                                     </Button>
                                                 )}
+                                                <div className="space-y-4">
+                                                    <div>
+                                                        <Label>Title (Optional)</Label>
+                                                        <Input
+                                                            {...form.register(`workAndImpact.${index}.title`)}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <Label>Description</Label>
+                                                        <Textarea
+                                                            {...form.register(`workAndImpact.${index}.description`)}
+                                                        />
+                                                        {form.formState.errors.workAndImpact?.[index]?.description && (
+                                                            <p className="text-sm text-red-500 mt-1">
+                                                                {form.formState.errors.workAndImpact[index].description.message}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                </div>
                                             </div>
                                         ))}
                                         <Button
@@ -383,7 +385,7 @@ const FacilitatorCard = ({
                                             onClick={() => appendWork({ title: "", description: "" })}
                                         >
                                             <Plus className="h-4 w-4 mr-2" />
-                                            Add Work
+                                            Add More
                                         </Button>
                                     </div>
                                 </div>
