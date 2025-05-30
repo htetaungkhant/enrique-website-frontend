@@ -55,7 +55,7 @@ const Courses = ({ courses, currentPage }) => {
     };
 
     const handleEditCourse = (courseId) => {
-        router.push(`/admin/courses/${courseId}/edit`);
+        router.push(`/admin/course-management/courses/${courseId}/edit`);
     };
 
     return (
@@ -94,7 +94,7 @@ const Courses = ({ courses, currentPage }) => {
 
                     <AddNewCard
                         label="Add New Course"
-                        href="/admin/courses/create-new-course"
+                        href="/admin/course-management/create-new-course"
                     />
                 </div>
 

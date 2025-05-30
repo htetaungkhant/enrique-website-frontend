@@ -46,12 +46,12 @@ const menuItems = [
             {
                 label: "Courses",
                 icon: <BookOpen className="w-4 h-4" />,
-                href: "/admin/courses",
+                href: "/admin/course-management/courses",
             },
             {
                 label: "Create New Course",
                 icon: <SquarePlus className="w-4 h-4" />,
-                href: "/admin/courses/create-new-course",
+                href: "/admin/course-management/create-new-course",
             },
         ],
     },
@@ -141,7 +141,7 @@ export default function AdminSidebar() {
                                             <SidebarMenuItem key={sub.href}>
                                                 <Link href={sub.href} className="block">
                                                     <SidebarMenuButton
-                                                        isActive={router.pathname === sub.href}
+                                                        isActive={sub.href?.toLowerCase()?.split("/")?.every((seg, i) => seg === router.pathname?.toLowerCase()?.split("/")[i])}
                                                         className="cursor-pointer text-white focus:!ring-0 hover:bg-transparent hover:text-gray-300 active:bg-transparent active:text-white"
                                                     >
                                                         <div className="flex items-center gap-2 pl-2">
