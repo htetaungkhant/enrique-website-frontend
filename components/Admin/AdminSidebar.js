@@ -51,7 +51,7 @@ const menuItems = [
             {
                 label: "Create New Course",
                 icon: <SquarePlus className="w-4 h-4" />,
-                href: "/admin/create-new-course",
+                href: "/admin/courses/create-new-course",
             },
         ],
     },

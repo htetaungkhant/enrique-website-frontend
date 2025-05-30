@@ -154,7 +154,7 @@ const Courses = ({ courses, currentPage }) => {
 
                     <AddNewCard
                         label="Add New Course"
-                        href="/admin/create-new-course"
+                        href="/admin/courses/create-new-course"
                     />
                 </div>
 
