@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BookOpen, Users, GraduationCap, LibraryBig, ListChecks, LogOut, ChevronDown, ChevronRight, StickyNote, Newspaper } from "lucide-react";
+import { BookOpen, Users, GraduationCap, LibraryBig, ListChecks, LogOut, ChevronDown, ChevronRight, StickyNote, SquarePlus, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -41,7 +41,19 @@ const menuItems = [
     {
         label: "Course Management",
         icon: <LibraryBig className="w-4 h-4" />,
-        href: "/admin/courses",
+        // href: "/admin/courses",
+        subMenus: [
+            {
+                label: "Courses",
+                icon: <BookOpen className="w-4 h-4" />,
+                href: "/admin/courses",
+            },
+            {
+                label: "Create New Course",
+                icon: <SquarePlus className="w-4 h-4" />,
+                href: "/admin/create-new-course",
+            },
+        ],
     },
     {
         label: "Ceremony Management",
