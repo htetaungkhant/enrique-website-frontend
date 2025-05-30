@@ -141,7 +141,7 @@ export default function AdminSidebar() {
                                             <SidebarMenuItem key={sub.href}>
                                                 <Link href={sub.href} className="block">
                                                     <SidebarMenuButton
-                                                        isActive={sub.href?.toLowerCase()?.split("/")?.every((seg, i) => seg === router.pathname?.toLowerCase()?.split("/")[i])}
+                                                        isActive={router.pathname === sub.href}
                                                         className="cursor-pointer text-white focus:!ring-0 hover:bg-transparent hover:text-gray-300 active:bg-transparent active:text-white"
                                                     >
                                                         <div className="flex items-center gap-2 pl-2">
