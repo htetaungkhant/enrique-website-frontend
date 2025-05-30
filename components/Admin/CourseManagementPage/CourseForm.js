@@ -54,14 +54,14 @@ const courseFormSchema = z.object({
     extraDetails: z.array(
         z.object({
             title: z.string().min(1, "Section title is required"),
-            points: z.array(z.string().min(1, "Point is required")).min(1, "At least one point is required"),
+            points: z.array(z.string().min(1, "Note shouldn't empty")).min(1, "At least one note is required"),
         })
     ).min(1, "At least one extra detail section is required"),
     courseVideos: z.array(
         z.object({
             video: z.string().min(1, "Video URL is required"),
             title: z.string().min(1, "Video title is required"),
-            points: z.array(z.string().optional()), // Points are optional for course videos
+            points: z.array(z.string().min(1, "Note shouldn't empty")).optional(), // Points are optional for course videos
         })
     ).min(1, "At least one course video is required"),
 });
@@ -92,7 +92,7 @@ const PointsArray = ({ name, index, isExtraDetails, isSubmitting }) => {
                             <FormItem className="flex-1">
                                 <FormControl>
                                     <Input
-                                        placeholder={`${isExtraDetails ? "Add a point (required)" : "Add a point (optional)"}`}
+                                        placeholder="Add a note" // {`${isExtraDetails ? "Add a note (required)" : "Add a note (optional)"}`}
                                         {...field}
                                         disabled={isSubmitting}
                                     />
@@ -101,18 +101,36 @@ const PointsArray = ({ name, index, isExtraDetails, isSubmitting }) => {
                             </FormItem>
                         )}
                     />
-                    {points.length > 1 && (
-                        <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleRemove(pointIndex)}
-                            className="h-10 w-10 cursor-pointer"
-                            disabled={isSubmitting}
-                        >
-                            <X className="h-4 w-4" />
-                        </Button>
-                    )}
+                    {
+                        isExtraDetails ? (
+                            points.length > 1 && (
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => handleRemove(pointIndex)}
+                                    className="h-10 w-10 cursor-pointer"
+                                    disabled={isSubmitting}
+                                >
+                                    <X className="h-4 w-4" />
+                                </Button>
+                            )
+                        )
+                            : (
+                                points.length > 0 && (
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => handleRemove(pointIndex)}
+                                        className="h-10 w-10 cursor-pointer"
+                                        disabled={isSubmitting}
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                )
+                            )
+                    }
                 </div>
             ))}
             <Button
@@ -123,7 +141,7 @@ const PointsArray = ({ name, index, isExtraDetails, isSubmitting }) => {
                 onClick={handleAdd}
                 disabled={isSubmitting}
             >
-                Add Point
+                Add Note
             </Button>
         </div>
     );
@@ -144,7 +162,7 @@ export function CourseForm() {
             createdBy: "",
             sessionOverview: "",
             extraDetails: [{ title: "", points: [""] }],
-            courseVideos: [{ video: "", title: "", points: [""] }],
+            courseVideos: [{ video: "", title: "", points: [] }],
         },
     });
 
@@ -486,7 +504,7 @@ export function CourseForm() {
                                 variant="outline"
                                 size="sm"
                                 className="cursor-pointer"
-                                onClick={() => appendCourseVideo({ video: "", title: "", points: [""] })}
+                                onClick={() => appendCourseVideo({ video: "", title: "", points: [] })}
                                 disabled={isSubmitting}
                             >
                                 <Plus className="mr-2 h-4 w-4" />
