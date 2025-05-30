@@ -146,8 +146,8 @@ const CourseCard = ({
                                             </AlertDialogDescription>
                                         </AlertDialogHeader>
                                         <AlertDialogFooter>
-                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+                                            <AlertDialogCancel className="cursor-pointer">Cancel</AlertDialogCancel>
+                                            <AlertDialogAction onClick={handleDelete} className="cursor-pointer">Delete</AlertDialogAction>
                                         </AlertDialogFooter>
                                     </AlertDialogContent>
                                 </AlertDialog>
