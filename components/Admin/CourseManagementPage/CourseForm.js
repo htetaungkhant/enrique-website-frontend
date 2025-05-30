@@ -107,7 +107,7 @@ const PointsArray = ({ name, index, isExtraDetails, isSubmitting }) => {
                             variant="ghost"
                             size="icon"
                             onClick={() => handleRemove(pointIndex)}
-                            className="h-10 w-10"
+                            className="h-10 w-10 cursor-pointer"
                             disabled={isSubmitting}
                         >
                             <X className="h-4 w-4" />
@@ -119,7 +119,7 @@ const PointsArray = ({ name, index, isExtraDetails, isSubmitting }) => {
                 type="button"
                 variant="outline"
                 size="sm"
-                className="mt-2"
+                className="mt-2 cursor-pointer"
                 onClick={handleAdd}
                 disabled={isSubmitting}
             >
@@ -425,6 +425,7 @@ export function CourseForm() {
                                 type="button"
                                 variant="outline"
                                 size="sm"
+                                className="cursor-pointer"
                                 onClick={() => appendExtraDetail({ title: "", points: [""] })}
                                 disabled={isSubmitting}
                             >
@@ -484,6 +485,7 @@ export function CourseForm() {
                                 type="button"
                                 variant="outline"
                                 size="sm"
+                                className="cursor-pointer"
                                 onClick={() => appendCourseVideo({ video: "", title: "", points: [""] })}
                                 disabled={isSubmitting}
                             >
