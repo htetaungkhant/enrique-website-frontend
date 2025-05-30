@@ -1,6 +1,6 @@
 import formidable from 'formidable';
 
-import { getAllCourses, createCourse, deleteCourse } from '@/lib/inhouseAPI/course-route';
+import { createCourse, deleteCourse } from '@/lib/inhouseAPI/course-route';
 
 const parseDeleteBody = async (req) => {
     const chunks = [];
@@ -28,15 +28,7 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-    if (req.method === "GET") {
-        try {
-            const courses = await getAllCourses(req);
-            res.status(200).json(courses);
-        } catch (error) {
-            console.error("Error fetching courses:", error);
-            res.status(500).json({ error: "Internal Server Error" });
-        }
-    }
+    if (req.method === "GET") { }
     else if (req.method === "POST") {
         try {
             const { fields, files } = await parseForm(req);
