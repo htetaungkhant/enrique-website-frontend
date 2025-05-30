@@ -118,15 +118,6 @@ const Courses = ({ courses, currentPage }) => {
         router.push(`/admin/courses/${courseId}/edit`);
     };
 
-    const handleDeleteCourse = async (courseId) => {
-        // Implement delete functionality
-        if (window.confirm("Are you sure you want to delete this course?")) {
-            // Call delete API
-            // Refresh the page after deletion
-            router.reload();
-        }
-    };
-
     return (
         <AdminPagesWrapper>
             <div className="p-6 space-y-6">
@@ -157,7 +148,6 @@ const Courses = ({ courses, currentPage }) => {
                             createdAt={course.createdAt}
                             price={course.price}
                             onEdit={handleEditCourse}
-                            onDelete={handleDeleteCourse}
                         />
                     )
                     )}

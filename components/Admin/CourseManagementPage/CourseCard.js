@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import Image from "next/image";
 import { format } from "date-fns";
 import { Calendar, Edit, Trash2 } from "lucide-react";
@@ -11,6 +12,17 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const CourseCard = ({
     id,
@@ -23,6 +35,31 @@ const CourseCard = ({
     onDelete,
     onEdit,
 }) => {
+    const router = useRouter();
+
+    const handleDelete = async () => {
+        try {
+            const response = await fetch("/api/admin/course", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ id }),
+            });
+
+            if (response.ok) {
+                router.replace(router.asPath);
+                onDelete && onDelete(id);
+            } else {
+                console.error("Failed to delete course");
+                toast.error("Failed to delete course. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error deleting course:", error);
+            toast.error("Failed to delete course. Please try again.");
+        }
+    };
+
     return (
         <TooltipProvider>
             <Card className="group p-0 gap-3 h-full overflow-hidden shadow-sm transition-all flex flex-col bg-white">
@@ -83,21 +120,37 @@ const CourseCard = ({
                                     </TooltipContent>
                                 </Tooltip>
 
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <Button
-                                            onClick={() => onDelete(id)}
-                                            size="icon"
-                                            variant="outline"
-                                            className="h-8 w-8 hover:bg-red-100 hover:text-red-600 hover:border-red-600 cursor-pointer"
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p>Delete course</p>
-                                    </TooltipContent>
-                                </Tooltip>
+                                <AlertDialog>
+                                    <Tooltip>
+                                        <AlertDialogTrigger asChild>
+                                            <TooltipTrigger asChild>
+                                                <Button
+                                                    size="icon"
+                                                    variant="outline"
+                                                    className="h-8 w-8 hover:bg-red-100 hover:text-red-600 hover:border-red-600 cursor-pointer"
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            </TooltipTrigger>
+                                        </AlertDialogTrigger>
+                                        <TooltipContent>
+                                            <p>Delete course</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                <strong className="text-red-600">This action cannot be undone.</strong> This will permanently delete the course and all associated data.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
                             </div>
                         </div>
                     </div>

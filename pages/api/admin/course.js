@@ -1,6 +1,6 @@
 import formidable from 'formidable';
 
-import { getAllCourses, createCourse } from '@/lib/inhouseAPI/course-route';
+import { getAllCourses, createCourse, deleteCourse } from '@/lib/inhouseAPI/course-route';
 
 const parseDeleteBody = async (req) => {
     const chunks = [];
@@ -62,7 +62,22 @@ export default async function handler(req, res) {
         }
     }
     else if (req.method === "PUT") { }
-    else if (req.method === "DELETE") { }
+    else if (req.method === "DELETE") {
+        try {
+            const body = await parseDeleteBody(req);
+            req.body = body;
+
+            const deletedCourse = await deleteCourse(req);
+            if (deletedCourse) {
+                res.status(200).json(deletedCourse);
+            } else {
+                res.status(400).json({ error: "Failed to delete course" });
+            }
+        } catch (error) {
+            console.error("Error deleting course:", error);
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
     else {
         res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
         res.status(405).end(`Method ${req.method} Not Allowed`);
