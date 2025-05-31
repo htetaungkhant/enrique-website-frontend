@@ -1,6 +1,6 @@
 import formidable from 'formidable';
 
-import { createCourse, updateCourse, deleteCourse } from '@/lib/inhouseAPI/course-route';
+import { createCourse, deleteCourse } from '@/lib/inhouseAPI/course-route';
 
 const parseDeleteBody = async (req) => {
     const chunks = [];
@@ -53,30 +53,6 @@ export default async function handler(req, res) {
             res.status(500).json({ error: "Internal Server Error" });
         }
     }
-    else if (req.method === "PUT") {
-        try {
-            const { fields, files } = await parseForm(req);
-
-            // Create a new request object with the parsed data
-            req.body = {
-                ...fields,
-                courseImage: files.courseImage,
-                createdByImage: files.createdByImage,
-                extraDetails: JSON.parse(fields.extraDetails),
-                courseVideos: JSON.parse(fields.courseVideos)
-            };
-
-            const updatedCourse = await updateCourse(req);
-            if (updatedCourse) {
-                res.status(200).json(updatedCourse);
-            } else {
-                res.status(400).json({ error: "Failed to update course" });
-            }
-        } catch (error) {
-            console.error("Error updating course:", error);
-            res.status(500).json({ error: "Internal Server Error" });
-        }
-    }
     else if (req.method === "DELETE") {
         try {
             const body = await parseDeleteBody(req);
@@ -94,7 +70,7 @@ export default async function handler(req, res) {
         }
     }
     else {
-        res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
+        res.setHeader("Allow", ["GET", "POST", "DELETE"]);
         res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 }
