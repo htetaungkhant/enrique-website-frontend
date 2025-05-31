@@ -1,6 +1,6 @@
 import formidable from 'formidable';
 
-import { createFacilitator, updateFacilitator, deleteFacilitator } from "@/lib/inhouseAPI/facilitator-route";
+import { createFacilitator, deleteFacilitator } from "@/lib/inhouseAPI/facilitator-route";
 
 // For DELETE requests we need the body parser
 const parseDeleteBody = async (req) => {
@@ -53,29 +53,6 @@ export default async function handler(req, res) {
             res.status(500).json({ error: "Internal Server Error" });
         }
     }
-    else if (req.method === "PUT") {
-        try {
-            const { fields, files } = await parseForm(req);
-
-            // Create a new request object with the parsed data
-            req.body = {
-                ...fields,
-                image: files.image,
-                areaOfExpertise: JSON.parse(fields.areaOfExpertise),
-                workAndImpact: JSON.parse(fields.workAndImpact)
-            };
-
-            const updatedFacilitator = await updateFacilitator(req);
-            if (updatedFacilitator) {
-                res.status(200).json(updatedFacilitator);
-            } else {
-                res.status(400).json({ error: "Failed to update facilitator" });
-            }
-        } catch (error) {
-            console.error("Error updating facilitator:", error);
-            res.status(500).json({ error: "Internal Server Error" });
-        }
-    }
     else if (req.method === "DELETE") {
         try {
             // Parse the body for DELETE requests
@@ -94,7 +71,7 @@ export default async function handler(req, res) {
         }
     }
     else {
-        res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
+        res.setHeader("Allow", ["GET", "POST", "DELETE"]);
         res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 }

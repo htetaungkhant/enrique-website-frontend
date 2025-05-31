@@ -163,10 +163,13 @@ const FacilitatorCard = ({
             formData.append("areaOfExpertise", JSON.stringify(data.areaOfExpertise));
             formData.append("workAndImpact", JSON.stringify(data.workAndImpact));
 
-            const response = await fetch("/api/admin/facilitator", {
-                method: "PUT",
-                body: formData,
-            });
+            const response = await fetch(
+                `/api/admin/facilitator/${id}`,
+                {
+                    method: "PUT",
+                    body: formData,
+                }
+            );
 
             const result = await response.json();
 
