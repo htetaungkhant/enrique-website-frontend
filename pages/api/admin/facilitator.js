@@ -1,6 +1,6 @@
 import formidable from 'formidable';
 
-import { getFacilitators, createFacilitator, updateFacilitator, deleteFacilitator } from "@/lib/inhouseAPI/facilitator-route"
+import { createFacilitator, updateFacilitator, deleteFacilitator } from "@/lib/inhouseAPI/facilitator-route";
 
 // For DELETE requests we need the body parser
 const parseDeleteBody = async (req) => {
@@ -29,15 +29,7 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-    if (req.method === "GET") {
-        try {
-            const facilitators = await getFacilitators(req);
-            res.status(200).json(facilitators);
-        } catch (error) {
-            console.error("Error fetching facilitators:", error);
-            res.status(500).json({ error: "Internal Server Error" });
-        }
-    }
+    if (req.method === "GET") { }
     else if (req.method === "POST") {
         try {
             const { fields, files } = await parseForm(req);
