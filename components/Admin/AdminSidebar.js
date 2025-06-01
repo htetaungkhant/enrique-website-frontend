@@ -58,7 +58,19 @@ const menuItems = [
     {
         label: "Ceremony Management",
         icon: <GraduationCap className="w-4 h-4" />,
-        href: "/admin/ceremonies",
+        // href: "/admin/ceremonies",
+        subMenus: [
+            {
+                label: "Ceremonies",
+                icon: <BookOpen className="w-4 h-4" />,
+                href: "/admin/ceremony-management/ceremonies",
+            },
+            {
+                label: "Create New Ceremony",
+                icon: <SquarePlus className="w-4 h-4" />,
+                href: "/admin/ceremony-management/create-new-ceremony",
+            },
+        ],
     },
     {
         label: "Blogs",
