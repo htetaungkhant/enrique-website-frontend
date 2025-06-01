@@ -245,7 +245,7 @@ export function FacilitatorForm() {
                                     <div className="grid gap-4">
                                         <div className="flex items-center justify-between">
                                             <h4 className="font-medium">Area #{index + 1}</h4>
-                                            {index > 0 && (
+                                            {areaFields?.length > 1 && (
                                                 <Button
                                                     type="button"
                                                     variant="ghost"
@@ -316,7 +316,7 @@ export function FacilitatorForm() {
                                     <div className="grid gap-4">
                                         <div className="flex items-center justify-between">
                                             <h4 className="font-medium">Work #{index + 1}</h4>
-                                            {index > 0 && (
+                                            {workFields?.length > 1 && (
                                                 <Button
                                                     type="button"
                                                     variant="ghost"
