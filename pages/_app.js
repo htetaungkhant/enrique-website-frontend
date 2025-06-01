@@ -32,7 +32,7 @@ export default function App({
       <PersistGate loading={null} persistor={persistor}>
         <SessionProvider session={pageProps.session} {...authOptions}>
           <ToastContainer />
-          <Toaster position="top-right" richColors />
+          <Toaster position="top-right" richColors closeButton />
           <AuthModal />
           <Component {...pageProps} />
         </SessionProvider>
