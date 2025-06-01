@@ -411,7 +411,7 @@ const FacilitatorCard = ({
                             <AlertDialogHeader>
                                 <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                    This action cannot be undone. This will permanently delete {fullName}'s profile.
+                                    <strong className="text-red-600">This action cannot be undone.</strong> This will permanently delete {fullName}'s profile.
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
