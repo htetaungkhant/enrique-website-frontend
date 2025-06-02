@@ -112,7 +112,7 @@ const Ceremonies = ({ ceremonies, currentPage }) => {
                         <CeremonyCard
                             key={ceremony.id}
                             id={ceremony.id}
-                            image={"https://s3.eu-west-1.amazonaws.com/arise-api/ceremony/01972d17-2c8f-7001-8cff-a990d3a04ad1_original.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2HUZ2C4HNRMJMJ6V%2F20250602%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20250602T045818Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=0c59ff914ab3dc164f9ea623bd0eb2954c1526b028c2b0025ec93cb4d9a3911e" || ceremony.image?.image}
+                            image={ceremony.image?.image}
                             title={ceremony.title}
                             locationCountry={ceremony.locationCountry}
                             locationAddress={ceremony.locationAddress}
