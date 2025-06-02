@@ -1,5 +1,6 @@
 import formidable from 'formidable';
 import { updateCeremony } from '@/lib/inhouseAPI/ceremony-route';
+import { filterDateMessages } from '@/lib/inhouseAPI/utils';
 
 const parseForm = async (req) => {
     return new Promise((resolve, reject) => {
@@ -21,7 +22,7 @@ export default async function handler(req, res) {
     if (req.method === "GET") { }
     else if (req.method === "PUT") {
         try {
-            // const { id } = req.query;
+            const { id } = req.query;
             const { fields, files } = await parseForm(req);
 
             req.body = {
@@ -39,6 +40,9 @@ export default async function handler(req, res) {
                 const errors = filterDateMessages(updatedCeremony);
                 if (errors.length > 0) {
                     res.status(400).json({ errors });
+                }
+                else if (updatedCeremony?.errors) {
+                    res.status(400).json(updatedCeremony);
                 }
                 else if (updatedCeremony?.error) {
                     res.status(400).json(updatedCeremony);
