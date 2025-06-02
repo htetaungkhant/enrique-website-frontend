@@ -59,6 +59,19 @@ const formSchema = z.object({
     ).min(1, "At least one extra detail section is required"),
 });
 
+const defaultValues = {
+    title: "",
+    startDate: "",
+    endDate: "",
+    price: "",
+    locationCountry: "",
+    locationAddress: "",
+    description: "",
+    mainImage: null,
+    hosts: [],
+    extraDetails: [{ title: "", points: [""] }],
+}
+
 export function CreateCeremonyForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [mainImage, setMainImage] = useState(null);
@@ -70,18 +83,7 @@ export function CreateCeremonyForm() {
 
     const form = useForm({
         resolver: zodResolver(formSchema),
-        defaultValues: {
-            title: "",
-            startDate: "",
-            endDate: "",
-            price: "",
-            locationCountry: "",
-            locationAddress: "",
-            description: "",
-            mainImage: null,
-            hosts: [],
-            extraDetails: [{ title: "", points: [""] }],
-        },
+        defaultValues,
     });
 
     const {
@@ -175,13 +177,14 @@ export function CreateCeremonyForm() {
             const responseJson = await response.json();
             if (response.ok) {
                 toast.success("Ceremony created successfully");
-                form.reset();
+                form.reset(defaultValues);
                 setMainImage(null);
                 setHosts([]);
                 setEditingHost(null);
                 setHostDialogOpen(false);
                 setNewHostName("");
                 setNewHostImage(null);
+                form.clearErrors();
 
                 // router.push("/admin/ceremony-management/ceremonies");
             }
