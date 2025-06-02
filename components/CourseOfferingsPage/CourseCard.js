@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { FaCalendarAlt } from "react-icons/fa";
-import { HiCurrencyDollar } from "react-icons/hi2";
+import { AiFillEuroCircle } from "react-icons/ai";
 import { HiBadgeCheck } from "react-icons/hi";
+import { format } from "date-fns";
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -11,6 +12,7 @@ const CourseCard = ({
     title,
     description,
     instructor,
+    instructorImage,
     dates,
     price,
     purchase = false,
@@ -20,7 +22,7 @@ const CourseCard = ({
         <Link
             href={`/course-offerings/${title}`}
             className={cn(
-                "inter-font text-[#212A63] rounded-2xl overflow-hidden",
+                "inter-font text-[#212A63] flex flex-col rounded-2xl overflow-hidden",
                 className,
             )}
         >
@@ -29,16 +31,16 @@ const CourseCard = ({
                 width={312}
                 height={225}
                 alt="course"
-                className="w-full h-auto object-cover"
+                className="w-full h-64 object-cover"
             />
-            <div className="flex flex-col bg-white p-2 lg:p-4">
-                <div className="flex flex-col gap-1 pb-1 border-[#2A6C4B] border-b">
+            <div className="flex-1 flex flex-col bg-white p-2 lg:p-4">
+                <div className="flex-1 flex flex-col gap-1 pb-1 border-[#2A6C4B] border-b">
                     {title && <h4 className="text-[#2A6C4B] font-semibold">{title}</h4>}
-                    {description && <p className="text-sm font-medium">{description}</p>}
+                    {description && <p className="flex-1 text-sm font-medium line-clamp-2">{description}</p>}
                     <div className="py-1 flex gap-2 justify-between">
                         <div className="flex gap-1 items-center">
                             <Image
-                                src="/dummy-data/6.png"
+                                src={instructorImage}
                                 width={48}
                                 height={48}
                                 alt="instructor"
@@ -48,7 +50,9 @@ const CourseCard = ({
                         </div>
                         <div className="flex gap-1 items-center">
                             <FaCalendarAlt className="text-[#2A6C4B]" />
-                            <span className="pl-1 text-xs font-medium">{dates}</span>
+                            <span className="pl-1 text-xs font-medium">
+                                {format(new Date(dates), "dd/MM/yyyy")}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -63,8 +67,8 @@ const CourseCard = ({
                             )
                             : (
                                 <>
-                                    <HiCurrencyDollar size={28} className="text-[#2A6C4B]" />
-                                    <span className="text-lg font-medium">${price}</span>
+                                    <AiFillEuroCircle size={28} className="text-[#2A6C4B]" />
+                                    <span className="text-lg font-medium">€{price}</span>
                                 </>
                             )
                     }
