@@ -21,12 +21,16 @@ export function DateTimePicker({ value, onChange, placeholder, disabled }) {
     useEffect(() => {
         if (date) {
             onChange(date.toISOString());
+        } else {
+            onChange("");
         }
     }, [date, onChange]);
 
     useEffect(() => {
         if (value) {
             setDate(new Date(value));
+        } else {
+            setDate(undefined);
         }
     }, [value]);
 
