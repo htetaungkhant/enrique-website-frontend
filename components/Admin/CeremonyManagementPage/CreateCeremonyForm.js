@@ -195,7 +195,11 @@ export function CreateCeremonyForm() {
                             ))
                         }
                     </div>
-                )
+                );
+            }
+            else if (response.status === 400 && responseJson?.error) {
+                console.error("Failed to create ceremony:", responseJson.error);
+                toast.error(responseJson.error);
             }
             else {
                 console.error("Failed to create ceremony");

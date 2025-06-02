@@ -49,6 +49,9 @@ export default async function handler(req, res) {
                 if (errors.length > 0) {
                     res.status(400).json({ errors });
                 }
+                else if (newCeremony?.error) {
+                    res.status(400).json(newCeremony);
+                }
                 else {
                     res.status(201).json(newCeremony);
                 }

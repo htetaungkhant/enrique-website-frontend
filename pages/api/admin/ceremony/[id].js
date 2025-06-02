@@ -36,7 +36,16 @@ export default async function handler(req, res) {
 
             const updatedCeremony = await updateCeremony(req);
             if (updatedCeremony) {
-                res.status(200).json(updatedCeremony);
+                const errors = filterDateMessages(updatedCeremony);
+                if (errors.length > 0) {
+                    res.status(400).json({ errors });
+                }
+                else if (updatedCeremony?.error) {
+                    res.status(400).json(updatedCeremony);
+                }
+                else {
+                    res.status(200).json(updatedCeremony);
+                }
             } else {
                 res.status(400).json({ error: "Failed to update ceremony" });
             }
