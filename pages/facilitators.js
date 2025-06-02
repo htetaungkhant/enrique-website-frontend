@@ -103,7 +103,6 @@ import { getFacilitators } from "@/lib/inhouseAPI/facilitator-route";
 export async function getServerSideProps(context) {
     try {
         const facilitators = await getFacilitators(context.req);
-        console.log(facilitators);
 
         return {
             props: {
