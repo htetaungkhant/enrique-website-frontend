@@ -131,9 +131,6 @@ export async function getServerSideProps(context) {
             });
         }
 
-
-        console.log(ceremonies);
-
         return {
             props: {
                 ceremonies: ceremonies ?? null,
