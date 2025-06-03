@@ -20,9 +20,11 @@ import { cn } from "@/lib/utils";
 export async function getServerSideProps(context) {
     try {
         const page = parseInt(context.query.page) || 1;
-        const ceremonies = await getCeremonies({ ...context.req, body: { page, limit: 10 } });
+        const response = await getCeremonies({ ...context.req, body: { page, limit: 10 } });
 
-        if (Array.isArray(ceremonies) && ceremonies.length > 0) {
+        const ceremonies = response?.ceremonies ?? [];
+
+        if (ceremonies.length > 0) {
             ceremonies.forEach(ceremony => {
                 if (ceremony.location) {
                     try {
@@ -57,7 +59,8 @@ export async function getServerSideProps(context) {
 
         return {
             props: {
-                ceremonies: ceremonies ?? null,
+                ceremonies,
+                total: response?.total ?? 0,
                 currentPage: page,
             },
         };
@@ -65,22 +68,23 @@ export async function getServerSideProps(context) {
         console.error("Error fetching ceremonies:", error);
         return {
             props: {
-                ceremonies: null,
+                ceremonies: [],
+                total: 0,
                 currentPage: 1,
             },
         };
     }
 }
 
-const Ceremonies = ({ ceremonies, currentPage }) => {
+const Ceremonies = ({ ceremonies, total, currentPage }) => {
     const router = useRouter();
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        if (ceremonies?.total) {
-            setTotalPages(Math.ceil(ceremonies.total / 10));
+        if (total) {
+            setTotalPages(Math.ceil(total / 10));
         }
-    }, [ceremonies]);
+    }, [total]);
 
     const handlePageChange = (page) => {
         router.push({
@@ -97,7 +101,7 @@ const Ceremonies = ({ ceremonies, currentPage }) => {
         <AdminPagesWrapper>
             <div className="p-6 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {!ceremonies && (
+                    {!Array.isArray(ceremonies) && (
                         <div className="col-span-full text-center text-muted-foreground">
                             No ceremonies data available
                         </div>

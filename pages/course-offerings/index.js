@@ -34,7 +34,7 @@ export async function getServerSideProps(context) {
         const page = parseInt(context.query.page) || 1;
         const { sortByPrice, sortByDate } = context.query;
 
-        const courses = await getAllCourses({
+        const response = await getAllCourses({
             ...context.req,
             body: {
                 page,
@@ -46,7 +46,8 @@ export async function getServerSideProps(context) {
 
         return {
             props: {
-                courses: courses ?? null,
+                courses: response?.courses ?? [],
+                total: response?.total ?? 0,
                 currentPage: page,
                 sortByPrice: sortByPrice || null,
                 sortByDate: sortByDate || null,
@@ -56,14 +57,17 @@ export async function getServerSideProps(context) {
         console.error("Error fetching courses:", error);
         return {
             props: {
-                courses: null,
+                courses: [],
+                total: 0,
                 currentPage: 1,
+                sortByPrice: null,
+                sortByDate: null,
             },
         };
     }
 }
 
-const CourseOfferingsPage = ({ courses, currentPage, sortByPrice, sortByDate }) => {
+const CourseOfferingsPage = ({ courses, total, currentPage, sortByPrice, sortByDate }) => {
     const [pricePopover, setPricePopover] = useState(false);
     const [datePopover, setDatePopover] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
@@ -83,10 +87,10 @@ const CourseOfferingsPage = ({ courses, currentPage, sortByPrice, sortByDate }) 
     }, [courses]);
 
     useEffect(() => {
-        if (courses?.total) {
-            setTotalPages(Math.ceil(courses.total / 10));
+        if (total) {
+            setTotalPages(Math.ceil(total / 10));
         }
-    }, [courses]);
+    }, [total]);
 
     useEffect(() => {
         const { sortByPrice, sortByDate } = router.query;

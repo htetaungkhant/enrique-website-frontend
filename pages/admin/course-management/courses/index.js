@@ -19,11 +19,12 @@ import { cn } from "@/lib/utils";
 export async function getServerSideProps(context) {
     try {
         const page = parseInt(context.query.page) || 1;
-        const courses = await getAllCourses({ ...context.req, body: { page, limit: 10 } });
+        const response = await getAllCourses({ ...context.req, body: { page, limit: 10 } });
 
         return {
             props: {
-                courses: courses ?? null,
+                courses: response?.courses ?? [],
+                total: response?.total ?? 0,
                 currentPage: page,
             },
         };
@@ -31,22 +32,23 @@ export async function getServerSideProps(context) {
         console.error("Error fetching courses:", error);
         return {
             props: {
-                courses: null,
+                courses: [],
+                total: 0,
                 currentPage: 1,
             },
         };
     }
 }
 
-const Courses = ({ courses, currentPage }) => {
+const Courses = ({ courses, total, currentPage }) => {
     const router = useRouter();
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        if (courses?.total) {
-            setTotalPages(Math.ceil(courses.total / 10));
+        if (total) {
+            setTotalPages(Math.ceil(total / 10));
         }
-    }, [courses]);
+    }, [total]);
 
     const handlePageChange = (page) => {
         router.push({
@@ -63,7 +65,7 @@ const Courses = ({ courses, currentPage }) => {
         <AdminPagesWrapper>
             <div className="p-6 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {!courses && (
+                    {!Array.isArray(courses) && (
                         <div className="col-span-full text-center text-muted-foreground">
                             No courses data available
                         </div>

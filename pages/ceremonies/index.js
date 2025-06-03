@@ -32,7 +32,7 @@ export async function getServerSideProps(context) {
         const page = parseInt(context.query.page) || 1;
         const { sortByDate } = context.query;
 
-        const ceremonies = await getCeremonies({
+        const response = await getCeremonies({
             ...context.req,
             body: {
                 page,
@@ -41,7 +41,9 @@ export async function getServerSideProps(context) {
             }
         });
 
-        if (Array.isArray(ceremonies) && ceremonies.length > 0) {
+        const ceremonies = response?.ceremonies ?? [];
+
+        if (ceremonies.length > 0) {
             ceremonies.forEach((ceremony) => {
                 // location: '{"country":"Portugal","address":"Quinta da Penalva, Sintra"}'
                 // if location of each ceremony is valid json string, split to "locationCountry" and "locationAddress". If not, just put location into locationCountry
@@ -87,7 +89,8 @@ export async function getServerSideProps(context) {
 
         return {
             props: {
-                ceremonies: ceremonies ?? null,
+                ceremonies,
+                total: response?.total ?? 0,
                 currentPage: page,
                 sortByDate: sortByDate || null,
             },
@@ -96,14 +99,16 @@ export async function getServerSideProps(context) {
         console.error("Error fetching ceremonies:", error);
         return {
             props: {
-                ceremonies: null,
+                ceremonies: [],
+                total: 0,
                 currentPage: 1,
+                sortByDate: null,
             },
         };
     }
 }
 
-const CeremoniesPage = ({ ceremonies, currentPage, sortByDate }) => {
+const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
     const [datePopover, setDatePopover] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredCeremonies, setFilteredCeremonies] = useState(ceremonies);
@@ -120,10 +125,10 @@ const CeremoniesPage = ({ ceremonies, currentPage, sortByDate }) => {
     }, [ceremonies]);
 
     useEffect(() => {
-        if (ceremonies?.total) {
-            setTotalPages(Math.ceil(ceremonies.total / 10));
+        if (total) {
+            setTotalPages(Math.ceil(total / 10));
         }
-    }, [ceremonies]);
+    }, [total]);
 
     useEffect(() => {
         const { sortByDate } = router.query;
