@@ -9,7 +9,7 @@ const Step26 = ({
     const { step26, setStep26 } = useQuestionnaire();
 
     return (
-        <QuestionaireCard className={cn("", className)}>
+        <QuestionaireCard className={cn("overflow-visible", className)}>
             <div className="text-base md:text-xl font-medium">
                 <div className="flex">
                     <span className="pr-2">26.</span>
@@ -20,7 +20,7 @@ const Step26 = ({
                 value={step26?.value || ''}
                 onChange={(value, data) => setStep26({ value, dialCode: data.dialCode })}
                 customPlaceholder="Type Here..."
-                className="rounded-xl overflow-hidden md:p-2 bg-white"
+                className="rounded-xl md:p-2 bg-white"
             />
         </QuestionaireCard>
     )
