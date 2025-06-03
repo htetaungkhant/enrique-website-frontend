@@ -4,10 +4,11 @@ import { BsYoutube } from "react-icons/bs";
 import { cn } from "@/lib/utils";
 
 const YouTubeBanner = ({
+    href,
     className,
 }) => {
     return (
-        <Link href="https://www.youtube.com/@Arise-Retreats" target="_blank" className={cn("min-w-72 max-w-250 h-80 md:h-120 lg:h-150 flex justify-center items-center border-1 border-white rounded-2xl bg-cover bg-center bg-no-repeat relative overflow-hidden", className)} style={{ backgroundImage: 'url(/image/Bufo.png)' }}>
+        <Link href={href || "https://www.youtube.com/@Arise-Retreats"} target="_blank" className={cn("min-w-72 max-w-250 h-80 md:h-120 lg:h-150 flex justify-center items-center border-1 border-white rounded-2xl bg-cover bg-center bg-no-repeat relative overflow-hidden", className)} style={{ backgroundImage: 'url(/image/Bufo.png)' }}>
             {/* Overlay */}
             <div className="absolute inset-0 bg-black opacity-55"></div>
 
