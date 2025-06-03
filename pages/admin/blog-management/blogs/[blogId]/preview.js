@@ -65,14 +65,14 @@ const BlogPreview = ({ blog }) => {
                 </div>
 
                 <Card className="bg-transparent border-none py-0">
-                    <div className="p-4 max-w-4xl">
+                    <div className="p-4"> { /* max-w-4xl */}
                         <h1 className="text-2xl md:text-3xl font-bold text-white mb-8">
                             {blog.title}
                         </h1>
 
                         <div
-                            className="prose prose-lg max-w-none prose-invert text-white [&_p]:text-white [&_h1]:text-white [&_h2]:text-white [&_h3]:text-white [&_h4]:text-white [&_h5]:text-white [&_h6]:text-white [&_ul]:text-white [&_ol]:text-white" // dark:prose-invert prose-headings:text-white prose-p:text-gray-300 prose-li:text-gray-300 prose-strong:text-white prose-a:text-blue-400 hover:prose-a:text-blue-300
-                            dangerouslySetInnerHTML={{ __html: blog.content }}
+                            className="prose prose-lg max-w-none prose-invert text-white whitespace-pre-wrap break-words [&_p]:text-white [&_h1]:text-white [&_h2]:text-white [&_h3]:text-white [&_h4]:text-white [&_h5]:text-white [&_h6]:text-white [&_ul]:text-white [&_ol]:text-white [&_*]:whitespace-pre-wrap [&_*]:break-words [&_p]:mb-4 [&_p:empty]:h-4" // dark:prose-invert prose-headings:text-white prose-p:text-gray-300 prose-li:text-gray-300 prose-strong:text-white prose-a:text-blue-400 hover:prose-a:text-blue-300
+                            dangerouslySetInnerHTML={{ __html: blog.content.replace(/(<p[^>]*>)\s*(<\/p>)/g, '$1<br>$2') }}
                         />
                     </div>
                 </Card>
