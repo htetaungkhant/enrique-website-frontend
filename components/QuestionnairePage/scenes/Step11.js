@@ -18,7 +18,7 @@ const Step11 = ({
             </div>
             <div className="flex flex-wrap gap-x-5 gap-y-3">
                 <AnswersBtn selected={step11 === "yes"} title="Yes" onClick={() => setStep11("yes")} />
-                <AnswersBtn selected={step11 === "no"} title="Not" onClick={() => setStep11("no")} />
+                <AnswersBtn selected={step11 === "no"} title="No" onClick={() => setStep11("no")} />
             </div>
         </QuestionaireCard>
     )
