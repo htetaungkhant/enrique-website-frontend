@@ -1,70 +1,197 @@
 import { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
 import Input, { PhoneNumberInput } from "./Input";
 import { SubmitBtn } from "./Button";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+
+const formSchema = z.object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    mobileNumber: z.string().refine((val) => {
+        // Remove any non-digit characters and check if there are digits beyond the country code
+        return val.replace(/\D/g, '').length > 1;
+    }, "Mobile number is required"),
+    email: z.string().min(1, "Email is required").email("Invalid email format")
+});
 
 const NewsLetter = ({ id, className }) => {
-    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPhoneError, setShowPhoneError] = useState(true);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const pureData = Object.fromEntries(formData.entries());
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            firstName: "",
+            lastName: "",
+            mobileNumber: "",
+            email: ""
+        }
+    });
 
-        const error = {}
-        Object.keys(pureData).map(key => {
-            if (key === "mobile-number" && pureData[key].split(" ").length <= 1) {
-                // error.push({ [key]: "Require value!" })
-                error[key] = "Require value!";
-            }
-            else if (pureData[key] === "") {
-                // error.push({ [key]: "Require value!" })
-                error[key] = "Require value!";
+    const onSubmit = async (data) => {
+        try {
+            setIsSubmitting(true);
+
+            // Create the full name from first and last name
+            const body = {
+                name: `${data.firstName} ${data.lastName}`,
+                email: data.email
             };
-        })
-        setErrors(error);
-        if (error.length > 0) return;
 
-        const finalData = {}
-        Object.entries(pureData).map(([key, value]) => {
-            if (key === "mobile-number") {
-                finalData[key] = value.replaceAll(" ", "");
-            }
-            else {
-                finalData[key] = value
-            }
-        })
+            const response = await fetch("/api/admin/newsletter", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+            });
 
-        console.log('Data to submit API', finalData);
-    }
+            if (response.ok) {
+                toast.success("Successfully subscribed to newsletter!");
+                form.reset();
+                setShowPhoneError(false);
+            } else {
+                toast.error("Failed to subscribe to newsletter");
+            }
+        } catch (error) {
+            toast.error(error?.response?.data?.message || "Failed to subscribe to newsletter");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    // Custom handler for phone number changes
+    const handlePhoneChange = (value, data, event, formattedValue) => {
+        const phoneWithoutCode = value.replace(data.dialCode, "");
+        form.setValue("mobileNumber", value);
+
+        // Only show error if field has been touched and is empty
+        if (phoneWithoutCode.length === 0) {
+            setShowPhoneError(true);
+        } else {
+            setShowPhoneError(false);
+        }
+
+        form.trigger("mobileNumber");
+    };
 
     return (
-        <section id={id} className={cn("relative px-3 py-9 lg:px-10 lg:py-12 xl:py-16 flex justify-center items-center border-t-[1px] border-white bg-center bg-cover bg-no-repeat", className)} style={{ backgroundImage: "url(/image/newsletter-bg.png)" }}>
-
+        <section
+            id={id}
+            className={cn(
+                "relative px-3 py-9 lg:px-10 lg:py-12 xl:py-16 flex justify-center items-center border-t-[1px] border-white bg-center bg-cover bg-no-repeat",
+                className
+            )}
+            style={{ backgroundImage: "url(/image/newsletter-bg.png)" }}
+        >
             {/* Overlay */}
             <div className="absolute inset-0 bg-black opacity-55"></div>
 
-            <form onSubmit={handleSubmit} className="relative inter-font text-white flex flex-col max-md:items-center gap-3 lg:gap-5 w-full md:w-3/4 lg:w-3/5 xl:w-[42rem]">
-                <h2 className="text-center font-bold text-3xl lg:text-4xl merriweather-font">Lets Evolve and Heal Together</h2>
-                <p className="text-center">Explore the transformative power of plant medicine, consciousness expansion, and deep spiritual healing with us.</p>
-                <div className="max-md:w-10/12 grid grid-cols-1 md:grid-cols-2 gap-y-5 md:gap-y-3 md:gap-x-5">
-                    <Input name="first-name" label="First Name" labelClassName="max-md:hidden" placeholder="Enter first name" />
-                    <Input name="last-name" label="Last Name" labelClassName="max-md:hidden" placeholder="Enter last name" />
-                    <PhoneNumberInput name="mobile-number" label="Mobile Number" labelClassName="max-md:hidden" customPlaceholder="Enter Mobile Number" />
-                    <Input name="email" type="email" label="Email ID" labelClassName="max-md:hidden" placeholder="Enter email ID" />
-                    {Object.keys(errors).length > 0 && (
-                        <div className='md:col-span-2'>
-                            <span className='text-red-500 font-semibold text-center block'>Please fill all required fields with valid data!</span>
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="relative inter-font text-white flex flex-col max-md:items-center gap-3 lg:gap-5 w-full md:w-3/4 lg:w-3/5 xl:w-[42rem]"
+                >
+                    <h2 className="text-center font-bold text-3xl lg:text-4xl merriweather-font">
+                        Lets Evolve and Heal Together
+                    </h2>
+                    <p className="text-center">
+                        Explore the transformative power of plant medicine, consciousness expansion, and deep spiritual healing with us.
+                    </p>
+
+                    <div className="max-md:w-10/12 grid grid-cols-1 md:grid-cols-2 gap-y-5 md:gap-y-3 md:gap-x-5">
+                        <FormField
+                            control={form.control}
+                            name="firstName"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            label="First Name"
+                                            labelClassName="max-md:hidden"
+                                            placeholder="Enter first name"
+                                        />
+                                    </FormControl>
+                                    <FormMessage className="text-red-400 text-sm mt-1" />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="lastName"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            label="Last Name"
+                                            labelClassName="max-md:hidden"
+                                            placeholder="Enter last name"
+                                        />
+                                    </FormControl>
+                                    <FormMessage className="text-red-400 text-sm mt-1" />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="mobileNumber"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <PhoneNumberInput
+                                            {...field}
+                                            value={field.value}
+                                            onChange={handlePhoneChange}
+                                            label="Mobile Number"
+                                            labelClassName="max-md:hidden"
+                                            customPlaceholder="Enter Mobile Number"
+                                        />
+                                    </FormControl>
+                                    {showPhoneError && form.formState.isSubmitted && (
+                                        <FormMessage className="text-red-400 text-sm mt-1">
+                                            Mobile number is required
+                                        </FormMessage>
+                                    )}
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            type="email"
+                                            label="Email ID"
+                                            labelClassName="max-md:hidden"
+                                            placeholder="Enter email ID"
+                                        />
+                                    </FormControl>
+                                    <FormMessage className="text-red-400 text-sm mt-1" />
+                                </FormItem>
+                            )}
+                        />
+
+                        <div className="md:col-span-2 flex justify-center mt-2">
+                            <SubmitBtn className="w-fit md:w-3/4" disabled={isSubmitting} />
                         </div>
-                    )}
-                    <div className="md:col-span-2 flex justify-center mt-2">
-                        <SubmitBtn className="w-fit md:w-3/4" />
                     </div>
-                </div>
-            </form>
+                </form>
+            </Form>
         </section>
-    )
-}
+    );
+};
 
 export default NewsLetter;

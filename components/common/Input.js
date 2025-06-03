@@ -4,18 +4,19 @@ import { HiMiniEye, HiMiniEyeSlash } from "react-icons/hi2";
 
 import { cn } from "@/lib/utils";
 
-export const PhoneNumberInput = ({
+export const PhoneNumberInput = React.forwardRef(({
     name,
     label,
     customPlaceholder,
     customPlaceholderClassName,
     value,
     onChange,
+    country,
     className,
     labelClassName,
     ...props
-}) => {
-    const inputRef = useRef(null);
+}, ref) => {
+    const inputRef = useRef(ref);
     const [phone, setPhone] = useState(null);
 
     const onPlaceholderClick = () => {
@@ -25,6 +26,20 @@ export const PhoneNumberInput = ({
     }
 
     const onPhoneNumberChange = (value, data, event, formattedValue) => {
+        // value
+        // 4201
+
+        // data
+        // {
+        //     countryCode: "cz",
+        //     dialCode: "420",
+        //     format: "+... ... ... ...",
+        //     name: "Czech Republic",
+        // }
+
+        // formattedValue
+        // +420 1
+
         setPhone(value.replace(data.dialCode, ""));
         if (onChange) onChange(value, data, event, formattedValue);
     }
@@ -36,7 +51,7 @@ export const PhoneNumberInput = ({
                 {!phone && customPlaceholder && <span className={cn('absolute left-[5.5rem] text-gray-400 text-xs md:text-sm z-10', customPlaceholderClassName)} onClick={onPlaceholderClick}>{customPlaceholder}</span>}
                 <PhoneInput
                     countryCodeEditable={false}
-                    country={'cz'}
+                    country={country || 'cz'}
                     value={value}
                     onChange={onPhoneNumberChange}
                     containerClass='text-black'
@@ -58,7 +73,7 @@ export const PhoneNumberInput = ({
             </div>
         </div>
     )
-}
+});
 
 export const PasswordInput = React.forwardRef(({ label, className, labelClassName, inputClassName, ...props }, ref) => {
     const [isPassword, setIsPassword] = useState(true);
