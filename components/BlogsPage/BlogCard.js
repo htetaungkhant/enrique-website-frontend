@@ -7,7 +7,7 @@ const BlogCard = ({ image, title, learnMoreHref, className }) => {
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/90 to-transparent"></div>
 
-            <h2 className="text-2xl md:text-3xl xl:text-4xl font-bold relative">{title}</h2>
+            <h2 className="text-2xl md:text-3xl xl:text-4xl font-bold line-clamp-5 relative">{title}</h2>
             <div className="relative">
                 <IconButton href={learnMoreHref} title="LEARN MORE" iconClassName="text-black bg-white rounded-full border-[1px] border-black" />
             </div>
