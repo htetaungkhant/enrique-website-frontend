@@ -313,14 +313,17 @@ const CourseOfferingsPage = ({ courses, currentPage, sortByPrice, sortByDate }) 
                     <div className="text-center text-white">No courses available.</div>
                 )}
 
-                {totalPages > 1 && (
+                {totalPages > 0 && (
                     <div className="mt-10">
                         <Pagination>
-                            <PaginationContent>
+                            <PaginationContent className="text-white">
                                 <PaginationItem>
                                     <PaginationPrevious
                                         onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
-                                        className={currentPage <= 1 ? "pointer-events-none opacity-50" : ""}
+                                        className={cn(
+                                            "border-white hover:bg-[#D7F2D5] hover:text-[#054224] transition-colors",
+                                            currentPage <= 1 ? "pointer-events-none opacity-50" : ""
+                                        )}
                                     />
                                 </PaginationItem>
 
@@ -336,7 +339,11 @@ const CourseOfferingsPage = ({ courses, currentPage, sortByPrice, sortByDate }) 
                                             <PaginationItem key={page}>
                                                 <PaginationLink
                                                     onClick={() => handlePageChange(page)}
-                                                    isActive={page === currentPage}
+                                                    // isActive={page === currentPage}
+                                                    className={cn(
+                                                        "border-white hover:bg-[#D7F2D5] hover:text-[#054224] transition-colors",
+                                                        page === currentPage && "bg-[#D7F2D5] text-[#054224]"
+                                                    )}
                                                 >
                                                     {page}
                                                 </PaginationLink>
@@ -348,7 +355,7 @@ const CourseOfferingsPage = ({ courses, currentPage, sortByPrice, sortByDate }) 
                                     ) {
                                         return (
                                             <PaginationItem key={page}>
-                                                <PaginationEllipsis />
+                                                <PaginationEllipsis className="text-white" />
                                             </PaginationItem>
                                         );
                                     }
@@ -358,7 +365,10 @@ const CourseOfferingsPage = ({ courses, currentPage, sortByPrice, sortByDate }) 
                                 <PaginationItem>
                                     <PaginationNext
                                         onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
-                                        className={currentPage >= totalPages ? "pointer-events-none opacity-50" : ""}
+                                        className={cn(
+                                            "border-white hover:bg-[#D7F2D5] hover:text-[#054224] transition-colors",
+                                            currentPage >= totalPages ? "pointer-events-none opacity-50" : ""
+                                        )}
                                     />
                                 </PaginationItem>
                             </PaginationContent>

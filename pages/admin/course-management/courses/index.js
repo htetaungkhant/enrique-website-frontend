@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import AdminPagesWrapper from "@/components/Admin/PageWrapper";
-import CourseCard from "@/components/Admin/CourseManagementPage/CourseCard";
-import AddNewCard from "@/components/Admin/AddNewCard";
-import { getAllCourses } from "@/lib/inhouseAPI/course-route";
 import {
     Pagination,
     PaginationContent,
@@ -14,6 +10,11 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import AdminPagesWrapper from "@/components/Admin/PageWrapper";
+import CourseCard from "@/components/Admin/CourseManagementPage/CourseCard";
+import AddNewCard from "@/components/Admin/AddNewCard";
+import { getAllCourses } from "@/lib/inhouseAPI/course-route";
+import { cn } from "@/lib/utils";
 
 export async function getServerSideProps(context) {
     try {
@@ -100,11 +101,14 @@ const Courses = ({ courses, currentPage }) => {
 
                 {totalPages > 1 && (
                     <Pagination>
-                        <PaginationContent>
+                        <PaginationContent className="text-white">
                             <PaginationItem>
                                 <PaginationPrevious
                                     onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
-                                    className={currentPage <= 1 ? "pointer-events-none opacity-50" : ""}
+                                    className={cn(
+                                        "border-white hover:bg-white hover:text-black transition-colors",
+                                        currentPage <= 1 ? "pointer-events-none opacity-50" : ""
+                                    )}
                                 />
                             </PaginationItem>
 
@@ -120,7 +124,11 @@ const Courses = ({ courses, currentPage }) => {
                                         <PaginationItem key={page}>
                                             <PaginationLink
                                                 onClick={() => handlePageChange(page)}
-                                                isActive={page === currentPage}
+                                                // isActive={page === currentPage}
+                                                className={cn(
+                                                    "border-white hover:bg-white hover:text-black transition-colors",
+                                                    page === currentPage && "bg-white text-black"
+                                                )}
                                             >
                                                 {page}
                                             </PaginationLink>
@@ -132,7 +140,7 @@ const Courses = ({ courses, currentPage }) => {
                                 ) {
                                     return (
                                         <PaginationItem key={page}>
-                                            <PaginationEllipsis />
+                                            <PaginationEllipsis className="text-white" />
                                         </PaginationItem>
                                     );
                                 }
@@ -142,7 +150,10 @@ const Courses = ({ courses, currentPage }) => {
                             <PaginationItem>
                                 <PaginationNext
                                     onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
-                                    className={currentPage >= totalPages ? "pointer-events-none opacity-50" : ""}
+                                    className={cn(
+                                        "border-white hover:bg-white hover:text-black transition-colors",
+                                        currentPage >= totalPages ? "pointer-events-none opacity-50" : ""
+                                    )}
                                 />
                             </PaginationItem>
                         </PaginationContent>
