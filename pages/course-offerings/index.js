@@ -296,6 +296,7 @@ const CourseOfferingsPage = ({ courses, currentPage, sortByPrice, sortByDate }) 
                             {filteredCourses.map((item, index) => (
                                 <CourseCard
                                     key={`${item.id}-${index}`}
+                                    id={item.id}
                                     image={item.image?.image}
                                     title={item.title}
                                     description={item.sessionOverview}

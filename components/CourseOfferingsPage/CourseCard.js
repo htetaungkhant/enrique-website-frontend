@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const CourseCard = ({
+    id,
     image,
     title,
     description,
@@ -20,7 +21,7 @@ const CourseCard = ({
 }) => {
     return (
         <Link
-            href={`/course-offerings/${title}`}
+            href={`/course-offerings/${id}`}
             className={cn(
                 "inter-font text-[#212A63] flex flex-col rounded-2xl overflow-hidden",
                 className,
