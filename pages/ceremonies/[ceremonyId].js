@@ -48,7 +48,6 @@ export async function getServerSideProps(context) {
             ceremony.toDate = "";
             ceremony.toTime = "";
         }
-        console.log(ceremony);
 
         if (!ceremony) {
             return {
