@@ -12,7 +12,6 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
-
 import Footer from "@/components/common/Footer";
 import { PageHeaderWithBanner } from "@/components/common/PageHeader";
 import SearchBox from "@/components/common/SearchBox";
