@@ -1,8 +1,4 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { MdOutlineAccessTimeFilled } from "react-icons/md";
-import { IoCalendarClear } from "react-icons/io5";
-import { FaLocationDot } from "react-icons/fa6";
 
 import Footer from "@/components/common/Footer";
 import UPSection from "@/components/common/UniformPaddingSection";
