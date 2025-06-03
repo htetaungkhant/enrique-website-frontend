@@ -107,7 +107,7 @@ const CourseCard = ({
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <Button
-                                            onClick={() => onEdit(id)}
+                                            onClick={() => (onEdit && onEdit(id))}
                                             size="icon"
                                             variant="outline"
                                             className="h-8 w-8 hover:bg-primary/10 hover:text-primary cursor-pointer"
