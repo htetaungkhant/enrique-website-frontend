@@ -148,7 +148,6 @@ const CeremoniesPage = ({ ceremonies, currentPage, sortByDate }) => {
         setDatePopover(false);
 
         const query = { ...router.query };
-        delete query.sortByPrice;
 
         if (value === SortingType.DATE_ASCENDING) {
             query.sortByDate = "asc";
