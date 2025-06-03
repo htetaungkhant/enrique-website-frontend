@@ -11,7 +11,6 @@ export async function getServerSideProps(context) {
     try {
         const { courseId } = context.params;
         const course = await getCourseDetails({ ...context.req, body: { id: courseId } });
-        console.log(course);
 
         if (!course) {
             return {
@@ -75,7 +74,7 @@ const CourseDetails = ({ course }) => {
                             )
                         }
                         {
-                            !session && session?.validationFailed ?
+                            !session || session?.validationFailed ?
                                 <YouTubeBanner />
                                 : Array.isArray(course.classes) && course.classes?.length > 0 ? (
                                     course.classes?.map((video, index) => (

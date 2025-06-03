@@ -313,7 +313,7 @@ const CourseOfferingsPage = ({ courses, currentPage, sortByPrice, sortByDate }) 
                     <div className="text-center text-white">No courses available.</div>
                 )}
 
-                {totalPages > 0 && (
+                {totalPages > 1 && (
                     <div className="mt-10">
                         <Pagination>
                             <PaginationContent className="text-white">
