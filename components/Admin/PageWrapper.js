@@ -28,10 +28,10 @@ const AdminPagesWrapper = ({
     return (
         <SidebarProvider>
             <main className="w-screen h-screen bg-gray-900 overflow-hidden">
-                <section className="h-full mx-auto lg:border-x border-gray-800"> {/* max-w-330 */}
+                <section className="h-full max-w-450 mx-auto lg:border-x border-gray-800"> {/* max-w-330 */}
                     {/* Header Bar */}
                     <header className="fixed top-0 left-0 w-full bg-gray-900 border-b border-gray-800 px-6 py-4 flex justify-center z-50">
-                        <div className="w-full flex justify-between"> {/* max-w-330 */}
+                        <div className="w-full max-w-450 flex justify-between"> {/* max-w-330 */}
                             <div className="flex items-center gap-3">
                                 {/* Sidebar trigger for mobile */}
                                 <div className="md:hidden">
