@@ -284,7 +284,7 @@ const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
                     ) : (
                         <div className="text-center text-white">No ceremonies available.</div>
                     )}
-                    {totalPages > 1 && (
+                    {!searchQuery && totalPages > 1 && (
                         <div className="mt-10">
                             <Pagination>
                                 <PaginationContent className="text-white">

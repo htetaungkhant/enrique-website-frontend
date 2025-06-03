@@ -317,7 +317,7 @@ const CourseOfferingsPage = ({ courses, total, currentPage, sortByPrice, sortByD
                     <div className="text-center text-white">No courses available.</div>
                 )}
 
-                {totalPages > 1 && (
+                {!searchQuery && totalPages > 1 && (
                     <div className="mt-10">
                         <Pagination>
                             <PaginationContent className="text-white">
