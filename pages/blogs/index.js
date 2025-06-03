@@ -19,64 +19,49 @@ import UPSection from "@/components/common/UniformPaddingSection";
 import BlogCard from "@/components/BlogsPage/BlogCard";
 import NewsLetter from "@/components/common/NewsLetter";
 import { cn } from "@/lib/utils";
-
-const data = [
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-    {
-        image: "/dummy-data/4.jpg",
-        title: "Psychedelic Integration & Emotional Healing",
-    },
-]
+import { getBlogs } from "@/lib/inhouseAPI/blog-route";
 
 const SortingType = Object.freeze({
     DATE_ASCENDING: "date-ascending",
     DATE_DESCENDING: "date-descending",
 });
 
-const BlogsPage = ({ blogs, currentPage, sortByDate }) => {
+export async function getServerSideProps(context) {
+    try {
+        const page = parseInt(context.query.page) || 1;
+        const sortByDate = context.query.sortByDate;
+
+        const response = await getBlogs({
+            ...context.req,
+            body: {
+                page,
+                limit: 10,
+                sortByDate
+            }
+        });
+
+        return {
+            props: {
+                blogs: response?.blogs ?? [],
+                total: response?.total ?? 0,
+                currentPage: page,
+                sortByDate: sortByDate || null
+            },
+        };
+    } catch (error) {
+        console.error("Error fetching blogs:", error);
+        return {
+            props: {
+                blogs: [],
+                total: 0,
+                currentPage: 1,
+                sortByDate: null
+            },
+        };
+    }
+}
+
+const BlogsPage = ({ blogs = [], total, currentPage, sortByDate }) => {
     const [datePopover, setDatePopover] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredBlogs, setFilteredBlogs] = useState(blogs);
@@ -93,10 +78,10 @@ const BlogsPage = ({ blogs, currentPage, sortByDate }) => {
     }, [blogs]);
 
     useEffect(() => {
-        if (blogs?.total) {
-            setTotalPages(Math.ceil(blogs.total / 10));
+        if (total) {
+            setTotalPages(Math.ceil(total / 10));
         }
-    }, [blogs]);
+    }, [total]);
 
     useEffect(() => {
         const { sortByDate } = router.query;
@@ -212,14 +197,31 @@ const BlogsPage = ({ blogs, currentPage, sortByDate }) => {
                             onChange={handleSearch}
                         />
                     </div>
+
+                    {!Array.isArray(filteredBlogs) && (
+                        <div className="text-center text-white">
+                            No blogs data available
+                        </div>
+                    )}
+
+                    {Array.isArray(filteredBlogs) && filteredBlogs.length === 0 && (
+                        <div className="text-center text-white">
+                            {searchQuery ? "No blogs found matching your search." : "No blogs found"}
+                        </div>
+                    )}
+
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 md:gap-10 xl:gap-20 justify-between">
-                        {
-                            data.map((item, index) => (
-                                <BlogCard key={index} image={item.image} title={item.title} learnMoreHref={`/blogs/${item.title}`} />
-                            ))
-                        }
+                        {Array.isArray(filteredBlogs) && filteredBlogs.map((blog) => (
+                            <BlogCard
+                                key={blog.id}
+                                image={blog.image || "/dummy-data/4.jpg"}
+                                title={blog.title}
+                                learnMoreHref={`/blogs/${blog.id}`}
+                            />
+                        ))}
                     </div>
-                    {totalPages > 1 && (
+
+                    {!searchQuery && totalPages > 1 && (
                         <div className="mt-10">
                             <Pagination>
                                 <PaginationContent className="text-white">
