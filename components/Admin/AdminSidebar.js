@@ -1,7 +1,22 @@
 import { useState, useEffect } from "react";
-import { BookOpen, Users, GraduationCap, LibraryBig, ListChecks, LogOut, ChevronDown, ChevronRight, StickyNote, SquarePlus, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import {
+    BookOpen,
+    Users,
+    GraduationCap,
+    LibraryBig,
+    ListChecks,
+    LogOut,
+    ChevronDown,
+    ChevronRight,
+    StickyNote,
+    SquarePlus,
+    Newspaper,
+    BookOpenCheck,
+    School,
+} from "lucide-react";
+import { ImBlog } from "react-icons/im";
 
 import { useAdminAuth } from "@/hooks/adminAuth";
 import {
@@ -23,7 +38,7 @@ const menuItems = [
         subMenus: [
             {
                 label: "Courses Purchased",
-                icon: <BookOpen className="w-4 h-4" />,
+                icon: <BookOpenCheck className="w-4 h-4" />,
                 href: "/admin/courses-purchased",
             },
             {
@@ -57,12 +72,12 @@ const menuItems = [
     },
     {
         label: "Ceremony Management",
-        icon: <GraduationCap className="w-4 h-4" />,
+        icon: <School className="w-4 h-4" />,
         // href: "/admin/ceremonies",
         subMenus: [
             {
                 label: "Ceremonies",
-                icon: <BookOpen className="w-4 h-4" />,
+                icon: <GraduationCap className="w-4 h-4" />,
                 href: "/admin/ceremony-management/ceremonies",
             },
             {
@@ -73,9 +88,21 @@ const menuItems = [
         ],
     },
     {
-        label: "Blogs",
-        icon: <StickyNote className="w-4 h-4" />,
-        href: "/admin/blogs",
+        label: "Blog Management",
+        icon: <ImBlog className="w-4 h-4" />,
+        // href: "/admin/blogs",
+        subMenus: [
+            {
+                label: "Blogs",
+                icon: <StickyNote className="w-4 h-4" />,
+                href: "/admin/blog-management/blogs",
+            },
+            {
+                label: "Create New Blog",
+                icon: <SquarePlus className="w-4 h-4" />,
+                href: "/admin/blog-management/create-new-blog",
+            },
+        ],
     },
     {
         label: "Newsletter",
