@@ -22,51 +22,6 @@ import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover
 import { getCeremonies } from "@/lib/inhouseAPI/ceremony-route";
 import { cn } from "@/lib/utils";
 
-const data = [
-    {
-        image: "/dummy-data/5.jpg",
-        title: "Bufo Alvarius",
-        locations: "Portugal",
-        dates: "From 25 OCT 2025 to 29 OCT 2025 ",
-        time: "4.00 pm - 8.00 pm"
-    },
-    {
-        image: "/dummy-data/5.jpg",
-        title: "Bufo Alvarius",
-        locations: "Portugal",
-        dates: "From 25 OCT 2025 to 29 OCT 2025 ",
-        time: "4.00 pm - 8.00 pm"
-    },
-    {
-        image: "/dummy-data/5.jpg",
-        title: "Bufo Alvarius",
-        locations: "Portugal",
-        dates: "From 25 OCT 2025 to 29 OCT 2025 ",
-        time: "4.00 pm - 8.00 pm"
-    },
-    {
-        image: "/dummy-data/5.jpg",
-        title: "Bufo Alvarius",
-        locations: "Portugal",
-        dates: "From 25 OCT 2025 to 29 OCT 2025 ",
-        time: "4.00 pm - 8.00 pm"
-    },
-    {
-        image: "/dummy-data/5.jpg",
-        title: "Bufo Alvarius",
-        locations: "Portugal",
-        dates: "From 25 OCT 2025 to 29 OCT 2025 ",
-        time: "4.00 pm - 8.00 pm"
-    },
-    {
-        image: "/dummy-data/5.jpg",
-        title: "Bufo Alvarius",
-        locations: "Portugal",
-        dates: "From 25 OCT 2025 to 29 OCT 2025 ",
-        time: "4.00 pm - 8.00 pm"
-    },
-]
-
 const SortingType = Object.freeze({
     DATE_ASCENDING: "date-ascending",
     DATE_DESCENDING: "date-descending",
