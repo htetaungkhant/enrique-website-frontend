@@ -12,18 +12,30 @@ const CeremonyCard = ({ image, title, locations, dates, time, learnMoreHref, cla
             <div className="flex-1 pt-10 -mt-5 rounded-bl-3xl border-l-8 border-[#3FA535] px-4 py-6 flex flex-col gap-3">
                 <h4 className="text-lg lg:text-xl font-bold">{title}</h4>
                 <div className="flex-1 font-medium flex flex-col gap-1">
-                    <div className="flex gap-3 items-center text-xs md:text-sm">
-                        <FaLocationDot className="text-[#1C3896] bg-[#1C389659] p-1 rounded-full w-5 h-5" />
-                        <p>{locations}</p>
-                    </div>
-                    <div className="flex gap-3 items-center text-xs md:text-sm">
-                        <IoCalendarClear className="text-[#1C3896] bg-[#1C389659] p-1 rounded-full w-5 h-5" />
-                        <p>{dates}</p>
-                    </div>
-                    <div className="flex gap-3 items-center text-xs md:text-sm">
-                        <MdOutlineAccessTimeFilled className="text-[#1C3896] bg-[#1C389659] p-1 rounded-full w-5 h-5" />
-                        <p>{time}</p>
-                    </div>
+                    {
+                        locations && (
+                            <div className="flex gap-3 items-center text-xs md:text-sm">
+                                <FaLocationDot className="text-[#1C3896] bg-[#1C389659] p-1 rounded-full w-5 h-5" />
+                                <p>{locations}</p>
+                            </div>
+                        )
+                    }
+                    {
+                        dates && (
+                            <div className="flex gap-3 items-center text-xs md:text-sm">
+                                <IoCalendarClear className="text-[#1C3896] bg-[#1C389659] p-1 rounded-full w-5 h-5" />
+                                <p>{dates}</p>
+                            </div>
+                        )
+                    }
+                    {
+                        time && (
+                            <div className="flex gap-3 items-center text-xs md:text-sm">
+                                <MdOutlineAccessTimeFilled className="text-[#1C3896] bg-[#1C389659] p-1 rounded-full w-5 h-5" />
+                                <p>{time}</p>
+                            </div>
+                        )
+                    }
                 </div>
                 <ReadMoreBtn className="bg-[#B6E3B1] h-10" href={learnMoreHref} />
             </div>
