@@ -115,7 +115,7 @@ const PageHeader = ({
                             !session || session.validationFailed ?
                                 <IconButton title="Login" outline={true} onClick={onLoginBtnClick} />
                                 :
-                                <UserButton title={session.user.name || `${session.user.backendData?.firstName} ${session.user.backendData?.lastName}`} href={userButtonHref()} />
+                                <UserButton title={`${session.user.backendData?.firstName} ${session.user.backendData?.lastName}` || session.user.name} href={userButtonHref()} />
                         }
                     </div>
 
@@ -163,7 +163,7 @@ const PageHeader = ({
                                 !session || session.validationFailed ?
                                     <IconButton title="Login" outline={true} onClick={onLoginBtnClick} />
                                     :
-                                    <UserButton title={session.user.name || `${session.user.backendData?.firstName} ${session.user.backendData?.lastName}`} href={userButtonHref()} />
+                                    <UserButton title={`${session.user.backendData?.firstName} ${session.user.backendData?.lastName}` || session.user.name} href={userButtonHref()} />
                             }
                         </div>
                     </div>
