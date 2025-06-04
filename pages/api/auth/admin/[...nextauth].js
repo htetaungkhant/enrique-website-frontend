@@ -30,7 +30,7 @@ export const adminAuthOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                // token = { ...token, ...user }; // This will merge user properties into token
+                // token = { ...token, ...user };
                 // token.role = user.role;
                 // token.adminId = user.id;
 
@@ -42,7 +42,7 @@ export const adminAuthOptions = {
         },
         async session({ session, token }) {
             if (session.user) {
-                // session.user = { ...session.user, ...token }; // This will merge token properties into session.user
+                // session.user = { ...session.user, ...token };
                 // session.user.role = token.role;
                 // session.user.id = token.adminId;
 
