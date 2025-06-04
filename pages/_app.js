@@ -12,6 +12,7 @@ import 'react-phone-input-2/lib/style.css'
 import { store, persistor } from '@/store';
 import AuthModal from "@/components/common/auth/AuthModal";
 import { Toaster } from "@/components/ui/sonner"
+import ChatBot from '@/components/common/ChatBot';
 
 export default function App({
   Component,
@@ -35,6 +36,7 @@ export default function App({
           <Toaster position="top-right" richColors closeButton />
           <AuthModal />
           <Component {...pageProps} />
+          <ChatBot />
         </SessionProvider>
       </PersistGate>
     </Provider>
