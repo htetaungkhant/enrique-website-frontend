@@ -183,11 +183,11 @@ const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
     }
 
     return (
-        <main>
+        <main className="min-h-screen flex flex-col">
             <PageHeaderWithBanner title="Ceremonies">
                 <p className="inter-font text-sm md:text-base lg:text-lg xl:text-xl font-medium">Expand Your Knowledge, Deepen Your Journey</p>
             </PageHeaderWithBanner>
-            <UPSection>
+            <UPSection className="flex-1">
                 <div className="inter-font">
                     <div className="py-16 flex flex-col gap-5 md:flex-row md:justify-between md:items-center text-white">
                         <h4 className="merriweather-font font-bold text-2xl md:text-3xl xl:text-4xl">Our Latest Events</h4>

@@ -169,11 +169,11 @@ const CourseOfferingsPage = ({ courses, total, currentPage, sortByPrice, sortByD
     }
 
     return (
-        <main>
+        <main className="min-h-screen flex flex-col">
             <PageHeaderWithBanner title="Learn & Grow with Arise">
                 <p className="inter-font text-sm md:text-base lg:text-lg xl:text-xl font-medium">Expand Your Knowledge, Deepen Your Journey</p>
             </PageHeaderWithBanner>
-            <UPSection className="inter-font">
+            <UPSection className="inter-font flex-1">
                 <div className="py-16 flex flex-col gap-5 md:flex-row md:justify-between md:items-start md:flex-wrap text-white">
                     <h2 className="whitespace-nowrap merriweather-font font-bold text-2xl md:text-3xl xl:text-4xl">Our Latest Courses</h2>
                     <div className="flex flex-col items-start md:flex-wrap md:flex-row gap-3 lg:gap-5">
