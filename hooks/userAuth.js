@@ -1,7 +1,7 @@
 import { useSession, signIn as nextAuthSignIn, signOut as nextAuthSignOut } from "next-auth/react";
 
 export const useUserAuth = () => {
-    const { data, status } = useSession();
+    const { data, status, update } = useSession();
 
     const userSignIn = async (options = {}) => {
         // Default provider to credentials if not specified
@@ -45,6 +45,7 @@ export const useUserAuth = () => {
     return {
         session: data,
         status,
+        updateUserSession: update,
         signIn: userSignIn,
         signOut: userSignOut,
         isAuthenticated: status === "authenticated",
