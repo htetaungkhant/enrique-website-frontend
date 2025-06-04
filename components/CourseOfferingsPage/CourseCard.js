@@ -52,7 +52,10 @@ const CourseCard = ({
                         <div className="flex gap-1 items-center">
                             <FaCalendarAlt className="text-[#2A6C4B]" />
                             <span className="pl-1 text-xs font-medium">
-                                {format(new Date(dates), "dd/MM/yyyy")}
+                                {dates && !isNaN(new Date(dates))
+                                    ? format(new Date(dates), "dd/MM/yyyy")
+                                    : "Invalid Date"
+                                }
                             </span>
                         </div>
                     </div>
