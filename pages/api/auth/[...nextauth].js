@@ -58,8 +58,8 @@ export const authOptions = {
             }
             return true;
         },
-        async jwt({ token, user, account, profile, isNewUser }) {
-            // console.log("callbacks jwt", token, user, account, profile);
+        async jwt({ token, user, account, profile, isNewUser, trigger, session }) {
+            // Handle initial sign in
             if (user) {
                 if (account?.provider === "google") {
                     if (account.validationFailed) {
@@ -78,6 +78,12 @@ export const authOptions = {
                     token.backendData = { ...user }
                 }
             }
+
+            // Handle updates
+            if (trigger === "update" && session?.user) {
+                token.backendData = session.user.backendData;
+            }
+
             return token;
         },
         async session({ session, user, token }) {
