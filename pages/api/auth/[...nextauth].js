@@ -92,7 +92,14 @@ export const authOptions = {
                     session.user.id = token.userId;
 
                     if (token.backendData) {
-                        session.user.backendData = token.backendData;
+                        // session.user.backendData = token.backendData;
+
+                        session.user.backendData = {};
+                        Object.entries(token.backendData).forEach(([key, value]) => {
+                            if (key !== "token") {
+                                session.user.backendData[key] = value;
+                            }
+                        });
                     }
                 }
             }
