@@ -26,7 +26,6 @@ import { Extension } from '@tiptap/core';
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import { FontFamily } from "@tiptap/extension-font-family";
-import FontSize from '@tiptap/extension-font-size';
 import TextAlign from '@tiptap/extension-text-align';
 import Subscript from '@tiptap/extension-subscript';
 import Superscript from '@tiptap/extension-superscript';
@@ -34,7 +33,7 @@ import Highlight from '@tiptap/extension-highlight';
 import Image from '@tiptap/extension-image';
 import BulletList from '@tiptap/extension-bullet-list';
 import Strike from '@tiptap/extension-strike';
-import TextStyle from '@tiptap/extension-text-style';
+import { TextStyle as BaseTextStyle } from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
@@ -56,6 +55,22 @@ import { useAdminAuth } from "@/hooks/adminAuth";
 const formSchema = z.object({
     title: z.string().min(1, "Title is required"),
     content: z.string().min(1, "Content is required"),
+});
+
+const FontSizeTextStyle = BaseTextStyle.extend({
+    addAttributes() {
+        return {
+            ...this.parent?.(),
+            fontSize: {
+                default: null,
+                parseHTML: element => element.style.fontSize || null,
+                renderHTML: attributes => {
+                    if (!attributes.fontSize) return {};
+                    return { style: `font-size: ${attributes.fontSize}` };
+                },
+            },
+        };
+    },
 });
 
 const MenuBar = ({ editor }) => {
@@ -98,8 +113,8 @@ const MenuBar = ({ editor }) => {
 
                 <select
                     className="h-8 w-20 rounded border border-input bg-muted px-2 text-sm hover:bg-accent focus:bg-accent transition-colors"
-                    value={editor.getAttributes('textStyle').fontSize}
-                    onChange={(e) => editor.chain().focus().setFontSize(e.target.value).run()}
+                    value={editor.getAttributes('textStyle').fontSize || ''}
+                    onChange={(e) => editor.chain().focus().setMark('textStyle', { fontSize: e.target.value }).run()}
                 >
                     <option value="">Size</option>
                     {[8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 30, 36, 48, 60, 72]
@@ -384,11 +399,8 @@ export function EditBlogForm({ initialData }) {
                 }
             }),
             Underline,
-            TextStyle,
+            FontSizeTextStyle,
             FontFamily,
-            FontSize.configure({
-                types: ['textStyle'],
-            }),
             TextAlign.configure({
                 types: ['paragraph', 'bulletList', 'orderedList', 'listItem'],
             }),
