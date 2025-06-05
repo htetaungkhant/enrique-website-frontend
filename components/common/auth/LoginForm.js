@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -82,6 +81,17 @@ const LoginForm = ({ toggleLoginSignup }) => {
         }
     };
 
+    const onClickForgotPassword = async (e) => {
+        e.preventDefault();
+
+        const query = { ...router.query, auth: "forgot-password" };
+        delete query.email;
+        router.push({
+            pathname: router.pathname,
+            query: query,
+        });
+    }
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} noValidate className="px-3 flex-1 flex flex-col gap-3 justify-center max-lg:text-xs text-sm text-[#848484]">
             <h1 className="text-center text-3xl font-bold text-[#484C52]">Login</h1>
@@ -110,7 +120,13 @@ const LoginForm = ({ toggleLoginSignup }) => {
                         <span className="text-xs text-red-500 mt-1 block">{errors.password.message}</span>
                     )}
                 </div>
-                <span className="ml-auto text-[#313C66] hover:underline cursor-pointer">Forgot Password?</span>
+                <button
+                    type="button"
+                    onClick={onClickForgotPassword}
+                    className="ml-auto text-[#313C66] hover:underline outline-none cursor-pointer"
+                >
+                    Forgot Password?
+                </button>
                 <Button type="submit" title={isSubmitting ? "Logging in..." : "Login"} disabled={isSubmitting}>
                     {isSubmitting ? "Logging in..." : "Login"}
                 </Button>
