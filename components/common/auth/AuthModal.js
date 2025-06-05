@@ -14,7 +14,7 @@ const AuthModal = ({
     className,
 }) => {
     const { session, isAuthenticated } = useUserAuth();
-    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showLoginSuccessModal, setShowLoginSuccessModal] = useState(false);
     const router = useRouter();
     const { query: { auth } } = router;
 
@@ -36,9 +36,19 @@ const AuthModal = ({
         });
     }
 
+    const handleBackToLogin = (e) => {
+        e.preventDefault();
+        const query = { ...router.query, auth: "login" };
+        delete query.email;
+        router.replace({
+            pathname: router.pathname,
+            query: query,
+        });
+    };
+
     useEffect(() => {
         if (!session?.validationFailed && isAuthenticated && (sessionStorage.getItem("justLoggedIn") === "1")) {
-            setShowSuccessModal(true);
+            setShowLoginSuccessModal(true);
             sessionStorage.removeItem("justLoggedIn");
         }
     }, [isAuthenticated]);
@@ -84,20 +94,41 @@ const AuthModal = ({
             </ModalWrapper>
             <ModalWrapper
                 backdrop={false}
-                isOpen={showSuccessModal}
+                isOpen={showLoginSuccessModal}
             >
                 <div
                     onClick={(e) => e.stopPropagation()}
                     className="mx-6 px-3 md:px-6 py-9 w-150 flex flex-col relative text-[#212A63] bg-white rounded-2xl shadow-xl inter-font"
                 >
                     {/* Close Button */}
-                    <IoMdCloseCircle size={28} onClick={() => setShowSuccessModal(false)} className="absolute top-3 right-3 text-[#484C52] hover:text-gray-500 cursor-pointer transition" />
+                    <IoMdCloseCircle size={28} onClick={() => setShowLoginSuccessModal(false)} className="absolute top-3 right-3 text-[#484C52] hover:text-gray-500 cursor-pointer transition" />
 
                     <div className="min-h-28 min-w-28 flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                         <div className="p-3 flex flex-col gap-10 items-center justify-center inter-font">
                             <h4 className="font-medium text-center text-2xl">Congrats! You have successfully Logged In</h4>
-                            <Button onClick={() => setShowSuccessModal(false)} className="p-3 min-w-60">
+                            <Button onClick={() => setShowLoginSuccessModal(false)} className="p-3 min-w-60">
                                 Proceed
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </ModalWrapper>
+            <ModalWrapper
+                backdrop={false}
+                isOpen={!session && (auth === "verify-success")}
+            >
+                <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="mx-6 px-3 md:px-6 py-9 w-150 flex flex-col relative text-[#212A63] bg-white rounded-2xl shadow-xl inter-font"
+                >
+                    {/* Close Button */}
+                    <IoMdCloseCircle size={28} onClick={handleCloseIconBtn} className="absolute top-3 right-3 text-[#484C52] hover:text-gray-500 cursor-pointer transition" />
+
+                    <div className="min-h-28 min-w-28 flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                        <div className="p-3 flex flex-col gap-10 items-center justify-center inter-font">
+                            <h4 className="font-medium text-center text-2xl">Congrats! You have created your account</h4>
+                            <Button onClick={handleBackToLogin} className="p-3 min-w-60">
+                                Back to Login
                             </Button>
                         </div>
                     </div>

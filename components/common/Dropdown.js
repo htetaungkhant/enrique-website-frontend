@@ -15,6 +15,7 @@ import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
  * @param {string} labelClassName - Additional className for the label element
  * @param {string} selectBoxClassName - Additional className for the dropdown trigger button
  * @param {string} placeholderClassName - Additional className for the placeholder text
+ * @param {string} error - Error message to display below the dropdown
  */
 export default function Dropdown({
     label,
@@ -27,6 +28,7 @@ export default function Dropdown({
     labelClassName,
     selectBoxClassName,
     placeholderClassName,
+    error,
 }) {
     const triggerRef = useRef(null);
     const [triggerWidth, setTriggerWidth] = useState();
@@ -36,7 +38,6 @@ export default function Dropdown({
 
     const handleOnLiClick = (value) => {
         if (onChange) onChange(value);
-
         setOpen(false);
     }
 
@@ -56,43 +57,49 @@ export default function Dropdown({
             {label && (
                 <label className={cn("text-xs font-medium", labelClassName)}>{label}</label>
             )}
-            <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                    <button
-                        ref={triggerRef}
-                        type="button"
-                        className={cn(
-                            "w-full p-2 border rounded-md bg-white text-left focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 transition",
-                            selectBoxClassName,
-                        )}
+            <div className="flex flex-col">
+                <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                        <button
+                            ref={triggerRef}
+                            type="button"
+                            className={cn(
+                                "w-full p-2 border rounded-md bg-white text-left focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 transition",
+                                error && "border-red-500 focus:border-red-500 focus:ring-red-500",
+                                selectBoxClassName,
+                            )}
+                        >
+                            {selected ? selected.label : <span className={cn("text-muted-foreground text-sm", placeholderClassName)}>{placeholder}</span>}
+                        </button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                        disablePortal
+                        className="p-0 w-full"
+                        align={popoverContentAlign}
+                        style={triggerWidth ? { width: triggerWidth } : undefined}
                     >
-                        {selected ? selected.label : <span className={cn("text-muted-foreground text-sm", placeholderClassName)}>{placeholder}</span>}
-                    </button>
-                </PopoverTrigger>
-                <PopoverContent
-                    disablePortal
-                    className="p-0 w-full"
-                    align={popoverContentAlign}
-                    style={triggerWidth ? { width: triggerWidth } : undefined}
-                >
-                    <ul className="divide-y divide-gray-100">
-                        {options.map((opt) => (
-                            <li key={opt.value}>
-                                <button
-                                    type="button"
-                                    className={cn(
-                                        "w-full px-4 py-2 text-left hover:bg-gray-100 transition",
-                                        value === opt.value && "bg-gray-100 font-semibold"
-                                    )}
-                                    onClick={() => handleOnLiClick(opt.value)}
-                                >
-                                    {opt.label}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </PopoverContent>
-            </Popover>
+                        <ul className="divide-y divide-gray-100">
+                            {options.map((opt) => (
+                                <li key={opt.value}>
+                                    <button
+                                        type="button"
+                                        className={cn(
+                                            "w-full px-4 py-2 text-left hover:bg-gray-100 transition",
+                                            value === opt.value && "bg-gray-100 font-semibold"
+                                        )}
+                                        onClick={() => handleOnLiClick(opt.value)}
+                                    >
+                                        {opt.label}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </PopoverContent>
+                </Popover>
+                {error && (
+                    <span className="mt-1 text-xs text-red-500">{error}</span>
+                )}
+            </div>
         </div>
     );
 }

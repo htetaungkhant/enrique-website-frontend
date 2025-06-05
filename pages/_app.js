@@ -7,7 +7,7 @@ import "@/styles/globals.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import 'react-phone-input-2/lib/style.css'
+import 'react-phone-input-2/lib/style.css';
 
 import { store, persistor } from '@/store';
 import AuthModal from "@/components/common/auth/AuthModal";

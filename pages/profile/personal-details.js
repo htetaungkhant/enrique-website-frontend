@@ -124,7 +124,7 @@ const PersonalDetailsPage = ({ user: initialUser, backendData: initialBackendDat
     const onPersonalInfoSubmit = async (data) => {
         try {
             setIsLoading(true);
-            const response = await fetch("/api/auth/user-route", {
+            const response = await fetch("/api/auth/user", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -158,7 +158,7 @@ const PersonalDetailsPage = ({ user: initialUser, backendData: initialBackendDat
     const onContactInfoSubmit = async (data) => {
         try {
             setIsLoading(true);
-            const response = await fetch("/api/auth/user-route", {
+            const response = await fetch("/api/auth/user", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

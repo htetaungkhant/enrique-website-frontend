@@ -4,13 +4,6 @@ import GoogleProvider from "next-auth/providers/google";
 
 import { validateGoogleIdToken, validateUserCredentials } from "@/lib/inhouseAPI/auth-route";
 
-console.log("Environment variable(NEXTAUTH_SECRET) ============================>", process.env.NEXTAUTH_SECRET);
-console.log("Environment variable(NEXTAUTH_URL) ============================>", process.env.NEXTAUTH_URL);
-console.log("Environment variable(NEXTAUTH_API) ============================>", process.env.NEXTAUTH_API);
-console.log("Environment variable(NEXTAUTH_X_API_KEY) ============================>", process.env.NEXTAUTH_X_API_KEY);
-console.log("Environment variable(GOOGLE_CLIENT_ID) ============================>", process.env.GOOGLE_CLIENT_ID);
-console.log("Environment variable(GOOGLE_CLIENT_SECRET) ============================>", process.env.GOOGLE_CLIENT_SECRET);
-
 export const authOptions = {
     providers: [
         CredentialsProvider({
