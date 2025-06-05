@@ -7,13 +7,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import Input, { PasswordInput } from "../Input";
 import Button from "../Button";
 import Checkbox from "../Checkbox";
 import Dropdown from "../Dropdown";
 import Datepicker from "../Datepicker";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 
 const signupSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
