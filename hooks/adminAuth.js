@@ -11,7 +11,7 @@ export const useAdminAuth = () => {
 
         // Add default callbackUrl if not provided
         if (!restOptions.callbackUrl) {
-            restOptions.callbackUrl = "/admin/courses-purchased";
+            restOptions.callbackUrl = "/admin/users";
         }
 
         return nextAuthSignIn(provider, restOptions);

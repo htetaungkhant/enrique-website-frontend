@@ -62,7 +62,7 @@ const LoginForm = () => {
     //     if (window.history.length > 2) {
     //         router.back();
     //     } else {
-    //         router.replace("/admin/courses-purchased");
+    //         router.replace("/admin/users");
     //     }
     //     return null;
     // }

@@ -33,20 +33,21 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "../ui/colla
 
 const menuItems = [
     {
-        label: "User Management",
+        label: "Users",
         icon: <Users className="w-4 h-4" />,
-        subMenus: [
-            {
-                label: "Courses Purchased",
-                icon: <BookOpenCheck className="w-4 h-4" />,
-                href: "/admin/courses-purchased",
-            },
-            {
-                label: "Survey Answers",
-                icon: <ListChecks className="w-4 h-4" />,
-                href: "/admin/survey-answers",
-            },
-        ],
+        href: "/admin/users",
+        // subMenus: [
+        //     {
+        //         label: "Courses Purchased",
+        //         icon: <BookOpenCheck className="w-4 h-4" />,
+        //         href: "/admin/courses-purchased",
+        //     },
+        //     {
+        //         label: "Survey Answers",
+        //         icon: <ListChecks className="w-4 h-4" />,
+        //         href: "/admin/survey-answers",
+        //     },
+        // ],
     },
     {
         label: "Facilitators",

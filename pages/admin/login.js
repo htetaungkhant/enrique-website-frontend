@@ -11,7 +11,7 @@ export async function getServerSideProps(context) {
     if (session) {
         return {
             redirect: {
-                destination: "/admin/courses-purchased",
+                destination: "/admin/users",
                 permanent: false,
             },
         };
