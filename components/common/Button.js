@@ -55,19 +55,19 @@ export const IconButton = ({
 		sm: {
 			button: "p-1 gap-1 rounded-3xl",
 			text: "p-1 text-xs md:text-sm",
-			icon: "h-6 lg:h-8",
+			icon: "h-6 w-6 lg:h-8 lg:w-8",
 			iconSize: 28,
 		},
 		md: {
 			button: "p-1 gap-3 lg:gap-2 rounded-[60px]",
 			text: "px-2 lg:py-1 text-sm md:text-base",
-			icon: "h-7 lg:h-9",
+			icon: "h-7 w-7 lg:h-9 lg:w-9",
 			iconSize: 46,
 		},
 		lg: {
 			button: "p-2 gap-4 rounded-[80px]",
 			text: "px-2 lg:py-2 text-base md:text-lg",
-			icon: "h-8 lg:h-10",
+			icon: "h-8 w-8 lg:w-10 lg:h-10",
 			iconSize: 60,
 		},
 	};
