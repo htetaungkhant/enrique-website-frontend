@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { motion } from "motion/react";
 
 import UPSection from "./UniformPaddingSection";
 import { cn } from "@/lib/utils";
@@ -11,13 +12,22 @@ export const UniformInfoSection = ({ image, children, imageAspectRatio = "defaul
     }
 
     return (
-        <UPSection className={cn(`${gridCols[imageAspectRatio]} max-xl:flex max-xl:flex-col max-xl:justify-center max-xl:items-center xl:grid gap-10 xl:gap-16`, className)}>
-            <div className={`order-2 ${reverse ? "xl:order-1" : "xl:order-2"} flex flex-col gap-6`}>
+        <UPSection className={cn(`${gridCols[imageAspectRatio]} max-xl:flex max-xl:flex-col max-xl:justify-center max-xl:items-center xl:grid gap-10 xl:gap-16 overflow-hidden`, className)}>
+            <motion.div className={`order-2 ${reverse ? "xl:order-1" : "xl:order-2"} flex flex-col gap-6`}
+                initial={{ opacity: 0, x: reverse ? -100 : 100 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+            >
                 {children}
-            </div>
+            </motion.div>
             {
                 image && (
-                    <div
+                    <motion.div
+                        initial={{ opacity: 0, x: reverse ? 100 : -100 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
                         className={cn(
                             "min-h-80 max-sm:w-full max-xl:w-1/3 xl:min-h-40 3xl:min-h-[26rem] order-1 relative",
                             (imageAspectRatio === "portrait") && "min-w-40",
@@ -32,30 +42,7 @@ export const UniformInfoSection = ({ image, children, imageAspectRatio = "defaul
                             alt="Info"
                             className={`object-cover rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-lg shadow-lg shadow-[#8A888840]`}
                         />
-                    </div>
-                    // <>
-                    //     <div
-                    //         className={`block 2xl:hidden min-h-80 max-sm:w-full sm:min-h-64 max-lg:w-1/2 lg:min-h-44 order-1 ${reverse ? "lg:order-2" : "lg:order-1"} relative`}
-                    //     >
-                    //         <Image
-                    //             src={image}
-                    //             fill
-                    //             alt="Info"
-                    //             className={`object-cover rounded-tl-[65px] rounded-br-[80px] shadow-lg shadow-[#8A888840]`}
-                    //         />
-                    //     </div>
-                    //     <div
-                    //         className={`hidden 2xl:block min-h-80 max-sm:w-full sm:min-h-64 max-lg:w-1/2 lg:min-h-44 w-1/4 order-1 ${reverse ? "lg:order-2" : "lg:order-1"} relative`}
-                    //     >
-                    //         <Image
-                    //             src={image}
-                    //             width={300}
-                    //             height={300}
-                    //             alt="Info"
-                    //             className={`w-full h-full object-cover rounded-tl-[65px] rounded-br-[80px] shadow-lg shadow-[#8A888840]`}
-                    //         />
-                    //     </div>
-                    // </>
+                    </motion.div>
                 )
             }
         </UPSection>
@@ -64,13 +51,25 @@ export const UniformInfoSection = ({ image, children, imageAspectRatio = "defaul
 
 const InfoSection = ({ image, children, smallImage = false, reverse = false, className }) => {
     return (
-        <UPSection className={cn(`flex justify-center items-center md:justify-between gap-10 lg:gap-20 flex-col lg:items-start ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"}`, className)}>
-            <div className="order-2 flex flex-col gap-6">
+        <UPSection className={cn(`flex justify-center items-center md:justify-between gap-10 lg:gap-20 flex-col lg:items-start ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"} overflow-hidden`, className)}>
+            <motion.div
+                initial={{ opacity: 0, x: reverse ? -100 : 100 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="order-2 flex flex-col gap-6"
+            >
                 {children}
-            </div>
+            </motion.div>
             {
                 image && (
-                    <div className="order-1">
+                    <motion.div
+                        initial={{ opacity: 0, x: reverse ? 100 : -100 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="order-1"
+                    >
                         <Image
                             src={image}
                             width={400}
@@ -78,7 +77,7 @@ const InfoSection = ({ image, children, smallImage = false, reverse = false, cla
                             alt="Info"
                             className={`${!smallImage ? "h-full sm:h-64 sm:w-64 sm:min-w-64 md:h-96 md:w-96 md:min-w-96" : "h-full sm:h-48 sm:w-48 sm:min-w-48 md:h-72 md:w-72 md:min-w-72"} object-cover rounded-tl-[65px] rounded-br-[80px] shadow-lg shadow-[#8A888840]`}
                         />
-                    </div>
+                    </motion.div>
                 )
             }
         </UPSection>
