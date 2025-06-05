@@ -22,18 +22,16 @@ export default function App({
   const isAdminRoute = Component.isAdminRoute ||
     (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin'));
 
-  // const authOptions = {
-  //   basePath: isAdminRoute ? "/api/auth/admin" : "/api/auth",
-  //   // This helps prevent session conflicts
-  //   refetchInterval: 0,
-  // };
-
-  const basePath = isAdminRoute ? "/api/auth/admin" : "/api/auth";
+  const authOptions = {
+    basePath: isAdminRoute ? "/api/auth/admin" : "/api/auth",
+    // This helps prevent session conflicts
+    refetchInterval: 0,
+  };
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <SessionProvider session={pageProps.session} basePath={basePath} refetchInterval={0}>
+        <SessionProvider session={pageProps.session} {...authOptions}>
           <ToastContainer />
           <Toaster position="top-right" richColors closeButton />
           <AuthModal />
