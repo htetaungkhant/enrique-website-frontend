@@ -147,7 +147,7 @@ const QuestionnairePage = () => {
                                         delay: 0.2,
                                         ease: "easeInOut"
                                     }}
-                                    className="relative px-6 py-0 lg:px-12 w-full flex-1 flex flex-col justify-center"
+                                    className="relative px-6 py-0 lg:px-12 w-full flex-1 flex flex-col"
                                 >
                                     <Swiper
                                         modules={[Navigation, Pagination]}
@@ -161,8 +161,8 @@ const QuestionnairePage = () => {
                                         style={{
                                             display: 'flex',
                                             flexDirection: 'column',
-                                            padding: '100px 0',
-                                            marginTop: '-100px',
+                                            // padding: '100px 0',
+                                            // marginTop: '-100px',
                                         }}
                                         wrapperClass="items-center"
                                     >

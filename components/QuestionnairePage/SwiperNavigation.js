@@ -277,7 +277,7 @@ const SwiperNavigation = ({ activeIndex, onGobackToFirst, onSubmit }) => {
         <>
             {
                 swiper && (
-                    <div className="flex justify-center gap-5 mt-10">
+                    <div className="flex justify-center gap-5 mt-5">
                         <IconButton className="w-33" title="Previous" onClick={handlePrevious} reverseIconPosition={true} iconAnimate={false} />
                         {
                             activeIdx === 31 ?

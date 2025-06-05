@@ -16,7 +16,7 @@ const Step1 = ({
                     <h4>How are you feeling right now as a starting point?</h4>
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-3">
+            <div className="grid grid-cols-2 gap-x-5 gap-y-3">
                 <AnswersBtn selected={step1 === 1} onClick={() => setStep1(1)} title="I’m in great health" />
                 <AnswersBtn selected={step1 === 2} onClick={() => setStep1(2)} title="I’m pretty healthy" />
                 <AnswersBtn selected={step1 === 3} onClick={() => setStep1(3)} title="I’m doing ok" />
