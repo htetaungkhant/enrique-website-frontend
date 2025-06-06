@@ -14,6 +14,7 @@ import Button from "../Button";
 import Checkbox from "../Checkbox";
 import Dropdown from "../Dropdown";
 import Datepicker from "../Datepicker";
+import { cn } from "@/lib/utils";
 
 const signupSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
@@ -89,9 +90,10 @@ const SignupForm = ({
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error(result.error || "Failed to sign up");
+                throw new Error(result.message || "Failed to sign up");
             }
 
+            toast.success("Account created successfully! Please verify your email.");
             const query = { ...router.query, auth: "verification", email: data.email };
             router.push({
                 pathname: router.pathname,
@@ -134,7 +136,7 @@ const SignupForm = ({
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error(result.error || "Failed to resend OTP");
+                throw new Error(result.message || "Failed to resend OTP");
             }
 
             toast.success("OTP has been sent to your email");
@@ -169,7 +171,7 @@ const SignupForm = ({
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error(result.error || "Failed to verify email");
+                throw new Error(result.message || "Failed to verify email");
             }
 
             toast.success("Account verified successfully!");
@@ -463,7 +465,9 @@ const SignupForm = ({
                                     className="mx-auto mt-8 min-w-60 py-4"
                                     onClick={handleVerificationAndCreateAccount}
                                     disabled={isVerifying || !otp || otp.length !== 6}
-                                />
+                                >
+                                    {isVerifying ? "Verifying..." : "Verify & Create account"}
+                                </Button>
                             </div>
                     )
                 }
