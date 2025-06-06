@@ -115,6 +115,11 @@ const ChatBot = () => {
         }
     };
 
+    const openPopover = () => {
+        setShowWelcome(false);
+        setIsOpen(true);
+    }
+
     const togglePopover = () => {
         setShowWelcome(false);
         setIsOpen(!isOpen);
@@ -123,7 +128,7 @@ const ChatBot = () => {
     return (
         <>
             {showWelcome && !isOpen && (
-                <div className="fixed bottom-6 right-25 z-50 max-w-[300px] bg-[#E6E8FF] p-2 rounded-lg shadow-lg animate-bounce-in">
+                <span onClick={openPopover} className="fixed bottom-6 right-25 z-50 max-w-[300px] bg-[#E6E8FF] p-2 rounded-lg shadow-lg cursor-pointer animate-bounce-in">
                     <div className="absolute -right-2 bottom-2 w-0 h-0 
                         border-l-[8px] border-l-transparent
                         border-t-[8px] border-t-[#E6E8FF]
@@ -131,7 +136,7 @@ const ChatBot = () => {
                         transform rotate-45"
                     />
                     <p className="font-semibold text-sm">Hi,<br />Welcome to Arise Bufo Retreat</p>
-                </div>
+                </span>
             )}
             <Popover open={isOpen} onOpenChange={togglePopover}>
                 <PopoverTrigger asChild>
