@@ -105,7 +105,7 @@ const AuthModal = ({
     };
 
     useEffect(() => {
-        if (!session?.validationFailed && isAuthenticated && (sessionStorage.getItem("justLoggedIn") === "1")) {
+        if (session?.user?.role === "user" && !session?.validationFailed && isAuthenticated && (sessionStorage.getItem("justLoggedIn") === "1")) {
             setShowLoginSuccessModal(true);
             sessionStorage.removeItem("justLoggedIn");
         }
