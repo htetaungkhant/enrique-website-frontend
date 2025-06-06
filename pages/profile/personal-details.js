@@ -98,7 +98,7 @@ export async function getServerSideProps(context) {
 }
 
 const PersonalDetailsPage = ({ user: initialUser, backendData: initialBackendData }) => {
-    const { session, updateUserSession } = useUserAuth();
+    const { session, updateSession } = useUserAuth();
     const currentUser = session?.user || initialUser;
     const currentBackendData = session?.user?.backendData || initialBackendData;
 
@@ -139,7 +139,8 @@ const PersonalDetailsPage = ({ user: initialUser, backendData: initialBackendDat
             const updatedUser = await response.json();
 
             // Update the session
-            await updateUserSession({
+            await updateSession({
+                ...session,
                 user: {
                     ...currentUser,
                     backendData: updatedUser
@@ -173,7 +174,8 @@ const PersonalDetailsPage = ({ user: initialUser, backendData: initialBackendDat
             const updatedUser = await response.json();
 
             // Update the session
-            await updateUserSession({
+            await updateSession({
+                ...session,
                 user: {
                     ...currentUser,
                     backendData: updatedUser

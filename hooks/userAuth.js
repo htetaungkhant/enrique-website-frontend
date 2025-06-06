@@ -45,7 +45,7 @@ export const useUserAuth = () => {
     return {
         session: data,
         status,
-        updateUserSession: update,
+        updateSession: update,
         signIn: userSignIn,
         signOut: userSignOut,
         isAuthenticated: status === "authenticated",
