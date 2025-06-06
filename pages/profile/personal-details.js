@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { removeUndefined } from "@/lib/utils";
 import { authOptions } from "../api/auth/[...nextauth]";
 
 const personalInfoSchema = z.object({
@@ -32,8 +33,8 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
-            user: session?.user || null,
-            backendData: session?.user?.backendData || null,
+            user: removeUndefined(session?.user) || null,
+            backendData: removeUndefined(session?.user?.backendData) || null,
         },
     };
 
