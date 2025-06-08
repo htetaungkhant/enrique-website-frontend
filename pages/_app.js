@@ -13,11 +13,17 @@ import { store, persistor } from '@/store';
 import AuthModal from "@/components/common/auth/AuthModal";
 import { Toaster } from "@/components/ui/sonner"
 import ChatBot from '@/components/common/ChatBot';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function App({
   Component,
   pageProps,
 }) {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
   // Determine which auth system to use based on the current path
   const isAdminRoute = Component.isAdminRoute ||
     (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin'));
@@ -28,10 +34,28 @@ export default function App({
     refetchInterval: 0,
   };
 
+  useEffect(() => {
+    // if (isAdminRoute) {
+    const handleStart = () => setIsLoading(true);
+    const handleComplete = () => setIsLoading(false);
+
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleComplete);
+    router.events.on('routeChangeError', handleComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleComplete);
+      router.events.off('routeChangeError', handleComplete);
+    };
+    // }
+  }, [router]);
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SessionProvider session={pageProps.session} {...authOptions}>
+          {isLoading && <LoadingSpinner />}
           <ToastContainer />
           <Toaster position="top-right" richColors closeButton />
           <AuthModal />
