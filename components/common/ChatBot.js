@@ -30,6 +30,7 @@ const ChatBot = () => {
     ]);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [isApiWorking, setIsApiWorking] = useState(false);
 
     // Show welcome message after component mount
     useEffect(() => {
@@ -95,6 +96,7 @@ const ChatBot = () => {
         }]);
         setInput("");
         setIsLoading(true);
+        setIsApiWorking(true);
 
         try {
             const response = await fetch('/api/chatbot', {
@@ -112,6 +114,8 @@ const ChatBot = () => {
         } catch (error) {
             console.error('Error:', error);
             streamResponse("I apologize, but I'm having trouble processing your request right now. Please try again later.");
+        } finally {
+            setIsApiWorking(false);
         }
     };
 
@@ -200,6 +204,14 @@ const ChatBot = () => {
                                 </div>
                             </div>
                         ))}
+
+                        {isApiWorking && (
+                            <div className="flex justify-start">
+                                <div className="max-w-[80%] p-3 rounded-lg bg-[#E6E8FF] animate-pulse">
+                                    Please wait...
+                                </div>
+                            </div>
+                        )}
 
                         {/* Quick Actions */}
                         {messages.length === 1 && (
