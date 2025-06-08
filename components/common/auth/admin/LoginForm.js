@@ -1,6 +1,8 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from 'react-toastify';
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -26,8 +28,9 @@ const schema = z.object({
 });
 
 const LoginForm = () => {
-    // const router = useRouter();
+    const router = useRouter();
     const { session, status, signIn } = useAdminAuth();
+    const [loading, setLoading] = useState(false);
     const form = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -37,20 +40,26 @@ const LoginForm = () => {
     });
 
     const onSubmit = async (data) => {
+        setLoading(true);
         try {
             const result = await signIn({
                 provider: "credentials",
                 email: data.email,
                 password: data.password,
+                redirect: false,
             });
 
             if (result?.error) {
                 console.error(result.error);
                 toast.error("Invalid email or password");
+                setLoading(false);
+            } else if (result?.ok) {
+                router.replace("/admin/users");
             }
         } catch (error) {
             console.error("An unexpected error occurred", error);
             toast.error("An unexpected error occurred");
+            setLoading(false);
         }
     };
 
@@ -113,9 +122,9 @@ const LoginForm = () => {
                 <Button
                     type="submit"
                     className="w-full mt-4 cursor-pointer"
-                    disabled={form.formState.isSubmitting}
+                    disabled={form.formState.isSubmitting || loading}
                 >
-                    {form.formState.isSubmitting ? "Logging in..." : "Login"}
+                    {form.formState.isSubmitting || loading ? "Logging in..." : "Login"}
                 </Button>
             </form>
         </Form>
