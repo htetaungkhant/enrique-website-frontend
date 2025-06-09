@@ -15,6 +15,7 @@ import {
     Newspaper,
     BookOpenCheck,
     School,
+    FileUser,
 } from "lucide-react";
 import { ImBlog } from "react-icons/im";
 
@@ -109,6 +110,11 @@ const menuItems = [
         label: "Newsletter",
         icon: <Newspaper className="w-4 h-4" />,
         href: "/admin/newsletter",
+    },
+    {
+        label: "Surveys",
+        icon: <FileUser className="w-4 h-4" />,
+        href: "/admin/surveys",
     },
 ];
 
