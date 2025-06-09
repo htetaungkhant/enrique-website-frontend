@@ -120,6 +120,7 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [showCreateDialog, setShowCreateDialog] = useState(false);
     const [editingNewsletter, setEditingNewsletter] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [totalPages, setTotalPages] = useState(1);
 
     const createForm = useForm({
@@ -149,6 +150,7 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
 
     const onCreateSubmit = async (data) => {
         try {
+            setIsSubmitting(true);
             const response = await fetch("/api/admin/newsletter", {
                 method: "POST",
                 headers: {
@@ -169,11 +171,14 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
         } catch (error) {
             console.error("Error creating newsletter:", error);
             toast.error("Failed to create newsletter");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     const onEditSubmit = async (data) => {
         try {
+            setIsSubmitting(true);
             const response = await fetch(`/api/admin/newsletter/${editingNewsletter.id}`, {
                 method: "PUT",
                 headers: {
@@ -197,6 +202,8 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
         } catch (error) {
             console.error("Error updating newsletter:", error);
             toast.error("Failed to update newsletter");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -222,6 +229,7 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
 
     const handleDelete = async (id) => {
         try {
+            setIsSubmitting(true);
             const response = await fetch("/api/admin/newsletter", {
                 method: "DELETE",
                 headers: {
@@ -240,6 +248,8 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
         } catch (error) {
             console.error("Error deleting newsletter:", error);
             toast.error("Failed to delete newsletter");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -282,12 +292,14 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                             className="pl-10 max-lg:w-full w-80 bg-white border-gray-200 text-gray-900 placeholder:text-gray-500"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
+                            disabled={isSubmitting}
                         />
                     </div>
                     <Button
                         onClick={() => setShowCreateDialog(true)}
                         variant="outline"
                         className="max-lg:order-1 cursor-pointer flex items-center gap-2 bg-white hover:bg-gray-100"
+                        disabled={isSubmitting}
                     >
                         <Plus size={20} />
                         Add New Newsletter
@@ -308,7 +320,11 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                                         <FormItem>
                                             <FormLabel>Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Enter name" {...field} />
+                                                <Input
+                                                    placeholder="Enter name"
+                                                    {...field}
+                                                    disabled={isSubmitting}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -321,14 +337,23 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                                         <FormItem>
                                             <FormLabel>Email</FormLabel>
                                             <FormControl>
-                                                <Input type="email" placeholder="Enter email" {...field} />
+                                                <Input
+                                                    type="email"
+                                                    placeholder="Enter email"
+                                                    {...field}
+                                                    disabled={isSubmitting}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit" className="w-full cursor-pointer">
-                                    Create Newsletter
+                                <Button
+                                    type="submit"
+                                    className="w-full cursor-pointer"
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? "Creating..." : "Create Newsletter"}
                                 </Button>
                             </form>
                         </Form>
@@ -349,7 +374,11 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                                         <FormItem>
                                             <FormLabel>Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Enter name" {...field} />
+                                                <Input
+                                                    placeholder="Enter name"
+                                                    {...field}
+                                                    disabled={isSubmitting}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -362,14 +391,23 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                                         <FormItem>
                                             <FormLabel>Email</FormLabel>
                                             <FormControl>
-                                                <Input type="email" placeholder="Enter email" {...field} />
+                                                <Input
+                                                    type="email"
+                                                    placeholder="Enter email"
+                                                    {...field}
+                                                    disabled={isSubmitting}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit" className="w-full cursor-pointer">
-                                    Update Newsletter
+                                <Button
+                                    type="submit"
+                                    className="w-full cursor-pointer"
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? "Updating..." : "Update Newsletter"}
                                 </Button>
                             </form>
                         </Form>
@@ -411,6 +449,7 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                                             size="sm"
                                             onClick={() => setEditingNewsletter(newsletter)}
                                             className="cursor-pointer"
+                                            disabled={isSubmitting}
                                         >
                                             <Pencil className="h-4 w-4" />
                                         </Button>
@@ -420,6 +459,7 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                                                     variant="ghost"
                                                     size="sm"
                                                     className="text-red-500 cursor-pointer"
+                                                    disabled={isSubmitting}
                                                 >
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
@@ -432,12 +472,17 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                                                     </AlertDialogDescription>
                                                 </AlertDialogHeader>
                                                 <AlertDialogFooter>
-                                                    <AlertDialogCancel className="cursor-pointer">Cancel</AlertDialogCancel>
+                                                    <AlertDialogCancel
+                                                        className="cursor-pointer"
+                                                    >
+                                                        Cancel
+                                                    </AlertDialogCancel>
                                                     <AlertDialogAction
                                                         className="cursor-pointer bg-red-500 hover:bg-red-600"
                                                         onClick={() => handleDelete(newsletter.id)}
+                                                        disabled={isSubmitting}
                                                     >
-                                                        Delete
+                                                        {isSubmitting ? "Deleting..." : "Delete"}
                                                     </AlertDialogAction>
                                                 </AlertDialogFooter>
                                             </AlertDialogContent>
