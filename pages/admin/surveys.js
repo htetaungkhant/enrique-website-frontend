@@ -468,7 +468,11 @@ const Surveys = ({ surveys = [] }) => {
                             {filteredSurveys.map((survey, index) => (
                                 <TableRow key={survey.id}>
                                     <TableCell>{index + 1}</TableCell>
-                                    <TableCell>{survey.question}</TableCell>
+                                    <TableCell className="max-w-md">
+                                        <div className="truncate" title={survey.question}>
+                                            {survey.question}
+                                        </div>
+                                    </TableCell>
                                     <TableCell className="capitalize">{survey.questionType.replace('_', ' ')}</TableCell>
                                     <TableCell>
                                         {format(new Date(survey.createdAt), "MMMM d, yyyy")}
