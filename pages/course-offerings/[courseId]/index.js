@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -39,6 +40,7 @@ export async function getServerSideProps(context) {
 const CourseDetails = ({ course, isAlreadyEnrolled }) => {
     const router = useRouter();
     const { session } = useUserAuth();
+    const [isLoading, setIsLoading] = useState(false);
 
     const handlePurchaseNow = async () => {
         if (!session || session.validationFailed) {
@@ -53,6 +55,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
             return;
         }
         else {
+            setIsLoading(true);
             try {
                 const response = await fetch('/api/register-course', {
                     method: 'POST',
@@ -73,6 +76,9 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
             catch (error) {
                 console.error("Error registering for course:", error);
                 toast.error("Failed to register for the course. Please try again.");
+            }
+            finally {
+                setIsLoading(false);
             }
             return;
         }
@@ -154,7 +160,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
                                         <span>Ceremony Fee</span>
                                         <span>€ {parseFloat(course.price)?.toFixed(2)}</span>
                                     </div>
-                                    <button onClick={handlePurchaseNow} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer">
+                                    <button disabled={isLoading} onClick={handlePurchaseNow} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
                                         Purchase  Now
                                     </button>
                                 </div>
