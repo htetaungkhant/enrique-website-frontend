@@ -1,16 +1,20 @@
+import { useRouter } from "next/router";
 import Image from "next/image";
+import { toast } from "sonner";
 
 import Footer from "@/components/common/Footer";
 import UPSection from "@/components/common/UniformPaddingSection";
 import PageHeader from "@/components/common/PageHeader";
 import YouTubeBanner from "@/components/common/YouTubeBanner";
-import { getCourseDetails } from "@/lib/inhouseAPI/course-route";
+import { getCourseDetails, getCoursesByUser } from "@/lib/inhouseAPI/course-route";
 import { useUserAuth } from "@/hooks/userAuth";
 
 export async function getServerSideProps(context) {
     try {
         const { courseId } = context.params;
         const course = await getCourseDetails({ ...context.req, body: { id: courseId } });
+        const coursesByUser = await getCoursesByUser(context.req);
+        const isAlreadyEnrolled = coursesByUser?.some(course => course.id === courseId);
 
         if (!course) {
             return {
@@ -20,7 +24,8 @@ export async function getServerSideProps(context) {
 
         return {
             props: {
-                course
+                course,
+                isAlreadyEnrolled: isAlreadyEnrolled ? true : false,
             }
         };
     } catch (error) {
@@ -31,8 +36,49 @@ export async function getServerSideProps(context) {
     }
 }
 
-const CourseDetails = ({ course }) => {
+const CourseDetails = ({ course, isAlreadyEnrolled }) => {
+    const router = useRouter();
     const { session } = useUserAuth();
+
+    const handlePurchaseNow = async () => {
+        if (!session || session.validationFailed) {
+            router.push({
+                pathname: router.pathname,
+                query: { ...router.query, auth: "login" }
+            });
+            return;
+        }
+        else if (isAlreadyEnrolled) {
+            alert("You are already enrolled in this course.");
+            return;
+        }
+        else {
+            try {
+                const response = await fetch('/api/register-course', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: course.id }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to register for the course');
+                }
+
+                const data = await response.json();
+                toast.success(data.message || "Course registered successfully!");
+                router.replace(router.asPath);
+            }
+            catch (error) {
+                console.error("Error registering for course:", error);
+                toast.error("Failed to register for the course. Please try again.");
+            }
+            return;
+        }
+
+        // window.location.href = `/course-offerings/${course.id}/purchase`;
+    }
 
     return (
         <main className="relative min-h-screen flex flex-col justify-between">
@@ -74,7 +120,7 @@ const CourseDetails = ({ course }) => {
                             )
                         }
                         {
-                            !session || session?.validationFailed ?
+                            !session || session?.validationFailed || !isAlreadyEnrolled ?
                                 <YouTubeBanner />
                                 : Array.isArray(course.classes) && course.classes?.length > 0 ? (
                                     course.classes?.map((video, index) => (
@@ -100,17 +146,21 @@ const CourseDetails = ({ course }) => {
                                     <p>Class videos are coming soon...</p>
                         }
                     </div>
-                    <div>
-                        <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
-                            <div className="font-bold flex justify-between">
-                                <span>Ceremony Fee</span>
-                                <span>€ {parseFloat(course.price)?.toFixed(2)}</span>
+                    {
+                        !isAlreadyEnrolled && (
+                            <div>
+                                <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
+                                    <div className="font-bold flex justify-between">
+                                        <span>Ceremony Fee</span>
+                                        <span>€ {parseFloat(course.price)?.toFixed(2)}</span>
+                                    </div>
+                                    <button onClick={handlePurchaseNow} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer">
+                                        Purchase  Now
+                                    </button>
+                                </div>
                             </div>
-                            <button className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer">
-                                Purchase  Now
-                            </button>
-                        </div>
-                    </div>
+                        )
+                    }
                 </div>
             </UPSection>
             <Footer className="mt-10" />
