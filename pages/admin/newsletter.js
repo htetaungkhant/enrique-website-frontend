@@ -158,7 +158,8 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
             });
 
             if (response.ok) {
-                router.refresh();
+                // router.refresh();
+                router.replace(router.asPath);
                 toast.success("Newsletter created successfully");
                 setShowCreateDialog(false);
                 createForm.reset();
@@ -185,7 +186,8 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
             });
 
             if (response.ok) {
-                router.refresh();
+                // router.refresh();
+                router.replace(router.asPath);
                 toast.success("Newsletter updated successfully");
                 setEditingNewsletter(null);
                 editForm.reset();
