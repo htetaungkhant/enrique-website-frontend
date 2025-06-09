@@ -479,3 +479,19 @@ body {
 .animate-bounce-in {
     animation: bounce-in 0.8s cubic-bezier(0.36, 0, 0.66, -0.56) forwards;
 }
+
+@keyframes progressBar {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-progressBar {
+  animation: progressBar 2s ease-in-out infinite;
+}

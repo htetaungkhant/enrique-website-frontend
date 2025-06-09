@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { SessionProvider } from "next-auth/react";
@@ -14,8 +16,6 @@ import AuthModal from "@/components/common/auth/AuthModal";
 import { Toaster } from "@/components/ui/sonner"
 import ChatBot from '@/components/common/ChatBot';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
 export default function App({
   Component,

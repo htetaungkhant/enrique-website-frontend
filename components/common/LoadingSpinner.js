@@ -3,10 +3,12 @@ import { cn } from "@/lib/utils";
 export default function LoadingSpinner({ className }) {
     return (
         <div className={cn(
-            "fixed inset-0 bg-black/50 backdrop-blur-sm z-1050 flex items-center justify-center",
+            "fixed top-0 left-0 right-0 z-1050",
             className
         )}>
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-white"></div>
+            <div className="w-full h-1.5 bg-gray-200/10 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-progressBar" />
+            </div>
         </div>
     );
 }
