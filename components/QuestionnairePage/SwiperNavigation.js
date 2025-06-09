@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+import { toast } from "sonner";
 import { useSwiper } from "swiper/react";
 
 import { useQuestionnaire } from "@/hooks/useQuestionnaire";

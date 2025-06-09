@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { SessionProvider } from "next-auth/react";
-import { ToastContainer } from 'react-toastify';
 
 import "@/styles/globals.css";
 import "swiper/css";
@@ -56,7 +55,6 @@ export default function App({
       <PersistGate loading={null} persistor={persistor}>
         <SessionProvider session={pageProps.session} {...authOptions}>
           {isLoading && <LoadingSpinner />}
-          <ToastContainer />
           <Toaster position="top-right" richColors closeButton />
           <AuthModal />
           <Component {...pageProps} />
