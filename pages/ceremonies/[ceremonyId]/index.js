@@ -1,19 +1,26 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
 import { IoCalendarClear } from "react-icons/io5";
 import { FaLocationDot } from "react-icons/fa6";
 import { format } from "date-fns";
+import { toast } from "sonner";
 
 import Footer from "@/components/common/Footer";
 import UPSection from "@/components/common/UniformPaddingSection";
 import PageHeader from "@/components/common/PageHeader";
-import { getCeremonyDetails } from "@/lib/inhouseAPI/ceremony-route";
+import { getCeremonyDetails, getCeremoniesByUser } from "@/lib/inhouseAPI/ceremony-route";
+import { useUserAuth } from "@/hooks/userAuth";
 
 
 export async function getServerSideProps(context) {
     try {
         const { ceremonyId } = context.params;
         const ceremony = await getCeremonyDetails({ ...context.req, body: { id: ceremonyId } });
+        const ceremoniesByUser = await getCeremoniesByUser(context.req);
+        const isAlreadyEnrolled = ceremoniesByUser?.some(ceremony => ceremony.id === ceremonyId);
+
         if (ceremony.location) {
             try {
                 const location = JSON.parse(ceremony.location);
@@ -57,7 +64,8 @@ export async function getServerSideProps(context) {
 
         return {
             props: {
-                ceremony
+                ceremony,
+                isAlreadyEnrolled: isAlreadyEnrolled ? true : false,
             }
         };
     } catch (error) {
@@ -68,9 +76,55 @@ export async function getServerSideProps(context) {
     }
 }
 
-const CeremonyDetails = ({ ceremony }) => {
+const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
     if (!ceremony) {
         return null;
+    }
+
+    const router = useRouter();
+    const { session } = useUserAuth();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleRegisterNow = async () => {
+        if (!session || session.validationFailed) {
+            router.push({
+                pathname: router.pathname,
+                query: { ...router.query, auth: "login" }
+            });
+            return;
+        }
+        else if (isAlreadyEnrolled) {
+            alert("You are already enrolled in this ceremony.");
+            return;
+        }
+        else {
+            setIsLoading(true);
+            try {
+                const response = await fetch('/api/register-ceremony', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: ceremony.id }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to register for the ceremony');
+                }
+
+                const data = await response.json();
+                toast.success(data.message || "ceremony registered successfully!");
+                router.replace(router.asPath);
+            }
+            catch (error) {
+                console.error("Error registering for ceremony:", error);
+                toast.error("Failed to register for the ceremony. Please try again.");
+            }
+            finally {
+                setIsLoading(false);
+            }
+            return;
+        }
     }
 
     return (
@@ -160,17 +214,21 @@ const CeremonyDetails = ({ ceremony }) => {
                             )
                         }
                     </div>
-                    <div>
-                        <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
-                            <div className="font-bold flex justify-between">
-                                <span>Ceremony Fee</span>
-                                <span>€ {parseFloat(ceremony.price)?.toFixed(2)}</span>
+                    {
+                        !isAlreadyEnrolled && (
+                            <div>
+                                <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
+                                    <div className="font-bold flex justify-between">
+                                        <span>Ceremony Fee</span>
+                                        <span>€ {parseFloat(ceremony.price)?.toFixed(2)}</span>
+                                    </div>
+                                    <button disabled={isLoading} onClick={handleRegisterNow} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
+                                        Register  Now
+                                    </button>
+                                </div>
                             </div>
-                            <button className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer">
-                                Register  Now
-                            </button>
-                        </div>
-                    </div>
+                        )
+                    }
                 </div>
             </UPSection>
             <Footer className="mt-10" />
