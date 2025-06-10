@@ -48,7 +48,7 @@ export const PhoneNumberInput = React.forwardRef(({
     return (
         <div className={cn('flex flex-col gap-1', className)}>
             {label && <span className={cn('text-xs', labelClassName)}>{label}</span>}
-            <div className="relative flex flex-col">
+            <div className="relative flex items-center">
                 {!phone && customPlaceholder && <span className={cn('absolute left-[5.5rem] text-gray-400 text-xs md:text-sm z-10', customPlaceholderClassName)} onClick={onPlaceholderClick}>{customPlaceholder}</span>}
                 <PhoneInput
                     countryCodeEditable={false}
@@ -75,21 +75,21 @@ export const PhoneNumberInput = React.forwardRef(({
                         ...props?.inputStyle
                     }}
                 />
-                {error && (
-                    <span className="mt-1 text-xs text-red-500">{error}</span>
-                )}
             </div>
+            {error && (
+                <span className="mt-1 text-xs text-red-500">{error}</span>
+            )}
         </div>
     )
 });
 
-export const PasswordInput = React.forwardRef(({ 
-    label, 
-    className, 
-    labelClassName, 
+export const PasswordInput = React.forwardRef(({
+    label,
+    className,
+    labelClassName,
     inputClassName,
-    error, 
-    ...props 
+    error,
+    ...props
 }, ref) => {
     const [isPassword, setIsPassword] = useState(true);
 
@@ -124,13 +124,13 @@ export const PasswordInput = React.forwardRef(({
 });
 PasswordInput.displayName = "PasswordInput";
 
-export const Textarea = ({ 
-    label, 
-    className, 
-    labelClassName, 
+export const Textarea = ({
+    label,
+    className,
+    labelClassName,
     textareaClassName,
     error,
-    ...props 
+    ...props
 }) => {
     return (
         <div className={cn("min-w-16 flex flex-col gap-1 p-[1px]", className)}>
@@ -152,13 +152,13 @@ export const Textarea = ({
     )
 }
 
-const Input = React.forwardRef(({ 
-    label, 
-    className, 
-    labelClassName, 
+const Input = React.forwardRef(({
+    label,
+    className,
+    labelClassName,
     inputClassName,
     error,
-    ...props 
+    ...props
 }, ref) => {
     return (
         <div className={cn("min-w-16 flex flex-col gap-1 p-[1px]", className)}>
