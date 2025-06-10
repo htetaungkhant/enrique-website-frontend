@@ -17,16 +17,11 @@ const CourseCard = ({
     dates,
     price,
     purchase = false,
+    disableLink = false,
     className,
 }) => {
-    return (
-        <Link
-            href={`/course-offerings/${id}`}
-            className={cn(
-                "inter-font text-[#212A63] flex flex-col rounded-2xl overflow-hidden",
-                className,
-            )}
-        >
+    const content = (
+        <>
             <Image
                 src={image}
                 width={312}
@@ -78,6 +73,31 @@ const CourseCard = ({
                     }
                 </div>
             </div>
+        </>
+    )
+
+    if (disableLink) {
+        return (
+            <div
+                className={cn(
+                    "inter-font text-[#212A63] flex flex-col rounded-2xl overflow-hidden",
+                    className,
+                )}
+            >
+                {content}
+            </div>
+        )
+    }
+
+    return (
+        <Link
+            href={`/course-offerings/${id}`}
+            className={cn(
+                "inter-font text-[#212A63] flex flex-col rounded-2xl overflow-hidden",
+                className,
+            )}
+        >
+            {content}
         </Link>
     )
 }
