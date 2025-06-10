@@ -14,13 +14,13 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
-import { getCeremonies } from "@/lib/inhouseAPI/ceremony-route";
+import { getAllCeremonies } from "@/lib/inhouseAPI/ceremony-route";
 import { cn } from "@/lib/utils";
 
 export async function getServerSideProps(context) {
     try {
         const page = parseInt(context.query.page) || 1;
-        const response = await getCeremonies({ ...context.req, body: { page, limit: 10 } });
+        const response = await getAllCeremonies({ ...context.req, body: { page, limit: 10 } });
 
         const ceremonies = response?.ceremonies ?? [];
 
