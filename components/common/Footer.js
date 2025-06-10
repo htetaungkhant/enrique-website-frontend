@@ -20,21 +20,21 @@ const Footer = ({ className }) => {
                     alt="logo"
                 />
                 <div className="text-[#143C58D6] flex gap-5 items-center">
-                    <Link href="#" target="_blank">
+                    <Link href="https://www.facebook.com/AriseRetreat7/" target="_blank">
                         <FaFacebookF className="bg-[#FDE3FE] rounded-sm w-6 h-6 lg:w-8 lg:h-8 p-1 pb-0" />
                     </Link>
-                    <Link href="#" target="_blank">
+                    <Link href="https://www.instagram.com/bufo.alvarius.79?igsh=NWQwbTZhOW5semFl&utm_source=qr" target="_blank">
                         <FaInstagram className="bg-[#FDE3FE] rounded-sm w-6 h-6 lg:w-8 lg:h-8 p-1" />
                     </Link>
-                    <Link href="#" target="_blank">
+                    {/* <Link href="#" target="_blank">
                         <RiTelegram2Fill className="bg-[#FDE3FE] rounded-sm w-6 h-6 lg:w-8 lg:h-8 p-1" />
-                    </Link>
-                    <Link href="#" target="_blank">
+                    </Link> */}
+                    <Link href="https://www.youtube.com/@Arise-Retreats" target="_blank">
                         <FaYoutube className="bg-[#FDE3FE] rounded-sm w-6 h-6 lg:w-8 lg:h-8 p-1" />
                     </Link>
-                    <Link href="#" target="_blank">
+                    {/* <Link href="#" target="_blank">
                         <FaLinkedinIn className="bg-[#FDE3FE] rounded-sm w-6 h-6 lg:w-8 lg:h-8 p-1" />
-                    </Link>
+                    </Link> */}
                 </div>
                 <p className="text-white text-center font-medium text-xs md:text-sm border-b-[1px] pb-2">Copyright © 2025 Arise. All rights reserved. Arise® and the Arise logo design are registered trademarks of Arise Inc. All other trademarks and logos are the property of their respective owners.</p>
                 <span className="text-white text-xs md:text-sm flex p-2">
