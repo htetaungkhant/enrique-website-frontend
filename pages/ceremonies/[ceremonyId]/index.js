@@ -18,8 +18,8 @@ export async function getServerSideProps(context) {
     try {
         const { ceremonyId } = context.params;
         const ceremony = await getCeremonyDetails({ ...context.req, body: { id: ceremonyId } });
-        const ceremoniesByUser = await getCeremoniesByUser(context.req);
-        const isAlreadyEnrolled = ceremoniesByUser?.some(ceremony => ceremony.id === ceremonyId);
+        const { ceremonies } = await getCeremoniesByUser(context.req);
+        const isAlreadyEnrolled = ceremonies?.some(ceremony => ceremony.id === ceremonyId);
 
         if (ceremony.location) {
             try {
