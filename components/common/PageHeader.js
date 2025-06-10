@@ -12,7 +12,7 @@ import { useUserAuth } from "@/hooks/userAuth";
 const PageHeader = ({
     className,
 }) => {
-    const { session, status } = useUserAuth();
+    const { session, status, isUser } = useUserAuth();
     const router = useRouter();
 
     const [hamburgerDisplay, setHamburgerDisplay] = useState(false);
@@ -20,6 +20,19 @@ const PageHeader = ({
     const handleHamburgerClick = () => {
         setHamburgerDisplay(!hamburgerDisplay);
     };
+
+    const onBookNowBtnClick = () => {
+        if (!session || session.validationFailed || !isUser) {
+            const query = { ...router.query, auth: "login" };
+            router.push({
+                pathname: router.pathname,
+                query: query,
+            });
+            return;
+        }
+
+        router.push("/questionnaire");
+    }
 
     const onLoginBtnClick = () => {
         // if (hamburgerDisplay) setHamburgerDisplay(false);
@@ -110,7 +123,7 @@ const PageHeader = ({
                     </nav>
 
                     <div className="hidden xl:flex space-x-4">
-                        <IconButton title="Book Now" href="/questionnaire" />
+                        <IconButton title="Book Now" onClick={onBookNowBtnClick} />
                         {
                             !session || session.validationFailed ?
                                 <IconButton title="Login" outline={true} onClick={onLoginBtnClick} />
@@ -158,7 +171,7 @@ const PageHeader = ({
                             Blogs
                         </Link>
                         <div className="flex gap-4 flex-col md:flex-row items-center justify-center">
-                            <IconButton title="Book Now" href="/questionnaire" />
+                            <IconButton title="Book Now" onClick={onBookNowBtnClick} />
                             {
                                 !session || session.validationFailed ?
                                     <IconButton title="Login" outline={true} onClick={onLoginBtnClick} />
@@ -232,7 +245,7 @@ export const PageHeaderWithFullBanner = ({
                         Array.isArray(title) ?
                             <div className={cn("text-5xl text-center font-bold", titleClassName)}>{
                                 title.map((eachTitle) => (
-                                    <h2>
+                                    <h2 key={eachTitle}>
                                         {eachTitle}
                                     </h2>
                                 ))
