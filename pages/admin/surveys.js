@@ -48,7 +48,7 @@ import { getSurveys } from "@/lib/inhouseAPI/survey-route";
 
 const formSchema = z.object({
     question: z.string().min(1, "Question is required"),
-    questionType: z.enum(["single_choice", "text", "rating"]),
+    questionType: z.enum(["single_choice", "multiple_choice", "text", "rating", "email", "phone"]),
     options: z.array(z.string()).optional(),
 });
 
@@ -102,7 +102,7 @@ const Surveys = ({ surveys = [] }) => {
         const body = {
             ...data,
             type: data.questionType,
-            options: data.questionType === "single_choice" ? data.options : undefined,
+            options: ['single_choice', 'multiple_choice'].includes(data.questionType) ? data.options : undefined,
         }
 
         try {
@@ -137,7 +137,7 @@ const Surveys = ({ surveys = [] }) => {
             id: editingSurvey.id,
             ...data,
             type: data.questionType,
-            options: data.questionType === "single_choice" ? data.options : undefined,
+            options: ['single_choice', 'multiple_choice'].includes(data.questionType) ? data.options : undefined,
         }
 
         try {
@@ -269,7 +269,7 @@ const Surveys = ({ surveys = [] }) => {
                                             <Select
                                                 onValueChange={(value) => {
                                                     field.onChange(value);
-                                                    if (value === 'single_choice') {
+                                                    if (value === 'single_choice' || value === 'multiple_choice') {
                                                         createForm.setValue("options", [""]);
                                                     } else {
                                                         createForm.setValue("options", []);
@@ -285,8 +285,11 @@ const Surveys = ({ surveys = [] }) => {
                                                 </FormControl>
                                                 <SelectContent>
                                                     <SelectItem value="single_choice">Single Choice</SelectItem>
+                                                    <SelectItem value="multiple_choice">Multiple Choice</SelectItem>
                                                     <SelectItem value="text">Text</SelectItem>
                                                     <SelectItem value="rating">Rating</SelectItem>
+                                                    <SelectItem value="email">Email</SelectItem>
+                                                    <SelectItem value="phone">Phone</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />
@@ -294,7 +297,8 @@ const Surveys = ({ surveys = [] }) => {
                                     )}
                                 />
 
-                                {createForm.watch("questionType") === "single_choice" && (
+                                {(createForm.watch("questionType") === "single_choice" || 
+                                  createForm.watch("questionType") === "multiple_choice") && (
                                     <div className="space-y-4">
                                         <FormLabel>Options</FormLabel>
                                         {createForm.watch("options")?.map((option, index) => (
@@ -390,8 +394,11 @@ const Surveys = ({ surveys = [] }) => {
                                                 </FormControl>
                                                 <SelectContent>
                                                     <SelectItem value="single_choice">Single Choice</SelectItem>
+                                                    <SelectItem value="multiple_choice">Multiple Choice</SelectItem>
                                                     <SelectItem value="text">Text</SelectItem>
                                                     <SelectItem value="rating">Rating</SelectItem>
+                                                    <SelectItem value="email">Email</SelectItem>
+                                                    <SelectItem value="phone">Phone</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />
@@ -399,7 +406,8 @@ const Surveys = ({ surveys = [] }) => {
                                     )}
                                 />
 
-                                {editForm.watch("questionType") === "single_choice" && (
+                                {(editForm.watch("questionType") === "single_choice" || 
+                                  editForm.watch("questionType") === "multiple_choice") && (
                                     <div className="space-y-4">
                                         <FormLabel>Options</FormLabel>
                                         {editForm.watch("options")?.map((option, index) => (
