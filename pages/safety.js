@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -9,6 +10,7 @@ import UPSection from "@/components/common/UniformPaddingSection";
 import YouTubeBanner from "@/components/common/YouTubeBanner";
 import { SwiperCardsRowSection } from "@/components/common/CardsRowSection";
 import AnimatedCard from "@/components/common/AnimatedCard";
+import { useQuestionnaire } from "@/hooks/useQuestionnaire";
 
 const cardsRowSectionData1 = {
     title: <h2>Potential Risks and <strong>Safety Considerations</strong></h2>,
@@ -65,6 +67,13 @@ const cardsRowSectionData2 = {
 }
 
 const SafetyPage = () => {
+    const { resetAll } = useQuestionnaire();
+
+    // Reset questionnaire state when the page loads
+    useEffect(() => {
+        resetAll();
+    }, [resetAll]);
+
     return (
         <main>
             <PageHeaderWithFullBanner

@@ -6,42 +6,34 @@ import { Navigation, Pagination } from "swiper/modules";
 
 import { useQuestionnaire } from "@/hooks/useQuestionnaire";
 import QuestStart from "@/components/QuestionnairePage/QuestStart";
-import Step1 from "@/components/QuestionnairePage/scenes/Step1";
-import Step2 from "@/components/QuestionnairePage/scenes/Step2";
-import Step3 from "@/components/QuestionnairePage/scenes/Step3";
-import Step4 from "@/components/QuestionnairePage/scenes/Step4";
-import Step5 from "@/components/QuestionnairePage/scenes/Step5";
-import Step6 from "@/components/QuestionnairePage/scenes/Step6";
-import Step7 from "@/components/QuestionnairePage/scenes/Step7";
-import Step8 from "@/components/QuestionnairePage/scenes/Step8";
-import Step9 from "@/components/QuestionnairePage/scenes/Step9";
-import Step10 from "@/components/QuestionnairePage/scenes/Step10";
-import Step11 from "@/components/QuestionnairePage/scenes/Step11";
-import Step12 from "@/components/QuestionnairePage/scenes/Step12";
-import Step13 from "@/components/QuestionnairePage/scenes/Step13";
-import Step14 from "@/components/QuestionnairePage/scenes/Step14";
-import Step15 from "@/components/QuestionnairePage/scenes/Step15";
-import Step16 from "@/components/QuestionnairePage/scenes/Step16";
-import Step17 from "@/components/QuestionnairePage/scenes/Step17";
-import Step18 from "@/components/QuestionnairePage/scenes/Step18";
-import Step19 from "@/components/QuestionnairePage/scenes/Step19";
-import Step20 from "@/components/QuestionnairePage/scenes/Step20";
-import Step21 from "@/components/QuestionnairePage/scenes/Step21";
-import Step22 from "@/components/QuestionnairePage/scenes/Step22";
-import Step23 from "@/components/QuestionnairePage/scenes/Step23";
-import Step24 from "@/components/QuestionnairePage/scenes/Step24";
-import Step25 from "@/components/QuestionnairePage/scenes/Step25";
-import Step26 from "@/components/QuestionnairePage/scenes/Step26";
-import Step27 from "@/components/QuestionnairePage/scenes/Step27";
-import Step28 from "@/components/QuestionnairePage/scenes/Step28";
-import Step29 from "@/components/QuestionnairePage/scenes/Step29";
-import Step30 from "@/components/QuestionnairePage/scenes/Step30";
-import Step31 from "@/components/QuestionnairePage/scenes/Step31";
 import QuestEnd from "@/components/QuestionnairePage/QuestEnd";
 import SwiperSlideContainer from "@/components/QuestionnairePage/SwiperSlideContainer";
 import SwiperNavigation from "@/components/QuestionnairePage/SwiperNavigation";
+import { getSurveys } from "@/lib/inhouseAPI/survey-route";
+import Step from "@/components/QuestionnairePage/Step";
 
-const QuestionnairePage = () => {
+
+export async function getServerSideProps(context) {
+    try {
+        const response = await getSurveys(context.req);
+        response.sort((a, b) => a.id - b.id);
+
+        return {
+            props: {
+                surveyQuestions: response ?? [],
+            },
+        };
+    } catch (error) {
+        console.error("Error fetching surveys:", error);
+        return {
+            props: {
+                surveyQuestions: [],
+            },
+        };
+    }
+}
+
+const QuestionnairePage = ({ surveyQuestions }) => {
     const containerRef = useRef(null);
     const { start, setStart, step1, end, setEnd, activeIndex, setActiveIndex } = useQuestionnaire();
     const [localStart, setLocalStart] = useState(false);
@@ -166,163 +158,18 @@ const QuestionnairePage = () => {
                                         }}
                                         wrapperClass="items-center"
                                     >
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step1 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step2 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step3 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step4 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step5 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step6 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step7 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step8 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step9 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step10 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step11 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step12 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step13 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step14 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step15 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step16 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step17 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step18 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step19 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step20 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step21 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step22 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step23 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step24 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step25 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step26 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step27 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step28 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step29 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step30 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <SwiperSlideContainer activeIndex={activeIndex}>
-                                                <Step31 />
-                                            </SwiperSlideContainer>
-                                        </SwiperSlide>
+                                        {
+                                            surveyQuestions.map((survey, idx) => (
+                                                <SwiperSlide key={`${survey.id}-${idx + 1}`}>
+                                                    <SwiperSlideContainer>
+                                                        <Step idx={idx + 1} survey={survey} />
+                                                    </SwiperSlideContainer>
+                                                </SwiperSlide>
+                                            ))
+                                        }
                                         <SwiperNavigation
                                             activeIndex={activeIndex}
+                                            surveys={surveyQuestions}
                                             onGobackToFirst={onGobackToFirst}
                                             onSubmit={onSubmit}
                                         />
