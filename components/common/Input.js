@@ -49,7 +49,7 @@ export const PhoneNumberInput = React.forwardRef(({
         <div className={cn('flex flex-col gap-1', className)}>
             {label && <span className={cn('text-xs', labelClassName)}>{label}</span>}
             <div className="relative flex items-center">
-                {!phone && customPlaceholder && <span className={cn('absolute left-[5.5rem] text-gray-400 text-xs md:text-sm z-10', customPlaceholderClassName)} onClick={onPlaceholderClick}>{customPlaceholder}</span>}
+                {!phone && customPlaceholder && <span className={cn('line-clamp-1 absolute left-[5.5rem] text-gray-400 text-xs md:text-sm z-10', customPlaceholderClassName)} onClick={onPlaceholderClick}>{customPlaceholder}</span>}
                 <PhoneInput
                     countryCodeEditable={false}
                     country={country || 'cz'}
