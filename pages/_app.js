@@ -15,6 +15,7 @@ import AuthModal from "@/components/common/auth/AuthModal";
 import { Toaster } from "@/components/ui/sonner"
 import ChatBot from '@/components/common/ChatBot';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import Advertisement from '@/components/common/Advertisement';
 
 export default function App({
   Component,
@@ -59,6 +60,7 @@ export default function App({
           <AuthModal />
           <Component {...pageProps} />
           <ChatBot />
+          {!isAdminRoute && <Advertisement />}
         </SessionProvider>
       </PersistGate>
     </Provider>
