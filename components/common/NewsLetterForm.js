@@ -122,7 +122,7 @@ const NewsLetterForm = ({ className, onSubmissionSuccess }) => {
                                             placeholder="Enter first name"
                                         />
                                     </FormControl>
-                                    <FormMessage className="text-red-400 text-sm mt-1" />
+                                    <FormMessage className="text-red-400 text-xs" />
                                 </FormItem>
                             )}
                         />
@@ -139,7 +139,7 @@ const NewsLetterForm = ({ className, onSubmissionSuccess }) => {
                                             placeholder="Enter last name"
                                         />
                                     </FormControl>
-                                    <FormMessage className="text-red-400 text-sm mt-1" />
+                                    <FormMessage className="text-red-400 text-xs" />
                                 </FormItem>
                             )}
                         />
@@ -159,7 +159,7 @@ const NewsLetterForm = ({ className, onSubmissionSuccess }) => {
                                         />
                                     </FormControl>
                                     {showPhoneError && form.formState.isSubmitted && (
-                                        <FormMessage className="text-red-400 text-sm mt-1">
+                                        <FormMessage className="text-red-400 text-xs">
                                             Mobile number is required
                                         </FormMessage>
                                     )}
@@ -180,7 +180,7 @@ const NewsLetterForm = ({ className, onSubmissionSuccess }) => {
                                             placeholder="Enter email ID"
                                         />
                                     </FormControl>
-                                    <FormMessage className="text-red-400 text-sm mt-1" />
+                                    <FormMessage className="text-red-400 text-xs" />
                                 </FormItem>
                             )}
                         />
