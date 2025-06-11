@@ -5,9 +5,9 @@ import * as z from "zod";
 import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import Input, { PhoneNumberInput } from "./Input";
 import { SubmitBtn } from "./Button";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 const formSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
