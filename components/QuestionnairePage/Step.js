@@ -13,7 +13,12 @@ const Step = ({
     const { answers, setAnswers } = useQuestionnaire();
 
     return (
-        <QuestionaireCard className={cn("", className)}>
+        <QuestionaireCard
+            className={cn(
+                survey?.questionType === "phone" ? "overflow-y-visible" : "",
+                className
+            )}
+        >
             <div className="text-base md:text-xl font-medium">
                 <div className="flex">
                     <span className="pr-2">{idx}</span>
