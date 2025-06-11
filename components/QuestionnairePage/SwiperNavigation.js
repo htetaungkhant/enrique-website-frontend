@@ -3,7 +3,7 @@ import { useSwiper } from "swiper/react";
 
 import { useQuestionnaire } from "@/hooks/useQuestionnaire";
 import { IconButton } from "@/components/common/Button";
-import { getQuestionaireErrorMessage } from "@/lib/utils";
+import { getQuestionaireErrorMessage, isPhoneValid } from "@/lib/utils";
 
 const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) => {
     const activeIdx = activeIndex + 1;
@@ -109,6 +109,11 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
                     return;
                 }
 
+                if (!isPhoneValid(stepAnswer?.answer?.value?.replace(stepAnswer?.answer?.dialCode, ""), stepAnswer?.answer?.dialCode)) {
+                    toast.error(errorMessage);
+                    return;
+                }
+
                 const submitResult = await submitSurveyAnswer(stepAnswer?.questionId, stepAnswer?.answer?.value?.replace(stepAnswer?.answer?.dialCode, ""), stepAnswer?.arrayAnswer, activeIdx);
                 if (submitResult) {
                     swiper?.slideNext();
@@ -116,7 +121,6 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
                 return;
             }
             else {
-                console.log("stepAnswer", stepAnswer);
                 if (!stepAnswer?.answer && (!stepAnswer?.arrayAnswer || (Array.isArray(stepAnswer?.arrayAnswer) && stepAnswer?.arrayAnswer.length === 0))) {
                     toast.error(getQuestionaireErrorMessage(surveys[activeIndex]?.questionType));
                     return;

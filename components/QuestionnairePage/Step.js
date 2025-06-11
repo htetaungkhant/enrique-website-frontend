@@ -117,13 +117,14 @@ const Step = ({
                 survey?.questionType === "phone" && (
                     <PhoneNumberInput
                         value={answers[idx]?.answer?.value || ''}
-                        onChange={(value, data) => setAnswers(
+                        onChange={(value, data, event, formattedValue) => setAnswers(
                             idx,
                             survey.id,
                             survey.questionType,
                             {
                                 value,
-                                dialCode: data.dialCode
+                                dialCode: data.dialCode,
+                                formattedValue,
                             },
                         )}
                         customPlaceholder="Type Here..."
