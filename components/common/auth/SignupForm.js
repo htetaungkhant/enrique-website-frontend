@@ -17,8 +17,12 @@ import Datepicker from "../Datepicker";
 import { cn } from "@/lib/utils";
 
 const signupSchema = z.object({
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
+    firstName: z.string()
+        .min(3, "First name must be at least 3 characters")
+        .min(1, "First name is required"),
+    lastName: z.string()
+        .min(3, "Last name must be at least 3 characters")
+        .min(1, "Last name is required"),
     email: z.string()
         .min(1, "Email is required")
         .email("Invalid email format"),
