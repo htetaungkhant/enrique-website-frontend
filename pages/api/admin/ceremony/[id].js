@@ -28,6 +28,7 @@ export default async function handler(req, res) {
             req.body = {
                 id,
                 ...fields,
+                gallery: files.gallery || (fields.existingGallery ? JSON.parse(fields.existingGallery) : undefined),
                 images: files.images || (fields.existingImages ? JSON.parse(fields.existingImages) : undefined),
                 image: files.image || (fields.existingImage ? JSON.parse(fields.existingImage) : undefined),
                 hostNames: JSON.parse(fields.hostNames),

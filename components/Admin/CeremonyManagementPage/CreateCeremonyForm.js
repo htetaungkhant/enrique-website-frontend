@@ -51,6 +51,7 @@ const formSchema = z.object({
     description: z.string().min(1, "Description is required"),
     price: z.string().min(1, "Price is required"),
     mainImage: imageSchema,
+    gallery: z.array(imageSchema).optional(),
     extraDetails: z.array(
         z.object({
             title: z.string().min(1, "Section title is required"),
@@ -68,6 +69,7 @@ const defaultValues = {
     locationAddress: "",
     description: "",
     mainImage: null,
+    gallery: [],
     hosts: [],
     extraDetails: [{ title: "", points: [""] }],
 }
@@ -75,6 +77,7 @@ const defaultValues = {
 export function CreateCeremonyForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [mainImage, setMainImage] = useState(null);
+    const [gallery, setGallery] = useState([]);
     const [hosts, setHosts] = useState([]);
     const [editingHost, setEditingHost] = useState(null);
     const [hostDialogOpen, setHostDialogOpen] = useState(false);
@@ -94,6 +97,27 @@ export function CreateCeremonyForm() {
         control: form.control,
         name: "extraDetails",
     });
+
+    const handleGalleryImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        const validFiles = files.filter(file => {
+            const isValidSize = file.size <= MAX_IMAGE_SIZE_BYTES;
+            const isValidType = ACCEPTED_IMAGE_TYPES.includes(file.type);
+            return isValidSize && isValidType;
+        });
+
+        if (validFiles.length !== files.length) {
+            toast.error(`Some images were skipped. Images must be under ${MAX_IMAGE_SIZE_MB}MB and in jpg, jpeg, png, or webp format.`);
+        }
+
+        setGallery(prev => [...prev, ...validFiles]);
+        form.setValue('gallery', [...gallery, ...validFiles]);
+    };
+
+    const removeGalleryImage = (index) => {
+        setGallery(prev => prev.filter((_, i) => i !== index));
+        form.setValue('gallery', gallery.filter((_, i) => i !== index));
+    };
 
     const handleHostImageChange = (e) => {
         const file = e.target.files[0];
@@ -169,6 +193,13 @@ export function CreateCeremonyForm() {
             hosts.forEach(host => {
                 formData.append("images", host.image);
             });
+
+            // Append gallery images
+            if (gallery.length > 0) {
+                gallery.forEach(image => {
+                    formData.append("gallery", image);
+                });
+            }
 
             const response = await fetch("/api/admin/ceremony", {
                 method: "POST",
@@ -263,6 +294,7 @@ export function CreateCeremonyForm() {
                                                 onChange(null);
                                             }}
                                             className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white hover:bg-red-600 cursor-pointer"
+                                            disabled={isSubmitting}
                                         >
                                             <XCircle className="h-4 w-4" />
                                         </button>
@@ -536,6 +568,66 @@ export function CreateCeremonyForm() {
                         </div>
                     ))}
                 </div>
+
+                <FormField
+                    control={form.control}
+                    name="gallery"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Gallery Images</FormLabel>
+                            <div
+                                onClick={() => document.getElementById('galleryImageInput').click()}
+                                className="mt-2 cursor-pointer flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-gray-400 transition-colors"
+                            >
+                                <div className="text-center">
+                                    <div className="mt-2 flex justify-center text-sm text-gray-600">
+                                        <span className="relative cursor-pointer rounded-md font-semibold text-primary hover:text-primary/80">
+                                            Upload gallery images
+                                        </span>
+                                    </div>
+                                    <p className="text-xs text-gray-500">PNG, JPG, WEBP up to {MAX_IMAGE_SIZE_MB}MB</p>
+                                </div>
+                                <Input
+                                    id="galleryImageInput"
+                                    type="file"
+                                    onChange={handleGalleryImageChange}
+                                    accept="image/*"
+                                    className="hidden"
+                                    multiple
+                                    disabled={isSubmitting}
+                                />
+                            </div>
+                            {gallery.length > 0 && (
+                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+                                    {gallery.map((image, index) => (
+                                        <div key={index} className="relative group">
+                                            <div className="relative w-full h-48">
+                                                <Image
+                                                    src={URL.createObjectURL(image)}
+                                                    alt={`Gallery image ${index + 1}`}
+                                                    fill
+                                                    className="object-cover rounded-lg"
+                                                />
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    removeGalleryImage(index);
+                                                }}
+                                                className="absolute top-2 right-2 p-1.5 bg-destructive/10 hover:bg-destructive/20 rounded text-destructive transition-colors cursor-pointer opacity-0 group-hover:opacity-100"
+                                                disabled={isSubmitting}
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
 
                 <Button type="submit" className="w-full cursor-pointer" disabled={isSubmitting}>
                     {isSubmitting ? "Creating..." : "Submit"}

@@ -36,6 +36,7 @@ export default async function handler(req, res) {
 
             req.body = {
                 ...fields,
+                gallery: files.gallery,
                 images: files.images,
                 image: files.image,
                 hostNames: JSON.parse(fields.hostNames),

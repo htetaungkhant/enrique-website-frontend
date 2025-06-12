@@ -25,8 +25,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DateTimePicker } from "@/components/common/DateTimePicker";
-import { PointsArray } from "./PointsArray";
 import { Card } from "@/components/ui/card";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { PointsArray } from "./PointsArray";
 
 const MAX_IMAGE_SIZE_MB = 6;
 const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
@@ -72,6 +73,19 @@ const editCeremonySchema = z.object({
     description: z.string().min(1, "Description is required"),
     price: z.string().min(1, "Price is required"),
     mainImage: imageSchema,
+    gallery: z.array(z.any())
+        .refine(
+            (files) => files.every(file =>
+                (file instanceof File && file.size <= MAX_IMAGE_SIZE_BYTES) || typeof file === 'string'
+            ),
+            `Image size must not exceed ${MAX_IMAGE_SIZE_MB}MB`
+        )
+        .refine(
+            (files) => files.every(file =>
+                (file instanceof File && ACCEPTED_IMAGE_TYPES.includes(file.type)) || typeof file === 'string'
+            ),
+            "Only .jpg, .jpeg, .png and .webp formats are supported"
+        ),
     extraDetails: z.array(
         z.object({
             title: z.string().min(1, "Section title is required"),
@@ -82,7 +96,9 @@ const editCeremonySchema = z.object({
 
 export function EditCeremonyForm({ initialData }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isConvertingImages, setIsConvertingImages] = useState(true);
     const [mainImage, setMainImage] = useState(initialData?.image?.image || null);
+    const [gallery, setGallery] = useState(initialData?.gallery?.map(img => img.image) || []);
     const [hosts, setHosts] = useState(
         initialData?.hosts?.map(host => ({
             name: host.title,
@@ -127,6 +143,8 @@ export function EditCeremonyForm({ initialData }) {
 
     useEffect(() => {
         const convertImages = async () => {
+            setIsConvertingImages(true);
+            // Handle main image
             if (initialData?.image?.image) {
                 const imageFile = await urlToFile(
                     initialData.image.image,
@@ -138,6 +156,7 @@ export function EditCeremonyForm({ initialData }) {
                 }
             }
 
+            // Handle host images
             if (initialData?.hosts?.length > 0) {
                 const hostPromises = initialData.hosts.map(async (host, index) => {
                     if (host.image?.image) {
@@ -160,12 +179,59 @@ export function EditCeremonyForm({ initialData }) {
                 setHosts(updatedHosts);
                 form.setValue('hosts', updatedHosts);
             }
+
+            // Handle gallery images
+            if (initialData?.gallery?.length > 0) {
+                const galleryPromises = initialData.gallery.map(async (img, index) => {
+                    if (img.image) {
+                        const imageFile = await urlToFile(
+                            img.image,
+                            `gallery-image-${index}-${initialData.id}.${img.image.split('.').pop()}`
+                        );
+                        return imageFile || img.image;
+                    }
+                    return null;
+                });
+
+                const updatedGallery = (await Promise.all(galleryPromises)).filter(Boolean);
+                setGallery(updatedGallery);
+                form.setValue('gallery', updatedGallery);
+            }
+
+            setIsConvertingImages(false);
         };
 
         if (initialData) {
-            convertImages();
+            convertImages().finally(() => {
+                setIsConvertingImages(false);
+            });
+        } else {
+            setIsConvertingImages(false);
         }
     }, [initialData, form]);
+
+    const handleGalleryImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        const validFiles = files.filter(file => {
+            const isValidSize = file.size <= MAX_IMAGE_SIZE_BYTES;
+            const isValidType = ACCEPTED_IMAGE_TYPES.includes(file.type);
+            return isValidSize && isValidType;
+        });
+
+        if (validFiles.length !== files.length) {
+            toast.error(`Some images were skipped. Images must be under ${MAX_IMAGE_SIZE_MB}MB and in jpg, jpeg, png, or webp format.`);
+        }
+
+        const updatedGallery = [...gallery, ...validFiles];
+        setGallery(updatedGallery);
+        form.setValue('gallery', updatedGallery);
+    };
+
+    const removeGalleryImage = (index) => {
+        const updatedGallery = gallery.filter((_, i) => i !== index);
+        setGallery(updatedGallery);
+        form.setValue('gallery', updatedGallery);
+    };
 
     const handleHostImageChange = (e) => {
         const file = e.target.files[0];
@@ -261,6 +327,24 @@ export function EditCeremonyForm({ initialData }) {
                 formData.append("existingImages", JSON.stringify(existingHostImages));
             }
 
+            // Handle gallery images
+            if (gallery.length > 0) {
+                const existingGalleryImages = gallery.filter(image => typeof image === 'string');
+                const newGalleryImages = gallery.filter(image => image instanceof File);
+
+                if (existingGalleryImages.length > 0) {
+                    formData.append("existingGallery", JSON.stringify(
+                        existingGalleryImages.map(image => ({ image }))
+                    ));
+                }
+
+                if (newGalleryImages.length > 0) {
+                    newGalleryImages.forEach(image => {
+                        formData.append("gallery", image);
+                    });
+                }
+            }
+
             const response = await fetch(`/api/admin/ceremony/${initialData.id}`, {
                 method: "PUT",
                 body: formData,
@@ -291,6 +375,15 @@ export function EditCeremonyForm({ initialData }) {
             setIsSubmitting(false);
         }
     };
+
+    if (isConvertingImages) {
+        return (
+            <div className="flex flex-col items-center justify-center p-8 space-y-4 bg-white rounded-lg">
+                <LoadingSpinner />
+                <p className="text-gray-600">Loading data, please wait...</p>
+            </div>
+        );
+    }
 
     return (
         <Form {...form}>
@@ -340,6 +433,7 @@ export function EditCeremonyForm({ initialData }) {
                                                     onChange(null);
                                                 }}
                                                 className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white hover:bg-red-600 cursor-pointer"
+                                                disabled={isSubmitting}
                                             >
                                                 <XCircle className="h-4 w-4" />
                                             </button>
@@ -612,6 +706,66 @@ export function EditCeremonyForm({ initialData }) {
                             </div>
                         ))}
                     </div>
+
+                    <FormField
+                        control={form.control}
+                        name="gallery"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Gallery Images</FormLabel>
+                                <div
+                                    onClick={() => document.getElementById('galleryImageInput').click()}
+                                    className="mt-2 cursor-pointer flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-gray-400 transition-colors"
+                                >
+                                    <div className="text-center">
+                                        <div className="mt-2 flex justify-center text-sm text-gray-600">
+                                            <span className="relative cursor-pointer rounded-md font-semibold text-primary hover:text-primary/80">
+                                                Upload gallery images
+                                            </span>
+                                        </div>
+                                        <p className="text-xs text-gray-500">PNG, JPG, WEBP up to {MAX_IMAGE_SIZE_MB}MB</p>
+                                    </div>
+                                    <Input
+                                        id="galleryImageInput"
+                                        type="file"
+                                        onChange={handleGalleryImageChange}
+                                        accept="image/*"
+                                        className="hidden"
+                                        multiple
+                                        disabled={isSubmitting}
+                                    />
+                                </div>
+                                {gallery.length > 0 && (
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+                                        {gallery.map((image, index) => (
+                                            <div key={index} className="relative group">
+                                                <div className="relative w-full h-48">
+                                                    <Image
+                                                        src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+                                                        alt={`Gallery image ${index + 1}`}
+                                                        fill
+                                                        className="object-cover rounded-lg"
+                                                    />
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        removeGalleryImage(index);
+                                                    }}
+                                                    className="absolute top-2 right-2 p-1.5 bg-destructive/10 hover:bg-destructive/20 rounded text-destructive transition-colors cursor-pointer opacity-0 group-hover:opacity-100"
+                                                    disabled={isSubmitting}
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                 </Card>
 
                 <div className="flex justify-end gap-4">
