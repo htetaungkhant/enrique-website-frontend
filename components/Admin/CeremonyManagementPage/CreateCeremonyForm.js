@@ -215,6 +215,7 @@ export function CreateCeremonyForm() {
                 setHostDialogOpen(false);
                 setNewHostName("");
                 setNewHostImage(null);
+                setGallery([]);
                 form.clearErrors();
 
                 // router.push("/admin/ceremony-management/ceremonies");
