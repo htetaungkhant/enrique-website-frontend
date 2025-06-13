@@ -1,5 +1,6 @@
-import { toast } from "sonner";
+import { useState } from "react";
 import { useSwiper } from "swiper/react";
+import { toast } from "sonner";
 
 import { useQuestionnaire } from "@/hooks/useQuestionnaire";
 import { IconButton } from "@/components/common/Button";
@@ -14,6 +15,7 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
         resetAll,
     } = useQuestionnaire();
     const swiper = useSwiper();
+    const [isNextDisabled, setIsNextDisabled] = useState(false);
 
     const handlePrevious = () => {
         if (activeIdx === 1) {
@@ -58,9 +60,11 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
     }
 
     const handleNext = async () => {
+        setIsNextDisabled(true);
         if (activeIdx === 1) {
             if (!answers[1]?.answer && (!answers[1]?.arrayAnswer || (Array.isArray(answers[1]?.arrayAnswer) && answers[1]?.arrayAnswer.length === 0))) {
                 toast.error(getQuestionaireErrorMessage(surveys[activeIndex]?.questionType));
+                setIsNextDisabled(false);
                 return;
             }
 
@@ -69,10 +73,12 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
                 setStart(true);
                 swiper?.slideNext();
             }
+            setIsNextDisabled(false);
             return;
         } else if (activeIdx === surveys.length) {
             if (!answers[activeIdx]?.answer && (!answers[activeIdx]?.arrayAnswer || (Array.isArray(answers[activeIdx]?.arrayAnswer) && answers[activeIdx]?.arrayAnswer.length === 0))) {
                 toast.error(getQuestionaireErrorMessage(surveys[activeIndex]?.questionType));
+                setIsNextDisabled(false);
                 return;
             }
 
@@ -80,6 +86,7 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
             if (submitResult) {
                 onSubmit?.(); // if (onSubmit) onSubmit();
             }
+            setIsNextDisabled(false);
             return;
         } else {
             const stepAnswer = answers[activeIdx];
@@ -87,12 +94,14 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
                 const errorMessage = getQuestionaireErrorMessage(surveys[activeIndex]?.questionType);
                 if (!stepAnswer?.answer) {
                     toast.error(errorMessage);
+                    setIsNextDisabled(false);
                     return;
                 }
 
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
                 if (stepAnswer?.answer && !emailRegex.test(stepAnswer?.answer)) {
                     toast.error(errorMessage);
+                    setIsNextDisabled(false);
                     return;
                 }
 
@@ -100,17 +109,20 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
                 if (submitResult) {
                     swiper?.slideNext();
                 }
+                setIsNextDisabled(false);
                 return;
             }
             else if (surveys[activeIndex]?.questionType === "phone") {
                 const errorMessage = getQuestionaireErrorMessage(surveys[activeIndex]?.questionType);
                 if (!stepAnswer?.answer || !stepAnswer?.answer?.value?.replace(stepAnswer?.answer?.dialCode, "")) { // (!step26 || !step26?.value?.replace(step26?.dialCode, ""))
                     toast.error(errorMessage);
+                    setIsNextDisabled(false);
                     return;
                 }
 
                 if (!isPhoneValid(stepAnswer?.answer?.value?.replace(stepAnswer?.answer?.dialCode, ""), stepAnswer?.answer?.dialCode)) {
                     toast.error(errorMessage);
+                    setIsNextDisabled(false);
                     return;
                 }
 
@@ -118,11 +130,13 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
                 if (submitResult) {
                     swiper?.slideNext();
                 }
+                setIsNextDisabled(false);
                 return;
             }
             else {
                 if (!stepAnswer?.answer && (!stepAnswer?.arrayAnswer || (Array.isArray(stepAnswer?.arrayAnswer) && stepAnswer?.arrayAnswer.length === 0))) {
                     toast.error(getQuestionaireErrorMessage(surveys[activeIndex]?.questionType));
+                    setIsNextDisabled(false);
                     return;
                 }
 
@@ -130,6 +144,7 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
                 if (submitResult) {
                     swiper?.slideNext();
                 }
+                setIsNextDisabled(false);
                 return;
             }
         }
@@ -145,7 +160,7 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
                             activeIdx === 31 ?
                                 <IconButton className="w-33" title="Submit" onClick={handleNext} iconAnimate={false} />
                                 :
-                                <IconButton className="w-33" title="Next" onClick={handleNext} iconAnimate={false} />
+                                <IconButton disabled={isNextDisabled} className="w-33" title="Next" onClick={handleNext} iconAnimate={false} />
                         }
                     </div>
                 )
