@@ -14,8 +14,12 @@ import Button from "../../common/Button";
 import Checkbox from "../../common/Checkbox";
 
 const formSchema = z.object({
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
+    firstName: z.string()
+        .min(3, "First name must be at least 3 characters")
+        .min(1, "First name is required"),
+    lastName: z.string()
+        .min(3, "Last name must be at least 3 characters")
+        .min(1, "Last name is required"),
     mobileNumber: z.string().refine((val) => {
         // Remove any non-digit characters and check if there are digits beyond the country code
         return val.replace(/\D/g, '').length > 1;

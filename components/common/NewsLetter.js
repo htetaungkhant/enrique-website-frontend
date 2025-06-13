@@ -10,8 +10,12 @@ import Input, { PhoneNumberInput } from "./Input";
 import { SubmitBtn } from "./Button";
 
 const formSchema = z.object({
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
+    firstName: z.string()
+        .min(3, "First name must be at least 3 characters")
+        .min(1, "First name is required"),
+    lastName: z.string()
+        .min(3, "Last name must be at least 3 characters")
+        .min(1, "Last name is required"),
     mobileNumber: z.string().refine((val) => {
         // Remove any non-digit characters and check if there are digits beyond the country code
         return val.replace(/\D/g, '').length > 1;
@@ -149,7 +153,7 @@ const NewsLetter = ({ id, className }) => {
                                     <FormControl>
                                         <PhoneNumberInput
                                             {...field}
-                                            value={field.value}
+                                            value={field.value || "420"}
                                             onChange={handlePhoneChange}
                                             label="Mobile Number"
                                             labelClassName="max-md:hidden"
