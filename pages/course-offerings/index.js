@@ -211,13 +211,14 @@ const CourseOfferingsPage = ({ courses, total, currentPage, sortByPrice, sortByD
                                 className="p-0 w-36 lg:w-40 xl:w-44 overflow-hidden"
                                 align="start"
                             >
-                                <ul className="merriweather-font">
+                                {/* className="merriweather-font" */}
+                                <ul>
                                     <li>
                                         <button
                                             type="button"
                                             className={cn(
-                                                "w-full px-4 py-2 text-left hover:bg-gray-100 transition outline-none",
-                                                (sortingType === SortingType.PRICE_ASCENDING) && "bg-gray-100 font-semibold"
+                                                "w-full px-4 py-2 text-left hover:bg-[#c8f7c5] transition outline-none",
+                                                (sortingType === SortingType.PRICE_ASCENDING) && "text-[#054224] bg-[#D7F2D5] hover:bg-[#c8f7c5] font-semibold"
                                             )}
                                             onClick={() => handlePriceSorting(SortingType.PRICE_ASCENDING)}
                                         >
@@ -228,8 +229,8 @@ const CourseOfferingsPage = ({ courses, total, currentPage, sortByPrice, sortByD
                                         <button
                                             type="button"
                                             className={cn(
-                                                "w-full px-4 py-2 text-left hover:bg-gray-100 transition outline-none",
-                                                (sortingType === SortingType.PRICE_DESCENDING) && "bg-gray-100 font-semibold"
+                                                "w-full px-4 py-2 text-left hover:bg-[#c8f7c5] transition outline-none",
+                                                (sortingType === SortingType.PRICE_DESCENDING) && "text-[#054224] bg-[#D7F2D5] hover:bg-[#c8f7c5] font-semibold"
                                             )}
                                             onClick={() => handlePriceSorting(SortingType.PRICE_DESCENDING)}
                                         >
@@ -257,13 +258,14 @@ const CourseOfferingsPage = ({ courses, total, currentPage, sortByPrice, sortByD
                                 className="p-0 w-36 lg:w-40 xl:w-44 overflow-hidden"
                                 align="start"
                             >
-                                <ul className="merriweather-font">
+                                {/* className="merriweather-font" */}
+                                <ul>
                                     <li>
                                         <button
                                             type="button"
                                             className={cn(
-                                                "w-full px-4 py-2 text-left hover:bg-gray-100 transition outline-none",
-                                                (sortingType === SortingType.DATE_ASCENDING) && "bg-gray-100 font-semibold"
+                                                "w-full px-4 py-2 text-left hover:bg-[#c8f7c5] transition outline-none",
+                                                (sortingType === SortingType.DATE_ASCENDING) && "text-[#054224] bg-[#D7F2D5] hover:bg-[#c8f7c5] font-semibold"
                                             )}
                                             onClick={() => handleDateSorting(SortingType.DATE_ASCENDING)}
                                         >
@@ -274,8 +276,8 @@ const CourseOfferingsPage = ({ courses, total, currentPage, sortByPrice, sortByD
                                         <button
                                             type="button"
                                             className={cn(
-                                                "w-full px-4 py-2 text-left hover:bg-gray-100 transition outline-none",
-                                                (sortingType === SortingType.DATE_DESCENDING) && "bg-gray-100 font-semibold"
+                                                "w-full px-4 py-2 text-left hover:bg-[#c8f7c5] transition outline-none",
+                                                (sortingType === SortingType.DATE_DESCENDING) && "text-[#054224] bg-[#D7F2D5] hover:bg-[#c8f7c5] font-semibold"
                                             )}
                                             onClick={() => handleDateSorting(SortingType.DATE_DESCENDING)}
                                         >
