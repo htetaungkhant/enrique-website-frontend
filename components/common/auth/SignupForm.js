@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
 import Image from "next/image";
 import Link from "next/link";
@@ -59,6 +59,22 @@ const SignupForm = ({
     const [isVerifying, setIsVerifying] = useState(false);
     const [isResendingOTP, setIsResendingOTP] = useState(false);
     const [otp, setOtp] = useState("");
+    const [serverDate, setServerDate] = useState(null);
+
+    useEffect(() => {
+        const fetchServerDate = async () => {
+            try {
+                const response = await fetch('/api/utils/get-server-date');
+                const data = await response.json();
+                setServerDate(new Date(data.date));
+            } catch (error) {
+                console.error('Failed to fetch server date:', error);
+                setServerDate(new Date()); // Fallback to client date
+            }
+        };
+
+        fetchServerDate();
+    }, []);
 
     const form = useForm({
         resolver: zodResolver(signupSchema),
@@ -333,6 +349,7 @@ const SignupForm = ({
                                                         onChange={(date) => field.onChange(date)}
                                                         labelClassName="text-sm"
                                                         error={form.formState.errors.dateOfBirth?.message}
+                                                        disabled={{ after: serverDate }}
                                                     />
                                                 </FormControl>
                                             </FormItem>

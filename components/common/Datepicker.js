@@ -35,6 +35,7 @@ export default function Datepicker({
     inputBoxClassName,
     placeholderClassName,
     error,
+    ...props
 }) {
     const [open, setOpen] = React.useState(false);
 
@@ -70,7 +71,9 @@ export default function Datepicker({
                                 onChange?.(date);
                                 setOpen(false);
                             }}
+                            captionLayout="dropdown"
                             initialFocus
+                            {...props}
                         />
                     </PopoverContent>
                 </Popover>
