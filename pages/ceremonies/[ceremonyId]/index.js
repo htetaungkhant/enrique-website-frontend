@@ -10,16 +10,19 @@ import { toast } from "sonner";
 import Footer from "@/components/common/Footer";
 import UPSection from "@/components/common/UniformPaddingSection";
 import PageHeader from "@/components/common/PageHeader";
-import { getCeremonyDetails, getCeremoniesByUser } from "@/lib/inhouseAPI/ceremony-route";
+import ceremonyRoute from "@/lib/inhouseAPI/ceremony-route";
 import { useUserAuth } from "@/hooks/userAuth";
 
 
 export async function getServerSideProps(context) {
     try {
         const { ceremonyId } = context.params;
-        const ceremony = await getCeremonyDetails({ ...context.req, body: { id: ceremonyId } });
-        const { ceremonies } = await getCeremoniesByUser(context.req);
-        const isAlreadyEnrolled = ceremonies?.some(ceremony => ceremony.id === ceremonyId);
+        const ceremony = await ceremonyRoute.getCeremonyDetails({ ...context.req, body: { id: ceremonyId } });
+        if (!ceremony) {
+            return {
+                notFound: true
+            };
+        }
 
         if (ceremony.location) {
             try {
@@ -56,18 +59,25 @@ export async function getServerSideProps(context) {
             ceremony.toTime = "";
         }
 
-        if (!ceremony) {
+        try {
+            const ceremoniesResponse = await ceremonyRoute.getRegisteredCeremoniesByUser(context.req);
+            const isAlreadyEnrolled = ceremoniesResponse?.ceremonies?.some(ceremony => ceremony.id === ceremonyId);
             return {
-                notFound: true
+                props: {
+                    ceremony,
+                    isAlreadyEnrolled: isAlreadyEnrolled ? true : false,
+                }
             };
         }
-
-        return {
-            props: {
-                ceremony,
-                isAlreadyEnrolled: isAlreadyEnrolled ? true : false,
-            }
-        };
+        catch (error) {
+            console.error("Error fetching registered ceremonies:", error);
+            return {
+                props: {
+                    ceremony,
+                    isAlreadyEnrolled: false,
+                }
+            };
+        }
     } catch (error) {
         console.error("Error fetching ceremony details:", error);
         return {
@@ -84,6 +94,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
     const router = useRouter();
     const { session } = useUserAuth();
     const [isLoading, setIsLoading] = useState(false);
+    const [viewAll, setViewAll] = useState(false);
 
     const handleRegisterNow = async () => {
         if (!session || session.validationFailed) {
@@ -132,7 +143,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
             <PageHeader />
             <UPSection className="inter-font text-white pt-28 xl:pt-48">
                 <div className="grid grid-cols-1 gap-10 lg:grid-cols-[65%_30%] justify-between">
-                    <div className="flex flex-col gap-10">
+                    <div className="max-lg:order-2 flex flex-col gap-10">
                         <h2 className="font-black text-5xl">{ceremony.title}</h2>
                         {
                             Array.isArray(ceremony.hosts) && ceremony.hosts?.length > 0 && (
@@ -215,8 +226,8 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                         }
                     </div>
                     {
-                        !isAlreadyEnrolled && (
-                            <div>
+                        !isAlreadyEnrolled ? (
+                            <div className="max-lg:order-1">
                                 <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
                                     <div className="font-bold flex justify-between">
                                         <span>Ceremony Fee</span>
@@ -228,8 +239,45 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                                 </div>
                             </div>
                         )
+                            : (
+                                <div className="max-lg:order-1">
+                                    <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
+                                        <div className="font-bold">You are already enrolled in this ceremony.</div>
+                                        <button onClick={() => router.push('/ceremonies')} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer">
+                                            View All Ceremonies
+                                        </button>
+                                    </div>
+                                </div>
+                            )
                     }
                 </div>
+                {
+                    Array.isArray(ceremony.gallery) && ceremony.gallery?.length > 0 && (
+                        <div className="max-lg:order-3 max-w-400 mx-auto mt-5 md:mt-10 flex flex-col items-center gap-4 md:gap-8">
+                            <h3 className="font-bold text-xl md:text-2xl xl:text-4xl">Gallery</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6 xl:gap-8">
+                                {
+                                    ceremony.gallery.slice(0, viewAll ? ceremony.gallery.length : 6).map((image, index) => (
+                                        <Image
+                                            key={`${image.id}-${index}`}
+                                            src={image.image}
+                                            width={300}
+                                            height={200}
+                                            alt={`Gallery Image ${index + 1}`}
+                                            className="w-full h-80 md:h-90 lg:h-100 xl:h-120 rounded-lg object-cover" />
+                                    ))
+                                }
+                            </div>
+                            {
+                                ceremony.gallery.length > 6 && (
+                                    <button onClick={() => setViewAll(!viewAll)} className="mt-2 md:mt-4 px-6 py-2 border border-white text-white font-medium rounded-xl cursor-pointer hover:bg-white hover:text-[#032F1F] transition-colors duration-300">
+                                        {viewAll ? "View Less" : "View More"}
+                                    </button>
+                                )
+                            }
+                        </div>
+                    )
+                }
             </UPSection>
             <Footer className="mt-10" />
         </main>

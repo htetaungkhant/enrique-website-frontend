@@ -98,7 +98,8 @@ export function EditCeremonyForm({ initialData }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isConvertingImages, setIsConvertingImages] = useState(true);
     const [mainImage, setMainImage] = useState(initialData?.image?.image || null);
-    const [gallery, setGallery] = useState(initialData?.gallery?.map(img => img.image) || []);
+    const [gallery, setGallery] = useState(initialData?.gallery?.map(img => ({ id: img.id, image: img.image })) || []);
+    const [deletedGalleryImages, setDeletedGalleryImages] = useState([]);
     const [hosts, setHosts] = useState(
         initialData?.hosts?.map(host => ({
             name: host.title,
@@ -181,6 +182,7 @@ export function EditCeremonyForm({ initialData }) {
             }
 
             // Handle gallery images
+            setDeletedGalleryImages([]);
             if (initialData?.gallery?.length > 0) {
                 const galleryPromises = initialData.gallery.map(async (img, index) => {
                     if (img.image) {
@@ -188,14 +190,18 @@ export function EditCeremonyForm({ initialData }) {
                             img.image,
                             `gallery-image-${index}-${initialData.id}.${img.image.split('.').pop()}`
                         );
-                        return imageFile || img.image;
+                        return {
+                            id: img.id,
+                            image: imageFile || img.image
+                        };
                     }
                     return null;
                 });
 
                 const updatedGallery = (await Promise.all(galleryPromises)).filter(Boolean);
                 setGallery(updatedGallery);
-                form.setValue('gallery', updatedGallery);
+                // Don't set form value for existing gallery images
+                form.setValue('gallery', []);
             }
 
             setIsConvertingImages(false);
@@ -222,15 +228,34 @@ export function EditCeremonyForm({ initialData }) {
             toast.error(`Some images were skipped. Images must be under ${MAX_IMAGE_SIZE_MB}MB and in jpg, jpeg, png, or webp format.`);
         }
 
-        const updatedGallery = [...gallery, ...validFiles];
+        // Update gallery state for UI preview
+        const updatedGallery = [
+            ...gallery,
+            ...validFiles.map(file => ({ id: null, image: file }))
+        ];
         setGallery(updatedGallery);
-        form.setValue('gallery', updatedGallery);
+
+        // Update form state with only new files
+        const currentFormGallery = form.getValues('gallery') || [];
+        form.setValue('gallery', [...currentFormGallery, ...validFiles]);
     };
 
     const removeGalleryImage = (index) => {
+        const removedImage = gallery[index];
+        if (removedImage?.id) {
+            setDeletedGalleryImages(prev => [...prev, removedImage.id]);
+        } else {
+            // If it's a new image, remove it from the form's gallery state
+            const currentFormGallery = form.getValues('gallery') || [];
+            const updatedFormGallery = currentFormGallery.filter(file =>
+                file !== removedImage.image
+            );
+            form.setValue('gallery', updatedFormGallery);
+        }
+
+        // Update UI state
         const updatedGallery = gallery.filter((_, i) => i !== index);
         setGallery(updatedGallery);
-        form.setValue('gallery', updatedGallery);
     };
 
     const handleHostImageChange = (e) => {
@@ -327,22 +352,50 @@ export function EditCeremonyForm({ initialData }) {
                 formData.append("existingImages", JSON.stringify(existingHostImages));
             }
 
-            // Handle gallery images
-            if (gallery.length > 0) {
-                const existingGalleryImages = gallery.filter(image => typeof image === 'string');
-                const newGalleryImages = gallery.filter(image => image instanceof File);
+            // Re-order deletedGalleryImages according to initialData order
+            if (deletedGalleryImages.length > 0 && Array.isArray(initialData?.gallery) && initialData.gallery?.length > 0) {
+                const orderedDeletedImages = initialData.gallery
+                    ?.filter(img => deletedGalleryImages.includes(img.id))
+                    ?.map(img => img.id)?.reverse() || [];
+
+                // Handle gallery images
+                const existingGalleryImages = gallery.filter(g => typeof g.image === 'string');
+                const newGalleryImages = form.getValues('gallery') || [];
 
                 if (existingGalleryImages.length > 0) {
                     formData.append("existingGallery", JSON.stringify(
-                        existingGalleryImages.map(image => ({ image }))
+                        existingGalleryImages.map(g => ({ id: g.id, image: g.image }))
                     ));
                 }
 
                 if (newGalleryImages.length > 0) {
-                    newGalleryImages.forEach(image => {
-                        formData.append("gallery", image);
+                    newGalleryImages.forEach(file => {
+                        formData.append("gallery", file);
                     });
                 }
+
+                // Add ordered deleted gallery images
+                formData.append("deletedGalleryImages", JSON.stringify(orderedDeletedImages));
+            } else {
+                // Handle gallery images when there are no deleted images
+                const existingGalleryImages = gallery.filter(g => typeof g.image === 'string');
+                const newGalleryImages = form.getValues('gallery') || [];
+
+                if (existingGalleryImages.length > 0) {
+                    formData.append("existingGallery", JSON.stringify(
+                        existingGalleryImages.map(g => ({ id: g.id, image: g.image }))
+                    ));
+                }
+
+                if (newGalleryImages.length > 0) {
+                    newGalleryImages.forEach(file => {
+                        formData.append("gallery", file);
+                    });
+                }
+
+                // if (deletedGalleryImages.length > 0) {
+                //     formData.append("deletedGalleryImages", JSON.stringify(deletedGalleryImages));
+                // }
             }
 
             const response = await fetch(`/api/admin/ceremony/${initialData.id}`, {
@@ -355,9 +408,9 @@ export function EditCeremonyForm({ initialData }) {
             }
 
             toast.success("Ceremony updated successfully!");
+
             router.replace(router.asPath);
         } catch (error) {
-            console.error("Error updating ceremony::", error);
             toast.error("Failed to update ceremony. Please try again.");
             const responseJson = await error.response?.json();
             if (responseJson?.errors) {
@@ -741,7 +794,7 @@ export function EditCeremonyForm({ initialData }) {
                                             <div key={index} className="relative group">
                                                 <div className="relative w-full h-48">
                                                     <Image
-                                                        src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+                                                        src={typeof image.image === 'string' ? image.image : URL.createObjectURL(image.image)}
                                                         alt={`Gallery image ${index + 1}`}
                                                         fill
                                                         className="object-cover rounded-lg"

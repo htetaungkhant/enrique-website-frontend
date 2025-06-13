@@ -34,6 +34,7 @@ export default async function handler(req, res) {
                 hostNames: JSON.parse(fields.hostNames),
                 location: JSON.parse(fields.location),
                 extraDetails: JSON.parse(fields.extraDetails),
+                deletedGalleryImages: fields.deletedGalleryImages ? JSON.parse(fields.deletedGalleryImages) : [],
             };
 
             const updatedCeremony = await updateCeremony(req);
