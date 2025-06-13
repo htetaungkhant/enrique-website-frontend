@@ -162,7 +162,7 @@ const ChatBot = () => {
                 </PopoverTrigger>
 
                 <PopoverContent
-                    className="w-[300px] md:w-[330px] xl:w-[400px] p-0 overflow-hidden"
+                    className="w-[300px] md:w-[330px] xl:w-[400px] p-0 overflow-hidden z-150"
                     side="top"
                     align="end"
                     sideOffset={16}
@@ -188,7 +188,7 @@ const ChatBot = () => {
                     </div>
 
                     {/* Messages */}
-                    <div ref={messagesContainerRef} className="p-4 h-[300px] lg:h-[400px] overflow-y-auto space-y-4">
+                    <div ref={messagesContainerRef} className="p-4 h-[300px] 2xl:h-[400px] overflow-y-auto space-y-4">
                         {messages.map((message, idx) => (
                             <div
                                 key={idx}
