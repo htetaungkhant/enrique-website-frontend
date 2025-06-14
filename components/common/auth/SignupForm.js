@@ -9,12 +9,12 @@ import { z } from "zod";
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { cn, maskEmail } from "@/lib/utils";
 import Input, { PasswordInput } from "../Input";
 import Button from "../Button";
 import Checkbox from "../Checkbox";
 import Dropdown from "../Dropdown";
 import Datepicker from "../Datepicker";
-import { cn } from "@/lib/utils";
 
 const signupSchema = z.object({
     firstName: z.string()
@@ -444,7 +444,7 @@ const SignupForm = ({
                             </>
                             :
                             <div className="mx-auto w-full lg:max-w-85 flex flex-col">
-                                <p className="text-center">Verify the Mail and <br />Enter the OTP shared on <span className="font-medium">{email}</span></p>
+                                <p className="text-center">Verify the Mail and <br />Enter the OTP shared on <span className="font-medium">{maskEmail(email)}</span></p>
                                 <label className="block mt-8 mb-3 text-[#403D4E] font-medium">OTP</label>
                                 <InputOTP
                                     maxLength={6}
