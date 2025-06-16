@@ -173,10 +173,10 @@ const AuthModal = ({
             sessionStorage.removeItem("justLoggedIn");
         }
 
-        return () => {
-            sessionStorage.removeItem("justLoggedIn");
-            sessionStorage.removeItem("forgotPasswordEmail");
-        };
+        // return () => {
+        //     sessionStorage.removeItem("justLoggedIn");
+        //     sessionStorage.removeItem("forgotPasswordEmail");
+        // };
     }, [isAuthenticated]);
 
     return (

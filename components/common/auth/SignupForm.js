@@ -10,6 +10,7 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { cn, maskEmail } from "@/lib/utils";
+import { useUserAuth } from "@/hooks/userAuth";
 import Input, { PasswordInput } from "../Input";
 import Button from "../Button";
 import Checkbox from "../Checkbox";
@@ -54,6 +55,7 @@ const signupSchema = z.object({
 const SignupForm = ({
     toggleLoginSignup,
 }) => {
+    const { signIn } = useUserAuth();
     const router = useRouter();
     const { query: { auth, email } } = router;
     const [isVerifying, setIsVerifying] = useState(false);
@@ -205,6 +207,27 @@ const SignupForm = ({
             toast.error(error.message || "Failed to verify email");
         } finally {
             setIsVerifying(false);
+        }
+    };
+
+    const handleGoogleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            sessionStorage.setItem("justLoggedIn", "1");
+
+            const path = window.location.pathname;
+            const searchParams = new URLSearchParams(window.location.search);
+            searchParams.delete("auth");
+            const callbackUrl = searchParams.size > 0 ? `${path}?${searchParams.toString()}` : path;
+            const options = {
+                provider: 'google',
+                redirect: false,
+                callbackUrl,
+            };
+            await signIn(options);
+        } catch (error) {
+            console.error("signin error", error);
+            toast.error("An unexpected error occurred");
         }
     };
 
@@ -430,6 +453,7 @@ const SignupForm = ({
                                     height={40}
                                     src="/icon/google.png"
                                     alt="google"
+                                    onClick={handleGoogleLogin}
                                     className="mx-auto w-10 h-10 max-lg:w-8 max-lg:h-8 cursor-pointer"
                                 />
                             </div>
