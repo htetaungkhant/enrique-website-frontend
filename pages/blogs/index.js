@@ -143,7 +143,22 @@ const BlogsPage = ({ blogs = [], total, currentPage, sortByDate }) => {
             <UPSection className="flex-1">
                 <div className="inter-font text-white">
                     <div className="py-16 flex flex-col items-start md:flex-row gap-3 lg:gap-5">
-                        <span className="px-4 py-1 lg:py-2 text-sm border-[1px] border-[#D7F2D5] rounded-3xl cursor-pointer text-[#054224] bg-[#D7F2D5]">All Blogs</span>
+                        <button
+                            className={cn(
+                                "px-4 py-1 lg:py-2 text-sm border-[1px] border-[#D7F2D5] rounded-3xl cursor-pointer text-white outline-none",
+                                !sortingType && "text-[#054224] bg-[#D7F2D5]",
+                            )}
+                            onClick={() => {
+                                setSortingType();
+                                const { page, sortByDate, ...restQuery } = router.query;
+                                router.push({
+                                    pathname: router.pathname,
+                                    query: { ...restQuery }
+                                });
+                            }}
+                        >
+                            All Blogs
+                        </button>
 
                         <Popover open={datePopover} onOpenChange={setDatePopover}>
                             <PopoverTrigger asChild>
