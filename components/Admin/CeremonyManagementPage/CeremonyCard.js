@@ -31,8 +31,8 @@ const CeremonyCard = ({
     locationAddress,
     startDate,
     endDate,
-    startTime,
-    endTime,
+    // startTime,
+    // endTime,
     onEdit,
     onDelete,
 }) => {
@@ -99,7 +99,8 @@ const CeremonyCard = ({
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                             <Clock className="h-4 w-4 shrink-0" />
                             <div>
-                                {startTime} - {endTime}
+                                {format(new Date(startDate), "h:mm a")} - {format(new Date(endDate), "h:mm a")}
+                                {/* {startTime} - {endTime} */}
                             </div>
                         </div>
                     </div>

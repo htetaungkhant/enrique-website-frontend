@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { format } from "date-fns";
+// import { format } from "date-fns";
 
 import AdminPagesWrapper from "@/components/Admin/PageWrapper";
 import CeremonyCard from "@/components/Admin/CeremonyManagementPage/CeremonyCard";
@@ -18,6 +18,7 @@ import { getAllCeremonies } from "@/lib/inhouseAPI/ceremony-route";
 import { cn } from "@/lib/utils";
 
 export async function getServerSideProps(context) {
+    console.log("deployment finished");
     try {
         const page = parseInt(context.query.page) || 1;
         const response = await getAllCeremonies({ ...context.req, body: { page, limit: 10 } });
@@ -41,19 +42,19 @@ export async function getServerSideProps(context) {
                     ceremony.locationAddress = "";
                 }
 
-                if (ceremony.startDate && ceremony.endDate) {
-                    try {
-                        ceremony.startTime = format(new Date(ceremony.startDate), "h:mm a");
-                        ceremony.endTime = format(new Date(ceremony.endDate), "h:mm a");
-                    } catch (error) {
-                        console.error("Error formatting time:", error);
-                        ceremony.startTime = "";
-                        ceremony.endTime = "";
-                    }
-                } else {
-                    ceremony.startTime = "";
-                    ceremony.endTime = "";
-                }
+                // if (ceremony.startDate && ceremony.endDate) {
+                //     try {
+                //         ceremony.startTime = format(new Date(ceremony.startDate), "h:mm a");
+                //         ceremony.endTime = format(new Date(ceremony.endDate), "h:mm a");
+                //     } catch (error) {
+                //         console.error("Error formatting time:", error);
+                //         ceremony.startTime = "";
+                //         ceremony.endTime = "";
+                //     }
+                // } else {
+                //     ceremony.startTime = "";
+                //     ceremony.endTime = "";
+                // }
             });
         }
 
@@ -123,8 +124,8 @@ const Ceremonies = ({ ceremonies, total, currentPage }) => {
                             locationAddress={ceremony.locationAddress}
                             startDate={ceremony.startDate}
                             endDate={ceremony.endDate}
-                            startTime={ceremony.startTime}
-                            endTime={ceremony.endTime}
+                            // startTime={ceremony.startTime}
+                            // endTime={ceremony.endTime}
                             onEdit={handleEditCeremony}
                         />
                     ))}
