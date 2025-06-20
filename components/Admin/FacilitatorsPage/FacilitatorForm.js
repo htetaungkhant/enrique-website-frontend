@@ -18,24 +18,23 @@ const MAX_IMAGE_SIZE_MB = 6;
 const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
 
 const facilitatorFormSchema = z.object({
-    // image: z.any().refine((file) => file instanceof File, "Image is required"),
     image: z
         .any()
         .refine(file => file instanceof File, "Image is required")
-        .refine(file => file instanceof File && file.size <= MAX_IMAGE_SIZE_BYTES, `Image size must not exceed ${MAX_IMAGE_SIZE_MB}MB`),
-    fullName: z.string().min(1, "Full name is required"),
-    designation: z.string().min(1, "Designation is required"),
-    about: z.string().min(1, "About section is required"),
+        .refine(file => file instanceof File && file.size <= MAX_IMAGE_SIZE_MB * 1024 * 1024, `Image size must not exceed ${MAX_IMAGE_SIZE_MB}MB`),
+    fullName: z.string().trim().min(1, "Full name is required"),
+    designation: z.string().trim().min(1, "Designation is required"),
+    about: z.string().trim().min(1, "About section is required"),
     areaOfExpertise: z.array(
         z.object({
-            title: z.string().min(1, "Title is required"),
-            description: z.string().min(1, "Description is required"),
+            title: z.string().trim().min(1, "Title is required"),
+            description: z.string().trim().min(1, "Description is required"),
         })
     ).min(1, "At least one area of expertise is required"),
     workAndImpact: z.array(
         z.object({
-            title: z.string(),
-            description: z.string().min(1, "Description is required"),
+            title: z.string().trim().optional(),
+            description: z.string().trim().min(1, "Description is required"),
         })
     ).min(1, "At least one work and impact item is required"),
 });
