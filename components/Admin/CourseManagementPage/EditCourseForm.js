@@ -66,22 +66,22 @@ const imageSchema = z.any()
 const editCourseSchema = z.object({
     courseImage: imageSchema,
     createdByImage: imageSchema,
-    title: z.string().min(1, "Title is required"),
-    price: z.string().min(1, "Price is required"),
-    createdBy: z.string().min(1, "Creator name is required"),
-    sessionOverview: z.string().min(1, "Session overview is required"),
+    title: z.string().trim().min(1, "Title is required"),
+    price: z.string().trim().min(1, "Price is required"),
+    createdBy: z.string().trim().min(1, "Creator name is required"),
+    sessionOverview: z.string().trim().min(1, "Session overview is required"),
     extraDetails: z.array(
         z.object({
-            title: z.string().min(1, "Section title is required"),
-            points: z.array(z.string().min(1, "Note shouldn't empty")).min(1, "At least one note is required"),
+            title: z.string().trim().min(1, "Section title is required"),
+            points: z.array(z.string().trim().min(1, "Note shouldn't empty")).min(1, "At least one note is required"),
         })
     ).min(1, "At least one extra detail section is required"),
     courseVideos: z.array(
         z.object({
             videoId: z.string().optional(),
-            video: z.string().min(1, "Video URL is required"),
-            title: z.string().min(1, "Video title is required"),
-            points: z.array(z.string().min(1, "Note shouldn't empty")).optional(),
+            video: z.string().trim().min(1, "Video URL is required"),
+            title: z.string().trim().min(1, "Video title is required"),
+            points: z.array(z.string().trim().min(1, "Note shouldn't empty")).optional(),
         })
     ).min(1, "At least one course video is required"),
 });
