@@ -16,6 +16,7 @@ import {
     BookOpenCheck,
     School,
     FileUser,
+    NotebookPen,
 } from "lucide-react";
 import { ImBlog } from "react-icons/im";
 
@@ -107,14 +108,19 @@ const menuItems = [
         ],
     },
     {
-        label: "Newsletter",
-        icon: <Newspaper className="w-4 h-4" />,
-        href: "/admin/newsletter",
-    },
-    {
         label: "Surveys",
         icon: <FileUser className="w-4 h-4" />,
         href: "/admin/surveys",
+    },
+    {
+        label: "Contact Us",
+        icon: <NotebookPen className="w-4 h-4" />,
+        href: "/admin/contact-us",
+    },
+    {
+        label: "Newsletter",
+        icon: <Newspaper className="w-4 h-4" />,
+        href: "/admin/newsletter",
     },
 ];
 
