@@ -50,6 +50,7 @@ import {
 } from "@/components/ui/form";
 import { Card } from "@/components/ui/card";
 import { useAdminAuth } from "@/hooks/adminAuth";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
     title: z.string().trim().min(1, "Title is required"),
@@ -135,7 +136,10 @@ const MenuBar = ({ editor }) => {
                     variant={editor.isActive("bold") ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => editor.chain().focus().toggleBold().run()}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive("bold") && "bg-gray-300"
+                    )}
                 >
                     <Bold className="h-4 w-4" />
                 </Button>
@@ -144,7 +148,10 @@ const MenuBar = ({ editor }) => {
                     variant={editor.isActive("italic") ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => editor.chain().focus().toggleItalic().run()}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive("italic") && "bg-gray-300"
+                    )}
                 >
                     <Italic className="h-4 w-4" />
                 </Button>
@@ -153,7 +160,10 @@ const MenuBar = ({ editor }) => {
                     variant={editor.isActive("underline") ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => editor.chain().focus().toggleUnderline().run()}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive("underline") && "bg-gray-300"
+                    )}
                 >
                     <UnderlineIcon className="h-4 w-4" />
                 </Button>
@@ -162,7 +172,10 @@ const MenuBar = ({ editor }) => {
                     variant={editor.isActive("strike") ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => editor.chain().focus().toggleStrike().run()}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive("strike") && "bg-gray-300"
+                    )}
                 >
                     <Strikethrough className="h-4 w-4" />
                 </Button>
@@ -191,7 +204,10 @@ const MenuBar = ({ editor }) => {
                     variant={editor.isActive("subscript") ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => editor.chain().focus().toggleSubscript().run()}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive("subscript") && "bg-gray-300"
+                    )}
                 >
                     <SubscriptIcon className="h-4 w-4" />
                 </Button>
@@ -200,7 +216,10 @@ const MenuBar = ({ editor }) => {
                     variant={editor.isActive("superscript") ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => editor.chain().focus().toggleSuperscript().run()}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive("superscript") && "bg-gray-300"
+                    )}
                 >
                     <SuperscriptIcon className="h-4 w-4" />
                 </Button>
@@ -212,7 +231,10 @@ const MenuBar = ({ editor }) => {
                     variant={editor.isActive({ textAlign: "left" }) ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => editor.chain().focus().setTextAlign("left").run()}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive({ textAlign: "left" }) && "bg-gray-300"
+                    )}
                 >
                     <AlignLeft className="h-4 w-4" />
                 </Button>
@@ -221,7 +243,10 @@ const MenuBar = ({ editor }) => {
                     variant={editor.isActive({ textAlign: "center" }) ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => editor.chain().focus().setTextAlign("center").run()}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive({ textAlign: "center" }) && "bg-gray-300"
+                    )}
                 >
                     <AlignCenter className="h-4 w-4" />
                 </Button>
@@ -230,7 +255,10 @@ const MenuBar = ({ editor }) => {
                     variant={editor.isActive({ textAlign: "right" }) ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => editor.chain().focus().setTextAlign("right").run()}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive({ textAlign: "right" }) && "bg-gray-300"
+                    )}
                 >
                     <AlignRight className="h-4 w-4" />
                 </Button>
@@ -239,7 +267,10 @@ const MenuBar = ({ editor }) => {
                     variant={editor.isActive({ textAlign: "justify" }) ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => editor.chain().focus().setTextAlign("justify").run()}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive({ textAlign: "justify" }) && "bg-gray-300"
+                    )}
                 >
                     <AlignJustify className="h-4 w-4" />
                 </Button>
@@ -253,7 +284,10 @@ const MenuBar = ({ editor }) => {
                     onClick={() => {
                         editor.chain().focus().toggleBulletList().run();
                     }}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive('bulletList') && "bg-gray-300"
+                    )}
                 >
                     <List className="h-4 w-4" />
                 </Button>
@@ -264,7 +298,10 @@ const MenuBar = ({ editor }) => {
                     onClick={() => {
                         editor.chain().focus().toggleOrderedList().run();
                     }}
-                    className="h-8 w-8 p-0"
+                    className={cn(
+                        "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+                        editor.isActive('orderedList') && "bg-gray-300"
+                    )}
                 >
                     <ListOrdered className="h-4 w-4" />
                 </Button>
@@ -279,7 +316,7 @@ const MenuBar = ({ editor }) => {
                             editor.commands.indent();
                         }
                     }}
-                    className="h-8 w-8 p-0"
+                    className="h-8 w-8 p-0 cursor-pointer hover:bg-gray-200"
                     title="Increase indent"
                 >
                     <IndentIcon className="h-4 w-4" />
@@ -295,7 +332,7 @@ const MenuBar = ({ editor }) => {
                             editor.commands.outdent();
                         }
                     }}
-                    className="h-8 w-8 p-0"
+                    className="h-8 w-8 p-0 cursor-pointer hover:bg-gray-200"
                     title="Decrease indent"
                 >
                     <Outdent className="h-4 w-4" />
@@ -308,7 +345,7 @@ const MenuBar = ({ editor }) => {
                     variant="ghost"
                     size="sm"
                     onClick={addImage}
-                    className="h-8 w-8 p-0"
+                    className="h-8 w-8 p-0 cursor-pointer hover:bg-gray-200"
                 >
                     <ImageIcon className="h-4 w-4" />
                 </Button>
