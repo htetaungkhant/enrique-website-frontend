@@ -52,8 +52,8 @@ import { Card } from "@/components/ui/card";
 import { useAdminAuth } from "@/hooks/adminAuth";
 
 const formSchema = z.object({
-    title: z.string().min(1, "Title is required"),
-    content: z.string().min(1, "Content is required"),
+    title: z.string().trim().min(1, "Title is required"),
+    content: z.string().trim().min(1, "Content is required"),
 });
 
 const defaultValues = {
