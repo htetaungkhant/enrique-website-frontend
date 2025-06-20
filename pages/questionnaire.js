@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -34,7 +34,6 @@ export async function getServerSideProps(context) {
 }
 
 const QuestionnairePage = ({ surveyQuestions }) => {
-    const containerRef = useRef(null);
     const { start, setStart, step1, end, setEnd, activeIndex, setActiveIndex } = useQuestionnaire();
     const [localStart, setLocalStart] = useState(false);
 
@@ -45,24 +44,21 @@ const QuestionnairePage = ({ surveyQuestions }) => {
 
     const onSubmit = () => {
         setEnd(true);
-        if (containerRef.current) {
-            containerRef.current.classList.remove("overflow-hidden");
-        }
     }
-
-    useEffect(() => {
-        if (containerRef.current && !end) {
-            containerRef.current.classList.add("overflow-hidden");
-        }
-    }, []);
 
     return (
         <main className="bg-black overflow-x-hidden">
-            <div ref={containerRef} className="h-screen w-screen flex flex-col bg-no-repeat bg-cover bg-center" style={{ backgroundImage: "url(/image/banner.png)" }}> {/* overflow-x-hidden overflow-y-auto */}
-                <div className="w-full h-full absolute flex justify-center items-center overflow-hidden">
-                    <div className="-mt-[8%] xl:h-[40%] xl:w-[30%] xl:min-h-120 xl:min-w-120 min-h-100 min-w-100 h-100 w-100 bg-radial from-[#000000] via-[#00000000] via-[70%] to-transparent"></div>
-                    <div className="xl:h-[50%] xl:w-[40%] xl:min-h-150 xl:min-w-150 md:min-h-120 md:min-w-120 md:h-120 md:w-120 min-h-100 min-w-100 h-100 w-100 bg-radial from-[#000000] via-[#00000000] via-[70%] to-transparent"></div>
-                    <div className="mt-[6%] xl:h-[40%] xl:w-[30%] xl:min-h-120 xl:min-w-120 min-h-100 min-w-100 h-100 w-100 bg-radial from-[#000000] via-[#00000000] to-transparent"></div>
+            <div className="h-screen w-screen flex flex-col bg-no-repeat bg-cover bg-center overflow-x-hidden overflow-y-auto" style={{ backgroundImage: "url(/image/banner.png)" }}>
+                <div className="w-screen h-full absolute flex justify-center items-center overflow-hidden">
+                    <div className="-mt-[8%] h-[70%] w-[25%] overflow-hidden">
+                        <span className="-ml-[50%] block w-full h-full bg-radial from-[#000000] via-[#00000000] via-[70%] to-transparent" />
+                    </div>
+                    <div className="h-[90%] w-[50%] overflow-hidden">
+                        <span className="block w-full h-full bg-radial from-[#000000] via-[#00000000] via-[70%] to-transparent" />
+                    </div>
+                    <div className="mt-[6%] h-[70%] w-[25%] overflow-hidden">
+                        <span className="block w-full h-full bg-radial from-[#000000] via-[#00000000] to-transparent" />
+                    </div>
                 </div>
                 <div className="relative flex justify-center items-center">
                     <div className="p-12 md:p-16 lg:p-20 bg-radial from-[#000000] via-[#00000000] via-[80%] to-transparent">
