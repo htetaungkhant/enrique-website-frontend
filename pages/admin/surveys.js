@@ -47,9 +47,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { getSurveys } from "@/lib/inhouseAPI/survey-route";
 
 const formSchema = z.object({
-    question: z.string().min(1, "Question is required"),
+    question: z.string().trim().min(1, "Question is required"),
     questionType: z.enum(["single_choice", "multiple_choice", "text", "rating", "email", "phone"]),
-    options: z.array(z.string()).optional(),
+    options: z.array(z.string().trim().min(1, "Option cannot be empty")).optional(),
 });
 
 export async function getServerSideProps(context) {
