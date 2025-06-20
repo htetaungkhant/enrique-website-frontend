@@ -42,20 +42,23 @@ const imageSchema = z.any()
     );
 
 const formSchema = z.object({
-    title: z.string().min(1, "Title is required"),
-    hosts: z.array(z.any()).min(1, "Please add at least one host"),
+    title: z.string().trim().min(1, "Title is required"),
+    hosts: z.array(z.object({
+        name: z.string().trim().min(1, "Host name is required"),
+        image: z.any(),
+    })).min(1, "Please add at least one host"),
     startDate: z.string().min(1, "Start date is required"),
     endDate: z.string().min(1, "End date is required"),
-    locationCountry: z.string().min(1, "Location country is required"),
-    locationAddress: z.string().min(1, "Location address is required"),
-    description: z.string().min(1, "Description is required"),
-    price: z.string().min(1, "Price is required"),
+    locationCountry: z.string().trim().min(1, "Location country is required"),
+    locationAddress: z.string().trim().min(1, "Location address is required"),
+    description: z.string().trim().min(1, "Description is required"),
+    price: z.string().trim().min(1, "Price is required"),
     mainImage: imageSchema,
     gallery: z.array(imageSchema).optional(),
     extraDetails: z.array(
         z.object({
-            title: z.string().min(1, "Section title is required"),
-            points: z.array(z.string().min(1, "Note shouldn't be empty")).min(1, "At least one note is required"),
+            title: z.string().trim().min(1, "Section title is required"),
+            points: z.array(z.string().trim().min(1, "Note shouldn't be empty")).min(1, "At least one note is required"),
         })
     ).min(1, "At least one extra detail section is required"),
 });
@@ -83,6 +86,7 @@ export function CreateCeremonyForm() {
     const [hostDialogOpen, setHostDialogOpen] = useState(false);
     const [newHostName, setNewHostName] = useState("");
     const [newHostImage, setNewHostImage] = useState(null);
+    const [hostNameError, setHostNameError] = useState("");
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -127,15 +131,20 @@ export function CreateCeremonyForm() {
     };
 
     const handleAddHost = () => {
-        if (newHostName && newHostImage) {
+        const trimmedName = newHostName.trim();
+        if (!trimmedName) {
+            setHostNameError("Host name cannot be empty or just spaces");
+            return;
+        }
+        if (newHostImage) {
             if (editingHost !== null) {
                 const updatedHosts = hosts.map((host, i) =>
-                    i === editingHost ? { name: newHostName, image: newHostImage } : host
+                    i === editingHost ? { name: trimmedName, image: newHostImage } : host
                 );
                 setHosts(updatedHosts);
                 form.setValue('hosts', updatedHosts);
             } else {
-                const updatedHosts = [...hosts, { name: newHostName, image: newHostImage }];
+                const updatedHosts = [...hosts, { name: trimmedName, image: newHostImage }];
                 setHosts(updatedHosts);
                 form.setValue('hosts', updatedHosts);
             }
@@ -143,6 +152,7 @@ export function CreateCeremonyForm() {
             setNewHostImage(null);
             setHostDialogOpen(false);
             setEditingHost(null);
+            setHostNameError("");
             form.clearErrors('hosts');
         }
     };
@@ -645,10 +655,16 @@ export function CreateCeremonyForm() {
                             <FormLabel>Name</FormLabel>
                             <Input
                                 value={newHostName}
-                                onChange={(e) => setNewHostName(e.target.value)}
+                                onChange={(e) => {
+                                    setNewHostName(e.target.value);
+                                    setHostNameError("");
+                                }}
                                 placeholder="Enter host name"
                             />
                         </FormItem>
+                        {hostNameError && (
+                            <p className="text-sm text-destructive mt-1">{hostNameError}</p>
+                        )}
                         <FormItem>
                             <FormLabel>Profile Image</FormLabel>
                             <div
@@ -688,7 +704,7 @@ export function CreateCeremonyForm() {
                     <Button
                         onClick={handleAddHost}
                         className="cursor-pointer"
-                        disabled={!newHostName || !newHostImage}
+                        disabled={!newHostName.trim() || !newHostImage}
                     >
                         {editingHost !== null ? "Update" : "Add"}
                     </Button>
