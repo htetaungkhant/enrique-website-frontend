@@ -85,21 +85,27 @@ const CeremonyCard = ({
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <Calendar className="h-4 w-4 shrink-0" />
-                            <div>
-                                <time>
-                                    {format(new Date(startDate), "dd MMM yyyy")} - {format(new Date(endDate), "dd MMM yyyy")}
-                                </time>
-                            </div>
-                        </div>
+                        {
+                            startDate && endDate && (
+                                <>
+                                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                        <Calendar className="h-4 w-4 shrink-0" />
+                                        <div>
+                                            <time>
+                                                {format(new Date(startDate), "dd MMM yyyy")} - {format(new Date(endDate), "dd MMM yyyy")}
+                                            </time>
+                                        </div>
+                                    </div>
 
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <Clock className="h-4 w-4 shrink-0" />
-                            <div>
-                                {format(new Date(startDate), "h:mm a")} - {format(new Date(endDate), "h:mm a")}
-                            </div>
-                        </div>
+                                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                        <Clock className="h-4 w-4 shrink-0" />
+                                        <div>
+                                            {format(new Date(startDate), "h:mm a")} - {format(new Date(endDate), "h:mm a")}
+                                        </div>
+                                    </div>
+                                </>
+                            )
+                        }
                     </div>
 
                     <div className="flex items-center justify-end gap-2 mt-4 pt-4 border-t">
