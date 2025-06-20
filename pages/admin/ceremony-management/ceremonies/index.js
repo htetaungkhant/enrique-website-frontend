@@ -18,7 +18,6 @@ import { getAllCeremonies } from "@/lib/inhouseAPI/ceremony-route";
 import { cn } from "@/lib/utils";
 
 export async function getServerSideProps(context) {
-    console.log("deployment finished");
     try {
         const page = parseInt(context.query.page) || 1;
         const response = await getAllCeremonies({ ...context.req, body: { page, limit: 10 } });
@@ -124,8 +123,6 @@ const Ceremonies = ({ ceremonies, total, currentPage }) => {
                             locationAddress={ceremony.locationAddress}
                             startDate={ceremony.startDate}
                             endDate={ceremony.endDate}
-                            // startTime={ceremony.startTime}
-                            // endTime={ceremony.endTime}
                             onEdit={handleEditCeremony}
                         />
                     ))}

@@ -31,8 +31,6 @@ const CeremonyCard = ({
     locationAddress,
     startDate,
     endDate,
-    // startTime,
-    // endTime,
     onEdit,
     onDelete,
 }) => {
@@ -100,7 +98,6 @@ const CeremonyCard = ({
                             <Clock className="h-4 w-4 shrink-0" />
                             <div>
                                 {format(new Date(startDate), "h:mm a")} - {format(new Date(endDate), "h:mm a")}
-                                {/* {startTime} - {endTime} */}
                             </div>
                         </div>
                     </div>
