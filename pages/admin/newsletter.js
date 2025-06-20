@@ -139,15 +139,6 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
         },
     });
 
-    useEffect(() => {
-        if (editingNewsletter) {
-            editForm.reset({
-                name: editingNewsletter.name,
-                email: editingNewsletter.email,
-            });
-        }
-    }, [editingNewsletter, editForm]);
-
     const onCreateSubmit = async (data) => {
         try {
             setIsSubmitting(true);
