@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { LuCalendarDays } from "react-icons/lu";
-import { format } from "date-fns";
 
 import {
     Pagination,
@@ -64,26 +63,26 @@ export async function getServerSideProps(context) {
                 // startDate: '2025-06-04T17:00:00.000Z', endDate: '2025-06-10T04:05:00.000Z',
                 // convert
                 // fromDate: '05 Jun 2025', fromTime: '12:00 AM', toDate: '10 Jun 2025', toTime: '11:05 AM'
-                if (ceremony.startDate && ceremony.endDate) {
-                    try {
-                        ceremony.fromDate = format(new Date(ceremony.startDate), "dd MMM yyyy");
-                        ceremony.fromTime = format(new Date(ceremony.startDate), "hh:mm a");
-                        ceremony.toDate = format(new Date(ceremony.endDate), "dd MMM yyyy");
-                        ceremony.toTime = format(new Date(ceremony.endDate), "hh:mm a");
-                    } catch (error) {
-                        console.error("Error formatting time:", error);
-                        ceremony.fromDate = "";
-                        ceremony.fromTime = "";
-                        ceremony.toDate = "";
-                        ceremony.toTime = "";
-                    }
-                }
-                else {
-                    ceremony.fromDate = "";
-                    ceremony.fromTime = "";
-                    ceremony.toDate = "";
-                    ceremony.toTime = "";
-                }
+                // if (ceremony.startDate && ceremony.endDate) {
+                //     try {
+                //         ceremony.fromDate = format(new Date(ceremony.startDate), "dd MMM yyyy");
+                //         ceremony.fromTime = format(new Date(ceremony.startDate), "hh:mm a");
+                //         ceremony.toDate = format(new Date(ceremony.endDate), "dd MMM yyyy");
+                //         ceremony.toTime = format(new Date(ceremony.endDate), "hh:mm a");
+                //     } catch (error) {
+                //         console.error("Error formatting time:", error);
+                //         ceremony.fromDate = "";
+                //         ceremony.fromTime = "";
+                //         ceremony.toDate = "";
+                //         ceremony.toTime = "";
+                //     }
+                // }
+                // else {
+                //     ceremony.fromDate = "";
+                //     ceremony.fromTime = "";
+                //     ceremony.toDate = "";
+                //     ceremony.toTime = "";
+                // }
             });
         }
 
@@ -272,8 +271,8 @@ const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
                                             image={ceremony.image?.image}
                                             title={ceremony.title}
                                             locations={ceremony.locationCountry}
-                                            dates={`From ${ceremony.fromDate} to ${ceremony.toDate}`}
-                                            time={`${ceremony.fromTime} - ${ceremony.toTime}`}
+                                            startDate={ceremony.startDate}
+                                            endDate={ceremony.endDate}
                                             learnMoreHref={`/ceremonies/${ceremony.id}`}
                                         />
                                     ))

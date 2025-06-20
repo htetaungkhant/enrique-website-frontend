@@ -38,26 +38,26 @@ export async function getServerSideProps(context) {
             ceremony.locationAddress = "";
         }
 
-        if (ceremony.startDate && ceremony.endDate) {
-            try {
-                ceremony.fromDate = format(new Date(ceremony.startDate), "dd MMM yyyy");
-                ceremony.fromTime = format(new Date(ceremony.startDate), "hh:mm a");
-                ceremony.toDate = format(new Date(ceremony.endDate), "dd MMM yyyy");
-                ceremony.toTime = format(new Date(ceremony.endDate), "hh:mm a");
-            } catch (error) {
-                console.error("Error formatting time:", error);
-                ceremony.fromDate = "";
-                ceremony.fromTime = "";
-                ceremony.toDate = "";
-                ceremony.toTime = "";
-            }
-        }
-        else {
-            ceremony.fromDate = "";
-            ceremony.fromTime = "";
-            ceremony.toDate = "";
-            ceremony.toTime = "";
-        }
+        // if (ceremony.startDate && ceremony.endDate) {
+        //     try {
+        //         ceremony.fromDate = format(new Date(ceremony.startDate), "dd MMM yyyy");
+        //         ceremony.fromTime = format(new Date(ceremony.startDate), "hh:mm a");
+        //         ceremony.toDate = format(new Date(ceremony.endDate), "dd MMM yyyy");
+        //         ceremony.toTime = format(new Date(ceremony.endDate), "hh:mm a");
+        //     } catch (error) {
+        //         console.error("Error formatting time:", error);
+        //         ceremony.fromDate = "";
+        //         ceremony.fromTime = "";
+        //         ceremony.toDate = "";
+        //         ceremony.toTime = "";
+        //     }
+        // }
+        // else {
+        //     ceremony.fromDate = "";
+        //     ceremony.fromTime = "";
+        //     ceremony.toDate = "";
+        //     ceremony.toTime = "";
+        // }
 
         try {
             const ceremoniesResponse = await ceremonyRoute.getRegisteredCeremoniesByUser(context.req);
@@ -180,19 +180,18 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                                 )
                             }
                             {
-                                ceremony.fromDate && ceremony.toDate && (
-                                    <div className="flex gap-3 items-center">
-                                        <IoCalendarClear className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
-                                        <p>From {ceremony.fromDate} to {ceremony.toDate}</p>
-                                    </div>
-                                )
-                            }
-                            {
-                                ceremony.fromTime && ceremony.toTime && (
-                                    <div className="flex gap-3 items-center">
-                                        <MdOutlineAccessTimeFilled className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
-                                        <p>{ceremony.fromTime} - {ceremony.toTime}</p>
-                                    </div>
+                                ceremony.startDate && ceremony.endDate && (
+                                    <>
+                                        <div className="flex gap-3 items-center">
+                                            <IoCalendarClear className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
+                                            <p>From {format(new Date(ceremony.startDate), "dd MMM yyyy")} to {format(new Date(ceremony.endDate), "dd MMM yyyy")}</p>
+                                        </div>
+
+                                        <div className="flex gap-3 items-center">
+                                            <MdOutlineAccessTimeFilled className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
+                                            <p>{format(new Date(ceremony.startDate), "hh:mm a")} - {format(new Date(ceremony.endDate), "hh:mm a")}</p>
+                                        </div>
+                                    </>
                                 )
                             }
                         </div>
