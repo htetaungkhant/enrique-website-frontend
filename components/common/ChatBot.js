@@ -162,7 +162,7 @@ const ChatBot = () => {
                 </PopoverTrigger>
 
                 <PopoverContent
-                    className="w-[300px] md:w-[330px] xl:w-[400px] p-0 overflow-hidden z-150"
+                    className="w-[300px] md:w-[300px] xl:w-[350px] 2xl:w-[400px] p-0 overflow-hidden z-150"
                     side="top"
                     align="end"
                     sideOffset={16}
