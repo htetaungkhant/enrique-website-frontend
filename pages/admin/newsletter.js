@@ -295,7 +295,8 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                             disabled={isSubmitting}
                         />
                     </div>
-                    <Button
+                    {/* Temporarily commented out the "Add New Newsletter" button */}
+                    {/* <Button
                         onClick={() => setShowCreateDialog(true)}
                         variant="outline"
                         className="max-lg:order-1 cursor-pointer flex items-center gap-2 bg-white hover:bg-gray-100"
@@ -303,7 +304,7 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                     >
                         <Plus size={20} />
                         Add New Newsletter
-                    </Button>
+                    </Button> */}
                 </div>
 
                 <Dialog open={showCreateDialog} onOpenChange={handleCreateDialogToggle}>
@@ -444,7 +445,8 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                                         {format(new Date(newsletter.createdAt), "MMMM d, yyyy")}
                                     </TableCell>
                                     <TableCell className="text-right space-x-2">
-                                        <Button
+                                        {/* Temporarily commented out the edit button */}
+                                        {/* <Button
                                             variant="ghost"
                                             size="sm"
                                             onClick={() => setEditingNewsletter(newsletter)}
@@ -452,7 +454,7 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                                             disabled={isSubmitting}
                                         >
                                             <Pencil className="h-4 w-4" />
-                                        </Button>
+                                        </Button> */}
                                         <AlertDialog>
                                             <AlertDialogTrigger asChild>
                                                 <Button
