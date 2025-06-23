@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
@@ -6,12 +6,21 @@ import { IoCalendarClear } from "react-icons/io5";
 import { FaLocationDot } from "react-icons/fa6";
 import { format } from "date-fns";
 import { toast } from "sonner";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
+import {
+    Dialog,
+    DialogContent,
+} from "@/components/ui/dialog";
 import Footer from "@/components/common/Footer";
 import UPSection from "@/components/common/UniformPaddingSection";
 import PageHeader from "@/components/common/PageHeader";
 import ceremonyRoute from "@/lib/inhouseAPI/ceremony-route";
 import { useUserAuth } from "@/hooks/userAuth";
+import CheckoutForm from "@/components/CeremoniesPage/CheckoutForm";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 
 export async function getServerSideProps(context) {
@@ -95,6 +104,47 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
     const { session } = useUserAuth();
     const [isLoading, setIsLoading] = useState(false);
     const [viewAll, setViewAll] = useState(false);
+    const [clientSecret, setClientSecret] = useState(null);
+    const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+
+    useEffect(() => {
+        const handleStripeCallback = async () => {
+            if (!stripePromise || !router.isReady) {
+                return;
+            }
+
+            const clientSecret = new URLSearchParams(window.location.search).get(
+                "payment_intent_client_secret"
+            );
+
+            if (!clientSecret) {
+                return;
+            }
+
+            const stripe = await stripePromise;
+            const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
+
+            router.replace(`/ceremonies/${router.query.ceremonyId}`, undefined, { shallow: true });
+
+            switch (paymentIntent.status) {
+                case "succeeded":
+                    toast.success("Payment succeeded!");
+                    await onSuccessfulCheckout(paymentIntent);
+                    break;
+                case "processing":
+                    toast.info("Your payment is processing.");
+                    break;
+                case "requires_payment_method":
+                    toast.error("Your payment was not successful, please try again.");
+                    break;
+                default:
+                    toast.error("Something went wrong.");
+                    break;
+            }
+        };
+
+        handleStripeCallback();
+    }, [router.isReady, stripePromise]);
 
     const handleRegisterNow = async () => {
         if (!session || session.validationFailed) {
@@ -108,33 +158,65 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
             alert("You are already enrolled in this ceremony.");
             return;
         }
-        else {
-            setIsLoading(true);
-            try {
-                const response = await fetch('/api/register-ceremony', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ id: ceremony.id }),
-                });
 
-                if (!response.ok) {
-                    throw new Error('Failed to register for the ceremony');
-                }
+        setIsLoading(true);
+        try {
+            const response = await fetch('/api/stripe-payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ceremonyId: ceremony.id }),
+            });
 
-                const data = await response.json();
-                toast.success(data.message || "ceremony registered successfully!");
-                router.replace(router.asPath);
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to create payment intent');
             }
-            catch (error) {
-                console.error("Error registering for ceremony:", error);
-                toast.error("Failed to register for the ceremony. Please try again.");
+
+            const data = await response.json();
+
+            if (!data.sessionId?.client_secret) {
+                throw new Error("Client secret not found in response.");
             }
-            finally {
-                setIsLoading(false);
+            setClientSecret(data.sessionId.client_secret);
+            setShowCheckoutModal(true);
+        }
+        catch (error) {
+            console.error("Error creating payment intent:", error);
+            toast.error(error.message || "Failed to proceed to checkout. Please try again.");
+        }
+        finally {
+            setIsLoading(false);
+        }
+    }
+
+    const onSuccessfulCheckout = async (paymentIntent) => {
+        setIsLoading(true);
+        try {
+            const response = await fetch('/api/register-ceremony', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: ceremony.id, orderId: paymentIntent.id, stripeMetadata: paymentIntent }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to register for the ceremony');
             }
-            return;
+
+            const data = await response.json();
+            toast.success(data.message || "Ceremony registered successfully!");
+            setShowCheckoutModal(false);
+            setClientSecret(null);
+            router.replace(router.asPath);
+        }
+        catch (error) {
+            console.error("Error registering for ceremony:", error);
+            toast.error("Failed to register for the ceremony. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -233,7 +315,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                                         <span>€ {parseFloat(ceremony.price)?.toFixed(2)}</span>
                                     </div>
                                     <button disabled={isLoading} onClick={handleRegisterNow} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
-                                        Register  Now
+                                        {isLoading ? 'Processing...' : 'Register Now'}
                                     </button>
                                 </div>
                             </div>
@@ -270,7 +352,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                             {
                                 ceremony.gallery.length > 6 && (
                                     <button onClick={() => setViewAll(!viewAll)} className="mt-2 md:mt-4 px-6 py-2 border border-white text-white font-medium rounded-xl cursor-pointer hover:bg-white hover:text-[#032F1F] transition-colors duration-300">
-                                        {viewAll ? "View Less" : "View More"}
+                                        {viewAll ? "View Less" : "View All"}
                                     </button>
                                 )
                             }
@@ -279,6 +361,29 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                 }
             </UPSection>
             <Footer className="mt-10" />
+            {clientSecret && showCheckoutModal && (
+                <Dialog
+                    open={showCheckoutModal}
+                    onOpenChange={(open) => {
+                        if (!open) {
+                            setShowCheckoutModal(false);
+                            setClientSecret(null);
+                        }
+                    }}
+                >
+                    <DialogContent onPointerDownOutside={(e) => e.preventDefault()} className="bg-transparent border-none p-0 w-full max-w-lg">
+                        <Elements stripe={stripePromise} options={{ clientSecret }}>
+                            <CheckoutForm
+                                ceremony={ceremony}
+                                onCancel={() => {
+                                    setShowCheckoutModal(false);
+                                    setClientSecret(null);
+                                }}
+                            />
+                        </Elements>
+                    </DialogContent>
+                </Dialog>
+            )}
         </main>
     )
 }

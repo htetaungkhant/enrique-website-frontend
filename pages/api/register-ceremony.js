@@ -3,9 +3,9 @@ import { registerCeremony } from '@/lib/inhouseAPI/ceremony-route';
 export default async function handler(req, res) {
     if (req.method === "POST") {
         try {
-            const { id } = req.body;
-            if (!id) {
-                return res.status(400).json({ error: "Ceremony ID is required" });
+            const { id, orderId } = req.body;
+            if (!id || !orderId) {
+                return res.status(400).json({ error: "Ceremony ID and Order ID are required" });
             }
 
             const result = await registerCeremony(req);
