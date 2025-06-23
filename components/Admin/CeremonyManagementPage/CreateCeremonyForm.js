@@ -56,8 +56,8 @@ const formSchema = z.object({
         .trim()
         .min(1, "Price is required")
         .refine(
-            (value) => !isNaN(value) && parseFloat(value) >= 0,
-            "Price must be a positive number"
+            (value) => !isNaN(value) && parseFloat(value) > 0,
+            "Price must be a positive number greater than zero"
         ),
     mainImage: imageSchema,
     gallery: z.array(imageSchema).optional(),
