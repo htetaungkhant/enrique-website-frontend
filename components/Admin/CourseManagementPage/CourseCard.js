@@ -83,7 +83,7 @@ const CourseCard = ({
                     <div className="flex flex-col gap-3 pt-3 border-t mt-auto">
                         <div className="flex items-center gap-3">
                             <Avatar className="h-10 w-10 ring-2 ring-primary/20">
-                                <AvatarImage src={createdBy.image} alt={createdBy.name} />
+                                <AvatarImage src={createdBy.image} alt={createdBy.name} className="object-cover" />
                             </Avatar>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-semibold truncate text-primary/80">
