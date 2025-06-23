@@ -94,7 +94,7 @@ const editCeremonySchema = z.object({
                 (file instanceof File && ACCEPTED_IMAGE_TYPES.includes(file.type)) || typeof file === 'string'
             ),
             "Only .jpg, .jpeg, .png and .webp formats are supported"
-        ),
+        ).optional(),
     extraDetails: z.array(
         z.object({
             title: z.string().trim().min(1, "Section title is required"),
