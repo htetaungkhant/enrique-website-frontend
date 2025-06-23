@@ -29,7 +29,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+import { cn, formatPhoneNumber } from "@/lib/utils";
 import supportRoute from "@/lib/inhouseAPI/support-route";
 
 const SortingType = Object.freeze({
@@ -151,7 +151,7 @@ const ContactUs = ({ supports = [], total, currentPage, sortByDate }) => {
                             {filteredSupportletters.map((supportLetter, index) => (
                                 <TableRow key={supportLetter.id}>
                                     <TableCell>{index + 1}</TableCell>
-                                    <TableCell>{supportLetter.mobile}</TableCell>
+                                    <TableCell>{formatPhoneNumber(supportLetter.mobile)}</TableCell>
                                     <TableCell>{supportLetter.email}</TableCell>
                                     <TableCell className="max-w-md">
                                         <div className="truncate" title={supportLetter.message}>
@@ -183,7 +183,7 @@ const ContactUs = ({ supports = [], total, currentPage, sortByDate }) => {
                                                 <div className="px-6 py-5 space-y-4 bg-white">
                                                     <div>
                                                         <div className="text-xs text-gray-500 font-semibold uppercase mb-1">Mobile</div>
-                                                        <div className="text-base text-gray-900">{supportLetter.mobile}</div>
+                                                        <div className="text-base text-gray-900">{formatPhoneNumber(supportLetter.mobile)}</div>
                                                     </div>
                                                     <div>
                                                         <div className="text-xs text-gray-500 font-semibold uppercase mb-1">Email</div>
