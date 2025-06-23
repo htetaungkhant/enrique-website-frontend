@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { toast } from "sonner";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 import Footer from "@/components/common/Footer";
 import UPSection from "@/components/common/UniformPaddingSection";
@@ -9,6 +11,13 @@ import PageHeader from "@/components/common/PageHeader";
 import YouTubeBanner from "@/components/common/YouTubeBanner";
 import { getCourseDetails, getCoursesByUser } from "@/lib/inhouseAPI/course-route";
 import { useUserAuth } from "@/hooks/userAuth";
+import {
+    Dialog,
+    DialogContent,
+} from "@/components/ui/dialog";
+import CheckoutForm from "@/components/CourseOfferingsPage/CheckoutForm";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export async function getServerSideProps(context) {
     try {
@@ -41,6 +50,47 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
     const router = useRouter();
     const { session } = useUserAuth();
     const [isLoading, setIsLoading] = useState(false);
+    const [clientSecret, setClientSecret] = useState(null);
+    const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+
+    useEffect(() => {
+        const handleStripeCallback = async () => {
+            if (!stripePromise || !router.isReady) {
+                return;
+            }
+
+            const clientSecret = new URLSearchParams(window.location.search).get(
+                "payment_intent_client_secret"
+            );
+
+            if (!clientSecret) {
+                return;
+            }
+
+            const stripe = await stripePromise;
+            const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
+
+            router.replace(`/course-offerings/${router.query.courseId}`, undefined, { shallow: true });
+
+            switch (paymentIntent.status) {
+                case "succeeded":
+                    toast.success("Payment succeeded!");
+                    await onSuccessfulCheckout(paymentIntent);
+                    break;
+                case "processing":
+                    toast.info("Your payment is processing.");
+                    break;
+                case "requires_payment_method":
+                    toast.error("Your payment was not successful, please try again.");
+                    break;
+                default:
+                    toast.error("Something went wrong.");
+                    break;
+            }
+        };
+
+        handleStripeCallback();
+    }, [router.isReady, stripePromise]);
 
     const handlePurchaseNow = async () => {
         if (!session || session.validationFailed) {
@@ -54,36 +104,65 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
             alert("You are already enrolled in this course.");
             return;
         }
-        else {
-            setIsLoading(true);
-            try {
-                const response = await fetch('/api/register-course', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ id: course.id }),
-                });
+        
+        setIsLoading(true);
+        try {
+            const response = await fetch('/api/stripe-payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ courseId: course.id }),
+            });
 
-                if (!response.ok) {
-                    throw new Error('Failed to register for the course');
-                }
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to create payment intent');
+            }
 
-                const data = await response.json();
-                toast.success(data.message || "Course registered successfully!");
-                router.replace(router.asPath);
+            const data = await response.json();
+            if (!data.sessionId?.client_secret) {
+                throw new Error("Client secret not found in response.");
             }
-            catch (error) {
-                console.error("Error registering for course:", error);
-                toast.error("Failed to register for the course. Please try again.");
-            }
-            finally {
-                setIsLoading(false);
-            }
-            return;
+            setClientSecret(data.sessionId.client_secret);
+            setShowCheckoutModal(true);
         }
+        catch (error) {
+            console.error("Error creating payment intent:", error);
+            toast.error(error.message || "Failed to proceed to checkout. Please try again.");
+        }
+        finally {
+            setIsLoading(false);
+        }
+    }
 
-        // window.location.href = `/course-offerings/${course.id}/purchase`;
+    const onSuccessfulCheckout = async (paymentIntent) => {
+        setIsLoading(true);
+        try {
+            const response = await fetch('/api/register-course', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: course.id, orderId: paymentIntent.id, stripeMetadata: paymentIntent }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to register for the course');
+            }
+
+            const data = await response.json();
+            toast.success(data.message || "Course registered successfully!");
+            setShowCheckoutModal(false);
+            setClientSecret(null);
+            router.replace(router.asPath);
+        }
+        catch (error) {
+            console.error("Error registering for course:", error);
+            toast.error("Failed to register for the course. Please try again.");
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -161,7 +240,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
                                         <span>€ {parseFloat(course.price)?.toFixed(2)}</span>
                                     </div>
                                     <button disabled={isLoading} onClick={handlePurchaseNow} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
-                                        Purchase  Now
+                                        Purchase Now
                                     </button>
                                 </div>
                             </div>
@@ -170,6 +249,26 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
                 </div>
             </UPSection>
             <Footer className="mt-10" />
+            {clientSecret && showCheckoutModal && (
+                <Dialog open={showCheckoutModal} onOpenChange={(open) => {
+                    if (!open) {
+                        setShowCheckoutModal(false);
+                        setClientSecret(null);
+                    }
+                }}>
+                    <DialogContent onPointerDownOutside={(e) => e.preventDefault()} className="bg-transparent border-none p-0 w-full max-w-lg">
+                        <Elements stripe={stripePromise} options={{ clientSecret }}>
+                            <CheckoutForm
+                                course={course}
+                                onCancel={() => {
+                                    setShowCheckoutModal(false);
+                                    setClientSecret(null);
+                                }}
+                            />
+                        </Elements>
+                    </DialogContent>
+                </Dialog>
+            )}
         </main>
     )
 }
