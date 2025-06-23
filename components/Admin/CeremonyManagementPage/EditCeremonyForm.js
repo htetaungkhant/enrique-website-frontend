@@ -74,7 +74,13 @@ const editCeremonySchema = z.object({
     locationCountry: z.string().trim().min(1, "Location country is required"),
     locationAddress: z.string().trim().min(1, "Location address is required"),
     description: z.string().trim().min(1, "Description is required"),
-    price: z.string().trim().min(1, "Price is required"),
+    price: z.string()
+        .trim()
+        .min(1, "Price is required")
+        .refine(
+            (value) => !isNaN(value) && parseFloat(value) >= 0,
+            "Price must be a positive number"
+        ),
     mainImage: imageSchema,
     gallery: z.array(z.any())
         .refine(

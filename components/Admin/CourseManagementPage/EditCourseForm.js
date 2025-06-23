@@ -67,7 +67,13 @@ const editCourseSchema = z.object({
     courseImage: imageSchema,
     createdByImage: imageSchema,
     title: z.string().trim().min(1, "Title is required"),
-    price: z.string().trim().min(1, "Price is required"),
+    price: z.string()
+        .trim()
+        .min(1, "Price is required")
+        .refine(
+            (value) => !isNaN(value) && parseFloat(value) >= 0,
+            "Price must be a positive number"
+        ),
     createdBy: z.string().trim().min(1, "Creator name is required"),
     sessionOverview: z.string().trim().min(1, "Session overview is required"),
     extraDetails: z.array(
