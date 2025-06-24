@@ -206,7 +206,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
                         }
                         {
                             !session || session?.validationFailed || !isAlreadyEnrolled ?
-                                <YouTubeBanner />
+                                <YouTubeBanner noLink />
                                 : Array.isArray(course.classes) && course.classes?.length > 0 ? (
                                     course.classes?.map((video, index) => (
                                         <div key={`${video.id}-${index}`} className="flex flex-col gap-2">
