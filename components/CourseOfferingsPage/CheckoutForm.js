@@ -45,7 +45,9 @@ export default function CheckoutForm({ onCancel, course }) {
             </div>
             <p className='mb-4'>Amount: <strong>€{parseFloat(course.price).toFixed(2)}</strong></p>
             <form onSubmit={handleSubmit}>
-                <PaymentElement options={{ layout: 'tabs' }} />
+                <PaymentElement
+                    options={{ layout: 'tabs' }}
+                />
                 <div className="flex justify-end gap-4 mt-6">
                     <Button
                         type="button"
