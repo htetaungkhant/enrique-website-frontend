@@ -28,6 +28,9 @@ export default function App({
   const isAdminRoute = Component.isAdminRoute ||
     (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin'));
 
+  const isQuestionnaireRoute = Component.isQuestionnaireRoute ||
+    (typeof window !== 'undefined' && window.location.pathname.startsWith('/questionnaire'));
+
   const authOptions = {
     basePath: isAdminRoute ? "/api/auth/admin" : "/api/auth",
     // This helps prevent session conflicts
@@ -60,7 +63,7 @@ export default function App({
           <AuthModal />
           <Component {...pageProps} />
           <ChatBot />
-          {!isAdminRoute && <Advertisement />}
+          {!isAdminRoute && !isQuestionnaireRoute && <Advertisement />}
         </SessionProvider>
       </PersistGate>
     </Provider>

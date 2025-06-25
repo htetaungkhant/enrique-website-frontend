@@ -210,4 +210,6 @@ const QuestionnairePage = ({ surveyQuestions }) => {
     )
 }
 
+QuestionnairePage.isQuestionnaireRoute = true;
+
 export default QuestionnairePage;
