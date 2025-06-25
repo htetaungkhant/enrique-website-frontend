@@ -37,7 +37,7 @@ export default function CheckoutForm({ onCancel, course }) {
     };
 
     return (
-        <div className='bg-white rounded-lg p-5 w-full max-w-[95%] mx-auto max-md:max-h-[70vh] overflow-y-auto md:max-w-xl'>
+        <div className='bg-white rounded-lg p-5 w-full max-w-[95%] md:max-w-xl mx-auto max-md:max-h-[70vh] max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]'>
             <h3 className='text-2xl font-bold mb-4'>Complete Your Registration</h3>
             <div className='mb-2 flex flex-wrap items-baseline'>
                 <p className='mr-2'>You are registering for:</p>
