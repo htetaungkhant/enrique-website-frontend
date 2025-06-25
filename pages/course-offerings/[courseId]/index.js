@@ -236,7 +236,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
                             <div>
                                 <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
                                     <div className="font-bold flex justify-between">
-                                        <span>Ceremony Fee</span>
+                                        <span>Course Fee</span>
                                         <span>€ {parseFloat(course.price)?.toFixed(2)}</span>
                                     </div>
                                     <button disabled={isLoading} onClick={handlePurchaseNow} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
