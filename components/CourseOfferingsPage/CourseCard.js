@@ -67,7 +67,7 @@ const CourseCard = ({
                             : (
                                 <>
                                     <AiFillEuroCircle size={28} className="text-[#2A6C4B]" />
-                                    <span className="text-lg font-medium">€{price}</span>
+                                    <span className="text-lg font-medium">{price}</span>
                                 </>
                             )
                     }
