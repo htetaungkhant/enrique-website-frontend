@@ -371,7 +371,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                         }
                     }}
                 >
-                    <DialogContent onPointerDownOutside={(e) => e.preventDefault()} className="bg-transparent border-none p-0 w-full max-w-lg">
+                    <DialogContent onPointerDownOutside={(e) => e.preventDefault()} className="bg-transparent border-none p-0 w-full max-w-lg z-110">
                         <Elements stripe={stripePromise} options={{ clientSecret }}>
                             <CheckoutForm
                                 ceremony={ceremony}
