@@ -25,7 +25,7 @@ const Advertisement = () => {
             if (!showAdvertisement && !hasSubmitted) {
                 timer = setInterval(() => {
                     setShowAdvertisement("intro");
-                }, 60000); // Show every minute (60000ms)
+                }, 300000); // Show every 5 minute (300000ms)
             }
         };
 
