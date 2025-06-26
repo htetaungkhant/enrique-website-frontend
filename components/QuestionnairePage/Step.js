@@ -1,9 +1,10 @@
 import { cn } from "@/lib/utils";
 import { useQuestionnaire } from "@/hooks/useQuestionnaire";
+import { PhoneNumberInput } from "@/components/common/Input";
+import CustomTimezoneSelect from '@/components/common/TimezoneSelect';
 import QuestionaireCard from "./QuestionaireCard";
 import AnswersBtn from "./AnswersBtn";
 import Rating from "./Rating";
-import { PhoneNumberInput } from "@/components/common/Input";
 
 const Step = ({
     idx,
@@ -155,6 +156,21 @@ const Step = ({
                         )}
                         customPlaceholder="Type Here..."
                         className="rounded-xl md:p-2 bg-white"
+                    />
+                )
+            }
+            {
+                survey?.questionType === "time_zone" && (
+                    <CustomTimezoneSelect
+                        value={answers[idx]?.answer || ''}
+                        onChange={(timezone) => {
+                            setAnswers(
+                                idx,
+                                survey.id,
+                                survey.questionType,
+                                timezone.value,
+                            )
+                        }}
                     />
                 )
             }
