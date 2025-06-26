@@ -34,9 +34,10 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
 
         const body = {
             questionId,
-            answer: answer ? answer.toString() : undefined,
+            answer: answer ? answer.toString()?.trim()?.replace("Others=>", "")?.trim()?.replace("Others", "")?.trim() : undefined,
             arrayAnswer,
         };
+
         try {
             const response = await fetch('/api/submit-survey', {
                 method: 'POST',
@@ -62,13 +63,14 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
     const handleNext = async () => {
         setIsNextDisabled(true);
         if (activeIdx === 1) {
-            if (!answers[1]?.answer && (!answers[1]?.arrayAnswer || (Array.isArray(answers[1]?.arrayAnswer) && answers[1]?.arrayAnswer.length === 0))) {
+            const stepAnswer = answers[1];
+            if ((!stepAnswer?.answer || stepAnswer?.answer?.toString()?.toLowerCase()?.trim()?.replace("others=>", "")?.trim()?.replace("others", "")?.trim() === "") && (!stepAnswer?.arrayAnswer || (Array.isArray(stepAnswer?.arrayAnswer) && stepAnswer?.arrayAnswer.length === 0))) {
                 toast.error(getQuestionaireErrorMessage(surveys[activeIndex]?.questionType));
                 setIsNextDisabled(false);
                 return;
             }
 
-            const submitResult = await submitSurveyAnswer(answers[1]?.questionId, answers[1]?.answer, answers[1]?.arrayAnswer, activeIdx);
+            const submitResult = await submitSurveyAnswer(stepAnswer?.questionId, stepAnswer?.answer, stepAnswer?.arrayAnswer, activeIdx);
             if (submitResult) {
                 setStart(true);
                 swiper?.slideNext();
@@ -76,13 +78,14 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
             setIsNextDisabled(false);
             return;
         } else if (activeIdx === surveys.length) {
-            if (!answers[activeIdx]?.answer && (!answers[activeIdx]?.arrayAnswer || (Array.isArray(answers[activeIdx]?.arrayAnswer) && answers[activeIdx]?.arrayAnswer.length === 0))) {
+            const stepAnswer = answers[activeIdx];
+            if ((!stepAnswer?.answer || stepAnswer?.answer?.toString()?.toLowerCase()?.trim()?.replace("others=>", "")?.trim()?.replace("others", "")?.trim() === "") && (!stepAnswer?.arrayAnswer || (Array.isArray(stepAnswer?.arrayAnswer) && stepAnswer?.arrayAnswer.length === 0))) {
                 toast.error(getQuestionaireErrorMessage(surveys[activeIndex]?.questionType));
                 setIsNextDisabled(false);
                 return;
             }
 
-            const submitResult = await submitSurveyAnswer(answers[activeIdx]?.questionId, answers[activeIdx]?.answer, answers[activeIdx]?.arrayAnswer, activeIdx);
+            const submitResult = await submitSurveyAnswer(stepAnswer?.questionId, stepAnswer?.answer, stepAnswer?.arrayAnswer, activeIdx);
             if (submitResult) {
                 onSubmit?.(); // if (onSubmit) onSubmit();
             }
@@ -134,7 +137,7 @@ const SwiperNavigation = ({ activeIndex, surveys, onGobackToFirst, onSubmit }) =
                 return;
             }
             else {
-                if (!stepAnswer?.answer && (!stepAnswer?.arrayAnswer || (Array.isArray(stepAnswer?.arrayAnswer) && stepAnswer?.arrayAnswer.length === 0))) {
+                if ((!stepAnswer?.answer || stepAnswer?.answer?.toString()?.toLowerCase()?.trim()?.replace("others=>", "")?.trim()?.replace("others", "")?.trim() === "") && (!stepAnswer?.arrayAnswer || (Array.isArray(stepAnswer?.arrayAnswer) && stepAnswer?.arrayAnswer.length === 0))) {
                     toast.error(getQuestionaireErrorMessage(surveys[activeIndex]?.questionType));
                     setIsNextDisabled(false);
                     return;

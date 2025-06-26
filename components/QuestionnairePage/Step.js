@@ -28,22 +28,43 @@ const Step = ({
             {
                 survey?.questionType === "single_choice" && (
                     survey?.options && Array.isArray(survey.options) && survey.options.length > 0 && (
-                        <div className="flex flex-wrap gap-x-5 gap-y-3">
-                            {
-                                survey.options.map((option, index) => (
-                                    <AnswersBtn
-                                        key={index}
-                                        selected={answers[idx]?.answer === option}
-                                        onClick={() => setAnswers(
-                                            idx,
-                                            survey.id,
-                                            survey.questionType,
-                                            option,
-                                        )}
-                                        title={option}
-                                    />
-                                ))
-                            }
+                        <div className="flex flex-col gap-y-3">
+                            <div className="flex flex-wrap gap-x-5 gap-y-3">
+                                {
+                                    survey.options.map((option, index) => (
+                                        <AnswersBtn
+                                            key={index}
+                                            selected={answers[idx]?.answer === option || (answers[idx]?.answer?.toString()?.toLowerCase()?.startsWith("others=>") && option?.toString()?.toLowerCase()?.startsWith("others"))}
+                                            onClick={() => setAnswers(
+                                                idx,
+                                                survey.id,
+                                                survey.questionType,
+                                                option,
+                                            )}
+                                            title={option}
+                                        />
+                                    ))
+                                }
+                            </div>
+                            {answers[idx]?.answer?.toString()?.toLowerCase()?.includes("others") && (
+                                <input
+                                    value={
+                                        answers[idx]?.answer?.toString()?.toLowerCase()?.startsWith("others=>")
+                                            ? answers[idx]?.answer?.toString()?.replace("Others=>", "")
+                                            : answers[idx]?.answer?.toString()?.toLowerCase()?.startsWith("others")
+                                                ? answers[idx]?.answer?.toString()?.replace("Others", "")
+                                                : ''
+                                    }
+                                    onChange={(e) => setAnswers(
+                                        idx,
+                                        survey.id,
+                                        survey.questionType,
+                                        `Others=>${e.target.value}`
+                                    )}
+                                    placeholder="Type Here..."
+                                    className="p-2 xl:px-5 xl:py-3 rounded-xl outline-none max-xs:text-sm text-black bg-white placeholder:text-gray-600 placeholder:text-sm placeholder:font-medium"
+                                />
+                            )}
                         </div>
                     )
                 )
