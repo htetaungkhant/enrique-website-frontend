@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Banner from "@/components/HomePage/Banner";
 import PageHeader from "@/components/common/PageHeader";
@@ -13,6 +14,7 @@ import Footer from "@/components/common/Footer";
 import CardGridSection from "@/components/common/AnimatedCardsGridSection";
 import GallerySection from "@/components/HomePage/Gallery/GallerySection";
 import { useQuestionnaire } from "@/hooks/useQuestionnaire";
+import { useUserAuth } from "@/hooks/userAuth";
 
 const thirdCRSectionData = {
 	title: '<span class="font-300">The Importance of </span><strong class="font-600">Integration</strong>',
@@ -86,10 +88,31 @@ const cardGridSection = {
 
 export default function HomePage() {
 	const { resetAll } = useQuestionnaire();
+	const router = useRouter();
+	const { session, isUser } = useUserAuth();
 
 	useEffect(() => {
 		resetAll();
 	}, [resetAll]);
+
+	const handleDownload = (e) => {
+		e.preventDefault();
+		if (!session || !isUser) {
+			const query = { ...router.query, auth: "login" };
+			router.push({
+				pathname: router.pathname,
+				query: query,
+			});
+			return;
+		}
+
+		const link = document.createElement("a");
+		link.href = "/pdf/Sacred_Ceremonial_Guide.pdf";
+		link.download = "Sacred Ceremonial Guide.pdf";
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	};
 
 	return (
 		<main>
@@ -104,7 +127,7 @@ export default function HomePage() {
 			<InfoSection image="/image/SacredGuidance.png" reverse={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Transform Your Journey with <strong className="font-semibold">Sacred Guidance</strong></h2>
 				<p className="text-white inter-font">Discover the profound wisdom and preparation steps for your sacred medicine journey with the <Link href="" target="_blank" className="text-[#fef15c]">Sacred Ceremonial Guide</Link>. This comprehensive guide provides essential insights on emotional, mental, physical, and spiritual preparation, integration practices, and the healing power of 5-MeO-DMT. Whether you are new to the experience or looking to deepen your understanding, this guide will help you navigate the path with clarity and intention.</p>
-				<IconButton title="Download Now" className="w-fit" href="/pdf/Sacred_Ceremonial_Guide.pdf" download="Sacred Ceremonial Guide.pdf" />
+				<IconButton title="Download Now" className="w-fit" onClick={handleDownload} />
 			</InfoSection>
 			<QuoteSection
 				descriptionTextClass="text-base"
@@ -113,9 +136,9 @@ export default function HomePage() {
 			/>
 			<FirstCRSection />
 			<InfoSection image="/image/BufosPotential.png">
-				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Scientific Validation of <strong className="font-semibold">Bufo’s Potential</strong></h2>
+				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Scientific Validation of <strong className="font-semibold">Bufo's Potential</strong></h2>
 				<p className="text-white inter-font">Research into 5-MeO-DMT, one of 21 alkaloids found in Bufo Alvarius venom, has gained remarkable traction. Leading institutions such as Johns Hopkins and the University of London are spearheading studies on its effects. Johns Hopkins has even published <Link href="" target="_blank" className="text-[#fef15c]">ground-breaking</Link> research highlighting its potential in <Link href="https://hub.jhu.edu/magazine/2019/summer/toad-venom-therapy/" target="_blank" className="text-[#fef15c]">addressing depression and anxiety</Link>.</p>
-				<p className="text-white inter-font">These studies seek to uncover the impact of 5-MeO-DMT on mental health, consciousness, and neurological function, reinforcing its therapeutic value. At the same time, mainstream media has amplified interest, with coverage from outlets like Forbes Magazine and Hamilton’s Pharmacopeia, reflecting a growing cultural acceptance of this powerful compound.</p>
+				<p className="text-white inter-font">These studies seek to uncover the impact of 5-MeO-DMT on mental health, consciousness, and neurological function, reinforcing its therapeutic value. At the same time, mainstream media has amplified interest, with coverage from outlets like Forbes Magazine and Hamilton's Pharmacopeia, reflecting a growing cultural acceptance of this powerful compound.</p>
 			</InfoSection>
 			<SecondCRSection />
 			<InfoSection image="/image/Media.png" smallImage={true} reverse={true}>
@@ -130,7 +153,7 @@ export default function HomePage() {
 			</InfoSection>
 			<InfoSection image="/image/SmokingBufo.png" smallImage={true} reverse={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">The Process of <strong className="font-semibold">Smoking Bufo</strong></h2>
-				<p className="text-white inter-font">The venom of the Bufo Alvarius toad is carefully extracted through a process known as “milking,” then dried for use. When smoked through a pipe, the heat neutralizes toxic components, allowing the user to inhale only the active 5-MeO-DMT vapor.</p>
+				<p className="text-white inter-font">The venom of the Bufo Alvarius toad is carefully extracted through a process known as "milking," then dried for use. When smoked through a pipe, the heat neutralizes toxic components, allowing the user to inhale only the active 5-MeO-DMT vapor.</p>
 				<p className="text-white inter-font">This method induces a short yet intensely powerful psychedelic experience, often described as more profound than traditional DMT. To ensure safety and maximize the benefits, it is essential to have an experienced guide and follow well-established safety protocols.</p>
 			</InfoSection>
 			<CardGridSection
