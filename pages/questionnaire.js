@@ -3,24 +3,31 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { toast } from "sonner";
 
 import { useQuestionnaire } from "@/hooks/useQuestionnaire";
 import QuestStart from "@/components/QuestionnairePage/QuestStart";
 import QuestEnd from "@/components/QuestionnairePage/QuestEnd";
 import SwiperSlideContainer from "@/components/QuestionnairePage/SwiperSlideContainer";
 import SwiperNavigation from "@/components/QuestionnairePage/SwiperNavigation";
-import { getSurveys } from "@/lib/inhouseAPI/survey-route";
 import Step from "@/components/QuestionnairePage/Step";
+import surveyRoute from "@/lib/inhouseAPI/survey-route";
 
 
 export async function getServerSideProps(context) {
     try {
-        const response = await getSurveys(context.req);
+        const response = await surveyRoute.getSurveys(context.req);
         response.sort((a, b) => a.id - b.id);
+
+        const surveysResponse = await surveyRoute.getSurveysByUser(context.req);
+        const filteredSurveys = surveysResponse.filter(survey => {
+            return (survey.answer === null || survey.answer === undefined || survey.answer === "") && (survey.arrayAnswer === undefined || survey.arrayAnswer === null || (Array.isArray(survey.arrayAnswer) && survey.arrayAnswer?.length === 0));
+        });
 
         return {
             props: {
                 surveyQuestions: response ?? [],
+                finishedOrNot: filteredSurveys.length > 0 ? false : true,
             },
         };
     } catch (error) {
@@ -28,18 +35,27 @@ export async function getServerSideProps(context) {
         return {
             props: {
                 surveyQuestions: [],
+                finishedOrNot: false,
             },
         };
     }
 }
 
-const QuestionnairePage = ({ surveyQuestions }) => {
+const QuestionnairePage = ({ surveyQuestions, finishedOrNot }) => {
     const { start, setStart, step1, end, setEnd, activeIndex, setActiveIndex } = useQuestionnaire();
     const [localStart, setLocalStart] = useState(false);
 
     const onGobackToFirst = () => {
         setLocalStart(false);
         setStart(false);
+    }
+
+    const onStart = () => {
+        if (finishedOrNot) {
+            toast.error("You have already answered the questionnaire.");
+            return;
+        }
+        setLocalStart(true);
     }
 
     const onSubmit = () => {
@@ -106,7 +122,7 @@ const QuestionnairePage = ({ surveyQuestions }) => {
                                 }}
                                 className="relative px-6 py-6 lg:py-20 lg:px-12 w-full flex-1 flex flex-col justify-center"
                             >
-                                <QuestStart onStart={() => setLocalStart(true)} />
+                                <QuestStart onStart={onStart} />
                             </motion.div>
                         )
                             : !end ? (
