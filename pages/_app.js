@@ -62,7 +62,7 @@ export default function App({
           <Toaster position="top-right" richColors closeButton />
           <AuthModal />
           <Component {...pageProps} />
-          <ChatBot />
+          {!isAdminRoute && !isQuestionnaireRoute && <ChatBot />}
           {!isAdminRoute && !isQuestionnaireRoute && <Advertisement />}
         </SessionProvider>
       </PersistGate>
