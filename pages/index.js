@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Link from "next/link";
 
 import Banner from "@/components/HomePage/Banner";
@@ -11,6 +12,7 @@ import CardsRowSection from "@/components/common/CardsRowSection";
 import Footer from "@/components/common/Footer";
 import CardGridSection from "@/components/common/AnimatedCardsGridSection";
 import GallerySection from "@/components/HomePage/Gallery/GallerySection";
+import { useQuestionnaire } from "@/hooks/useQuestionnaire";
 
 const thirdCRSectionData = {
 	title: '<span class="font-300">The Importance of </span><strong class="font-600">Integration</strong>',
@@ -83,6 +85,12 @@ const cardGridSection = {
 }
 
 export default function HomePage() {
+	const { resetAll } = useQuestionnaire();
+
+	useEffect(() => {
+		resetAll();
+	}, [resetAll]);
+
 	return (
 		<main>
 			<PageHeader />
