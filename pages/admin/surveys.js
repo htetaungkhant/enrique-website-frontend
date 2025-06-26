@@ -48,7 +48,7 @@ import { getSurveys } from "@/lib/inhouseAPI/survey-route";
 
 const formSchema = z.object({
     question: z.string().trim().min(1, "Question is required"),
-    questionType: z.enum(["single_choice", "multiple_choice", "text", "rating", "email", "phone"]),
+    questionType: z.enum(["single_choice", "multiple_choice", "text", "rating", "email", "phone", "time_zone"]),
     options: z.array(z.string().trim().min(1, "Option cannot be empty")).optional(),
 });
 
@@ -290,6 +290,7 @@ const Surveys = ({ surveys = [] }) => {
                                                     <SelectItem value="rating">Rating</SelectItem>
                                                     <SelectItem value="email">Email</SelectItem>
                                                     <SelectItem value="phone">Phone</SelectItem>
+                                                    <SelectItem value="time_zone">Time Zone</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />
@@ -399,6 +400,7 @@ const Surveys = ({ surveys = [] }) => {
                                                     <SelectItem value="rating">Rating</SelectItem>
                                                     <SelectItem value="email">Email</SelectItem>
                                                     <SelectItem value="phone">Phone</SelectItem>
+                                                    <SelectItem value="time_zone">Time Zone</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />
