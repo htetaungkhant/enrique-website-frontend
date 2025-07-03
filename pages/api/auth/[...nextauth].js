@@ -2,7 +2,10 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
-import { validateGoogleIdToken, validateUserCredentials } from "@/lib/inhouseAPI/auth-route";
+import { validateGoogleIdToken, validateUserCredentials, refreshToken } from "@/lib/inhouseAPI/auth-route";
+
+const maxAge = 30 * 24 * 60 * 60; // 30 days
+const updateAge = 24 * 60 * 60; // 24 hours
 
 export const authOptions = {
     providers: [
@@ -35,6 +38,14 @@ export const authOptions = {
     pages: {
         signIn: "/user-auth-pages",
         error: '/user-auth-pages',
+    },
+    session: {
+        strategy: 'jwt',
+        maxAge,
+        updateAge,
+    },
+    jwt: {
+        maxAge,
     },
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
@@ -82,6 +93,14 @@ export const authOptions = {
             // Handle updates
             if (trigger === "update" && session?.user) {
                 token.backendData = session.user.backendData;
+            }
+
+            if (Date.now() >= token.expiresAt) {
+                const refreshed = await refreshToken(token.token, token.id || token.userId || token.backendData.id);
+                if (refreshed?.token) {
+                    token.token = refreshed.token;
+                    token.expiresAt = Date.now() + maxAge * 1000;
+                }
             }
 
             return token;
@@ -135,7 +154,6 @@ export const authOptions = {
             },
         },
     },
-    // session: { strategy: "jwt" },
     // secret: process.env.NEXTAUTH_SECRET,
 }
 

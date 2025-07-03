@@ -1,7 +1,10 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { validateAdminCredentials } from "@/lib/inhouseAPI/auth-route";
+import { validateAdminCredentials, refreshToken } from "@/lib/inhouseAPI/auth-route";
+
+const maxAge = 30 * 24 * 60 * 60; // 30 days
+const updateAge = 24 * 60 * 60; // 24 hours
 
 export const adminAuthOptions = {
     providers: [
@@ -27,6 +30,14 @@ export const adminAuthOptions = {
             }
         }),
     ],
+    session: {
+        strategy: 'jwt',
+        maxAge,
+        updateAge,
+    },
+    jwt: {
+        maxAge,
+    },
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
@@ -34,9 +45,18 @@ export const adminAuthOptions = {
                 // token.role = user.role;
                 // token.adminId = user.id;
 
+                token.expiresAt = Date.now() + maxAge * 1000;
                 Object.keys(user).forEach(key => {
                     token[key] = user[key];
                 });
+            }
+
+            if (Date.now() >= token.expiresAt) {
+                const refreshed = await refreshToken(token.token, token.id);
+                if (refreshed?.token) {
+                    token.token = refreshed.token;
+                    token.expiresAt = Date.now() + maxAge * 1000;
+                }
             }
             return token;
         },
