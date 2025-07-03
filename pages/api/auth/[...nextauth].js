@@ -95,7 +95,7 @@ export const authOptions = {
                 token.backendData = session.user.backendData;
             }
 
-            if (Date.now() >= token.expiresAt) {
+            if (!token?.expiresAt || (Date.now() >= token.expiresAt)) {
                 const refreshed = await refreshToken(token.token, token.id || token.userId || token.backendData.id);
                 if (refreshed?.token) {
                     token.token = refreshed.token;
