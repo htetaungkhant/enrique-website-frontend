@@ -51,7 +51,7 @@ export const adminAuthOptions = {
                 });
             }
 
-            if ((token?.expiresAt !== undefined) && (Date.now() >= token.expiresAt)) {
+            if (Date.now() >= token.expiresAt) {
                 const refreshed = await refreshToken(token.token, token.id);
                 if (refreshed?.token) {
                     token.token = refreshed.token;
