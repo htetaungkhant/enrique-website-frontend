@@ -30,6 +30,25 @@ const MAX_IMAGE_SIZE_MB = 6;
 const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
+
+async function convertHeicToJpeg(file) {
+    if (file && file.type === "image/heic") {
+        try {
+            const heic2any = (await import("heic2any")).default;
+            const convertedBlob = await heic2any({
+                blob: file,
+                toType: "image/jpeg",
+                quality: 0.9,
+            });
+            return new File([convertedBlob], file.name.replace(/\.heic$/i, ".jpg"), { type: "image/jpeg" });
+        } catch (err) {
+            toast.error("Failed to convert HEIC image. Please try another image.");
+            return null;
+        }
+    }
+    return file;
+}
+
 const imageSchema = z.any()
     .refine((file) => file instanceof File, "Image is required")
     .refine(
@@ -108,8 +127,10 @@ export function CreateCeremonyForm() {
         name: "extraDetails",
     });
 
-    const handleGalleryImageChange = (e) => {
-        const files = Array.from(e.target.files);
+    const handleGalleryImageChange = async (e) => {
+        let files = Array.from(e.target.files);
+        files = await Promise.all(files.map(convertHeicToJpeg));
+
         const validFiles = files.filter(file => {
             const isValidSize = file.size <= MAX_IMAGE_SIZE_BYTES;
             const isValidType = ACCEPTED_IMAGE_TYPES.includes(file.type);
@@ -129,9 +150,10 @@ export function CreateCeremonyForm() {
         form.setValue('gallery', gallery.filter((_, i) => i !== index));
     };
 
-    const handleHostImageChange = (e) => {
-        const file = e.target.files[0];
+    const handleHostImageChange = async (e) => {
+        let file = e.target.files[0];
         if (file) {
+            file = await convertHeicToJpeg(file);
             setNewHostImage(file);
         }
     };
@@ -330,11 +352,14 @@ export function CreateCeremonyForm() {
                                 <Input
                                     id="mainImageInput"
                                     type="file"
-                                    onChange={(e) => {
-                                        const file = e.target.files?.[0];
+                                    onChange={async (e) => {
+                                        let file = e.target.files?.[0];
                                         if (file) {
-                                            setMainImage(URL.createObjectURL(file));
-                                            onChange(file);
+                                            file = await convertHeicToJpeg(file);
+                                            if (file) {
+                                                setMainImage(URL.createObjectURL(file));
+                                                onChange(file);
+                                            }
                                         }
                                     }}
                                     accept="image/*"
