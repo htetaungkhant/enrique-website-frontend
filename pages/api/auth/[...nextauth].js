@@ -4,8 +4,8 @@ import GoogleProvider from "next-auth/providers/google";
 
 import { validateGoogleIdToken, validateUserCredentials, refreshToken } from "@/lib/inhouseAPI/auth-route";
 
-const maxAge = 30; // 30 days
-const updateAge = 24; // 24 hours
+const maxAge = 30 * 24 * 60 * 60; // 30 days
+const updateAge = 24 * 60 * 60; // 24 hours
 
 export const authOptions = {
     providers: [
