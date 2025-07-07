@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 import AnimatedCard from "./AnimatedCard";
+import UPSection from "@/components/common/UniformPaddingSection";
 
 const data = [
     {
@@ -112,7 +113,7 @@ const GallerySection = () => {
     }
 
     return (
-        <section className="p-8 flex flex-col gap-6 lg:p-12">
+        <UPSection className="flex flex-col gap-6">
             <h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Preparation Steps For <strong className="font-semibold">Your  Retreat</strong></h2>
             <div className="hidden md:flex gap-8">
                 {
@@ -177,7 +178,7 @@ const GallerySection = () => {
                     <FaArrowRight className="text-[#545454]" />
                 </button>
             </div>
-        </section>
+        </UPSection>
     )
 }
 

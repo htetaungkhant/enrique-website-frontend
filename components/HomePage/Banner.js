@@ -1,7 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { LinkButton } from "../common/Button";
+import { IconButton } from "../common/Button";
 import Image from "next/image";
 
 const slides = [
@@ -12,7 +12,7 @@ const slides = [
 			"Let us help you transform your space into a haven of safety and comfort.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/",
+		link: "/survey",
 	},
 	{
 		bgImage: "/image/banner.png",
@@ -20,7 +20,7 @@ const slides = [
 		description: "Discover our transformative healing therapies and expert guidance from seasoned practitioners.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/",
+		link: "/survey",
 	},
 	{
 		bgImage: "/image/banner.png",
@@ -28,7 +28,7 @@ const slides = [
 		description: "Unlock a transformative journey through the power of intimate, supportive small groups.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/",
+		link: "/survey",
 	},
 	{
 		bgImage: "/image/banner.png",
@@ -36,7 +36,7 @@ const slides = [
 		description: "Experience a private, luxury healing retreat tailored to your unique spiritual journey.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/",
+		link: "/flight-service",
 	},
 ];
 
@@ -51,7 +51,8 @@ const Banner = () => {
 				loop={true}
 				speed={1000}
 				autoplay={{ delay: 5000 }}
-				// pagination={{ clickable: true }}
+				navigation={true}
+				pagination={{ clickable: true }}
 				className="w-full h-[100vh]"
 			>
 				{slides.map((slide, index) => (
@@ -63,20 +64,20 @@ const Banner = () => {
 							}}
 						>
 							{/* Overlay */}
-							 <div className="absolute inset-0 bg-black opacity-55"></div>
+							<div className="absolute inset-0 bg-black opacity-55"></div>
 
 							{/* Content Container */}
-							<div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-12 gap-8 w-full">
-								<div className="order-2 lg:order-1 relative text-center flex flex-col lg:items-start items-center justify-center lg:pl-12">
-									<h2 className="text-2xl font-bold mb-4 poppins-bold text-left lg:text-4xl lg:max-w-lg">
+							<div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-12 gap-4 w-full">
+								<div className="order-2 lg:order-1 relative text-center flex flex-col lg:items-start items-center justify-center lg:pl-24">
+									<h2 className="text-2xl font-bold mb-2 sm:mb-4 poppins-bold text-left lg:text-4xl lg:max-w-lg">
 										{slide.text}
 									</h2>
-									<p className="text-md mb-6 poppins-regular text-left lg:text-lg lg:max-w-xl">
+									<p className="text-md mb-3 sm:mb-6 poppins-regular text-left lg:text-lg lg:max-w-xl">
 										{slide.description}
 									</p>
-									<div className="w-full flex mt-3 justify-start md:mt-0 md:justify-center lg:justify-start">
+									<div className="w-full flex mt-3 justify-start md:mt-0 sm:justify-center lg:justify-start">
 										{slide.button && (
-											<LinkButton name={slide.button} href={slide.link} />
+											<IconButton title={slide.button} href={slide.link} />
 										)}
 									</div>
 								</div>
@@ -88,7 +89,7 @@ const Banner = () => {
 										width={367}
 										height={384}
 										alt="logo"
-										className="h-96 w-auto object-contain"
+										className="h-96 w-auto max-sm:max-w-60 max-2xs:max-w-56 object-contain"
 									/>
 								</div>
 							</div>

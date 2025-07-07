@@ -1,15 +1,17 @@
 import Image from "next/image";
 
+import UPSection from "../common/UniformPaddingSection";
+
 const QuoteSection = ({ image, description, descriptionTextClass = "", author, authorTextClass = "", normal = true }) => {
     return (
-        <section className="relative -mt-1">
-            <div className={`px-12 py-6 lg:flex lg:flex-row flex flex-col items-center lg:space-x-8 justify-center ${!normal ? "absolute -top-20 left-0 right-0 z-10 bg-transparent" : ""}`}>
+        <UPSection className={`relative -mt-1 ${!normal ? "bg-gradient-to-b from-[rgb(3,2,12)] to-[rgb(20,26,54)]" : ""}`}>
+            <div className={`lg:flex lg:flex-row flex flex-col items-center lg:space-x-8 justify-center ${!normal ? "absolute md:-top-20 left-6 right-6 z-10 bg-transparent" : ""}`}>
                 {image && (
                     <Image
                         src={image}
                         width={300}
                         height={300}
-                        className="h-[180px] lg:h-[250px] w-auto"
+                        className="h-[250px] w-auto"
                         alt="author"
                     />
                 )}
@@ -30,8 +32,8 @@ const QuoteSection = ({ image, description, descriptionTextClass = "", author, a
                     }
                 </div>
             </div>
-            {!normal && <span className="block bg-gradient-to-b from-[rgb(3,2,12)] to-[rgb(20,26,54)] h-64" />}
-        </section>
+            {!normal && <span className="block h-72 md:h-56 lg:h-28" />}
+        </UPSection>
     );
 }
 

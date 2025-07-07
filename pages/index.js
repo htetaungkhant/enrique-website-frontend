@@ -1,23 +1,122 @@
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Banner from "@/components/HomePage/Banner";
 import PageHeader from "@/components/common/PageHeader";
-import InfoSection from "@/components/HomePage/InfoSection";
+import InfoSection from "@/components/common/InfoSection";
 import QuoteSection from "@/components/HomePage/QuoteSection";
-import Button from "@/components/common/Button";
+import { IconButton } from "@/components/common/Button";
 import FirstCRSection from "@/components/HomePage/CardsRow/FirstCRSection";
 import SecondCRSection from "@/components/HomePage/CardsRow/SecondCRSection";
-import ThirdCRSection from "@/components/HomePage/CardsRow/ThirdCRSection";
-import Footer from "@/components/HomePage/Footer";
-import FirstCGSection from "@/components/HomePage/CardsGrid/FirstCGSection";
+import CardsRowSection from "@/components/common/CardsRowSection";
+import Footer from "@/components/common/Footer";
+import CardGridSection from "@/components/common/AnimatedCardsGridSection";
 import GallerySection from "@/components/HomePage/Gallery/GallerySection";
+import { useQuestionnaire } from "@/hooks/useQuestionnaire";
+import { useUserAuth } from "@/hooks/userAuth";
 
-export default function Home() {
+const thirdCRSectionData = {
+	title: '<span class="font-300">The Importance of </span><strong class="font-600">Integration</strong>',
+	description: 'Integrating a Bufo ceremony is key to lasting growth and well-being. Practice mindfulness, self-reflection, and grounding techniques. Apply insights through daily intention and conscious living.',
+	cardList: [
+		{
+			badgeText: "Integration",
+			title: 'Grounding <br /><span class="font-400">Practices</span>',
+			description: "Engage in physical activity, meditation, or breathwork to reconnect with your body and process emotions.",
+		},
+		{
+			badgeText: "Integration",
+			title: 'Time for <br /><span class="font-400">Reflection</span>',
+			description: "Allow space for rest and introspection, giving the experience time to settle naturally.",
+		},
+		{
+			badgeText: "Integration",
+			title: 'Creative <br /><span class="font-400">Expression</span>',
+			description: "Explore journaling, art therapy, or nonverbal expression to extract deeper meaning from your journey.",
+		},
+		{
+			badgeText: "Integration",
+			title: 'Daily <br /><span class="font-400">Self-Care</span>',
+			description: "Maintain a personal practice that nurtures your connection to the insights gained during the ceremony.",
+		},
+		{
+			badgeText: "Integration",
+			title: 'Community <br /><span class="font-400">& Support</span>',
+			description: "Join integration circles or seek professional guidance to share experiences and receive support in a safe and understanding environment.",
+		}
+	]
+}
+
+const cardGridSection = {
+	title: {
+		__html: 'Key Elements of a <strong style="font-weight: 600;">Bufo Ceremony</strong>'
+	},
+	data: [
+		{
+			firstRow: {
+				title: "Preparation",
+				description: "Participants undergo physical, mental, and emotional preparation through fasting, meditation, or cleansing rituals. This enhances receptivity, ensuring a transformative experience with greater clarity, focus, and readiness for the journey",
+			},
+			secondRow: {
+				title: "Breathwork",
+				description: "Deep, rhythmic breathing enhances awareness, allowing participants to surrender to the experience. Conscious breath control regulates emotions, deepens psychedelic effects, and promotes relaxation, clarity, and connection to inner wisdom.",
+			},
+		},
+		{
+			firstRow: {
+				title: "Setting",
+				description: "A quiet, peaceful space—such as nature or a sacred room—sets the tone. A calming atmosphere fosters introspection, relaxation, and a safe environment for deep spiritual and emotional exploration.",
+			},
+			secondRow: {
+				title: "Dosage",
+				description: "Administered in precise amounts, the venom is inhaled through smoking or vaporization. Controlled dosing ensures a safe, effective experience, balancing intensity while allowing participants to navigate insights with clarity.",
+			},
+		},
+		{
+			firstRow: {
+				title: "Guidance",
+				description: "A trained facilitator ensures safety, offers support, and navigates challenges during the ceremony. Their experience helps participants stay grounded, process emotions, and maximize the potential benefits of the journey.",
+			},
+			secondRow: {
+				title: "Integration",
+				description: "After the ceremony, reflection and self-exploration help internalize insights. Practices like journaling, meditation, or counseling assist in applying newfound wisdom to daily life for long-term growth.",
+			},
+		}
+	]
+}
+
+export default function HomePage() {
+	const { resetAll } = useQuestionnaire();
+	const router = useRouter();
+	const { session, isUser } = useUserAuth();
+
+	useEffect(() => {
+		resetAll();
+	}, [resetAll]);
+
+	const handleDownload = (e) => {
+		e.preventDefault();
+		if (!session || !isUser) {
+			const query = { ...router.query, auth: "login" };
+			router.push({
+				pathname: router.pathname,
+				query: query,
+			});
+			return;
+		}
+
+		const link = document.createElement("a");
+		link.href = "/pdf/Sacred_Ceremonial_Guide.pdf";
+		link.download = "Sacred Ceremonial Guide.pdf";
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	};
+
 	return (
-		<div className="bg-gradient-to-b from-[#171F3F] to-[#020105] ">
-			<div className="absolute top-0 left-0 w-full z-100 xl:p-12">
-				<PageHeader />
-			</div>
+		<main>
+			<PageHeader />
 			<Banner />
 			<QuoteSection
 				normal={false}
@@ -28,7 +127,7 @@ export default function Home() {
 			<InfoSection image="/image/SacredGuidance.png" reverse={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Transform Your Journey with <strong className="font-semibold">Sacred Guidance</strong></h2>
 				<p className="text-white inter-font">Discover the profound wisdom and preparation steps for your sacred medicine journey with the <Link href="" target="_blank" className="text-[#fef15c]">Sacred Ceremonial Guide</Link>. This comprehensive guide provides essential insights on emotional, mental, physical, and spiritual preparation, integration practices, and the healing power of 5-MeO-DMT. Whether you are new to the experience or looking to deepen your understanding, this guide will help you navigate the path with clarity and intention.</p>
-				<Button name="Download Now" />
+				<IconButton title="Download Now" className="w-fit" onClick={handleDownload} />
 			</InfoSection>
 			<QuoteSection
 				descriptionTextClass="text-base"
@@ -37,9 +136,9 @@ export default function Home() {
 			/>
 			<FirstCRSection />
 			<InfoSection image="/image/BufosPotential.png">
-				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Scientific Validation of <strong className="font-semibold">Bufo’s Potential</strong></h2>
+				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Scientific Validation of <strong className="font-semibold">Bufo's Potential</strong></h2>
 				<p className="text-white inter-font">Research into 5-MeO-DMT, one of 21 alkaloids found in Bufo Alvarius venom, has gained remarkable traction. Leading institutions such as Johns Hopkins and the University of London are spearheading studies on its effects. Johns Hopkins has even published <Link href="" target="_blank" className="text-[#fef15c]">ground-breaking</Link> research highlighting its potential in <Link href="https://hub.jhu.edu/magazine/2019/summer/toad-venom-therapy/" target="_blank" className="text-[#fef15c]">addressing depression and anxiety</Link>.</p>
-				<p className="text-white inter-font">These studies seek to uncover the impact of 5-MeO-DMT on mental health, consciousness, and neurological function, reinforcing its therapeutic value. At the same time, mainstream media has amplified interest, with coverage from outlets like Forbes Magazine and Hamilton’s Pharmacopeia, reflecting a growing cultural acceptance of this powerful compound.</p>
+				<p className="text-white inter-font">These studies seek to uncover the impact of 5-MeO-DMT on mental health, consciousness, and neurological function, reinforcing its therapeutic value. At the same time, mainstream media has amplified interest, with coverage from outlets like Forbes Magazine and Hamilton's Pharmacopeia, reflecting a growing cultural acceptance of this powerful compound.</p>
 			</InfoSection>
 			<SecondCRSection />
 			<InfoSection image="/image/Media.png" smallImage={true} reverse={true}>
@@ -54,10 +153,14 @@ export default function Home() {
 			</InfoSection>
 			<InfoSection image="/image/SmokingBufo.png" smallImage={true} reverse={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">The Process of <strong className="font-semibold">Smoking Bufo</strong></h2>
-				<p className="text-white inter-font">The venom of the Bufo Alvarius toad is carefully extracted through a process known as “milking,” then dried for use. When smoked through a pipe, the heat neutralizes toxic components, allowing the user to inhale only the active 5-MeO-DMT vapor.</p>
+				<p className="text-white inter-font">The venom of the Bufo Alvarius toad is carefully extracted through a process known as "milking," then dried for use. When smoked through a pipe, the heat neutralizes toxic components, allowing the user to inhale only the active 5-MeO-DMT vapor.</p>
 				<p className="text-white inter-font">This method induces a short yet intensely powerful psychedelic experience, often described as more profound than traditional DMT. To ensure safety and maximize the benefits, it is essential to have an experienced guide and follow well-established safety protocols.</p>
 			</InfoSection>
-			<FirstCGSection />
+			<CardGridSection
+				title={cardGridSection.title}
+				data={cardGridSection.data}
+				cardClassName="sm:h-70 md:h-[26rem] lg:h-[24rem] xl:h-84"
+			/>
 			<GallerySection />
 			<InfoSection image="/image/Bufo.png" reverse={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Spiritual Awakening Through <strong className="font-semibold">Bufo</strong></h2>
@@ -72,8 +175,8 @@ export default function Home() {
 					<span className="font-bold">A Deeply Personal Experience –</span> Each journey is unique, reflecting the inner world of the participant. Many describe it as a life-changing moment of emotional, psychological, and spiritual evolution.
 				</p>
 			</InfoSection>
-			<ThirdCRSection />
-			<Footer />
-		</div>
+			<CardsRowSection title={thirdCRSectionData.title} description={thirdCRSectionData.description} cardList={thirdCRSectionData.cardList} />
+			<Footer className="mt-10" />
+		</main>
 	);
 }
