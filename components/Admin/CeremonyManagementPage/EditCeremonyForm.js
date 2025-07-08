@@ -55,13 +55,17 @@ const urlToFile = async (url, filename) => {
 async function convertHeicToJpeg(file) {
     if (file && file.type === "image/heic") {
         try {
-            const heic2any = (await import("heic2any")).default;
-            const convertedBlob = await heic2any({
-                blob: file,
-                toType: "image/jpeg",
-                quality: 0.9,
+            const formData = new FormData();
+            formData.append('image', file);
+            const response = await fetch('/api/convert-heic', {
+                method: 'POST',
+                body: formData,
             });
-            return new File([convertedBlob], file.name.replace(/\.heic$/i, ".jpg"), { type: "image/jpeg" });
+            if (!response.ok) {
+                throw new Error('Failed to convert HEIC image');
+            }
+            const blob = await response.blob();
+            return new File([blob], file.name.replace(/\.heic$/i, ".jpg"), { type: "image/jpeg" });
         } catch (err) {
             toast.error("Failed to convert HEIC image. Please try another image.");
             return null;
