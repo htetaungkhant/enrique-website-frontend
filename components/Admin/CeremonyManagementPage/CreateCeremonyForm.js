@@ -263,7 +263,6 @@ export function CreateCeremonyForm() {
                 // router.push("/admin/ceremony-management/ceremonies");
             }
             else if (response.status === 400 && responseJson?.errors) {
-                console.error("Failed to create ceremony:", responseJson.errors);
                 toast.error(
                     <div className="flex flex-col gap-[2px]">
                         {
@@ -275,16 +274,13 @@ export function CreateCeremonyForm() {
                 );
             }
             else if (response.status === 400 && responseJson?.error) {
-                console.error("Failed to create ceremony:", responseJson.error);
                 toast.error(responseJson.error);
             }
             else {
-                console.error("Failed to create ceremony");
-                toast.error("Failed to create ceremony. Please try again.");
+                toast.error(responseJson?.error || "Failed to create ceremony. Please try again.");
             }
         } catch (error) {
-            console.error("Error creating ceremony:", error);
-            toast.error("Failed to create ceremony. Please try again.");
+            toast.error(error.message || "Failed to create ceremony. Please try again.");
         } finally {
             setIsSubmitting(false);
         }

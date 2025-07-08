@@ -4,9 +4,43 @@ import { filterDateMessages } from '@/lib/inhouseAPI/utils';
 
 const parseForm = async (req) => {
     return new Promise((resolve, reject) => {
-        const form = formidable();
+        const form = formidable({
+            // Stay well under API Gateway's 10MB limit
+            maxFileSize: 8 * 1024 * 1024, // 8MB per file
+            maxTotalFileSize: 8 * 1024 * 1024, // 8MB total
+            maxFieldsSize: 2 * 1024 * 1024, // 2MB for fields
+            keepExtensions: true,
+
+            onFileSizeExceeded: (file) => {
+                reject(new Error(`File ${file.originalFilename} exceeds 8MB limit`));
+            }
+        });
+
         form.parse(req, (err, fields, files) => {
-            if (err) return reject(err);
+            if (err) {
+                if (err.httpCode === 413) {
+                    return reject(new Error('Request entity too large'));
+                }
+                if (err.code === 1009) { // LIMIT_FILE_SIZE
+                    return reject(new Error('File size exceeds limit'));
+                }
+                if (err.code === 1010) { // LIMIT_FILE_COUNT
+                    return reject(new Error('Too many files uploaded'));
+                }
+                if (err.code === 1011) { // LIMIT_FIELD_KEY
+                    return reject(new Error('Field name too long'));
+                }
+                if (err.code === 1012) { // LIMIT_FIELD_VALUE
+                    return reject(new Error('Field value too long'));
+                }
+                if (err.code === 1013) { // LIMIT_FIELD_COUNT
+                    return reject(new Error('Too many fields'));
+                }
+                if (err.code === 1014) { // LIMIT_UNEXPECTED_FILE
+                    return reject(new Error('Unexpected file upload'));
+                }
+                return reject(err);
+            }
             resolve({ fields, files });
         });
     });
@@ -56,8 +90,7 @@ export default async function handler(req, res) {
                 res.status(400).json({ error: "Failed to update ceremony" });
             }
         } catch (error) {
-            console.error('Error updating ceremony:', error);
-            res.status(500).json({ error: "Internal Server Error" });
+            res.status(500).json({ error: error.message || "Internal Server Error" });
         }
     }
     else {

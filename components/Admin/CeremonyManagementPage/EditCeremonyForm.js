@@ -461,14 +461,15 @@ export function EditCeremonyForm({ initialData }) {
             });
 
             if (!response.ok) {
-                throw new Error("Failed to update ceremony");
+                const errorResponse = await response.json();
+                throw new Error(errorResponse?.error || "Failed to update ceremony");
             }
 
             toast.success("Ceremony updated successfully!");
 
             router.replace(router.asPath);
         } catch (error) {
-            toast.error("Failed to update ceremony. Please try again.");
+            toast.error(error.message || "Failed to update ceremony. Please try again.");
             const responseJson = await error.response?.json();
             if (responseJson?.errors) {
                 toast.error(
