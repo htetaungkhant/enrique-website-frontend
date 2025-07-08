@@ -19,7 +19,7 @@ const parseForm = async (req) => {
         form.parse(req, (err, fields, files) => {
             if (err) {
                 if (err.httpCode === 413) {
-                    return reject(new Error('Request entity too large'));
+                    return reject(new Error('Request entity too large. Should be less than 8MB!'));
                 }
                 if (err.code === 1009) { // LIMIT_FILE_SIZE
                     return reject(new Error('File size exceeds limit'));
