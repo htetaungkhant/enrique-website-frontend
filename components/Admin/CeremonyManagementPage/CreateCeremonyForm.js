@@ -31,6 +31,28 @@ const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
 
+const compressImage = (file, maxSizeMB = 8) => {
+    return new Promise((resolve) => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new window.Image();
+
+        img.onload = () => {
+            // Calculate compression ratio to target size
+            const targetSize = maxSizeMB * 1024 * 1024;
+            const compressionRatio = Math.min(1, Math.sqrt(targetSize / file.size));
+
+            canvas.width = img.width * compressionRatio;
+            canvas.height = img.height * compressionRatio;
+
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(resolve, 'image/jpeg', 0.5);
+        };
+
+        img.src = URL.createObjectURL(file);
+    });
+};
+
 async function convertHeicToJpeg(file) {
     if (file && file.type === "image/heic") {
         try {
@@ -50,7 +72,14 @@ async function convertHeicToJpeg(file) {
             return null;
         }
     }
-    return file;
+
+    try {
+        const compressedBlob = await compressImage(file);
+        return new File([compressedBlob], file.name, { type: file.type });
+    } catch (error) {
+        toast.error("Failed to compress image. Please try another image.");
+        return null;
+    }
 }
 
 const imageSchema = z.any()
