@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       const outputBuffer = await heicConvert({
         buffer: inputBuffer,
         format: 'JPEG',
-        quality: 0.9
+        quality: 0.5
       });
       fs.unlinkSync(file.filepath);
       res.setHeader('Content-Type', 'image/jpeg');
