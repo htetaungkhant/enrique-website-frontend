@@ -17,9 +17,20 @@ const parseForm = async (req) => {
         });
 
         form.parse(req, (err, fields, files) => {
+            // let totalSize = 0;
+            // Object.values(files).forEach(fileOrArray => {
+            //     const fileList = Array.isArray(fileOrArray) ? fileOrArray : [fileOrArray];
+            //     fileList.forEach(file => {
+            //         if (file && file.size) totalSize += file.size;
+            //     });
+            // });
+
+            // const totalSizeMB = (totalSize / (1024 * 1024)).toFixed(2);
+            // console.log('Total uploaded files size:', totalSizeMB, 'MB');
+
             if (err) {
                 if (err.httpCode === 413) {
-                    return reject(new Error('Request entity too large. Should be less than 8MB!'));
+                    return reject(new Error('Request entity too large'));
                 }
                 if (err.code === 1009) { // LIMIT_FILE_SIZE
                     return reject(new Error('File size exceeds limit'));
@@ -53,48 +64,46 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-    if (req.method === "GET") { }
-    else if (req.method === "PUT") {
-        try {
-            const { id } = req.query;
-            const { fields, files } = await parseForm(req);
-
-            req.body = {
-                id,
-                ...fields,
-                gallery: files.gallery || (fields.existingGallery ? JSON.parse(fields.existingGallery) : undefined),
-                images: files.images || (fields.existingImages ? JSON.parse(fields.existingImages) : undefined),
-                image: files.image || (fields.existingImage ? JSON.parse(fields.existingImage) : undefined),
-                hostNames: JSON.parse(fields.hostNames),
-                location: JSON.parse(fields.location),
-                extraDetails: JSON.parse(fields.extraDetails),
-                deletedGalleryImages: fields.deletedGalleryImages ? JSON.parse(fields.deletedGalleryImages) : [],
-            };
-
-            const updatedCeremony = await updateCeremony(req);
-            if (updatedCeremony) {
-                const errors = filterDateMessages(updatedCeremony);
-                if (errors.length > 0) {
-                    res.status(400).json({ errors });
-                }
-                else if (updatedCeremony?.errors) {
-                    res.status(400).json(updatedCeremony);
-                }
-                else if (updatedCeremony?.error) {
-                    res.status(400).json(updatedCeremony);
-                }
-                else {
-                    res.status(200).json(updatedCeremony);
-                }
-            } else {
-                res.status(400).json({ error: "Failed to update ceremony" });
-            }
-        } catch (error) {
-            res.status(500).json({ error: error.message || "Internal Server Error" });
-        }
-    }
-    else {
-        res.setHeader("Allow", ["GET", "PUT"]);
+    if (req.method !== "PUT") {
+        res.setHeader("Allow", ["PUT"]);
         res.status(405).end(`Method ${req.method} Not Allowed`);
+    }
+
+    try {
+        const { id } = req.query;
+        const { fields, files } = await parseForm(req);
+
+        req.body = {
+            id,
+            ...fields,
+            gallery: files.gallery || (fields.existingGallery ? JSON.parse(fields.existingGallery) : undefined),
+            images: files.images || (fields.existingImages ? JSON.parse(fields.existingImages) : undefined),
+            image: files.image || (fields.existingImage ? JSON.parse(fields.existingImage) : undefined),
+            hostNames: JSON.parse(fields.hostNames),
+            location: JSON.parse(fields.location),
+            extraDetails: JSON.parse(fields.extraDetails),
+            deletedGalleryImages: fields.deletedGalleryImages ? JSON.parse(fields.deletedGalleryImages) : [],
+        };
+
+        const updatedCeremony = await updateCeremony(req);
+        if (updatedCeremony) {
+            const errors = filterDateMessages(updatedCeremony);
+            if (errors.length > 0) {
+                res.status(400).json({ errors });
+            }
+            else if (updatedCeremony?.errors) {
+                res.status(400).json(updatedCeremony);
+            }
+            else if (updatedCeremony?.error) {
+                res.status(400).json(updatedCeremony);
+            }
+            else {
+                res.status(200).json(updatedCeremony);
+            }
+        } else {
+            res.status(400).json({ error: "Failed to update ceremony" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message || "Internal Server Error" });
     }
 }
