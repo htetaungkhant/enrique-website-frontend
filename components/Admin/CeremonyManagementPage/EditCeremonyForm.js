@@ -93,14 +93,14 @@ async function convertHeicToJpeg(file) {
             return null;
         }
     }
-    return file;
-    // try {
-    //     const compressedBlob = await compressImage(file);
-    //     return new File([compressedBlob], file.name, { type: file.type });
-    // } catch (error) {
-    //     toast.error("Failed to compress image. Please try another image.");
-    //     return null;
-    // }
+
+    try {
+        const compressedBlob = await compressImage(file);
+        return new File([compressedBlob], file.name, { type: file.type });
+    } catch (error) {
+        toast.error("Failed to compress image. Please try another image.");
+        return null;
+    }
 }
 
 const imageSchema = z.any()
@@ -490,15 +490,20 @@ export function EditCeremonyForm({ initialData }) {
             });
 
             if (!response.ok) {
-                const errorResponse = await response.json();
-                throw new Error(errorResponse?.error || "Failed to update ceremony");
+                if (response.status === 413) {
+                    const errorResponse = await response.json();
+                    toast.error(errorResponse.error || `Image size exceeds ${MAX_IMAGE_SIZE_MB}MB limit. Please upload smaller images.`);
+                    setIsSubmitting(false);
+                    return;
+                }
+                throw new Error("Failed to update ceremony");
             }
 
             toast.success("Ceremony updated successfully!");
 
             router.replace(router.asPath);
         } catch (error) {
-            toast.error(error.message || "Failed to update ceremony. Please try again.");
+            toast.error("Failed to update ceremony. Please try again.");
             const responseJson = await error.response?.json();
             if (responseJson?.errors) {
                 toast.error(
