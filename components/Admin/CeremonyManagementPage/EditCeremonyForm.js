@@ -490,7 +490,7 @@ export function EditCeremonyForm({ initialData }) {
             });
 
             if (!response.ok) {
-                console.log("Failed to update ceremony:", response);
+                console.log("Failed to update ceremony:", response, response.status === 413);
                 if (response.status === 413) {
                     const errorResponse = await response.json();
                     console.log("Error response:", errorResponse);
@@ -498,7 +498,9 @@ export function EditCeremonyForm({ initialData }) {
                     setIsSubmitting(false);
                     return;
                 }
-                throw new Error("Failed to update ceremony");
+                else {
+                    throw new Error("Failed to update ceremony");
+                }
             }
 
             toast.success("Ceremony updated successfully!");
