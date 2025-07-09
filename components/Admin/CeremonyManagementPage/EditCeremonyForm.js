@@ -490,14 +490,13 @@ export function EditCeremonyForm({ initialData }) {
             });
 
             if (!response.ok) {
-                console.log("Failed to update ceremony:", response, response.status === 413);
                 if (response.status === 413) {
                     try {
                         const errorResponse = await response.json();
-                        toast.error(errorResponse?.error || `Image size exceeds limit. Please upload smaller images.`);
+                        toast.error(errorResponse?.error || `Image size exceeds limit. Please upload one by one.`);
                     }
                     catch (error) {
-                        toast.error("Image size exceeds limit. Please upload smaller images.");
+                        toast.error("Image size exceeds limit. Please upload one by one.");
                     }
                     setIsSubmitting(false);
                     return;
