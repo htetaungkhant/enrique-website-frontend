@@ -162,16 +162,11 @@ const SafetyPage = () => {
                             className="max-[33rem]:h-86 md:h-96 xl:h-80"
                             description="Ayahuasca is illegal in some countries, including the U.S., where most retreats operate underground. While some may be reputable, attending an illegal ceremony poses risks. Opting for a legal retreat ensures a safer, more authentic experience."
                         />
-                        <AnimatedCard title="Location" className="max-[33rem]:h-100 md:h-96 xl:h-80">
-                            <div className="flex flex-col gap-5">
-                                <p>Choose a destination that aligns with you spiritually and legally:</p>
-                                <ul className="pl-5 list-disc">
-                                    <li><strong>Costa Rica</strong> – Lush, tropical setting with established retreats.</li>
-                                    <li><strong>Peru</strong> – Deep Amazonian traditions, often paired with visits to Machu Picchu.</li>
-                                    <li><strong>Mexico & Portugal</strong> – Legal and structured retreat options.</li>
-                                </ul>
-                            </div>
-                        </AnimatedCard>
+                        <AnimatedCard
+                            title="Location"
+                            className="max-[33rem]:h-86 md:h-96 xl:h-80"
+                            description="Choose a destination that resonates with your spirit and aligns with your values—somewhere that offers a safe, supportive, and legally-compliant environment for deep inner work. Look for places known for their natural beauty, cultural richness, and well-established retreat communities that honor tradition and promote personal transformation."
+                        />
                     </div>
                 </div>
             </UPSection>
