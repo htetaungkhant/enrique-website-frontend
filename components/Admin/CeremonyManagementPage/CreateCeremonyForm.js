@@ -305,6 +305,18 @@ export function CreateCeremonyForm() {
             else if (response.status === 400 && responseJson?.error) {
                 toast.error(responseJson.error);
             }
+            else if (response.status === 413) {
+                try {
+                    const errorResponse = await response.json();
+                    toast.error(errorResponse?.error || `Image size exceeds limit. Please upload one by one.`);
+                }
+                catch (error) {
+                    toast.error("Image size exceeds limit. Please upload one by one.");
+                }
+            }
+            else if (response.status === 504) {
+                toast.error("Request timed out. Please try again.");
+            }
             else {
                 toast.error(responseJson?.error || "Failed to create ceremony. Please try again.");
             }
