@@ -493,7 +493,8 @@ export function EditCeremonyForm({ initialData }) {
                 console.log("Failed to update ceremony:", response);
                 if (response.status === 413) {
                     const errorResponse = await response.json();
-                    toast.error(errorResponse.error || `Image size exceeds ${MAX_IMAGE_SIZE_MB}MB limit. Please upload smaller images.`);
+                    console.log("Error response:", errorResponse);
+                    toast.error(`Image size exceeds ${MAX_IMAGE_SIZE_MB}MB limit. Please upload smaller images.`);
                     setIsSubmitting(false);
                     return;
                 }
