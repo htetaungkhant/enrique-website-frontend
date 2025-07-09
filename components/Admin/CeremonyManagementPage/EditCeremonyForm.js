@@ -501,6 +501,11 @@ export function EditCeremonyForm({ initialData }) {
                     setIsSubmitting(false);
                     return;
                 }
+                else if (response.status === 504) {
+                    toast.error("Request timed out. Please try again.");
+                    setIsSubmitting(false);
+                    return;
+                }
                 throw new Error("Failed to update ceremony");
             }
 
