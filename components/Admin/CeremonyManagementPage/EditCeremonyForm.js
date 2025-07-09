@@ -93,14 +93,14 @@ async function convertHeicToJpeg(file) {
             return null;
         }
     }
-
-    try {
-        const compressedBlob = await compressImage(file);
-        return new File([compressedBlob], file.name, { type: file.type });
-    } catch (error) {
-        toast.error("Failed to compress image. Please try another image.");
-        return null;
-    }
+    return file;
+    // try {
+    //     const compressedBlob = await compressImage(file);
+    //     return new File([compressedBlob], file.name, { type: file.type });
+    // } catch (error) {
+    //     toast.error("Failed to compress image. Please try another image.");
+    //     return null;
+    // }
 }
 
 const imageSchema = z.any()
