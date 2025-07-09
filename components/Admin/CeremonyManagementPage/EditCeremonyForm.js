@@ -490,15 +490,30 @@ export function EditCeremonyForm({ initialData }) {
             });
 
             if (!response.ok) {
-                const errorResponse = await response.json();
-                throw new Error(errorResponse?.error || "Failed to update ceremony");
+                if (response.status === 413) {
+                    try {
+                        const errorResponse = await response.json();
+                        toast.error(errorResponse?.error || `Image size exceeds limit. Please upload one by one.`);
+                    }
+                    catch (error) {
+                        toast.error("Image size exceeds limit. Please upload one by one.");
+                    }
+                    setIsSubmitting(false);
+                    return;
+                }
+                else if (response.status === 504) {
+                    toast.error("Request timed out. Please try again.");
+                    setIsSubmitting(false);
+                    return;
+                }
+                throw new Error("Failed to update ceremony");
             }
 
             toast.success("Ceremony updated successfully!");
 
             router.replace(router.asPath);
         } catch (error) {
-            toast.error(error.message || "Failed to update ceremony. Please try again.");
+            toast.error("Failed to update ceremony. Please try again.");
             const responseJson = await error.response?.json();
             if (responseJson?.errors) {
                 toast.error(

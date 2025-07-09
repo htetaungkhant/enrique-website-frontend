@@ -27,7 +27,7 @@ export default async function handler(req, res) {
   form.parse(req, async (err, fields, files) => {
     if (err) {
       if (err.httpCode === 413) {
-        return res.status(500).json({ error: 'Request entity too large. Should be less than 8MB!' });
+        return res.status(500).json({ error: 'Request entity too large' });
       }
       if (err.code === 1009) { // LIMIT_FILE_SIZE
         return res.status(500).json({ error: 'File size exceeds limit' });
