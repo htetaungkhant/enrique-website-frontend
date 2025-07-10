@@ -20,7 +20,7 @@ const slides = [
 		description: "Discover our transformative healing therapies and expert guidance from seasoned practitioners.",
 		button: "Learn More",
 		logo: "/image/banner-logo.png",
-		link: "/survey",
+		link: "/facilitators",
 	},
 	{
 		bgImage: "/image/banner.png",
