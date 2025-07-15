@@ -310,9 +310,9 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                         !isAlreadyEnrolled ? (
                             <div className="max-lg:order-1">
                                 <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
-                                    <div className="font-bold flex justify-between">
+                                    <div className="font-bold flex justify-between gap-2">
                                         <span>Ceremony Deposit Fee</span>
-                                        <span>€ {parseFloat(ceremony.price)?.toFixed(2)}</span>
+                                        <span className="whitespace-nowrap">€ {parseFloat(ceremony.price)?.toFixed(2)}</span>
                                     </div>
                                     <button disabled={isLoading} onClick={handleRegisterNow} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
                                         {isLoading ? 'Processing...' : 'Register Now'}
