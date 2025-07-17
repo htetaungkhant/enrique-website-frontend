@@ -254,7 +254,7 @@ const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
                                 </PopoverContent>
                             </Popover>
                             <SearchBox
-                                placeholder="Search by Course Name"
+                                placeholder="Search by Ceremonies"
                                 className="md:w-52 lg:w-72 text-sm"
                                 value={searchQuery}
                                 onChange={handleSearch}
