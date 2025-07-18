@@ -268,12 +268,13 @@ const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
                                     filteredCeremonies.map((ceremony, index) => (
                                         <CeremonyCard
                                             key={`${ceremony.id}-${index}`}
+                                            id={ceremony.id}
                                             image={ceremony.image?.image}
                                             title={ceremony.title}
                                             locations={ceremony.locationCountry}
                                             startDate={ceremony.startDate}
                                             endDate={ceremony.endDate}
-                                            learnMoreHref={`/ceremonies/${ceremony.id}`}
+                                            learnMoreHref={`/ceremonies/${ceremony.title}`.replaceAll(/\s+/g, '-').toLowerCase()}
                                         />
                                     ))
                                 }

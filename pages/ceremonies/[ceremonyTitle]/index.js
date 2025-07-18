@@ -25,8 +25,8 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 export async function getServerSideProps(context) {
     try {
-        const { ceremonyId } = context.params;
-        const ceremony = await ceremonyRoute.getCeremonyDetails({ ...context.req, body: { id: ceremonyId } });
+        const { ceremonyTitle } = context.params;
+        const ceremony = await ceremonyRoute.getCeremonyDetailsByTitle({ ...context.req, body: { title: ceremonyTitle } });
         if (!ceremony) {
             return {
                 notFound: true
