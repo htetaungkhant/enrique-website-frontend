@@ -70,6 +70,8 @@ const AuthModal = ({
     }
 
     const handleCloseIconBtn = () => {
+        sessionStorage.removeItem("restartCeremonyCheckout");
+        sessionStorage.removeItem("restartCourseCheckout");
         if (auth === "reset-password") {
             sessionStorage.removeItem("forgotPasswordEmail");
         }
@@ -168,7 +170,9 @@ const AuthModal = ({
     };
 
     useEffect(() => {
-        if (session?.user?.role === "user" && !session?.validationFailed && isAuthenticated && (sessionStorage.getItem("justLoggedIn") === "1")) {
+        const restartCeremonyCheckout = sessionStorage.getItem("restartCeremonyCheckout");
+        const restartCourseCheckout = sessionStorage.getItem("restartCourseCheckout");
+        if (restartCourseCheckout !== "true" && restartCeremonyCheckout !== "true" && session?.user?.role === "user" && !session?.validationFailed && isAuthenticated && (sessionStorage.getItem("justLoggedIn") === "1")) {
             setShowLoginSuccessModal(true);
             sessionStorage.removeItem("justLoggedIn");
         }

@@ -148,6 +148,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
 
     const handleRegisterNow = async () => {
         if (!session || session.validationFailed) {
+            sessionStorage.setItem("restartCourseCheckout", "true");
             router.push({
                 pathname: router.pathname,
                 query: { ...router.query, auth: "login" }
@@ -188,8 +189,18 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
         }
         finally {
             setIsLoading(false);
+            sessionStorage.removeItem("restartCourseCheckout");
         }
     }
+
+    useEffect(() => {
+        const restartCourseCheckout = sessionStorage.getItem("restartCourseCheckout");
+        if (session && !session.validationFailed && restartCourseCheckout === "true") {
+            sessionStorage.removeItem("restartCourseCheckout");
+            sessionStorage.removeItem("justLoggedIn");
+            handlePurchaseNow();
+        }
+    }, [session]);
 
     const onSuccessfulCheckout = async (paymentIntent) => {
         setIsLoading(true);
@@ -223,7 +234,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
     return (
         <main className="relative min-h-screen flex flex-col justify-between">
             <PageHeader />
-            <UPSection className="inter-font text-white pt-28 lg:pt-48">
+            <UPSection className="inter-font text-white pt-24 lg:pt-36">
                 <div className="grid grid-cols-1 gap-10 lg:grid-cols-[65%_30%] justify-between">
                     <div className="max-lg:order-2 flex flex-col gap-10">
                         <h2 className="font-black text-5xl">{ceremony.title}</h2>
