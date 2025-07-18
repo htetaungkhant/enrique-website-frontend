@@ -25,8 +25,8 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 export async function getServerSideProps(context) {
     try {
-        const { ceremonyId } = context.params;
-        const ceremony = await ceremonyRoute.getCeremonyDetails({ ...context.req, body: { id: ceremonyId } });
+        const { ceremonyTitle } = context.params;
+        const ceremony = await ceremonyRoute.getCeremonyDetailsByTitle({ ...context.req, body: { title: ceremonyTitle } });
         if (!ceremony) {
             return {
                 notFound: true
@@ -315,7 +315,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                                         <span className="whitespace-nowrap">€ {parseFloat(ceremony.price)?.toFixed(2)}</span>
                                     </div>
                                     <button disabled={isLoading} onClick={handleRegisterNow} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
-                                        {isLoading ? 'Processing...' : 'Register Now'}
+                                        {isLoading ? 'Processing...' : (!session || session.validationFailed) ? 'Register Now' : "Start Registration"}
                                     </button>
                                 </div>
                             </div>

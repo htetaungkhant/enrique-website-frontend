@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { ReadMoreBtn } from "../common/Button";
 
-const CeremonyCard = ({ image, title, locations, startDate, endDate, learnMoreHref, className }) => {
+const CeremonyCard = ({ id, image, title, locations, startDate, endDate, learnMoreHref, className }) => {
     return (
         <div className={cn("inter-font text-[#403D4E] bg-white rounded-3xl shadow-xl ring ring-[#A5F3CC40] shadow-[#A5F3CC40] flex flex-col overflow-hidden", className)}>
             <div className="h-48 rounded-3xl bg-center bg-cover bg-no-repeat relative" style={{ backgroundImage: `url(${image})` }}></div>

@@ -9,7 +9,7 @@ import Footer from "@/components/common/Footer";
 import UPSection from "@/components/common/UniformPaddingSection";
 import PageHeader from "@/components/common/PageHeader";
 import YouTubeBanner from "@/components/common/YouTubeBanner";
-import { getCourseDetails, getCoursesByUser } from "@/lib/inhouseAPI/course-route";
+import { getCourseDetailsByTitle, getCoursesByUser } from "@/lib/inhouseAPI/course-route";
 import { useUserAuth } from "@/hooks/userAuth";
 import {
     Dialog,
@@ -21,10 +21,10 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 export async function getServerSideProps(context) {
     try {
-        const { courseId } = context.params;
-        const course = await getCourseDetails({ ...context.req, body: { id: courseId } });
+        const { courseTitle } = context.params;
+        const course = await getCourseDetailsByTitle({ ...context.req, body: { title: courseTitle } });
         const coursesByUser = await getCoursesByUser(context.req);
-        const isAlreadyEnrolled = coursesByUser?.some(course => course.id === courseId);
+        const isAlreadyEnrolled = coursesByUser?.some(c => c?.id === course?.id);
 
         if (!course) {
             return {
@@ -104,7 +104,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
             alert("You are already enrolled in this course.");
             return;
         }
-        
+
         setIsLoading(true);
         try {
             const response = await fetch('/api/stripe-payment', {
@@ -240,7 +240,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
                                         <span>€ {parseFloat(course.price)?.toFixed(2)}</span>
                                     </div>
                                     <button disabled={isLoading} onClick={handlePurchaseNow} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
-                                        Purchase Now
+                                        {isLoading ? 'Processing...' : (!session || session.validationFailed) ? 'Register Now' : "Start Registration"}
                                     </button>
                                 </div>
                             </div>
