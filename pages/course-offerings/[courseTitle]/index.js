@@ -240,7 +240,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
                                         <span>€ {parseFloat(course.price)?.toFixed(2)}</span>
                                     </div>
                                     <button disabled={isLoading} onClick={handlePurchaseNow} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
-                                        Purchase Now
+                                        {isLoading ? 'Processing...' : (!session || session.validationFailed) ? 'Register Now' : "Start Registration"}
                                     </button>
                                 </div>
                             </div>
