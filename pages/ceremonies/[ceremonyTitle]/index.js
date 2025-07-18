@@ -223,7 +223,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
     return (
         <main className="relative min-h-screen flex flex-col justify-between">
             <PageHeader />
-            <UPSection className="inter-font text-white pt-28 lg:pt-48">
+            <UPSection className="inter-font text-white pt-24 lg:pt-36">
                 <div className="grid grid-cols-1 gap-10 lg:grid-cols-[65%_30%] justify-between">
                     <div className="max-lg:order-2 flex flex-col gap-10">
                         <h2 className="font-black text-5xl">{ceremony.title}</h2>
