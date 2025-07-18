@@ -198,7 +198,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
         if (session && !session.validationFailed && restartCourseCheckout === "true") {
             sessionStorage.removeItem("restartCourseCheckout");
             sessionStorage.removeItem("justLoggedIn");
-            handlePurchaseNow();
+            handleRegisterNow();
         }
     }, [session]);
 
@@ -234,9 +234,9 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
     return (
         <main className="relative min-h-screen flex flex-col justify-between">
             <PageHeader />
-            <UPSection className="inter-font text-white pt-24 lg:pt-36">
+            <UPSection className="inter-font text-white pt-64 lg:pt-36">
                 <div className="grid grid-cols-1 gap-10 lg:grid-cols-[65%_30%] justify-between">
-                    <div className="max-lg:order-2 flex flex-col gap-10">
+                    <div className="flex flex-col gap-10">
                         <h2 className="font-black text-5xl">{ceremony.title}</h2>
                         {
                             Array.isArray(ceremony.hosts) && ceremony.hosts?.length > 0 && (
@@ -317,9 +317,9 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                             )
                         }
                     </div>
-                    {
-                        !isAlreadyEnrolled ? (
-                            <div className="max-lg:order-1">
+                    <div className="max-lg:w-full max-lg:max-w-9/10 max-lg:translate-x-[-50%] max-lg:left-1/2 max-lg:top-24 max-xl:max-w-72 fixed top-36 lg:right-20">
+                        {
+                            !isAlreadyEnrolled ? (
                                 <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
                                     <div className="font-bold flex justify-between gap-2">
                                         <span>Ceremony Deposit Fee</span>
@@ -329,23 +329,21 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                                         {isLoading ? 'Processing...' : (!session || session.validationFailed) ? 'Register Now' : "Start Registration"}
                                     </button>
                                 </div>
-                            </div>
-                        )
-                            : (
-                                <div className="max-lg:order-1">
+                            )
+                                : (
                                     <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
                                         <div className="font-bold">You are already enrolled in this ceremony.</div>
                                         <button onClick={() => router.push('/ceremonies')} className="p-3 inter-font font-bold text-sm text-white rounded-4xl bg-[#212A63] cursor-pointer">
                                             View All Ceremonies
                                         </button>
                                     </div>
-                                </div>
-                            )
-                    }
+                                )
+                        }
+                    </div>
                 </div>
                 {
                     Array.isArray(ceremony.gallery) && ceremony.gallery?.length > 0 && (
-                        <div className="max-lg:order-3 max-w-400 mx-auto mt-5 md:mt-10 flex flex-col items-center gap-4 md:gap-8">
+                        <div className="max-w-400 mx-auto mt-5 md:mt-10 flex flex-col items-center gap-4 md:gap-8">
                             <h3 className="font-bold text-xl md:text-2xl xl:text-4xl">Gallery</h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6 xl:gap-8">
                                 {
