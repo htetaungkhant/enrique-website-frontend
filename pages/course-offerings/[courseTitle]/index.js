@@ -94,6 +94,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
 
     const handlePurchaseNow = async () => {
         if (!session || session.validationFailed) {
+            sessionStorage.setItem("restartCeremonyCheckout", "true");
             router.push({
                 pathname: router.pathname,
                 query: { ...router.query, auth: "login" }
@@ -133,8 +134,18 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
         }
         finally {
             setIsLoading(false);
+            sessionStorage.removeItem("restartCeremonyCheckout");
         }
     }
+
+    useEffect(() => {
+        const restartCeremonyCheckout = sessionStorage.getItem("restartCeremonyCheckout");
+        if (session && !session.validationFailed && restartCeremonyCheckout === "true") {
+            sessionStorage.removeItem("restartCeremonyCheckout");
+            sessionStorage.removeItem("justLoggedIn");
+            handlePurchaseNow();
+        }
+    }, [session]);
 
     const onSuccessfulCheckout = async (paymentIntent) => {
         setIsLoading(true);
@@ -168,7 +179,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
     return (
         <main className="relative min-h-screen flex flex-col justify-between">
             <PageHeader />
-            <UPSection className="inter-font text-white pt-28 xl:pt-48">
+            <UPSection className="inter-font text-white pt-24 lg:pt-38">
                 <div className="grid grid-cols-1 gap-10 lg:grid-cols-[65%_30%] justify-between">
                     <div className="flex flex-col gap-10">
                         <h2 className="font-black text-5xl">{course.title}</h2>

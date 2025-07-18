@@ -148,6 +148,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
 
     const handleRegisterNow = async () => {
         if (!session || session.validationFailed) {
+            sessionStorage.setItem("restartCourseCheckout", "true");
             router.push({
                 pathname: router.pathname,
                 query: { ...router.query, auth: "login" }
@@ -188,8 +189,18 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
         }
         finally {
             setIsLoading(false);
+            sessionStorage.removeItem("restartCourseCheckout");
         }
     }
+
+    useEffect(() => {
+        const restartCourseCheckout = sessionStorage.getItem("restartCourseCheckout");
+        if (session && !session.validationFailed && restartCourseCheckout === "true") {
+            sessionStorage.removeItem("restartCourseCheckout");
+            sessionStorage.removeItem("justLoggedIn");
+            handlePurchaseNow();
+        }
+    }, [session]);
 
     const onSuccessfulCheckout = async (paymentIntent) => {
         setIsLoading(true);
