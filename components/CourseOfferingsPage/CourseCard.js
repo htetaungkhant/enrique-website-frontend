@@ -91,7 +91,7 @@ const CourseCard = ({
 
     return (
         <Link
-            href={`/course-offerings/${id}`}
+            href={`/course-offerings/${title.replaceAll(/\s+/g, '-').toLowerCase()}`}
             className={cn(
                 "inter-font text-[#212A63] flex flex-col rounded-2xl overflow-hidden",
                 className,
