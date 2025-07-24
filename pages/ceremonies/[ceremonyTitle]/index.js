@@ -234,7 +234,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
     return (
         <main className="relative min-h-screen flex flex-col justify-between">
             <PageHeader />
-            <UPSection className="inter-font text-white pt-64 lg:pt-36">
+            <UPSection className="inter-font text-white pt-24 lg:pt-36">
                 <div className="grid grid-cols-1 gap-10 lg:grid-cols-[65%_30%] justify-between">
                     <div className="flex flex-col gap-10">
                         <h2 className="font-black text-5xl">{ceremony.title}</h2>
@@ -317,7 +317,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                             )
                         }
                     </div>
-                    <div className="max-lg:w-full max-lg:max-w-9/10 max-lg:translate-x-[-50%] max-lg:left-1/2 max-lg:top-24 max-xl:max-w-72 fixed top-36 lg:right-20">
+                    <div className="max-lg:hidden max-lg:w-full max-lg:max-w-9/10 max-lg:translate-x-[-50%] max-lg:left-1/2 max-lg:top-24 max-xl:max-w-72 fixed top-36 lg:right-20">
                         {
                             !isAlreadyEnrolled ? (
                                 <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
@@ -337,6 +337,20 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                                             View All Ceremonies
                                         </button>
                                     </div>
+                                )
+                        }
+                    </div>
+                    <div className="lg:hidden max-lg:w-[calc(100%-120px)] fixed max-lg:left-5 max-lg:bottom-6 lg:top-36 lg:right-20 lg:min-w-68 lg:max-xl:max-w-72 z-10">
+                        {
+                            !isAlreadyEnrolled ? (
+                                <button disabled={isLoading} onClick={handleRegisterNow} className="uppercase w-full text-black bg-gray-100 hover:bg-[#212A63] hover:text-white p-3 inter-font font-bold text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400 transition-all duration-300 ease-in-out">
+                                    {isLoading ? 'Processing...' : (!session || session.validationFailed) ? 'Register Now' : "Start Registration"}
+                                </button>
+                            )
+                                : (
+                                    <button onClick={() => router.push('/ceremonies')} className="uppercase w-full text-black bg-gray-100 hover:bg-[#212A63] hover:text-white p-3 inter-font font-bold text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400 transition-all duration-300 ease-in-out">
+                                        View All Ceremonies
+                                    </button>
                                 )
                         }
                     </div>

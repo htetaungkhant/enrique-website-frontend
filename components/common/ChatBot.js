@@ -132,21 +132,21 @@ const ChatBot = () => {
     return (
         <>
             {showWelcome && !isOpen && (
-                <span onClick={openPopover} className="fixed bottom-6 right-25 z-50 max-w-[300px] bg-[#E6E8FF] p-2 rounded-lg shadow-lg cursor-pointer animate-bounce-in">
+                <span onClick={openPopover} className="max-lg:hidden fixed bottom-5 lg:bottom-6 right-20 lg:right-25 z-50 max-w-[300px] bg-[#E6E8FF] p-2 rounded-lg shadow-lg cursor-pointer animate-bounce-in">
                     <div className="absolute -right-2 bottom-2 w-0 h-0 
                         border-l-[8px] border-l-transparent
                         border-t-[8px] border-t-[#E6E8FF]
                         border-r-[8px] border-r-transparent
                         transform rotate-45"
                     />
-                    <p className="font-semibold text-sm">Hi,<br />Welcome to Arise Bufo Retreat</p>
+                    <p className="font-semibold text-xs lg:text-sm">Hi,<br />Welcome to Arise Bufo Retreat</p>
                 </span>
             )}
             <Popover open={isOpen} onOpenChange={togglePopover}>
                 <PopoverTrigger asChild>
                     <div
                         className={cn(
-                            "fixed bottom-5 right-5 z-50 w-16 h-16 rounded-full cursor-pointer transition-transform",
+                            "fixed bottom-5 right-5 z-50 w-13 h-13 lg:w-16 lg:h-16 rounded-full cursor-pointer transition-transform",
                             !isOpen && "hover:scale-110",
                         )}
                     >
