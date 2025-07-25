@@ -57,7 +57,7 @@ const PageHeader = ({
     return (
         <>
             <section className={cn("max-xl:bg-gradient-to-b from-[#171F3F] to-[#020105] fixed top-0 left-0 w-full z-100 xl:p-12", className)}>
-                <div className="relative xl:bg-[#301d26] xl:rounded-[40px] px-6 py-4 flex items-baseline xl:items-center justify-between gap-2 flex-wrap"> {/* bg-[#301D26B2] */}
+                <div className="relative xl:bg-[#301d26] xl:rounded-[40px] px-6 py-4 flex items-end xl:items-center justify-between gap-2 flex-wrap"> {/* bg-[#301D26B2] */}
                     <div className="z-30">
                         <Link href="/">
                             <Image
