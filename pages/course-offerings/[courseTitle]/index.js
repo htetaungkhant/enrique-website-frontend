@@ -242,7 +242,30 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
                                     <p>Class videos are coming soon...</p>
                         }
                     </div>
-                    <div className="max-lg:hidden max-lg:w-full max-lg:max-w-9/10 max-lg:translate-x-[-50%] max-lg:left-1/2 max-lg:top-24 fixed top-36 lg:right-20 lg:min-w-68 max-xl:max-w-72 z-10">
+                    <div className="max-lg:w-[calc(100%-120px)] fixed max-lg:left-5 max-lg:bottom-6 lg:top-36 lg:right-20 lg:min-w-68 lg:max-xl:max-w-72 z-10 lg:max-xl:max-w-72 fixed lg:top-36 lg:right-20">
+                        {
+                            !isAlreadyEnrolled ? (
+                                <div className="p-3 sm:p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
+                                    <div className="font-bold flex justify-between gap-2 text-[10px] min-[375px]:text-xs md:text-sm lg:text-base">
+                                        <span>Course Fee</span>
+                                        <span>€ {parseFloat(course.price)?.toFixed(2)}</span>
+                                    </div>
+                                    <button disabled={isLoading} onClick={handlePurchaseNow} className="p-3 inter-font font-bold text-xs sm:text-sm text-white rounded-lg sm:rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
+                                        {isLoading ? 'Processing...' : (!session || session.validationFailed) ? 'Register Now' : "Start Registration"}
+                                    </button>
+                                </div>
+                            )
+                                : (
+                                    <div className="p-3 sm:p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
+                                        <div className="font-bold text-[10px] min-[375px]:text-xs md:text-sm lg:text-base">You are already enrolled in this course.</div>
+                                        <button onClick={() => router.push('/course-offerings')} className="p-3 inter-font font-bold text-xs sm:text-sm text-white rounded-lg sm:rounded-4xl bg-[#212A63] cursor-pointer">
+                                            View All Courses
+                                        </button>
+                                    </div>
+                                )
+                        }
+                    </div>
+                    {/* <div className="max-lg:hidden max-lg:w-full max-lg:max-w-9/10 max-lg:translate-x-[-50%] max-lg:left-1/2 max-lg:top-24 fixed top-36 lg:right-20 lg:min-w-68 max-xl:max-w-72 z-10">
                         {
                             !isAlreadyEnrolled ? (
                                 <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
@@ -264,8 +287,8 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
                                     </div>
                                 )
                         }
-                    </div>
-                    <div className="lg:hidden max-lg:w-[calc(100%-120px)] fixed max-lg:left-5 max-lg:bottom-6 lg:top-36 lg:right-20 lg:min-w-68 lg:max-xl:max-w-72 z-10">
+                    </div> */}
+                    {/* <div className="lg:hidden max-lg:w-[calc(100%-120px)] fixed max-lg:left-5 max-lg:bottom-6 lg:top-36 lg:right-20 lg:min-w-68 lg:max-xl:max-w-72 z-10">
                         {
                             !isAlreadyEnrolled ? (
                                 <button disabled={isLoading} onClick={handlePurchaseNow} className="uppercase w-full text-black bg-gray-100 hover:bg-[#212A63] hover:text-white p-3 inter-font font-bold text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400 transition-all duration-300 ease-in-out">
@@ -278,7 +301,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
                                     </button>
                                 )
                         }
-                    </div>
+                    </div> */}
                 </div>
             </UPSection>
             <Footer className="mt-10" />
