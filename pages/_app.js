@@ -16,6 +16,7 @@ import { Toaster } from "@/components/ui/sonner"
 import ChatBot from '@/components/common/ChatBot';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import Advertisement from '@/components/common/Advertisement';
+import WhatsApp from '@/components/common/WhatsApp';
 
 export default function App({
   Component,
@@ -62,6 +63,7 @@ export default function App({
           <Toaster position="top-right" richColors closeButton />
           <AuthModal />
           <Component {...pageProps} />
+          {!isAdminRoute && !isQuestionnaireRoute && <WhatsApp />}
           {!isAdminRoute && !isQuestionnaireRoute && <ChatBot />}
           {!isAdminRoute && !isQuestionnaireRoute && <Advertisement />}
         </SessionProvider>
