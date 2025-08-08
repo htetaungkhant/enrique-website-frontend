@@ -57,7 +57,7 @@ const cardsRowSectionData2 = {
         {
             badgeText: "Risks",
             title: 'Possible Sleep Disturbances',
-            description: "Some users report difficulty sleeping after a 5-MeO-DMT session. To help manage this, natural solutions such as magnesium, melatonin, or grounding exercises may be beneficial.",
+            description: "Some users have trouble sleeping after 5-MeO-DMT or Bufo sessions. Natural aids like 5-HTP, magnesium, melatonin, ashwagandha, and CBD can help; in severe cases, diazepam may be used briefly.",
         }
     ]
 }
