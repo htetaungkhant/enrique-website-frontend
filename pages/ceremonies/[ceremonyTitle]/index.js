@@ -19,6 +19,7 @@ import PageHeader from "@/components/common/PageHeader";
 import ceremonyRoute from "@/lib/inhouseAPI/ceremony-route";
 import { useUserAuth } from "@/hooks/userAuth";
 import CheckoutForm from "@/components/CeremoniesPage/CheckoutForm";
+import Discount from "@/components/common/Discount";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -105,6 +106,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [viewAll, setViewAll] = useState(false);
     const [clientSecret, setClientSecret] = useState(null);
+    const [discount, setDiscount] = useState(false);
     const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
     useEffect(() => {
@@ -232,115 +234,117 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
     }
 
     return (
-        <main className="relative min-h-screen flex flex-col justify-between">
-            <PageHeader />
-            <UPSection className="inter-font text-white pt-24 lg:pt-36">
-                <div className="grid grid-cols-1 gap-10 lg:grid-cols-[65%_30%] justify-between">
-                    <div className="flex flex-col gap-10">
-                        <h2 className="font-black text-5xl">{ceremony.title}</h2>
-                        {
-                            Array.isArray(ceremony.hosts) && ceremony.hosts?.length > 0 && (
-                                <div>
-                                    <p className="font-semibold">Hosts:</p>
-                                    <div className="pt-3 flex flex-wrap gap-6 lg:gap-10">
-                                        {
-                                            ceremony.hosts?.map((host, index) => (
-                                                <div key={`${host.title}-${index}`} className="flex items-center gap-3 font-medium">
-                                                    {host.image?.image && <Image src={host.image?.image} width={100} height={100} alt="avator" className="w-12 h-12 lg:w-16 lg:h-16 rounded-full" />}
-                                                    {host.title && <span className="text-lg">{host.title}</span>}
-                                                </div>
-                                            ))
-                                        }
-                                    </div>
-                                </div>
-                            )
-                        }
-                        <div className="text-lg">
+        <>
+            <Discount discountUsers={ceremony.discountUsers} onSubmissionSuccess={() => setDiscount(true)} />
+            <main className="relative min-h-screen flex flex-col justify-between">
+                <PageHeader />
+                <UPSection className="inter-font text-white pt-24 lg:pt-36">
+                    <div className="grid grid-cols-1 gap-10 lg:grid-cols-[65%_30%] justify-between">
+                        <div className="flex flex-col gap-10">
+                            <h2 className="font-black text-5xl">{ceremony.title}</h2>
                             {
-                                ceremony.locationAddress && (
-                                    <div className="flex gap-3 items-center">
-                                        <FaLocationDot className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
-                                        <p>{ceremony.locationAddress}</p>
-                                    </div>
-                                )
-                            }
-                            {
-                                ceremony.locationCountry && (
-                                    <div className="flex gap-3 items-center">
-                                        <FaLocationDot className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
-                                        <p>{ceremony.locationCountry}</p>
-                                    </div>
-                                )
-                            }
-                            {
-                                ceremony.startDate && ceremony.endDate && (
-                                    <>
-                                        <div className="flex gap-3 items-center">
-                                            <IoCalendarClear className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
-                                            <p>From {format(new Date(ceremony.startDate), "dd MMM yyyy")} to {format(new Date(ceremony.endDate), "dd MMM yyyy")}</p>
+                                Array.isArray(ceremony.hosts) && ceremony.hosts?.length > 0 && (
+                                    <div>
+                                        <p className="font-semibold">Hosts:</p>
+                                        <div className="pt-3 flex flex-wrap gap-6 lg:gap-10">
+                                            {
+                                                ceremony.hosts?.map((host, index) => (
+                                                    <div key={`${host.title}-${index}`} className="flex items-center gap-3 font-medium">
+                                                        {host.image?.image && <Image src={host.image?.image} width={100} height={100} alt="avator" className="w-12 h-12 lg:w-16 lg:h-16 rounded-full" />}
+                                                        {host.title && <span className="text-lg">{host.title}</span>}
+                                                    </div>
+                                                ))
+                                            }
                                         </div>
+                                    </div>
+                                )
+                            }
+                            <div className="text-lg">
+                                {
+                                    ceremony.locationAddress && (
+                                        <div className="flex gap-3 items-center">
+                                            <FaLocationDot className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
+                                            <p>{ceremony.locationAddress}</p>
+                                        </div>
+                                    )
+                                }
+                                {
+                                    ceremony.locationCountry && (
+                                        <div className="flex gap-3 items-center">
+                                            <FaLocationDot className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
+                                            <p>{ceremony.locationCountry}</p>
+                                        </div>
+                                    )
+                                }
+                                {
+                                    ceremony.startDate && ceremony.endDate && (
+                                        <>
+                                            <div className="flex gap-3 items-center">
+                                                <IoCalendarClear className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
+                                                <p>From {format(new Date(ceremony.startDate), "dd MMM yyyy")} to {format(new Date(ceremony.endDate), "dd MMM yyyy")}</p>
+                                            </div>
 
-                                        <div className="flex gap-3 items-center">
-                                            <MdOutlineAccessTimeFilled className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
-                                            <p>{format(new Date(ceremony.startDate), "hh:mm a")} - {format(new Date(ceremony.endDate), "hh:mm a")}</p>
+                                            <div className="flex gap-3 items-center">
+                                                <MdOutlineAccessTimeFilled className="text-[#5AED4A] bg-[#5AED4A59] p-1 rounded-full w-5 h-5" />
+                                                <p>{format(new Date(ceremony.startDate), "hh:mm a")} - {format(new Date(ceremony.endDate), "hh:mm a")}</p>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                            </div>
+                            {
+                                ceremony.sessionOverview && (
+                                    <div className="flex flex-col gap-2">
+                                        <h3 className="font-bold text-lg">Session Overview</h3>
+                                        <p>{ceremony.sessionOverview}</p>
+                                    </div>
+                                )
+                            }
+                            {
+                                Array.isArray(ceremony.extraDetails) && ceremony.extraDetails?.length > 0 && (
+                                    ceremony.extraDetails?.map((extra, index) => (
+                                        <div key={`${extra.title}-${index}`} className="flex flex-col gap-2">
+                                            <h3 className="font-bold text-lg">{extra.title}</h3>
+                                            {
+                                                Array.isArray(extra.points) && extra.points?.length > 0 && (
+                                                    <ul className="list-disc pl-3">
+                                                        {
+                                                            extra.points?.map((point, index) => (
+                                                                <li key={`${point}-${index}`}>{point}</li>
+                                                            ))
+                                                        }
+                                                    </ul>
+                                                )
+                                            }
                                         </div>
-                                    </>
+                                    ))
                                 )
                             }
                         </div>
-                        {
-                            ceremony.sessionOverview && (
-                                <div className="flex flex-col gap-2">
-                                    <h3 className="font-bold text-lg">Session Overview</h3>
-                                    <p>{ceremony.sessionOverview}</p>
-                                </div>
-                            )
-                        }
-                        {
-                            Array.isArray(ceremony.extraDetails) && ceremony.extraDetails?.length > 0 && (
-                                ceremony.extraDetails?.map((extra, index) => (
-                                    <div key={`${extra.title}-${index}`} className="flex flex-col gap-2">
-                                        <h3 className="font-bold text-lg">{extra.title}</h3>
-                                        {
-                                            Array.isArray(extra.points) && extra.points?.length > 0 && (
-                                                <ul className="list-disc pl-3">
-                                                    {
-                                                        extra.points?.map((point, index) => (
-                                                            <li key={`${point}-${index}`}>{point}</li>
-                                                        ))
-                                                    }
-                                                </ul>
-                                            )
-                                        }
-                                    </div>
-                                ))
-                            )
-                        }
-                    </div>
-                    <div className="max-lg:w-[calc(100%-120px)] fixed max-lg:left-5 max-lg:bottom-6 lg:top-36 lg:right-20 lg:min-w-68 lg:max-xl:max-w-72 z-10 lg:max-xl:max-w-72 fixed lg:top-36 lg:right-20">
-                        {
-                            !isAlreadyEnrolled ? (
-                                <div className="p-3 sm:p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
-                                    <div className="font-bold flex justify-between gap-2 text-[10px] min-[375px]:text-xs md:text-sm lg:text-base">
-                                        <span>Ceremony Deposit Fee</span>
-                                        <span className="whitespace-nowrap">€ {parseFloat(ceremony.price)?.toFixed(2)}</span>
-                                    </div>
-                                    <button disabled={isLoading} onClick={handleRegisterNow} className="p-3 inter-font font-bold text-xs sm:text-sm text-white rounded-lg sm:rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
-                                        {isLoading ? 'Processing...' : (!session || session.validationFailed) ? 'Register Now' : "Start Registration"}
-                                    </button>
-                                </div>
-                            )
-                                : (
+                        <div className="max-lg:w-[calc(100%-120px)] fixed max-lg:left-5 max-lg:bottom-6 lg:top-36 lg:right-20 lg:min-w-68 lg:max-xl:max-w-72 z-10 lg:max-xl:max-w-72 fixed lg:top-36 lg:right-20">
+                            {
+                                !isAlreadyEnrolled ? (
                                     <div className="p-3 sm:p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
-                                        <div className="font-bold text-[10px] min-[375px]:text-xs md:text-sm lg:text-base">You are already enrolled in this ceremony.</div>
-                                        <button onClick={() => router.push('/ceremonies')} className="p-3 inter-font font-bold text-xs sm:text-sm text-white rounded-lg sm:rounded-4xl bg-[#212A63] cursor-pointer">
-                                            View All Ceremonies
+                                        <div className="font-bold flex justify-between gap-2 text-[10px] min-[375px]:text-xs md:text-sm lg:text-base">
+                                            <span>Ceremony Deposit Fee</span>
+                                            <span className="whitespace-nowrap">€ {discount ? parseFloat(ceremony.price - (ceremony.price * (ceremony.discountPercent / 100)))?.toFixed(2) : parseFloat(ceremony.price)?.toFixed(2)}</span>
+                                        </div>
+                                        <button disabled={isLoading} onClick={handleRegisterNow} className="p-3 inter-font font-bold text-xs sm:text-sm text-white rounded-lg sm:rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">
+                                            {isLoading ? 'Processing...' : discount ? "Pay Now" : (!session || session.validationFailed) ? 'Register Now' : "Start Registration"}
                                         </button>
                                     </div>
                                 )
-                        }
-                    </div>
-                    {/* <div className="max-lg:hidden max-lg:w-full max-lg:max-w-9/10 max-lg:translate-x-[-50%] max-lg:left-1/2 max-lg:top-24 max-xl:max-w-72 fixed top-36 lg:right-20">
+                                    : (
+                                        <div className="p-3 sm:p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
+                                            <div className="font-bold text-[10px] min-[375px]:text-xs md:text-sm lg:text-base">You are already enrolled in this ceremony.</div>
+                                            <button onClick={() => router.push('/ceremonies')} className="p-3 inter-font font-bold text-xs sm:text-sm text-white rounded-lg sm:rounded-4xl bg-[#212A63] cursor-pointer">
+                                                View All Ceremonies
+                                            </button>
+                                        </div>
+                                    )
+                            }
+                        </div>
+                        {/* <div className="max-lg:hidden max-lg:w-full max-lg:max-w-9/10 max-lg:translate-x-[-50%] max-lg:left-1/2 max-lg:top-24 max-xl:max-w-72 fixed top-36 lg:right-20">
                         {
                             !isAlreadyEnrolled ? (
                                 <div className="p-4 rounded-xl bg-white text-[#032F1F] flex flex-col gap-3">
@@ -363,7 +367,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                                 )
                         }
                     </div> */}
-                    {/* <div className="lg:hidden max-lg:w-[calc(100%-120px)] fixed max-lg:left-5 max-lg:bottom-6 lg:top-36 lg:right-20 lg:min-w-68 lg:max-xl:max-w-72 z-10">
+                        {/* <div className="lg:hidden max-lg:w-[calc(100%-120px)] fixed max-lg:left-5 max-lg:bottom-6 lg:top-36 lg:right-20 lg:min-w-68 lg:max-xl:max-w-72 z-10">
                         {
                             !isAlreadyEnrolled ? (
                                 <button disabled={isLoading} onClick={handleRegisterNow} className="uppercase w-full text-black bg-gray-100 hover:bg-[#212A63] hover:text-white p-3 inter-font font-bold text-sm rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400 transition-all duration-300 ease-in-out">
@@ -377,60 +381,62 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                                 )
                         }
                     </div> */}
-                </div>
-                {
-                    Array.isArray(ceremony.gallery) && ceremony.gallery?.length > 0 && (
-                        <div className="max-w-400 mx-auto mt-5 md:mt-10 flex flex-col items-center gap-4 md:gap-8">
-                            <h3 className="font-bold text-xl md:text-2xl xl:text-4xl">Gallery</h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6 xl:gap-8">
+                    </div>
+                    {
+                        Array.isArray(ceremony.gallery) && ceremony.gallery?.length > 0 && (
+                            <div className="max-w-400 mx-auto mt-5 md:mt-10 flex flex-col items-center gap-4 md:gap-8">
+                                <h3 className="font-bold text-xl md:text-2xl xl:text-4xl">Gallery</h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6 xl:gap-8">
+                                    {
+                                        ceremony.gallery.slice(0, viewAll ? ceremony.gallery.length : 6).map((image, index) => (
+                                            <Image
+                                                key={`${image.id}-${index}`}
+                                                src={image.image}
+                                                width={300}
+                                                height={200}
+                                                alt={`Gallery Image ${index + 1}`}
+                                                className="w-full h-80 md:h-90 lg:h-100 xl:h-120 rounded-lg object-cover" />
+                                        ))
+                                    }
+                                </div>
                                 {
-                                    ceremony.gallery.slice(0, viewAll ? ceremony.gallery.length : 6).map((image, index) => (
-                                        <Image
-                                            key={`${image.id}-${index}`}
-                                            src={image.image}
-                                            width={300}
-                                            height={200}
-                                            alt={`Gallery Image ${index + 1}`}
-                                            className="w-full h-80 md:h-90 lg:h-100 xl:h-120 rounded-lg object-cover" />
-                                    ))
+                                    ceremony.gallery.length > 6 && (
+                                        <button onClick={() => setViewAll(!viewAll)} className="mt-2 md:mt-4 px-6 py-2 border border-white text-white font-medium rounded-xl cursor-pointer hover:bg-white hover:text-[#032F1F] transition-colors duration-300">
+                                            {viewAll ? "View Less" : "View All"}
+                                        </button>
+                                    )
                                 }
                             </div>
-                            {
-                                ceremony.gallery.length > 6 && (
-                                    <button onClick={() => setViewAll(!viewAll)} className="mt-2 md:mt-4 px-6 py-2 border border-white text-white font-medium rounded-xl cursor-pointer hover:bg-white hover:text-[#032F1F] transition-colors duration-300">
-                                        {viewAll ? "View Less" : "View All"}
-                                    </button>
-                                )
+                        )
+                    }
+                </UPSection>
+                <Footer className="mt-10" />
+                {clientSecret && showCheckoutModal && (
+                    <Dialog
+                        open={showCheckoutModal}
+                        onOpenChange={(open) => {
+                            if (!open) {
+                                setShowCheckoutModal(false);
+                                setClientSecret(null);
                             }
-                        </div>
-                    )
-                }
-            </UPSection>
-            <Footer className="mt-10" />
-            {clientSecret && showCheckoutModal && (
-                <Dialog
-                    open={showCheckoutModal}
-                    onOpenChange={(open) => {
-                        if (!open) {
-                            setShowCheckoutModal(false);
-                            setClientSecret(null);
-                        }
-                    }}
-                >
-                    <DialogContent onPointerDownOutside={(e) => e.preventDefault()} className="bg-transparent border-none p-0 w-full max-w-lg z-110">
-                        <Elements stripe={stripePromise} options={{ clientSecret }}>
-                            <CheckoutForm
-                                ceremony={ceremony}
-                                onCancel={() => {
-                                    setShowCheckoutModal(false);
-                                    setClientSecret(null);
-                                }}
-                            />
-                        </Elements>
-                    </DialogContent>
-                </Dialog>
-            )}
-        </main>
+                        }}
+                    >
+                        <DialogContent onPointerDownOutside={(e) => e.preventDefault()} className="bg-transparent border-none p-0 w-full max-w-lg z-110">
+                            <Elements stripe={stripePromise} options={{ clientSecret }}>
+                                <CheckoutForm
+                                    ceremony={ceremony}
+                                    discount={discount}
+                                    onCancel={() => {
+                                        setShowCheckoutModal(false);
+                                        setClientSecret(null);
+                                    }}
+                                />
+                            </Elements>
+                        </DialogContent>
+                    </Dialog>
+                )}
+            </main>
+        </>
     )
 }
 
