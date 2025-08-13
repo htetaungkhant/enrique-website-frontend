@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 
 import Button from '@/components/common/Button';
 
-export default function CheckoutForm({ onCancel, ceremony }) {
+export default function CheckoutForm({ onCancel, ceremony, discount }) {
     const stripe = useStripe();
     const elements = useElements();
     const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +43,7 @@ export default function CheckoutForm({ onCancel, ceremony }) {
                 <p className='mr-2'>You are registering for:</p>
                 <strong className='truncate'>{ceremony.title}</strong>
             </div>
-            <p className='mb-4'>Amount: <strong>€{parseFloat(ceremony.price).toFixed(2)}</strong></p>
+            <p className='mb-4'>Amount: <strong>€{discount ? parseFloat(ceremony.price - (ceremony.price * (ceremony.discountPercent / 100)))?.toFixed(2) : parseFloat(ceremony.price).toFixed(2)}</strong></p>
             <form onSubmit={handleSubmit}>
                 <PaymentElement
                     options={{ layout: 'tabs' }}
