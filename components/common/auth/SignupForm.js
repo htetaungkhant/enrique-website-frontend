@@ -7,11 +7,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { cn, maskEmail } from "@/lib/utils";
 import { useUserAuth } from "@/hooks/userAuth";
-import Input, { PasswordInput } from "../Input";
+import Input, { PasswordInput, PhoneNumberInput } from "../Input";
 import Button from "../Button";
 import Checkbox from "../Checkbox";
 import Dropdown from "../Dropdown";
@@ -27,9 +27,13 @@ const signupSchema = z.object({
     email: z.string()
         .min(1, "Email is required")
         .email("Invalid email format"),
-    phone: z.string()
-        .min(1, "Phone number is required")
-        .regex(/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/, "Invalid phone number"),
+    // phone: z.string()
+    //     .min(1, "Phone number is required")
+    //     .regex(/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/, "Invalid phone number"),
+    phone: z.string().refine((val) => {
+        // Remove any non-digit characters and check if there are digits beyond the country code
+        return val.replace(/\D/g, '').length > 1;
+    }, "Phone number is required"),
     password: z.string()
         .min(1, "Password is required")
         .min(8, "Password must be at least 8 characters")
@@ -62,6 +66,7 @@ const SignupForm = ({
     const [isResendingOTP, setIsResendingOTP] = useState(false);
     const [otp, setOtp] = useState("");
     const [serverDate, setServerDate] = useState(null);
+    const [phoneNumberError, setPhoneNumberError] = useState("");
 
     useEffect(() => {
         const fetchServerDate = async () => {
@@ -99,6 +104,7 @@ const SignupForm = ({
             ...data,
             dateOfBirth: new Date(data.dateOfBirth).toISOString(),
         };
+        console.log("Signup data:", body);
 
         try {
             const response = await fetch("/api/auth/user", {
@@ -231,6 +237,23 @@ const SignupForm = ({
         }
     };
 
+    // Custom handler for phone number changes
+    const handlePhoneChange = (value, data, event, formattedValue) => {
+        const phoneWithoutCode = value.replace(data.dialCode, "");
+        form.setValue("phone", value);
+
+        // Only show error if field has been touched and is empty
+        if (phoneWithoutCode.length === 0) {
+            setPhoneNumberError("empty");
+        } else if (phoneWithoutCode.length < 9) {
+            setPhoneNumberError("short");
+        } else {
+            setPhoneNumberError("");
+        }
+
+        form.trigger("phone");
+    };
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSignup)} className="px-3 flex-1 flex flex-col gap-3 justify-center max-lg:text-xs text-sm text-[#2D3748]">
@@ -306,16 +329,21 @@ const SignupForm = ({
                                         render={({ field }) => (
                                             <FormItem className="flex-1 min-w-37">
                                                 <FormControl>
-                                                    <Input
-                                                        label="Phone number"
-                                                        type="tel"
-                                                        placeholder="Enter Phone number"
-                                                        labelClassName="text-sm"
-                                                        inputClassName="text-[#2D3748] placeholder:text-[#848484]"
-                                                        error={form.formState.errors.phone?.message}
+                                                    <PhoneNumberInput
                                                         {...field}
+                                                        value={field.value || "420"}
+                                                        onChange={handlePhoneChange}
+                                                        label="Phone number"
+                                                        labelClassName="text-sm"
+                                                        customPlaceholder="Enter Phone number"
                                                     />
                                                 </FormControl>
+                                                {form.formState.isSubmitted && (
+                                                    <FormMessage className="-mt-0.5 text-red-400 text-xs">
+                                                        {phoneNumberError === "empty" && "Phone number is required"}
+                                                        {phoneNumberError === "short" && "Phone number is too short"}
+                                                    </FormMessage>
+                                                )}
                                             </FormItem>
                                         )}
                                     />

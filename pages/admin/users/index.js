@@ -13,7 +13,7 @@ import {
     PaginationLink
 } from "@/components/ui/pagination";
 import { getAllUsers } from '@/lib/inhouseAPI/auth-route';
-import { cn } from '@/lib/utils';
+import { cn, formatPhoneNumber } from '@/lib/utils';
 
 export async function getServerSideProps(context) {
     try {
@@ -82,7 +82,7 @@ const UsersList = ({ users, total, currentPage }) => {
                                     <TableCell>{(currentPage - 1) * 10 + index + 1}</TableCell>
                                     <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
                                     <TableCell>{user.email}</TableCell>
-                                    <TableCell>{user.phone || 'N/A'}</TableCell>
+                                    <TableCell>{user.phone ? formatPhoneNumber(user.phone) : 'N/A'}</TableCell>
                                     <TableCell className="text-right">
                                         <Button
                                             variant="ghost"
