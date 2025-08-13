@@ -35,7 +35,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { cn } from "@/lib/utils";
+import { cn, formatPhoneNumber } from "@/lib/utils";
 import { getNewsLetters } from "@/lib/inhouseAPI/newsletter-route";
 
 const SortingType = Object.freeze({
@@ -166,6 +166,7 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                                 <TableHead className="w-20">ID</TableHead>
                                 <TableHead>Name</TableHead>
                                 <TableHead>Email</TableHead>
+                                <TableHead>Mobile</TableHead>
                                 <TableHead>
                                     <Button
                                         variant="ghost"
@@ -185,6 +186,7 @@ const Newsletter = ({ newsletters = [], total, currentPage, sortByDate }) => {
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{newsletter.name}</TableCell>
                                     <TableCell>{newsletter.email}</TableCell>
+                                    <TableCell>{newsletter.phoneNumber ? formatPhoneNumber(newsletter.phoneNumber) : "N/A"}</TableCell>
                                     <TableCell>
                                         {format(new Date(newsletter.createdAt), "MMMM d, yyyy")}
                                     </TableCell>

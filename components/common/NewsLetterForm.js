@@ -46,7 +46,7 @@ const NewsLetterForm = ({ className, onSubmissionSuccess }) => {
             const body = {
                 name: `${data.firstName} ${data.lastName}`,
                 email: data.email,
-                mobileNumber: data.mobileNumber
+                phoneNumber: data.mobileNumber
             };
 
             const response = await fetch("/api/admin/newsletter", {
