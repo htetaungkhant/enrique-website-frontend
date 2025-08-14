@@ -19,7 +19,9 @@ import {
     IndentIcon,
     Outdent,
     Strikethrough,
-    Palette
+    Palette,
+    Upload,
+    Pencil,
 } from "lucide-react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import { Extension } from '@tiptap/core';
@@ -51,10 +53,41 @@ import {
 } from "@/components/ui/form";
 import { Card } from "@/components/ui/card";
 import { useAdminAuth } from "@/hooks/adminAuth";
+import { cn } from "@/lib/utils";
+
+const MAX_IMAGE_SIZE_MB = 6;
+const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
+// Schema for the existing JSON object structure
+const imageObjectSchema = z.object({
+    id: z.string().uuid("Invalid image ID format"),
+    image: z.string().url("Invalid image URL format"),
+    thumbnail: z.string().url("Invalid thumbnail URL format"),
+});
+
+// Schema for File upload
+const imageFileSchema = z.any()
+    .refine((file) => file instanceof File, "Image is required")
+    .refine(
+        (file) => file instanceof File && file.size <= MAX_IMAGE_SIZE_BYTES,
+        `Image size must not exceed ${MAX_IMAGE_SIZE_MB}MB`
+    )
+    .refine(
+        (file) => file instanceof File && ACCEPTED_IMAGE_TYPES.includes(file.type),
+        "Only .jpg, .jpeg, .png and .webp formats are supported"
+    );
+
+// Union schema that accepts either File or the JSON object
+const imageSchema = z.union([
+    imageFileSchema,
+    imageObjectSchema,
+]);
 
 const formSchema = z.object({
     title: z.string().trim().min(1, "Title is required"),
     content: z.string().trim().min(1, "Content is required"),
+    image: imageSchema
 });
 
 const FontSizeTextStyle = BaseTextStyle.extend({
@@ -315,6 +348,7 @@ const MenuBar = ({ editor }) => {
 
 export function EditBlogForm({ initialData }) {
     const { session } = useAdminAuth();
+    const [imagePreview, setImagePreview] = useState(initialData?.image?.image || null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
 
@@ -323,6 +357,7 @@ export function EditBlogForm({ initialData }) {
         defaultValues: {
             title: initialData?.title || "",
             content: initialData?.content || "",
+            image: initialData?.image || undefined,
         },
     });
 
@@ -430,19 +465,29 @@ export function EditBlogForm({ initialData }) {
         },
     });
 
+    const handleImageChange = (e, field, setPreview) => {
+        if (e.target.files?.[0]) {
+            field.onChange(e.target.files[0]);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result);
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    };
+
     const onSubmit = async (data) => {
         try {
             setIsSubmitting(true);
+            const formData = new FormData();
+            formData.append("title", data.title);
+            formData.append("createdBy", session.user?.name || `${session.user?.firstName} ${session.user?.lastName}`);
+            formData.append("content", data.content);
+            formData.append("image", data.image instanceof File ? data.image : JSON.stringify(data.image));
+
             const response = await fetch(`/api/admin/blog/${initialData.id}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    id: initialData.id,
-                    title: data.title,
-                    content: data.content,
-                }),
+                body: formData,
             });
 
             if (!response.ok) {
@@ -469,13 +514,66 @@ export function EditBlogForm({ initialData }) {
                         name="title"
                         render={({ field }) => (
                             <FormItem className="mb-4">
+                                <FormLabel>Title</FormLabel>
                                 <FormControl>
                                     <Input
                                         placeholder="Enter Title"
                                         {...field}
-                                        className="text-lg border-0 border-b rounded-none focus-visible:ring-0 px-0"
+                                        className="text-lg border focus-visible:ring-0"
                                         disabled={isSubmitting}
                                     />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="image"
+                        render={({ field: { value, onChange, ...field } }) => (
+                            <FormItem>
+                                <FormLabel>Thumbnail</FormLabel>
+                                <FormControl>
+                                    <div className="flex items-center gap-4 max-w-64">
+                                        <div
+                                            className={cn(
+                                                "relative flex h-48 w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed",
+                                                imagePreview ? "border-muted" : "border-primary"
+                                            )}
+                                            onClick={() => document.getElementById("image").click()}
+                                        >
+                                            {imagePreview ? (
+                                                <>
+                                                    <img
+                                                        src={imagePreview}
+                                                        alt="Preview"
+                                                        className="h-full w-full rounded-lg object-cover"
+                                                    />
+                                                    <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/50 opacity-0 transition-opacity hover:opacity-100">
+                                                        <Pencil className="h-6 w-6 text-white" />
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <div className="flex flex-col items-center gap-2 p-4 text-center">
+                                                    <Upload className="h-8 w-8 text-primary" />
+                                                    <p className="text-sm font-medium">Upload image</p>
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Max size: {MAX_IMAGE_SIZE_MB}MB
+                                                    </p>
+                                                </div>
+                                            )}
+                                            <input
+                                                id="image"
+                                                type="file"
+                                                accept={ACCEPTED_IMAGE_TYPES.join(",")}
+                                                className="hidden"
+                                                onChange={(e) => handleImageChange(e, { onChange }, setImagePreview)}
+                                                {...field}
+                                                disabled={isSubmitting}
+                                            />
+                                        </div>
+                                    </div>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -487,6 +585,7 @@ export function EditBlogForm({ initialData }) {
                         name="content"
                         render={({ field }) => (
                             <FormItem>
+                                <FormLabel>Content</FormLabel>
                                 <FormControl>
                                     <div className="min-h-[500px] border rounded-md overflow-hidden">
                                         <MenuBar editor={editor} />
