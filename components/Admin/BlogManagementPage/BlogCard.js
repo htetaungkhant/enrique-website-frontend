@@ -46,10 +46,10 @@ const BlogCard = ({ id, title, image, onEdit, onDelete }) => {
 
     return (
         <Card className="bg-white py-3 hover:shadow-md transition-shadow">
-            <CardContent className="p-3 flex flex-col gap-4">
+            <CardContent className="h-full p-3 flex flex-col gap-4">
                 <Link href={`/admin/blog-management/blogs/${id}/preview`} className="relative w-full aspect-video rounded-lg overflow-hidden">
                     <Image
-                        src={image || "/dummy-data/4.jpg"}
+                        src={image?.image || "/dummy-data/4.jpg"}
                         alt={title}
                         fill
                         className="object-cover hover:scale-105 transition-transform duration-300"
