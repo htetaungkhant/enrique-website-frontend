@@ -229,7 +229,7 @@ const BlogsPage = ({ blogs = [], total, currentPage, sortByDate }) => {
                         {Array.isArray(filteredBlogs) && filteredBlogs.map((blog) => (
                             <BlogCard
                                 key={blog.id}
-                                image={blog.image || "/dummy-data/4.jpg"}
+                                image={blog.image?.image || "/dummy-data/4.jpg"}
                                 title={blog.title}
                                 learnMoreHref={`/blogs/${blog.id}`}
                             />
