@@ -21,6 +21,8 @@ import {
   Palette,
   Upload,
   Pencil,
+  Link as LinkIcon,
+  Unlink,
 } from "lucide-react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import { Extension } from "@tiptap/core";
@@ -38,6 +40,7 @@ import { TextStyle as BaseTextStyle } from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import OrderedList from "@tiptap/extension-ordered-list";
 import ListItem from "@tiptap/extension-list-item";
+import Link from "@tiptap/extension-link";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -123,6 +126,17 @@ const MenuBar = ({ editor }) => {
       }
     };
     input.click();
+  };
+
+  const addLink = () => {
+    const url = window.prompt("Enter the URL");
+    if (url) {
+      editor.chain().focus().setLink({ href: url, target: "_blank" }).run();
+    }
+  };
+
+  const removeLink = () => {
+    editor.chain().focus().unsetLink().run();
   };
 
   return (
@@ -406,6 +420,30 @@ const MenuBar = ({ editor }) => {
         >
           <ImageIcon className="h-4 w-4" />
         </Button>
+        <Button
+          type="button"
+          variant={editor.isActive("link") ? "secondary" : "ghost"}
+          size="sm"
+          onClick={addLink}
+          className={cn(
+            "h-8 w-8 p-0 cursor-pointer hover:bg-gray-200",
+            editor.isActive("link") && "bg-gray-300"
+          )}
+          title="Add link"
+        >
+          <LinkIcon className="h-4 w-4" />
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={removeLink}
+          className="h-8 w-8 p-0 cursor-pointer hover:bg-gray-200"
+          disabled={!editor.isActive("link")}
+          title="Remove link"
+        >
+          <Unlink className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   );
@@ -436,6 +474,14 @@ export function CreateBlogForm() {
       }),
       Color.configure({
         types: ["textStyle"],
+      }),
+      Link.configure({
+        openOnClick: false,
+        HTMLAttributes: {
+          class: "text-blue-400 underline cursor-pointer hover:text-blue-300",
+          target: "_blank",
+          rel: "noopener noreferrer",
+        },
       }),
       // Custom extension for paragraph indentation
       Extension.create({
