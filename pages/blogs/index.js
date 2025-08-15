@@ -248,7 +248,9 @@ const BlogsPage = ({ blogs = [], total, currentPage, sortByDate }) => {
                   key={blog.id}
                   image={blog.image?.image || "/dummy-data/4.jpg"}
                   title={blog.title}
-                  learnMoreHref={`/blogs/${blog.id}`}
+                  learnMoreHref={`/blogs/${blog.title}`
+                    .replaceAll(/\s+/g, "-")
+                    .toLowerCase()}
                 />
               ))}
           </div>

@@ -5,12 +5,15 @@ import { Card } from "@/components/ui/card";
 import Footer from "@/components/common/Footer";
 import { PageHeaderWithBanner } from "@/components/common/PageHeader";
 import UPSection from "@/components/common/UniformPaddingSection";
-import { getBlogDetails } from "@/lib/inhouseAPI/blog-route";
+import blogRoute from "@/lib/inhouseAPI/blog-route";
 
 export async function getServerSideProps(context) {
   try {
-    const { blogId } = context.params;
-    const blog = await getBlogDetails({ ...context.req, body: { id: blogId } });
+    const { blogTitle } = context.params;
+    const blog = await blogRoute.getBlogDetailsByTitle({
+      ...context.req,
+      body: { title: blogTitle },
+    });
 
     if (!blog) {
       return {
