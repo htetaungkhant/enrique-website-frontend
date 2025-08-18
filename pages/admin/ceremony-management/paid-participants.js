@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { format } from "date-fns";
-import { Trash2, Search, ArrowUpDown } from "lucide-react";
-import { toast } from "sonner";
+import { Search, ArrowUpDown } from "lucide-react";
 
 import AdminPagesWrapper from "@/components/Admin/PageWrapper";
 import { Input } from "@/components/ui/input";
@@ -24,19 +23,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { cn, formatPhoneNumber } from "@/lib/utils";
-import { getCeremonyParticipants } from "@/lib/inhouseAPI/participant-route";
+import { getPaidCeremonyParticipants } from "@/lib/inhouseAPI/ceremony-route";
 
 const SortingType = Object.freeze({
   DATE_ASCENDING: "asc",
@@ -48,7 +36,7 @@ export async function getServerSideProps(context) {
     const page = parseInt(context.query.page) || 1;
     const sortByDate = context.query.sortByDate;
 
-    const response = await getCeremonyParticipants({
+    const response = await getPaidCeremonyParticipants({
       ...context.req,
       body: {
         page,
@@ -59,7 +47,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        participants: response?.participants ?? [],
+        participants: response?.list ?? [],
         total: response?.total ?? 0,
         currentPage: page,
         sortByDate: sortByDate || null,
@@ -78,7 +66,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-const CeremonyParticipants = ({
+const PaidParticipants = ({
   participants = [],
   total,
   currentPage,
@@ -86,7 +74,6 @@ const CeremonyParticipants = ({
 }) => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
@@ -101,32 +88,6 @@ const CeremonyParticipants = ({
       participant.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       participant.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  const handleDelete = async (id) => {
-    try {
-      setIsSubmitting(true);
-      const response = await fetch("/api/admin/ceremony/participant", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
-
-      if (response.ok) {
-        // router.refresh();
-        router.replace(router.asPath);
-        toast.success("Participant deleted successfully");
-      } else {
-        toast.error("Failed to delete participant");
-      }
-    } catch (error) {
-      console.error("Error deleting participant:", error);
-      toast.error("Failed to delete participant");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const handlePageChange = (page) => {
     router.push({
@@ -153,7 +114,7 @@ const CeremonyParticipants = ({
   return (
     <AdminPagesWrapper>
       <div className="p-6 flex flex-col gap-4">
-        <h1 className="text-2xl text-white font-bold">Ceremony Participants</h1>
+        <h1 className="text-2xl text-white font-bold">Paid Participants</h1>
         <div className="flex max-lg:flex-col lg:justify-between lg:items-center gap-2">
           <div className="max-lg:order-2 relative">
             <Search
@@ -165,7 +126,6 @@ const CeremonyParticipants = ({
               className="pl-10 max-lg:w-full w-80 bg-white border-gray-200 text-gray-900 placeholder:text-gray-500"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              disabled={isSubmitting}
             />
           </div>
         </div>
@@ -177,6 +137,7 @@ const CeremonyParticipants = ({
                 <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Mobile</TableHead>
+                <TableHead>Country</TableHead>
                 <TableHead>
                   <Button
                     variant="ghost"
@@ -187,7 +148,6 @@ const CeremonyParticipants = ({
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                   </Button>
                 </TableHead>
-                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -196,49 +156,13 @@ const CeremonyParticipants = ({
                   <TableCell>{`${participant.firstName} ${participant.lastName}`}</TableCell>
                   <TableCell>{participant.email}</TableCell>
                   <TableCell>
-                    {participant.mobile
-                      ? formatPhoneNumber(participant.mobile)
+                    {participant.phoneNumber
+                      ? formatPhoneNumber(participant.phoneNumber)
                       : "N/A"}
                   </TableCell>
+                  <TableCell>{participant.country}</TableCell>
                   <TableCell>
                     {format(new Date(participant.createdAt), "MMMM d, yyyy")}
-                  </TableCell>
-                  <TableCell className="text-right space-x-2">
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-red-500 cursor-pointer"
-                          disabled={isSubmitting}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            <strong className="text-red-600">
-                              This action cannot be undone.
-                            </strong>{" "}
-                            This will permanently delete the participant.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel className="cursor-pointer">
-                            Cancel
-                          </AlertDialogCancel>
-                          <AlertDialogAction
-                            className="cursor-pointer bg-red-500 hover:bg-red-600"
-                            onClick={() => handleDelete(participant.id)}
-                            disabled={isSubmitting}
-                          >
-                            {isSubmitting ? "Deleting..." : "Delete"}
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
                   </TableCell>
                 </TableRow>
               ))}
@@ -316,4 +240,4 @@ const CeremonyParticipants = ({
   );
 };
 
-export default CeremonyParticipants;
+export default PaidParticipants;
