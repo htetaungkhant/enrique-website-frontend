@@ -153,9 +153,7 @@ const CeremonyParticipants = ({
   return (
     <AdminPagesWrapper>
       <div className="p-6 flex flex-col gap-4">
-        <h1 className="text-2xl text-white font-bold">
-          Participant Management
-        </h1>
+        <h1 className="text-2xl text-white font-bold">Ceremony Participants</h1>
         <div className="flex max-lg:flex-col lg:justify-between lg:items-center gap-2">
           <div className="max-lg:order-2 relative">
             <Search
