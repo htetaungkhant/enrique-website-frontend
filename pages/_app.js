@@ -1,36 +1,43 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import { SessionProvider } from "next-auth/react";
 
 import "@/styles/globals.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import 'react-phone-input-2/lib/style.css';
+import "react-phone-input-2/lib/style.css";
 
-import { store, persistor } from '@/store';
+import { store, persistor } from "@/store";
 import AuthModal from "@/components/common/auth/AuthModal";
-import { Toaster } from "@/components/ui/sonner"
-import ChatBot from '@/components/common/ChatBot';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
-import Advertisement from '@/components/common/Advertisement';
-import WhatsApp from '@/components/common/WhatsApp';
+import { Toaster } from "@/components/ui/sonner";
+import ChatBot from "@/components/common/ChatBot";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import Advertisement from "@/components/common/Advertisement";
+import WhatsApp from "@/components/common/WhatsApp";
 
-export default function App({
-  Component,
-  pageProps,
-}) {
+export default function App({ Component, pageProps }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   // Determine which auth system to use based on the current path
-  const isAdminRoute = Component.isAdminRoute ||
-    (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin'));
+  const isAdminRoute =
+    Component.isAdminRoute ||
+    (typeof window !== "undefined" &&
+      window.location.pathname.startsWith("/admin"));
 
-  const isQuestionnaireRoute = Component.isQuestionnaireRoute ||
-    (typeof window !== 'undefined' && window.location.pathname.startsWith('/questionnaire'));
+  const isQuestionnaireRoute =
+    Component.isQuestionnaireRoute ||
+    (typeof window !== "undefined" &&
+      window.location.pathname.startsWith("/questionnaire"));
+
+  const ceremonyPathPattern = /^\/ceremonies\/[^\/]+$/;
+  const isCeremonyRoute =
+    Component.isCeremonyRoute ||
+    (typeof window !== "undefined" &&
+      ceremonyPathPattern.test(window.location.pathname));
 
   const authOptions = {
     basePath: isAdminRoute ? "/api/auth/admin" : "/api/auth",
@@ -43,14 +50,14 @@ export default function App({
     const handleStart = () => setIsLoading(true);
     const handleComplete = () => setIsLoading(false);
 
-    router.events.on('routeChangeStart', handleStart);
-    router.events.on('routeChangeComplete', handleComplete);
-    router.events.on('routeChangeError', handleComplete);
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
 
     return () => {
-      router.events.off('routeChangeStart', handleStart);
-      router.events.off('routeChangeComplete', handleComplete);
-      router.events.off('routeChangeError', handleComplete);
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
     };
     // }
   }, [router]);
@@ -65,7 +72,9 @@ export default function App({
           <Component {...pageProps} />
           {!isAdminRoute && !isQuestionnaireRoute && <WhatsApp />}
           {!isAdminRoute && !isQuestionnaireRoute && <ChatBot />}
-          {!isAdminRoute && !isQuestionnaireRoute && <Advertisement />}
+          {!isAdminRoute && !isQuestionnaireRoute && !isCeremonyRoute && (
+            <Advertisement />
+          )}
         </SessionProvider>
       </PersistGate>
     </Provider>
