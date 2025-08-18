@@ -116,7 +116,7 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
 
     setIsLoading(true);
     try {
-      const response = await fetch("/api/stripe-payment", {
+      const response = await fetch("/api/course-stripe-payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
