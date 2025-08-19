@@ -181,7 +181,7 @@ const LoginForm = ({ toggleLoginSignup }) => {
           <button
             type="button"
             onClick={onClickGuestCheckout}
-            className="text-center text-[#2D3748] underline outline-none cursor-pointer"
+            className="text-center text-white text-xs bg-[#212A63] mx-auto px-3 py-1 rounded-xl hover:underline outline-none cursor-pointer"
           >
             Continue as guest
           </button>
