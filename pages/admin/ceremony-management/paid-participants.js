@@ -23,7 +23,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { cn, formatPhoneNumber } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { getPaidCeremonyParticipants } from "@/lib/inhouseAPI/ceremony-route";
 
 const SortingType = Object.freeze({
@@ -84,9 +84,21 @@ const PaidParticipants = ({
 
   const filteredParticipants = participants.filter(
     (participant) =>
-      participant.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      participant.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      participant.email.toLowerCase().includes(searchQuery.toLowerCase())
+      participant.user?.firstName
+        ?.toLowerCase()
+        ?.includes(searchQuery.toLowerCase()) ||
+      participant.user?.lastName
+        ?.toLowerCase()
+        ?.includes(searchQuery.toLowerCase()) ||
+      participant.user?.email
+        ?.toLowerCase()
+        ?.includes(searchQuery.toLowerCase()) ||
+      participant.guest?.name
+        ?.toLowerCase()
+        ?.includes(searchQuery.toLowerCase()) ||
+      participant.guest?.email
+        ?.toLowerCase()
+        ?.includes(searchQuery.toLowerCase())
   );
 
   const handlePageChange = (page) => {
@@ -137,7 +149,7 @@ const PaidParticipants = ({
                 <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Mobile</TableHead>
-                <TableHead>Country</TableHead>
+                <TableHead>Ceremony</TableHead>
                 <TableHead>
                   <Button
                     variant="ghost"
@@ -151,18 +163,30 @@ const PaidParticipants = ({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredParticipants.map((participant) => (
-                <TableRow key={participant.id}>
-                  <TableCell>{`${participant.firstName} ${participant.lastName}`}</TableCell>
-                  <TableCell>{participant.email}</TableCell>
+              {filteredParticipants.map((participant, index) => (
+                <TableRow
+                  key={`${
+                    participant.user?.id || participant.guest?.id
+                  }-${index}`}
+                >
                   <TableCell>
-                    {participant.phoneNumber
-                      ? formatPhoneNumber(participant.phoneNumber)
-                      : "N/A"}
+                    {participant.guest?.name ||
+                      `${participant.user?.firstName} ${participant.user?.lastName}`}
                   </TableCell>
-                  <TableCell>{participant.country}</TableCell>
                   <TableCell>
-                    {format(new Date(participant.createdAt), "MMMM d, yyyy")}
+                    {participant.user?.email || participant.guest?.email}
+                  </TableCell>
+                  <TableCell>
+                    {participant.user?.phone ||
+                      participant.guest?.phoneNumber ||
+                      "N/A"}
+                  </TableCell>
+                  <TableCell>{participant.ceremony?.title || "N/A"}</TableCell>
+                  <TableCell>
+                    {format(
+                      new Date(participant.createdAt || 0),
+                      "MMMM d, yyyy"
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

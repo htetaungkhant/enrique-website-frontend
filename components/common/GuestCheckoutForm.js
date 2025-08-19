@@ -77,10 +77,15 @@ const GuestCheckoutForm = ({
         ceremonyId: ceremony.id,
         name: `${values?.firstName} ${values?.lastName}`,
         email: values?.email,
-        // phoneNumber: JSON.stringify(values?.mobileNumber),
-        phoneNumber: values?.mobileNumber?.number,
+        phoneNumber: `+${
+          values?.mobileNumber?.countryCode
+        }-${values?.mobileNumber?.number?.replace(
+          values?.mobileNumber?.countryCode,
+          ""
+        )}`,
         country: values?.country,
       };
+
       const response = await fetch("/api/ceremony-stripe-payment", {
         method: "POST",
         headers: {
