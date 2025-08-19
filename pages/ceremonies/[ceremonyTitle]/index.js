@@ -108,9 +108,9 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
   const { session } = useUserAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [viewAll, setViewAll] = useState(false);
-  const [clientSecret, setClientSecret] = useState(null);
+  const [stripeMetaFromAPI, setStripeMetaFromAPI] = useState(null);
   const [guestId, setGuestId] = useState(null);
-  const [discount, setDiscount] = useState(false);
+  const [getDiscount, setGetDiscount] = useState(false);
   const [displayGuestModal, setDisplayGuestModal] = useState(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
@@ -136,7 +136,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
       if (!data.sessionId?.client_secret) {
         throw new Error("Client secret not found in response.");
       }
-      setClientSecret(data?.sessionId?.client_secret);
+      setStripeMetaFromAPI(data?.sessionId);
       setGuestId(data?.guestId || null);
       setShowCheckoutModal(true);
     } catch (error) {
@@ -151,7 +151,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
   };
 
   const handleAfterGuestSubmission = (data) => {
-    setClientSecret(data?.sessionId?.client_secret);
+    setStripeMetaFromAPI(data?.sessionId);
     setGuestId(data?.guestId || null);
 
     const query = { ...router.query };
@@ -203,7 +203,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
       const data = await response.json();
       toast.success(data.message || "Ceremony registered successfully!");
       setShowCheckoutModal(false);
-      setClientSecret(null);
+      setStripeMetaFromAPI(null);
       setGuestId(null);
       router.replace(router.asPath);
     } catch (error) {
@@ -211,7 +211,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
       toast.error("Failed to register for the ceremony. Please try again.");
     } finally {
       setIsLoading(false);
-      setClientSecret(null);
+      setStripeMetaFromAPI(null);
       setGuestId(null);
     }
   };
@@ -222,17 +222,17 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
         return;
       }
 
-      const clientSecret = new URLSearchParams(window.location.search).get(
-        "payment_intent_client_secret"
-      );
+      const clientSecretFromURL = new URLSearchParams(
+        window.location.search
+      ).get("payment_intent_client_secret");
 
-      if (!clientSecret) {
+      if (!clientSecretFromURL) {
         return;
       }
 
       const stripe = await stripePromise;
       const { paymentIntent } = await stripe.retrievePaymentIntent(
-        clientSecret
+        clientSecretFromURL
       );
 
       router.replace(`/ceremonies/${router.query.ceremonyId}`, undefined, {
@@ -285,7 +285,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
     <>
       <Discount
         discountUsers={ceremony.discountUsers}
-        onSubmissionSuccess={() => setDiscount(true)}
+        onSubmissionSuccess={() => setGetDiscount(true)}
       />
 
       <GuestCheckoutForm
@@ -393,12 +393,15 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                     <span>Ceremony Deposit Fee</span>
                     <span className="whitespace-nowrap">
                       €{" "}
-                      {discount
-                        ? parseFloat(
-                            ceremony.price -
-                              ceremony.price * (ceremony.discountPercent / 100)
-                          )?.toFixed(2)
-                        : parseFloat(ceremony.price)?.toFixed(2)}
+                      {(stripeMetaFromAPI?.amount &&
+                        (stripeMetaFromAPI?.amount / 100).toFixed(2)) ||
+                        (getDiscount
+                          ? parseFloat(
+                              ceremony.price -
+                                ceremony.price *
+                                  (ceremony.discountPercent / 100)
+                            )?.toFixed(2)
+                          : parseFloat(ceremony.price)?.toFixed(2))}
                     </span>
                   </div>
                   <button
@@ -408,7 +411,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                   >
                     {isLoading
                       ? "Processing..."
-                      : discount
+                      : getDiscount
                       ? "Pay Now"
                       : !session || session.validationFailed
                       ? "Register Now"
@@ -498,13 +501,13 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
           )}
         </UPSection>
         <Footer className="mt-10" />
-        {clientSecret && showCheckoutModal && (
+        {stripeMetaFromAPI && showCheckoutModal && (
           <Dialog
             open={showCheckoutModal}
             onOpenChange={(open) => {
               if (!open) {
                 setShowCheckoutModal(false);
-                setClientSecret(null);
+                setStripeMetaFromAPI(null);
                 setGuestId(null);
               }
             }}
@@ -513,13 +516,21 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
               onPointerDownOutside={(e) => e.preventDefault()}
               className="bg-transparent border-none p-0 w-full max-w-lg z-110"
             >
-              <Elements stripe={stripePromise} options={{ clientSecret }}>
+              <Elements
+                stripe={stripePromise}
+                options={{
+                  mode: "payment",
+                  amount: stripeMetaFromAPI?.amount,
+                  currency: stripeMetaFromAPI?.currency,
+                }}
+              >
                 <CheckoutForm
                   ceremony={ceremony}
-                  discount={discount}
+                  getDiscount={getDiscount}
+                  stripeMetaFromAPI={stripeMetaFromAPI}
                   onCancel={() => {
                     setShowCheckoutModal(false);
-                    setClientSecret(null);
+                    setStripeMetaFromAPI(null);
                     setGuestId(null);
                   }}
                 />
