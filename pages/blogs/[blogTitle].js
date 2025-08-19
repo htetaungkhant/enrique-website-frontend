@@ -5,26 +5,38 @@ import { Card } from "@/components/ui/card";
 import Footer from "@/components/common/Footer";
 import { PageHeaderWithBanner } from "@/components/common/PageHeader";
 import UPSection from "@/components/common/UniformPaddingSection";
+import BlogCard from "@/components/BlogsPage/BlogCard";
 import blogRoute from "@/lib/inhouseAPI/blog-route";
 
 export async function getServerSideProps(context) {
   try {
     const { blogTitle } = context.params;
-    const blog = await blogRoute.getBlogDetailsByTitle({
-      ...context.req,
-      body: { title: blogTitle },
-    });
 
-    if (!blog) {
+    const { blogs } = await blogRoute.getBlogs({ ...context.req });
+
+    if (Array.isArray(blogs) && blogs?.length > 0) {
+      const blog = blogs.find(
+        (c) =>
+          c.title?.replaceAll(/\s+/g, "-").toLowerCase() ===
+          blogTitle.toLowerCase()
+      );
+
+      if (!blog) {
+        return {
+          notFound: true,
+        };
+      }
+
       return {
-        notFound: true,
+        props: {
+          blog,
+          relatedBlogs: blogs?.sort(() => 0.5 - Math.random()).slice(0, 3),
+        },
       };
     }
 
     return {
-      props: {
-        blog,
-      },
+      notFound: true,
     };
   } catch (error) {
     console.error("Error fetching blog details:", error);
@@ -34,7 +46,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-const BlogDetails = ({ blog }) => {
+const BlogDetails = ({ blog, relatedBlogs = [] }) => {
   const router = useRouter();
 
   if (!blog) return null;
@@ -78,6 +90,28 @@ const BlogDetails = ({ blog }) => {
               />
             </div>
           </Card>
+
+          {Array.isArray(relatedBlogs) && relatedBlogs.length > 0 && (
+            <section className="mt-20">
+              <h2 className="text-xl font-bold text-white mb-4">
+                Related Blogs
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 md:gap-10 xl:gap-20 justify-between">
+                {relatedBlogs.map((blog) => (
+                  <BlogCard
+                    key={blog.id}
+                    image={blog.image?.image || "/dummy-data/4.jpg"}
+                    title={blog.title}
+                    className="text-white h-40 lg:h-56"
+                    titleClassName="text-xl md:text-2xl xl:text-3xl line-clamp-3"
+                    learnMoreHref={`/blogs/${blog.title}`
+                      .replaceAll(/\s+/g, "-")
+                      .toLowerCase()}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       </UPSection>
       <Footer className="mt-10" />
