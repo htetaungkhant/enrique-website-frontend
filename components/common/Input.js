@@ -22,7 +22,7 @@ export const PhoneNumberInput = React.forwardRef(
     ref
   ) => {
     const inputRef = useRef(ref);
-    const [phone, setPhone] = useState(null);
+    const [phone, setPhone] = useState(value || null);
 
     const onPlaceholderClick = () => {
       if (inputRef.current) {
@@ -46,7 +46,7 @@ export const PhoneNumberInput = React.forwardRef(
       // +420 1
 
       setPhone(value.replace(data.dialCode, ""));
-      if (onChange) onChange(value, data, event, formattedValue);
+      onChange?.(value, data, event, formattedValue);
     };
 
     return (

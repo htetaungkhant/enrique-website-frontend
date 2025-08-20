@@ -25,10 +25,16 @@ const formSchema = z.object({
     .string()
     .min(3, "Last name must be at least 3 characters")
     .min(1, "Last name is required"),
-  mobileNumber: z.string().refine((val) => {
-    // Remove any non-digit characters and check if there are digits beyond the country code
-    return val.replace(/\D/g, "").length > 1;
-  }, "Mobile number is required"),
+  mobileNumber: z
+    .object({
+      number: z.string().min(7, "Mobile number is required"),
+      countryCode: z.string().min(1, "Country code is required"),
+    })
+    .refine(
+      (val) =>
+        val.number.replace(/\D/g, "").replace(val.countryCode, "").length >= 6,
+      "Mobile number is required"
+    ),
   email: z.string().min(1, "Email is required").email("Invalid email format"),
   country: z.string().min(1, "Country is required"),
 });
@@ -43,7 +49,10 @@ const Discount = ({ discountUsers, discountPercent, onSubmissionSuccess }) => {
     defaultValues: {
       firstName: "",
       lastName: "",
-      mobileNumber: "",
+      mobileNumber: {
+        number: "",
+        countryCode: "420",
+      },
       email: "",
       country: "",
     },
@@ -57,7 +66,12 @@ const Discount = ({ discountUsers, discountPercent, onSubmissionSuccess }) => {
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
-        mobile: data.mobileNumber,
+        mobile: `+${
+          data?.mobileNumber?.countryCode
+        }-${data?.mobileNumber?.number?.replace(
+          data?.mobileNumber?.countryCode,
+          ""
+        )}`,
         country: data.country,
       };
 
@@ -70,6 +84,14 @@ const Discount = ({ discountUsers, discountPercent, onSubmissionSuccess }) => {
       });
 
       if (response.ok) {
+        sessionStorage.setItem("discounted_user_firstName", data?.firstName);
+        sessionStorage.setItem("discounted_user_lastName", data?.lastName);
+        sessionStorage.setItem("discounted_user_email", data?.email);
+        sessionStorage.setItem(
+          "discounted_user_mobile",
+          `${data?.mobileNumber?.countryCode}-${data?.mobileNumber?.number}`
+        );
+        sessionStorage.setItem("discounted_user_country", data?.country);
         if (discountUsers > 0) {
           toast.success("Successfully subscribed to Early Bird Discount!");
         } else {
@@ -91,13 +113,14 @@ const Discount = ({ discountUsers, discountPercent, onSubmissionSuccess }) => {
     }
   };
 
-  // Custom handler for phone number changes
   const handlePhoneChange = (value, data, event, formattedValue) => {
     const phoneWithoutCode = value.replace(data.dialCode, "");
-    form.setValue("mobileNumber", value);
+    form.setValue("mobileNumber", {
+      number: value,
+      countryCode: data?.dialCode,
+    });
 
-    // Only show error if field has been touched and is empty
-    if (phoneWithoutCode.length === 0) {
+    if (phoneWithoutCode.length < 6) {
       setShowPhoneError(true);
     } else {
       setShowPhoneError(false);
@@ -239,7 +262,11 @@ const Discount = ({ discountUsers, discountPercent, onSubmissionSuccess }) => {
                         <FormControl>
                           <PhoneNumberInput
                             {...field}
-                            value={field.value || "420"}
+                            value={
+                              field.value?.number ||
+                              field.value?.countryCode ||
+                              "420"
+                            }
                             onChange={handlePhoneChange}
                             label="Mobile Number"
                             customPlaceholder="Enter Mobile Number"
