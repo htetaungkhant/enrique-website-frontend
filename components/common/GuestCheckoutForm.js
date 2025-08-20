@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -58,14 +58,19 @@ const GuestCheckoutForm = ({
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      firstName: sessionStorage.getItem("discounted_user_firstName") || "",
+      lastName: sessionStorage.getItem("discounted_user_lastName") || "",
       mobileNumber: {
-        number: "",
-        countryCode: "420",
+        number:
+          sessionStorage.getItem("discounted_user_mobile")?.split("-")[1] || "",
+        countryCode:
+          sessionStorage
+            .getItem("discounted_user_mobile")
+            ?.split("-")[0]
+            ?.replace("+", "") || "420",
       },
-      email: "",
-      country: "",
+      email: sessionStorage.getItem("discounted_user_email") || "",
+      country: sessionStorage.getItem("discounted_user_country") || "",
     },
   });
 
@@ -121,7 +126,6 @@ const GuestCheckoutForm = ({
     }
   };
 
-  // Custom handler for phone number changes
   const handlePhoneChange = (value, data, event, formattedValue) => {
     const phoneWithoutCode = value.replace(data.dialCode, "");
     form.setValue("mobileNumber", {
@@ -129,7 +133,6 @@ const GuestCheckoutForm = ({
       countryCode: data?.dialCode,
     });
 
-    // Only show error if field has been touched and is empty
     if (phoneWithoutCode.length < 6) {
       setShowPhoneError(true);
     } else {
@@ -151,6 +154,40 @@ const GuestCheckoutForm = ({
       query: query,
     });
   };
+
+  useEffect(() => {
+    form.setValue(
+      "firstName",
+      sessionStorage.getItem("discounted_user_firstName") || ""
+    );
+    form.setValue(
+      "lastName",
+      sessionStorage.getItem("discounted_user_lastName") || ""
+    );
+    form.setValue(
+      "email",
+      sessionStorage.getItem("discounted_user_email") || ""
+    );
+    form.setValue("mobileNumber", {
+      number:
+        sessionStorage.getItem("discounted_user_mobile")?.split("-")[1] || "",
+      countryCode:
+        sessionStorage
+          .getItem("discounted_user_mobile")
+          ?.split("-")[0]
+          ?.replace("+", "") || "420",
+    });
+    form.setValue(
+      "country",
+      sessionStorage.getItem("discounted_user_country") || ""
+    );
+  }, [
+    sessionStorage.getItem("discounted_user_firstName"),
+    sessionStorage.getItem("discounted_user_lastName"),
+    sessionStorage.getItem("discounted_user_email"),
+    sessionStorage.getItem("discounted_user_mobile"),
+    sessionStorage.getItem("discounted_user_country"),
+  ]);
 
   return (
     <>
@@ -235,7 +272,11 @@ const GuestCheckoutForm = ({
                           <FormControl>
                             <PhoneNumberInput
                               {...field}
-                              value={field.value?.number || "420"}
+                              value={
+                                field.value?.number ||
+                                field.value?.countryCode ||
+                                "420"
+                              }
                               onChange={handlePhoneChange}
                               label="Mobile Number"
                               customPlaceholder="Enter Mobile Number"
