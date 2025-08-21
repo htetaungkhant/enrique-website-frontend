@@ -177,6 +177,7 @@ const CeremonyParticipants = ({
                 <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Mobile</TableHead>
+                <TableHead>Country</TableHead>
                 <TableHead>
                   <Button
                     variant="ghost"
@@ -200,6 +201,7 @@ const CeremonyParticipants = ({
                       ? formatPhoneNumber(participant.mobile)
                       : "N/A"}
                   </TableCell>
+                  <TableCell>{participant.country || "N/A"}</TableCell>
                   <TableCell>
                     {format(new Date(participant.createdAt), "MMMM d, yyyy")}
                   </TableCell>
