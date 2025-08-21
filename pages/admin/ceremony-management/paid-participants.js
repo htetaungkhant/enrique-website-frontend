@@ -149,6 +149,7 @@ const PaidParticipants = ({
                 <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Mobile</TableHead>
+                <TableHead>Country</TableHead>
                 <TableHead>Ceremony</TableHead>
                 <TableHead>
                   <Button
@@ -179,6 +180,11 @@ const PaidParticipants = ({
                   <TableCell>
                     {participant.user?.phone ||
                       participant.guest?.phoneNumber ||
+                      "N/A"}
+                  </TableCell>
+                  <TableCell>
+                    {participant.user?.country ||
+                      participant.guest?.country ||
                       "N/A"}
                   </TableCell>
                   <TableCell>{participant.ceremony?.title || "N/A"}</TableCell>
