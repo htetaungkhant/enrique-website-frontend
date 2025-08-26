@@ -1,3 +1,6 @@
+import { useRouter } from "next/router";
+import { setCookie } from "cookies-next";
+
 import { cn } from "@/lib/utils";
 import { IconButton } from "../common/Button";
 
@@ -7,7 +10,22 @@ const BlogCard = ({
   learnMoreHref,
   className,
   titleClassName,
+  fromRelated = false,
 }) => {
+  const router = useRouter();
+
+  const handleLearnMore = () => {
+    setCookie("blogTitle", title?.replaceAll(/\s+/g, "-").toLowerCase(), {
+      maxAge: 60 * 5,
+    });
+    if (fromRelated) {
+      // window.scrollTo(0, 0);
+      router.replace(learnMoreHref);
+    } else {
+      router.push(learnMoreHref);
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -29,8 +47,9 @@ const BlogCard = ({
       </h2>
       <div className="relative">
         <IconButton
-          href={learnMoreHref}
+          onClick={handleLearnMore}
           title="LEARN MORE"
+          className="w-full"
           iconClassName="text-black bg-white rounded-full border-[1px] border-black"
         />
       </div>
