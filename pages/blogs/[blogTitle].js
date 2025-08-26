@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
+import { getCookie, setCookie } from "cookies-next";
 import { ArrowLeft } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Footer from "@/components/common/Footer";
@@ -10,18 +12,46 @@ import blogRoute from "@/lib/inhouseAPI/blog-route";
 
 export async function getServerSideProps(context) {
   try {
-    const { blogTitle } = context.params;
+    const cookieBlogTitle = await getCookie("blogTitle", {
+      req: context.req,
+      res: context.res,
+    });
+    if (cookieBlogTitle) {
+      setCookie("blogTitle", "", {
+        req: context.req,
+        res: context.res,
+        maxAge: -1,
+      });
+    }
 
-    const { blogs } = await blogRoute.getBlogs({ ...context.req });
+    const blogTitle =
+      cookieBlogTitle || context.req.url?.replace("/blogs/", "");
+
+    const { blogs } = await blogRoute.getBlogs({
+      ...context.req,
+      body: { limit: 100 },
+    });
 
     if (Array.isArray(blogs) && blogs?.length > 0) {
+      const relatedBlogs = blogs?.sort(() => 0.5 - Math.random()).slice(0, 3);
+
       const blog = blogs.find(
         (c) =>
           c.title?.replaceAll(/\s+/g, "-").toLowerCase() ===
           blogTitle.toLowerCase()
       );
-
       if (!blog) {
+        return {
+          notFound: true,
+        };
+      }
+
+      const blogDetails = await blogRoute.getBlogDetails({
+        ...context.req,
+        body: { id: blog.id },
+      });
+      if (!blogDetails) {
+        console.error(`Blog details for id ${blog.id} not found`);
         return {
           notFound: true,
         };
@@ -29,8 +59,8 @@ export async function getServerSideProps(context) {
 
       return {
         props: {
-          blog,
-          relatedBlogs: blogs?.sort(() => 0.5 - Math.random()).slice(0, 3),
+          blog: blogDetails,
+          relatedBlogs,
         },
       };
     }
@@ -82,7 +112,7 @@ const BlogDetails = ({ blog, relatedBlogs = [] }) => {
               <div
                 className="prose prose-lg max-w-none prose-invert text-white whitespace-pre-wrap break-words [&_p]:text-white [&_h1]:text-white [&_h2]:text-white [&_h3]:text-white [&_h4]:text-white [&_h5]:text-white [&_h6]:text-white [&_ul]:text-white [&_ol]:text-white [&_*]:whitespace-pre-wrap [&_*]:break-words [&_p]:mb-4 [&_p:empty]:h-4"
                 dangerouslySetInnerHTML={{
-                  __html: blog.content.replace(
+                  __html: blog.content?.replace(
                     /(<p[^>]*>)\s*(<\/p>)/g,
                     "$1<br>$2"
                   ),
@@ -100,6 +130,7 @@ const BlogDetails = ({ blog, relatedBlogs = [] }) => {
                 {relatedBlogs.map((blog) => (
                   <BlogCard
                     key={blog.id}
+                    fromRelated={true}
                     image={blog.image?.image || "/dummy-data/4.jpg"}
                     title={blog.title}
                     className="text-white h-40 lg:h-56"
