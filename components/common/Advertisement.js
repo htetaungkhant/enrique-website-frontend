@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { IoMdCloseCircle } from "react-icons/io";
+// import { IoMdCloseCircle } from "react-icons/io";
 import { useUserAuth } from "@/hooks/userAuth";
 import NewsLetterForm from "./NewsLetterForm";
 
@@ -52,7 +52,7 @@ const Advertisement = () => {
                     <div className="lg:max-h-100 max-md:w-full max-w-[300px] md:max-w-180 xl:max-w-120 flex z-1000 fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-[#CDFFD8] to-[#94B9FF] overflow-hidden rounded-xl shadow">
 
                         {/* Close Button */}
-                        <IoMdCloseCircle size={24} onClick={() => setShowAdvertisement("")} className="absolute top-2 right-2 z-50 text-gray-200 hover:text-gray-50 cursor-pointer transition" />
+                        {/* <IoMdCloseCircle size={24} onClick={() => setShowAdvertisement("")} className="absolute top-2 right-2 z-50 text-gray-200 hover:text-gray-50 cursor-pointer transition" /> */}
 
                         <div className="p-4 lg:px-8 lg:py-10 md:w-1/2 flex flex-col justify-center gap-3 lg:gap-6">
                             <h2 className="text-[#212A63] font-black text-xl lg:text-2xl">Is Your Soul Prepared for the Journey?</h2>
@@ -89,7 +89,7 @@ const Advertisement = () => {
                 showAdvertisement === "newsletter-form" && (
                     <div className="max-md:w-[90%] max-xl:w-[75%] xl:w-[60%] max-w-230 z-1000 fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-y-visible rounded-xl shadow">
                         {/* Close Button */}
-                        <IoMdCloseCircle size={24} onClick={() => setShowAdvertisement("")} className="absolute top-2 right-2 z-50 text-gray-200 hover:text-gray-50 cursor-pointer transition" />
+                        {/* <IoMdCloseCircle size={24} onClick={() => setShowAdvertisement("")} className="absolute top-2 right-2 z-50 text-gray-200 hover:text-gray-50 cursor-pointer transition" /> */}
                         <NewsLetterForm onSubmissionSuccess={handleAfterSubmissionSuccess} />
                     </div>
                 )

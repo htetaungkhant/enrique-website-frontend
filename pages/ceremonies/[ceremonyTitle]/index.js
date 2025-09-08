@@ -284,7 +284,8 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
   return (
     <>
       <Discount
-        discountUsers={ceremony.discountUsers}
+        title={ceremony?.title}
+        discountUsers={ceremony?.discountUsers}
         onSubmissionSuccess={() => setGetDiscount(true)}
       />
 
