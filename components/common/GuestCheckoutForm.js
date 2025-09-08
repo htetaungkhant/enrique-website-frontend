@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { IoMdCloseCircle } from "react-icons/io";
+// import { IoMdCloseCircle } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -198,11 +198,11 @@ const GuestCheckoutForm = ({
 
           <div className="max-md:w-[90%] max-xl:w-[75%] xl:w-[60%] max-w-230 z-950 fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-y-visible rounded-xl shadow">
             {/* Close Button */}
-            <IoMdCloseCircle
+            {/* <IoMdCloseCircle
               size={24}
               onClick={handleClose}
               className="absolute top-2 right-2 z-50 text-gray-200 hover:text-gray-50 cursor-pointer transition"
-            />
+            /> */}
 
             <div className="flex w-full rounded-3xl overflow-y-visible">
               <div
