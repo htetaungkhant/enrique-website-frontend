@@ -33,11 +33,15 @@ export default function App({ Component, pageProps }) {
     (typeof window !== "undefined" &&
       window.location.pathname.startsWith("/questionnaire"));
 
-  const ceremonyPathPattern = /^\/ceremonies\/[^\/]+$/;
+  // const ceremonyPathPattern = /^\/ceremonies\/[^\/]+$/;
+  // const isCeremonyRoute =
+  //   Component.isCeremonyRoute ||
+  //   (typeof window !== "undefined" &&
+  //     ceremonyPathPattern.test(window.location.pathname));
   const isCeremonyRoute =
     Component.isCeremonyRoute ||
     (typeof window !== "undefined" &&
-      ceremonyPathPattern.test(window.location.pathname));
+      window.location.pathname.startsWith("/ceremonies"));
 
   const authOptions = {
     basePath: isAdminRoute ? "/api/auth/admin" : "/api/auth",
