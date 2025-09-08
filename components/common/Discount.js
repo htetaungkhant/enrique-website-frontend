@@ -39,7 +39,12 @@ const formSchema = z.object({
   country: z.string().min(1, "Country is required"),
 });
 
-const Discount = ({ discountUsers, discountPercent, onSubmissionSuccess }) => {
+const Discount = ({
+  title,
+  discountUsers,
+  discountPercent,
+  onSubmissionSuccess,
+}) => {
   const [showDiscount, setShowDiscount] = useState("intro");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPhoneError, setShowPhoneError] = useState(true);
@@ -150,8 +155,9 @@ const Discount = ({ discountUsers, discountPercent, onSubmissionSuccess }) => {
             </h2>
             <div className="text-[10px] lg:text-xs font-medium">
               <p>
-                Be among the FIRST 3 to register for our 7-Day Luxury Healing
-                Retreat in Ibiza and receive an exclusive 10% off.
+                {`Be among the FIRST 3 to register for our ${
+                  title || "ceremonies"
+                } and receive an exclusive 10% off.`}
               </p>
               <br />
               <p>Reconnect... Heal... Transform...</p>
