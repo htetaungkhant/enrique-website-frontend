@@ -39,7 +39,7 @@ export async function getServerSideProps(context) {
       body: {
         page,
         limit: 10,
-        sortByDate,
+        sortByDate: sortByDate || "asc",
       },
     });
 
