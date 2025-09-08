@@ -99,13 +99,13 @@ const Discount = ({
         sessionStorage.setItem("discounted_user_country", data?.country);
         if (discountUsers > 0) {
           toast.success("Successfully subscribed to Early Bird Discount!");
+          onSubmissionSuccess?.();
         } else {
           toast.error("Early Bird Discount is already full. Try again later.");
         }
         form.reset();
         setShowPhoneError(false);
         setShowDiscount("");
-        onSubmissionSuccess?.();
       } else {
         toast.error("Early Bird Discount is already full!");
       }

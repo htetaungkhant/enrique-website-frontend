@@ -21,8 +21,10 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
+import Discount from "@/components/common/Discount";
 import { getCeremonies } from "@/lib/inhouseAPI/ceremony-route";
 import { cn } from "@/lib/utils";
+import { useDiscount } from "@/providers/DiscountProvider";
 
 const SortingType = Object.freeze({
   DATE_ASCENDING: "date-ascending",
@@ -119,6 +121,7 @@ const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
     return undefined;
   });
   const [totalPages, setTotalPages] = useState(1);
+  const { setHasDiscount } = useDiscount();
   const router = useRouter();
 
   useEffect(() => {
@@ -184,197 +187,206 @@ const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
   };
 
   return (
-    <main className="min-h-screen flex flex-col">
-      <PageHeaderWithBanner title="Ceremonies">
-        <p className="inter-font text-sm md:text-base lg:text-lg xl:text-xl font-medium">
-          Expand Your Knowledge, Deepen Your Journey
-        </p>
-      </PageHeaderWithBanner>
-      <UPSection className="flex-1">
-        <div className="inter-font">
-          <div className="py-16 flex flex-col gap-5 md:flex-row md:justify-between md:items-center text-white">
-            <h4 className="merriweather-font font-bold text-2xl md:text-3xl xl:text-4xl">
-              Our Latest Events
-            </h4>
-            <div className="flex flex-col items-start md:flex-wrap md:flex-row gap-3 lg:gap-5">
-              <button
-                className={cn(
-                  "px-4 py-1 lg:py-2 text-sm border-[1px] border-[#D7F2D5] rounded-3xl cursor-pointer text-white outline-none",
-                  !sortingType && "text-[#054224] bg-[#D7F2D5]"
-                )}
-                onClick={() => {
-                  setSortingType();
-                  const { page, sortByDate, ...restQuery } = router.query;
-                  router.push({
-                    pathname: router.pathname,
-                    query: { ...restQuery },
-                  });
-                }}
-              >
-                All Events
-              </button>
-              <Popover open={datePopover} onOpenChange={setDatePopover}>
-                <PopoverTrigger asChild>
-                  <span
-                    className={cn(
-                      "px-4 py-1 lg:py-2 text-sm border-[1px] border-white rounded-3xl cursor-pointer flex items-center gap-3",
-                      (sortingType === SortingType.DATE_ASCENDING ||
-                        sortingType === SortingType.DATE_DESCENDING) &&
-                        "text-[#054224] bg-[#D7F2D5]"
-                    )}
-                  >
-                    Sort by Date
-                    <LuCalendarDays size={16} />
-                  </span>
-                </PopoverTrigger>
-                <PopoverContent
-                  disablePortal
-                  className="p-0 w-36 lg:w-40 xl:w-44 overflow-hidden"
-                  align="start"
+    <>
+      <Discount
+        title={ceremonies?.title}
+        discountUsers={ceremonies?.discountUsers}
+        onSubmissionSuccess={() => setHasDiscount(true)}
+      />
+      <main className="min-h-screen flex flex-col">
+        <PageHeaderWithBanner title="Ceremonies">
+          <p className="inter-font text-sm md:text-base lg:text-lg xl:text-xl font-medium">
+            Expand Your Knowledge, Deepen Your Journey
+          </p>
+        </PageHeaderWithBanner>
+        <UPSection className="flex-1">
+          <div className="inter-font">
+            <div className="py-16 flex flex-col gap-5 md:flex-row md:justify-between md:items-center text-white">
+              <h4 className="merriweather-font font-bold text-2xl md:text-3xl xl:text-4xl">
+                Our Latest Events
+              </h4>
+              <div className="flex flex-col items-start md:flex-wrap md:flex-row gap-3 lg:gap-5">
+                <button
+                  className={cn(
+                    "px-4 py-1 lg:py-2 text-sm border-[1px] border-[#D7F2D5] rounded-3xl cursor-pointer text-white outline-none",
+                    !sortingType && "text-[#054224] bg-[#D7F2D5]"
+                  )}
+                  onClick={() => {
+                    setSortingType();
+                    const { page, sortByDate, ...restQuery } = router.query;
+                    router.push({
+                      pathname: router.pathname,
+                      query: { ...restQuery },
+                    });
+                  }}
                 >
-                  {/* className="merriweather-font" */}
-                  <ul>
-                    <li>
-                      <button
-                        type="button"
-                        className={cn(
-                          "w-full px-4 py-2 text-left hover:bg-[#c8f7c5] transition outline-none",
-                          sortingType === SortingType.DATE_ASCENDING &&
-                            "text-[#054224] bg-[#D7F2D5] hover:bg-[#c8f7c5] font-semibold"
-                        )}
-                        onClick={() =>
-                          handleDateSorting(SortingType.DATE_ASCENDING)
-                        }
-                      >
-                        Ascending
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        type="button"
-                        className={cn(
-                          "w-full px-4 py-2 text-left hover:bg-[#c8f7c5] transition outline-none",
-                          sortingType === SortingType.DATE_DESCENDING &&
-                            "text-[#054224] bg-[#D7F2D5] hover:bg-[#c8f7c5] font-semibold"
-                        )}
-                        onClick={() =>
-                          handleDateSorting(SortingType.DATE_DESCENDING)
-                        }
-                      >
-                        Descending
-                      </button>
-                    </li>
-                  </ul>
-                </PopoverContent>
-              </Popover>
-              <SearchBox
-                placeholder="Search by Ceremonies"
-                className="md:w-52 lg:w-72 text-sm"
-                value={searchQuery}
-                onChange={handleSearch}
-              />
-            </div>
-          </div>
-          {Array.isArray(filteredCeremonies) ? (
-            filteredCeremonies.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 md:gap-10 xl:gap-20 justify-between">
-                {filteredCeremonies.map((ceremony, index) => (
-                  <CeremonyCard
-                    key={`${ceremony.id}-${index}`}
-                    id={ceremony.id}
-                    image={ceremony.image?.image}
-                    title={ceremony.title}
-                    locations={ceremony.locationCountry}
-                    startDate={ceremony.startDate}
-                    endDate={ceremony.endDate}
-                    learnMoreHref={`/ceremonies/${ceremony.title}`
-                      .replaceAll(/\s+/g, "-")
-                      .toLowerCase()}
-                  />
-                ))}
+                  All Events
+                </button>
+                <Popover open={datePopover} onOpenChange={setDatePopover}>
+                  <PopoverTrigger asChild>
+                    <span
+                      className={cn(
+                        "px-4 py-1 lg:py-2 text-sm border-[1px] border-white rounded-3xl cursor-pointer flex items-center gap-3",
+                        (sortingType === SortingType.DATE_ASCENDING ||
+                          sortingType === SortingType.DATE_DESCENDING) &&
+                          "text-[#054224] bg-[#D7F2D5]"
+                      )}
+                    >
+                      Sort by Date
+                      <LuCalendarDays size={16} />
+                    </span>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    disablePortal
+                    className="p-0 w-36 lg:w-40 xl:w-44 overflow-hidden"
+                    align="start"
+                  >
+                    {/* className="merriweather-font" */}
+                    <ul>
+                      <li>
+                        <button
+                          type="button"
+                          className={cn(
+                            "w-full px-4 py-2 text-left hover:bg-[#c8f7c5] transition outline-none",
+                            sortingType === SortingType.DATE_ASCENDING &&
+                              "text-[#054224] bg-[#D7F2D5] hover:bg-[#c8f7c5] font-semibold"
+                          )}
+                          onClick={() =>
+                            handleDateSorting(SortingType.DATE_ASCENDING)
+                          }
+                        >
+                          Ascending
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          type="button"
+                          className={cn(
+                            "w-full px-4 py-2 text-left hover:bg-[#c8f7c5] transition outline-none",
+                            sortingType === SortingType.DATE_DESCENDING &&
+                              "text-[#054224] bg-[#D7F2D5] hover:bg-[#c8f7c5] font-semibold"
+                          )}
+                          onClick={() =>
+                            handleDateSorting(SortingType.DATE_DESCENDING)
+                          }
+                        >
+                          Descending
+                        </button>
+                      </li>
+                    </ul>
+                  </PopoverContent>
+                </Popover>
+                <SearchBox
+                  placeholder="Search by Ceremonies"
+                  className="md:w-52 lg:w-72 text-sm"
+                  value={searchQuery}
+                  onChange={handleSearch}
+                />
               </div>
+            </div>
+            {Array.isArray(filteredCeremonies) ? (
+              filteredCeremonies.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 md:gap-10 xl:gap-20 justify-between">
+                  {filteredCeremonies.map((ceremony, index) => (
+                    <CeremonyCard
+                      key={`${ceremony.id}-${index}`}
+                      id={ceremony.id}
+                      image={ceremony.image?.image}
+                      title={ceremony.title}
+                      locations={ceremony.locationCountry}
+                      startDate={ceremony.startDate}
+                      endDate={ceremony.endDate}
+                      learnMoreHref={`/ceremonies/${ceremony.title}`
+                        .replaceAll(/\s+/g, "-")
+                        .toLowerCase()}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center text-white">
+                  No ceremonies found matching your search.
+                </div>
+              )
             ) : (
               <div className="text-center text-white">
-                No ceremonies found matching your search.
+                No ceremonies available.
               </div>
-            )
-          ) : (
-            <div className="text-center text-white">
-              No ceremonies available.
-            </div>
-          )}
-          {!searchQuery && totalPages > 1 && (
-            <div className="mt-10">
-              <Pagination>
-                <PaginationContent className="text-white">
-                  <PaginationItem>
-                    <PaginationPrevious
-                      onClick={() =>
-                        currentPage > 1 && handlePageChange(currentPage - 1)
-                      }
-                      className={cn(
-                        "border-white hover:bg-[#D7F2D5] hover:text-[#054224] transition-colors",
-                        currentPage <= 1 ? "pointer-events-none opacity-50" : ""
-                      )}
-                    />
-                  </PaginationItem>
+            )}
+            {!searchQuery && totalPages > 1 && (
+              <div className="mt-10">
+                <Pagination>
+                  <PaginationContent className="text-white">
+                    <PaginationItem>
+                      <PaginationPrevious
+                        onClick={() =>
+                          currentPage > 1 && handlePageChange(currentPage - 1)
+                        }
+                        className={cn(
+                          "border-white hover:bg-[#D7F2D5] hover:text-[#054224] transition-colors",
+                          currentPage <= 1
+                            ? "pointer-events-none opacity-50"
+                            : ""
+                        )}
+                      />
+                    </PaginationItem>
 
-                  {[...Array(totalPages)].map((_, i) => {
-                    const page = i + 1;
-                    if (
-                      page === 1 ||
-                      page === totalPages ||
-                      (page >= currentPage - 1 && page <= currentPage + 1)
-                    ) {
-                      return (
-                        <PaginationItem key={page}>
-                          <PaginationLink
-                            onClick={() => handlePageChange(page)}
-                            className={cn(
-                              "border-white hover:bg-[#D7F2D5] hover:text-[#054224] transition-colors",
-                              page === currentPage &&
-                                "bg-[#D7F2D5] text-[#054224]"
-                            )}
-                          >
-                            {page}
-                          </PaginationLink>
-                        </PaginationItem>
-                      );
-                    } else if (
-                      page === currentPage - 2 ||
-                      page === currentPage + 2
-                    ) {
-                      return (
-                        <PaginationItem key={page}>
-                          <PaginationEllipsis className="text-white" />
-                        </PaginationItem>
-                      );
-                    }
-                    return null;
-                  })}
-
-                  <PaginationItem>
-                    <PaginationNext
-                      onClick={() =>
-                        currentPage < totalPages &&
-                        handlePageChange(currentPage + 1)
+                    {[...Array(totalPages)].map((_, i) => {
+                      const page = i + 1;
+                      if (
+                        page === 1 ||
+                        page === totalPages ||
+                        (page >= currentPage - 1 && page <= currentPage + 1)
+                      ) {
+                        return (
+                          <PaginationItem key={page}>
+                            <PaginationLink
+                              onClick={() => handlePageChange(page)}
+                              className={cn(
+                                "border-white hover:bg-[#D7F2D5] hover:text-[#054224] transition-colors",
+                                page === currentPage &&
+                                  "bg-[#D7F2D5] text-[#054224]"
+                              )}
+                            >
+                              {page}
+                            </PaginationLink>
+                          </PaginationItem>
+                        );
+                      } else if (
+                        page === currentPage - 2 ||
+                        page === currentPage + 2
+                      ) {
+                        return (
+                          <PaginationItem key={page}>
+                            <PaginationEllipsis className="text-white" />
+                          </PaginationItem>
+                        );
                       }
-                      className={cn(
-                        "border-white hover:bg-[#D7F2D5] hover:text-[#054224] transition-colors",
-                        currentPage >= totalPages
-                          ? "pointer-events-none opacity-50"
-                          : ""
-                      )}
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            </div>
-          )}
-        </div>
-      </UPSection>
-      <Footer className="mt-10" />
-    </main>
+                      return null;
+                    })}
+
+                    <PaginationItem>
+                      <PaginationNext
+                        onClick={() =>
+                          currentPage < totalPages &&
+                          handlePageChange(currentPage + 1)
+                        }
+                        className={cn(
+                          "border-white hover:bg-[#D7F2D5] hover:text-[#054224] transition-colors",
+                          currentPage >= totalPages
+                            ? "pointer-events-none opacity-50"
+                            : ""
+                        )}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </div>
+            )}
+          </div>
+        </UPSection>
+        <Footer className="mt-10" />
+      </main>
+    </>
   );
 };
 

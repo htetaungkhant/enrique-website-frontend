@@ -17,6 +17,7 @@ import ChatBot from "@/components/common/ChatBot";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import Advertisement from "@/components/common/Advertisement";
 import WhatsApp from "@/components/common/WhatsApp";
+import { DiscountProvider } from "@/providers/DiscountProvider";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -70,15 +71,17 @@ export default function App({ Component, pageProps }) {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SessionProvider session={pageProps.session} {...authOptions}>
-          {isLoading && <LoadingSpinner />}
-          <Toaster position="top-right" richColors closeButton />
-          <AuthModal />
-          <Component {...pageProps} />
-          {!isAdminRoute && !isQuestionnaireRoute && <WhatsApp />}
-          {!isAdminRoute && !isQuestionnaireRoute && <ChatBot />}
-          {!isAdminRoute && !isQuestionnaireRoute && !isCeremonyRoute && (
-            <Advertisement />
-          )}
+          <DiscountProvider>
+            {isLoading && <LoadingSpinner />}
+            <Toaster position="top-right" richColors closeButton />
+            <AuthModal />
+            <Component {...pageProps} />
+            {!isAdminRoute && !isQuestionnaireRoute && <WhatsApp />}
+            {!isAdminRoute && !isQuestionnaireRoute && <ChatBot />}
+            {!isAdminRoute && !isQuestionnaireRoute && !isCeremonyRoute && (
+              <Advertisement />
+            )}
+          </DiscountProvider>
         </SessionProvider>
       </PersistGate>
     </Provider>

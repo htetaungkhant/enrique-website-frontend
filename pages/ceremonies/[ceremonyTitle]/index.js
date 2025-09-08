@@ -16,8 +16,8 @@ import PageHeader from "@/components/common/PageHeader";
 import ceremonyRoute from "@/lib/inhouseAPI/ceremony-route";
 import { useUserAuth } from "@/hooks/userAuth";
 import CheckoutForm from "@/components/CeremoniesPage/CheckoutForm";
-import Discount from "@/components/common/Discount";
 import GuestCheckoutForm from "@/components/common/GuestCheckoutForm";
+import { useDiscount } from "@/providers/DiscountProvider";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
@@ -110,9 +110,9 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
   const [viewAll, setViewAll] = useState(false);
   const [stripeMetaFromAPI, setStripeMetaFromAPI] = useState(null);
   const [guestId, setGuestId] = useState(null);
-  const [getDiscount, setGetDiscount] = useState(false);
   const [displayGuestModal, setDisplayGuestModal] = useState(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const { hasDiscount } = useDiscount();
 
   const handleRegisterNow = async () => {
     setIsLoading(true);
@@ -283,12 +283,6 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
 
   return (
     <>
-      <Discount
-        title={ceremony?.title}
-        discountUsers={ceremony?.discountUsers}
-        onSubmissionSuccess={() => setGetDiscount(true)}
-      />
-
       <GuestCheckoutForm
         ceremony={ceremony}
         onSubmissionSuccess={handleAfterGuestSubmission}
@@ -396,7 +390,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                       €{" "}
                       {(stripeMetaFromAPI?.amount &&
                         (stripeMetaFromAPI?.amount / 100).toFixed(2)) ||
-                        (getDiscount
+                        (hasDiscount
                           ? parseFloat(
                               ceremony.price -
                                 ceremony.price *
@@ -412,7 +406,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                   >
                     {isLoading
                       ? "Processing..."
-                      : getDiscount
+                      : hasDiscount
                       ? "Pay Now"
                       : !session || session.validationFailed
                       ? "Register Now"
@@ -527,7 +521,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
               >
                 <CheckoutForm
                   ceremony={ceremony}
-                  getDiscount={getDiscount}
+                  getDiscount={hasDiscount}
                   stripeMetaFromAPI={stripeMetaFromAPI}
                   onCancel={() => {
                     setShowCheckoutModal(false);
