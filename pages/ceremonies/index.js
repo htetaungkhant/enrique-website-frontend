@@ -390,4 +390,6 @@ const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
   );
 };
 
+CeremoniesPage.isCeremonyRoute = true;
+
 export default CeremoniesPage;

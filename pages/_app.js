@@ -34,6 +34,11 @@ export default function App({ Component, pageProps }) {
     (typeof window !== "undefined" &&
       window.location.pathname.startsWith("/questionnaire"));
 
+  const isFacilitatorRoute =
+    Component.isFacilitatorRoute ||
+    (typeof window !== "undefined" &&
+      window.location.pathname.startsWith("/facilitators"));
+
   // const ceremonyPathPattern = /^\/ceremonies\/[^\/]+$/;
   // const isCeremonyRoute =
   //   Component.isCeremonyRoute ||
@@ -78,9 +83,10 @@ export default function App({ Component, pageProps }) {
             <Component {...pageProps} />
             {!isAdminRoute && !isQuestionnaireRoute && <WhatsApp />}
             {!isAdminRoute && !isQuestionnaireRoute && <ChatBot />}
-            {!isAdminRoute && !isQuestionnaireRoute && !isCeremonyRoute && (
-              <Advertisement />
-            )}
+            {!isAdminRoute &&
+              !isQuestionnaireRoute &&
+              !isFacilitatorRoute &&
+              !isCeremonyRoute && <Advertisement />}
           </DiscountProvider>
         </SessionProvider>
       </PersistGate>
