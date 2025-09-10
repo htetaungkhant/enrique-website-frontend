@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 // import { IoMdCloseCircle } from "react-icons/io";
 import { useForm } from "react-hook-form";
@@ -97,6 +97,7 @@ const Discount = ({
           `${data?.mobileNumber?.countryCode}-${data?.mobileNumber?.number}`
         );
         sessionStorage.setItem("discounted_user_country", data?.country);
+        sessionStorage.setItem("already_discounted", "true");
         if (discountUsers > 0) {
           toast.success("Successfully subscribed to Early Bird Discount!");
           onSubmissionSuccess?.();
@@ -133,6 +134,13 @@ const Discount = ({
 
     form.trigger("mobileNumber");
   };
+
+  useEffect(() => {
+    const hasDiscounted = sessionStorage.getItem("already_discounted");
+    if (hasDiscounted === "true") {
+      setShowDiscount("");
+    }
+  }, []);
 
   return (
     <>
