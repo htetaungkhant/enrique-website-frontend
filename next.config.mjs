@@ -1,19 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    TZ: "UTC",
+  },
   reactStrictMode: true,
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 's3.eu-west-1.amazonaws.com',
-        port: '',
-        pathname: '/arise-api/**',
+        protocol: "https",
+        hostname: "s3.eu-west-1.amazonaws.com",
+        port: "",
+        pathname: "/arise-api/**",
       },
       {
-        protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
-        port: '',
-        pathname: '/a/**',
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/a/**",
       },
     ],
   },
