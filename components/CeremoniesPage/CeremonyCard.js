@@ -1,7 +1,7 @@
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
 import { IoCalendarClear } from "react-icons/io5";
 import { FaLocationDot } from "react-icons/fa6";
-import { format } from "date-fns";
+import { toZonedTime, format } from "date-fns-tz";
 
 import { cn } from "@/lib/utils";
 import { ReadMoreBtn } from "../common/Button";
@@ -41,16 +41,26 @@ const CeremonyCard = ({
               <div className="flex gap-3 items-center text-xs md:text-sm">
                 <IoCalendarClear className="text-[#1C3896] bg-[#1C389659] p-1 rounded-full w-5 h-5" />
                 <p>{`From ${format(
-                  new Date(startDate),
-                  "dd MMM yyyy"
-                )} to ${format(new Date(endDate), "dd MMM yyyy")}`}</p>
+                  toZonedTime(new Date(startDate), "UTC"),
+                  "dd MMM yyyy",
+                  { timeZone: "UTC" }
+                )} to ${format(
+                  toZonedTime(new Date(endDate), "UTC"),
+                  "dd MMM yyyy",
+                  { timeZone: "UTC" }
+                )}`}</p>
               </div>
 
               <div className="flex gap-3 items-center text-xs md:text-sm">
                 <MdOutlineAccessTimeFilled className="text-[#1C3896] bg-[#1C389659] p-1 rounded-full w-5 h-5" />
-                <p>{`${format(new Date(startDate), "hh:mm a")} - ${format(
-                  new Date(endDate),
-                  "hh:mm a"
+                <p>{`${format(
+                  toZonedTime(new Date(startDate), "UTC"),
+                  "hh:mm a",
+                  { timeZone: "UTC" }
+                )} - ${format(
+                  toZonedTime(new Date(endDate), "UTC"),
+                  "hh:mm a",
+                  { timeZone: "UTC" }
                 )}`}</p>
               </div>
             </>

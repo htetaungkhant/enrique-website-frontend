@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { IoCalendarOutline } from "react-icons/io5";
-import { format } from "date-fns";
+import { format, toZonedTime, fromZonedTime } from "date-fns-tz";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -15,22 +15,16 @@ import {
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export function DateTimePicker({ value, onChange, placeholder, disabled }) {
-  const [date, setDate] = useState(value ? new Date(value) : undefined);
+  const [date, setDate] = useState(
+    value ? toZonedTime(new Date(value), "UTC") : undefined
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (date) {
-      onChange(date.toISOString());
+      onChange(fromZonedTime(date, "UTC").toISOString());
     }
   }, [date, onChange]);
-
-  useEffect(() => {
-    if (value) {
-      setDate(new Date(value));
-    } else {
-      setDate(undefined);
-    }
-  }, [value]);
 
   const hours = Array.from({ length: 12 }, (_, i) => i + 1);
   const handleDateSelect = (selectedDate) => {
@@ -77,7 +71,7 @@ export function DateTimePicker({ value, onChange, placeholder, disabled }) {
         >
           {date ? (
             <span className="flex-1">
-              {format(date, "MM/dd/yyyy hh:mm aa")}
+              {format(date, "MM/dd/yyyy hh:mm aa", { timeZone: "UTC" })}
             </span>
           ) : (
             <span className="flex-1">
