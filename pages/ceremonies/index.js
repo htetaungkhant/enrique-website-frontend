@@ -46,6 +46,7 @@ export async function getServerSideProps(context) {
     });
 
     const ceremonies = response?.ceremonies ?? [];
+    const discountUsers = response?.discountUsers ?? 0;
 
     if (ceremonies.length > 0) {
       ceremonies.forEach((ceremony) => {
@@ -93,6 +94,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         ceremonies,
+        discountUsers,
         total: response?.total ?? 0,
         currentPage: page,
         sortByDate: sortByDate || null,
@@ -103,6 +105,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         ceremonies: [],
+        discountUsers: 0,
         total: 0,
         currentPage: 1,
         sortByDate: null,
@@ -111,7 +114,13 @@ export async function getServerSideProps(context) {
   }
 }
 
-const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
+const CeremoniesPage = ({
+  ceremonies,
+  discountUsers,
+  total,
+  currentPage,
+  sortByDate,
+}) => {
   const [datePopover, setDatePopover] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCeremonies, setFilteredCeremonies] = useState(ceremonies);
@@ -189,8 +198,7 @@ const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
   return (
     <>
       <Discount
-        title={ceremonies?.title}
-        discountUsers={ceremonies?.discountUsers}
+        discountUsers={discountUsers}
         onSubmissionSuccess={() => setHasDiscount(true)}
       />
       <main className="min-h-screen flex flex-col">
