@@ -283,6 +283,16 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
 
   return (
     <>
+      {ceremony.markAsSold && (
+        <Image
+          src="/image/sold-out.png"
+          width={150}
+          height={150}
+          alt="sold out"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-40 h-40 lg:w-52 lg:h-52 object-contain"
+        />
+      )}
+
       <GuestCheckoutForm
         ceremony={ceremony}
         onSubmissionSuccess={handleAfterGuestSubmission}
@@ -400,7 +410,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
                     </span>
                   </div>
                   <button
-                    disabled={isLoading}
+                    disabled={ceremony.markAsSold || isLoading}
                     onClick={onClickRegister}
                     className="p-3 inter-font font-bold text-xs sm:text-sm text-white rounded-lg sm:rounded-4xl bg-[#212A63] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400"
                   >

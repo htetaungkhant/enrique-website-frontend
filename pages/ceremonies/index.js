@@ -307,6 +307,7 @@ const CeremoniesPage = ({
                       learnMoreHref={`/ceremonies/${ceremony.title}`
                         .replaceAll(/\s+/g, "-")
                         .toLowerCase()}
+                      soldOut={ceremony.markAsSold}
                     />
                   ))}
                 </div>

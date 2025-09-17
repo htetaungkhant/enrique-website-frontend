@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
 import { IoCalendarClear } from "react-icons/io5";
 import { FaLocationDot } from "react-icons/fa6";
@@ -14,6 +15,7 @@ const CeremonyCard = ({
   startDate,
   endDate,
   learnMoreHref,
+  soldOut = false,
   className,
 }) => {
   return (
@@ -24,10 +26,19 @@ const CeremonyCard = ({
       )}
     >
       <div
-        className="h-48 rounded-3xl bg-center bg-cover bg-no-repeat relative"
+        className="h-48 rounded-3xl bg-center bg-cover bg-no-repeat relative z-10"
         style={{ backgroundImage: `url(${image})` }}
       ></div>
-      <div className="flex-1 pt-10 -mt-5 rounded-bl-3xl border-l-8 border-[#3FA535] px-4 py-6 flex flex-col gap-3">
+      <div className="flex-1 pt-10 -mt-5 rounded-bl-3xl border-l-8 border-[#3FA535] px-4 py-6 flex flex-col gap-3 relative">
+        {soldOut && (
+          <Image
+            src="/image/sold-out.png"
+            width={100}
+            height={100}
+            className="absolute top-0 right-0 z-20"
+            alt="sold out"
+          />
+        )}
         <h4 className="text-lg lg:text-xl font-bold">{title}</h4>
         <div className="flex-1 font-medium flex flex-col gap-1">
           {locations && (
