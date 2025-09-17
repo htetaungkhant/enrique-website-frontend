@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,6 +25,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { DateTimePicker } from "@/components/common/DateTimePicker";
+import { Switch } from "@/components/ui/switch";
 import { PointsArray } from "./PointsArray";
 
 const MAX_IMAGE_SIZE_MB = 6;
@@ -101,6 +103,7 @@ const imageSchema = z
   );
 
 const formSchema = z.object({
+  markAsSold: z.boolean().default(false),
   title: z.string().trim().min(1, "Title is required"),
   hosts: z
     .array(
@@ -138,6 +141,7 @@ const formSchema = z.object({
 });
 
 const defaultValues = {
+  markAsSold: false,
   title: "",
   startDate: "",
   endDate: "",
@@ -272,6 +276,7 @@ export function CreateCeremonyForm() {
       }
 
       const formData = new FormData();
+      formData.append("markAsSold", data.markAsSold);
       formData.append("title", data.title);
       formData.append("hostNames", JSON.stringify(hosts.map((h) => h.name)));
       formData.append(
@@ -364,6 +369,27 @@ export function CreateCeremonyForm() {
       >
         <FormField
           control={form.control}
+          name="markAsSold"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+              <div className="space-y-0.5">
+                <FormLabel>Sold Out</FormLabel>
+                <FormDescription>
+                  Mark this ceremony as sold out to prevent further bookings.
+                </FormDescription>
+              </div>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="title"
           render={({ field }) => (
             <FormItem>
@@ -379,7 +405,6 @@ export function CreateCeremonyForm() {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="mainImage"
@@ -449,7 +474,6 @@ export function CreateCeremonyForm() {
             </FormItem>
           )}
         />
-
         <div className="space-y-4">
           <FormLabel>Host *</FormLabel>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -514,7 +538,6 @@ export function CreateCeremonyForm() {
             </p>
           )}
         </div>
-
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
           <FormField
             control={form.control}
@@ -554,7 +577,6 @@ export function CreateCeremonyForm() {
             )}
           />
         </div>
-
         <FormField
           control={form.control}
           name="price"
@@ -573,7 +595,6 @@ export function CreateCeremonyForm() {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="locationCountry"
@@ -591,7 +612,6 @@ export function CreateCeremonyForm() {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="locationAddress"
@@ -609,7 +629,6 @@ export function CreateCeremonyForm() {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="description"
@@ -628,7 +647,6 @@ export function CreateCeremonyForm() {
             </FormItem>
           )}
         />
-
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <FormLabel>Extra Details *</FormLabel>
@@ -687,7 +705,6 @@ export function CreateCeremonyForm() {
             </div>
           ))}
         </div>
-
         <FormField
           control={form.control}
           name="gallery"
@@ -751,7 +768,6 @@ export function CreateCeremonyForm() {
             </FormItem>
           )}
         />
-
         <Button
           type="submit"
           className="w-full cursor-pointer"

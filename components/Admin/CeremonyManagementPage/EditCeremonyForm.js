@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -27,6 +28,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { DateTimePicker } from "@/components/common/DateTimePicker";
 import { Card } from "@/components/ui/card";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { Switch } from "@/components/ui/switch";
 import { PointsArray } from "./PointsArray";
 
 const MAX_IMAGE_SIZE_MB = 6;
@@ -124,6 +126,7 @@ const imageSchema = z
   );
 
 const editCeremonySchema = z.object({
+  markAsSold: z.boolean().default(false),
   title: z.string().trim().min(1, "Title is required"),
   hosts: z
     .array(
@@ -209,6 +212,7 @@ export function EditCeremonyForm({ initialData }) {
   const form = useForm({
     resolver: zodResolver(editCeremonySchema),
     defaultValues: {
+      markAsSold: initialData?.markAsSold || false,
       title: initialData?.title || "",
       startDate: initialData?.startDate || "",
       endDate: initialData?.endDate || "",
@@ -454,6 +458,7 @@ export function EditCeremonyForm({ initialData }) {
       }
 
       const formData = new FormData();
+      formData.append("markAsSold", data.markAsSold);
       formData.append("title", data.title);
       formData.append("hostNames", JSON.stringify(hosts.map((h) => h.name)));
       formData.append(
@@ -618,6 +623,28 @@ export function EditCeremonyForm({ initialData }) {
         className="mx-auto space-y-8"
       >
         <Card className="p-6 space-y-8 bg-white rounded-lg">
+          <FormField
+            control={form.control}
+            name="markAsSold"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                <div className="space-y-0.5">
+                  <FormLabel>Sold Out</FormLabel>
+                  <FormDescription>
+                    Mark this ceremony as sold out to prevent further bookings.
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    disabled={isSubmitting}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="title"
