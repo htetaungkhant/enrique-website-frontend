@@ -27,12 +27,42 @@ export async function getServerSideProps(context) {
     const blogTitle =
       cookieBlogTitle || context.req.url?.replace("/blogs/", "");
 
-    const { blogs } = await blogRoute.getBlogs({
-      ...context.req,
-      body: { limit: 100 },
-    });
+    // Fetch blogs in batches to get around the 100 limit
+    const fetchAllBlogs = async () => {
+      const allBlogs = [];
+      let page = 1;
+      const limit = 100;
+      let hasMore = true;
 
-    if (Array.isArray(blogs) && blogs?.length > 0) {
+      while (hasMore && allBlogs.length < 1000) {
+        const response = await blogRoute.getBlogs({
+          ...context.req,
+          body: {
+            page,
+            limit,
+          },
+        });
+
+        if (response?.blogs && Array.isArray(response.blogs)) {
+          allBlogs.push(...response.blogs);
+
+          // Check if we got fewer blogs than the limit (indicates last page)
+          if (response.blogs.length < limit) {
+            hasMore = false;
+          } else {
+            page++;
+          }
+        } else {
+          hasMore = false;
+        }
+      }
+
+      return allBlogs;
+    };
+
+    const blogs = await fetchAllBlogs();
+
+    if (Array.isArray(blogs) && blogs.length > 0) {
       const relatedBlogs = blogs?.sort(() => 0.5 - Math.random()).slice(0, 3);
 
       const blog = blogs.find(
