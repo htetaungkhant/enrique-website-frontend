@@ -135,14 +135,14 @@ const FlightServicePage = () => {
             <div className="h-48 bg-gradient-to-b from-[#000000] to-[#00000000]" />
             <UPSection className="-mt-44 md:-mt-32 flex flex-col gap-2 inter-font text-white">
                 <h2 className="text-3xl xl:text-4xl mb-3">Transformative <strong>Retreat Experiences</strong></h2>
-                <p className="font-medium">Ayahuasca is a sacred plant medicine made from the Psychotria viridis shrub and Banisteriopsis caapi vine. Traditionally used by Amazonian tribes for spiritual and healing ceremonies, it remains a key part of many spiritual practices today.</p>
+                <p className="font-medium">Aya Master Plant is a sacred plant medicine made from the Psychotria viridis shrub and Banisteriopsis caapi vine. Traditionally used by Amazonian tribes for spiritual and healing ceremonies, it remains a key part of many spiritual practices today.</p>
                 <p className="font-medium">This exclusive private retreat is designed for individuals seeking deep healing and transformation through sacred plant medicines and holistic wellness practices. Our highly personalized services ensure a profound and life-changing journey. <br />Our healing retreat includes a variety of traditional and holistic practices:</p>
                 <div className="flex max-md:flex-col max-md:gap-5 gap-10">
                     <div className="max-md:order-2 flex-1 text-[#212A63] px-2 py-2 lg:px-3 lg:py-3 xl:px-6 xl:py-8 bg-gradient-to-b from-[#D7F2D5] to-[#5C8959] rounded-xl">
                         <ul className="h-full flex flex-col justify-between font-medium">
                             <li><strong className="text-xl">Kambo Cleansing</strong> – An Amazonian detox ritual for immunity and energy balance</li>
                             <li><strong className="text-xl">Toad Medicine (5-MeO-DMT)</strong> – A one-on-one journey with the 'God molecule' for profound spiritual awakening.</li>
-                            <li><strong className="text-xl">Ayahuasca Ceremonies</strong> – Sacred plant medicine sessions for deep emotional healing and higher self-connection.</li>
+                            <li><strong className="text-xl">Aya Master Plant Ceremonies</strong> – Sacred plant medicine sessions for deep emotional healing and higher self-connection.</li>
                             <li><strong className="text-xl">Yoga & Meditation</strong> –Daily guided practices to restore balance and mindfulness.</li>
                             <li><strong className="text-xl">Breathwork Therapy</strong> –  Techniques to release trauma, reduce stress, and elevate consciousness.</li>
                             <li><strong className="text-xl">Holistic Massages</strong> – Therapeutic bodywork for relaxation and energy alignment.</li>

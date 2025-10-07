@@ -113,7 +113,7 @@ const cardsRowSectionData2 = {
         },
         {
             title: 'Enhancing a Bufo Ceremony with Kambo',
-            description: "Kambo serves as an excellent preparatory cleanse before engaging in other entheogenic experiences, such as Ayahuasca or Bufo. By detoxifying the body and clearing emotional blockages, Kambo helps individuals enter these profound spiritual experiences with greater clarity and openness. This preparation enhances the depth and effectiveness of the journey, allowing for a more meaningful and transformative experience.",
+            description: "Kambo serves as an excellent preparatory cleanse before engaging in other entheogenic experiences, such as Aya Master Plant or Bufo. By detoxifying the body and clearing emotional blockages, Kambo helps individuals enter these profound spiritual experiences with greater clarity and openness. This preparation enhances the depth and effectiveness of the journey, allowing for a more meaningful and transformative experience.",
         },
     ]
 }
@@ -140,8 +140,8 @@ const KamboPage = () => {
             <UniformInfoSection image="/image/ayahuasca-cut.png" reverse={true} className="-mt-24">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">The Power of Kambo: A Fire Energy for Body and Mind</h2>
                 <div className="flex flex-col gap-6">
-                    <p className="text-white inter-font">A Kambo ceremony is a revered healing ritual known for its profound cleansing properties. Derived from the secretion of the Amazonian giant monkey frog (Phyllomedusa bicolor), Kambo is an ancient medicine that has been used for centuries by indigenous tribes. Whether experienced in a dedicated Kambo retreat or as part of a broader healing journey with Ayahuasca and Bufo, Kambo enhances spiritual openness and deepens the transformative process.</p>
-                    <p className="text-white inter-font">Whether taken in the serenity of a Kambo retreat or integrated into a broader healing journey with <Link href="" target="_blank" className="text-[#fef15c]">Ayahuasca</Link> and <Link href="" target="_blank" className="text-[#fef15c]">Bufo</Link> , Kambo can significantly enhance your openness to spiritual experiences. Discover how this ancient practice can enrich your path to wellness or just give you a deeper trip.</p>
+                    <p className="text-white inter-font">A Kambo ceremony is a revered healing ritual known for its profound cleansing properties. Derived from the secretion of the Amazonian giant monkey frog (Phyllomedusa bicolor), Kambo is an ancient medicine that has been used for centuries by indigenous tribes. Whether experienced in a dedicated Kambo retreat or as part of a broader healing journey with Aya Master Plant and Bufo, Kambo enhances spiritual openness and deepens the transformative process.</p>
+                    <p className="text-white inter-font">Whether taken in the serenity of a Kambo retreat or integrated into a broader healing journey with <Link href="" target="_blank" className="text-[#fef15c]">Aya Master Plant</Link> and <Link href="" target="_blank" className="text-[#fef15c]">Bufo</Link> , Kambo can significantly enhance your openness to spiritual experiences. Discover how this ancient practice can enrich your path to wellness or just give you a deeper trip.</p>
                 </div>
             </UniformInfoSection>
             <UPSection className="text-white inter-font flex flex-col gap-6">

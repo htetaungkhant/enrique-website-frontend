@@ -105,9 +105,9 @@ const AyurvedaPage = () => {
                     <p className="text-white inter-font">As research continues, <strong>Ayurveda is being integrated into mainstream healthcare, offering a natural, preventive, and sustainable approach to wellness.</strong></p>
                 </div>
             </UniformInfoSection>
-            <Explanation title="Understanding Ayahuasca">
+            <Explanation title="Understanding Aya Master Plant">
                 <div className="flex flex-col gap-4 text-sm font-medium">
-                    <p>Ayahuasca is a sacred Amazonian brew crafted from the Banisteriopsis caapi vine and Psychotria viridis leaves. Known for its potent psychoactive effects, it plays a central role in spiritual exploration and healing. The combination of harmala alkaloids and DMT produces profound, transformative experiences, often used in ceremonial settings for deep introspection and personal growth.</p>
+                    <p>Aya Master Plant is a sacred Amazonian brew crafted from the Banisteriopsis caapi vine and Psychotria viridis leaves. Known for its potent psychoactive effects, it plays a central role in spiritual exploration and healing. The combination of harmala alkaloids and DMT produces profound, transformative experiences, often used in ceremonial settings for deep introspection and personal growth.</p>
                 </div>
             </Explanation>
             <UPSection>

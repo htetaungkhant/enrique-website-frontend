@@ -18,7 +18,7 @@ const cardsRowSectionData1 = {
         {
             badgeText: "Risks",
             title: <h4>Psychological<br /> <span className="font-light">Distress</span></h4>,
-            description: <p className="text-[#A5A2A2]">Ayahuasca can bring up deeply buried emotions, trauma, and fears, leading to anxiety, paranoia, or distressing visions. Integration and guidance are crucial for processing experiences.</p>,
+            description: <p className="text-[#A5A2A2]">Aya Master Plant can bring up deeply buried emotions, trauma, and fears, leading to anxiety, paranoia, or distressing visions. Integration and guidance are crucial for processing experiences.</p>,
         },
         {
             badgeText: "Risks",
@@ -28,7 +28,7 @@ const cardsRowSectionData1 = {
         {
             badgeText: "Risks",
             title: <h4>Medication<br /> <span className="font-light">Interactions</span></h4>,
-            description: <p className="text-[#A5A2A2]">Combining Ayahuasca with antidepressants (SSRIs), stimulants, or MAOIs can cause serotonin syndrome, dangerously high blood pressure, or seizures. Consult a healthcare professional before consuming it to avoid complications.</p>,
+            description: <p className="text-[#A5A2A2]">Combining Aya Master Plant with antidepressants (SSRIs), stimulants, or MAOIs can cause serotonin syndrome, dangerously high blood pressure, or seizures. Consult a healthcare professional before consuming it to avoid complications.</p>,
         },
         {
             badgeText: "Risks",
@@ -36,12 +36,12 @@ const cardsRowSectionData1 = {
             description: <p className="text-[#A5A2A2]">Those with heart disease, schizophrenia, or bipolar disorder may face severe risks, including cardiac stress or psychosis. Medical supervision is strongly advised before participating in ceremonies.</p>,
         },
     ],
-    footer: <p>Respecting the <Link href="" target="_blank" className="text-[#fef15c]">sacred nature of the brew</Link>, understanding its cultural significance, and choosing a safe, supportive setting with experienced facilitators are essential to minimizing risks and ensuring a meaningful, transformative, and safe Ayahuasca experience.</p>,
+    footer: <p>Respecting the <Link href="" target="_blank" className="text-[#fef15c]">sacred nature of the brew</Link>, understanding its cultural significance, and choosing a safe, supportive setting with experienced facilitators are essential to minimizing risks and ensuring a meaningful, transformative, and safe Aya Master Plant experience.</p>,
 }
 
 const cardsRowSectionData2 = {
     title: <h2>Choosing a <strong>Reputable Retreat</strong></h2>,
-    description: "Selecting a trustworthy retreat center is crucial for a safe and authentic Ayahuasca experience. Ensure the facility prioritizes participant well-being, follows ethical practices, and provides proper guidance, medical screening, and experienced facilitators for support.",
+    description: "Selecting a trustworthy retreat center is crucial for a safe and authentic Aya Master Plant experience. Ensure the facility prioritizes participant well-being, follows ethical practices, and provides proper guidance, medical screening, and experienced facilitators for support.",
     cardList: [
         {
             badgeText: "Retreat",
@@ -51,7 +51,7 @@ const cardsRowSectionData2 = {
         {
             badgeText: "Retreat",
             title: <h4>Experienced<br /> <span className="font-light">Facilitators</span></h4>,
-            description: <p className="text-[#A5A2A2]">Choose a retreat where shamans or guides have extensive experience, proper training, and a deep understanding of Ayahuasca traditions to ensure a safe, supportive, and guided journey.</p>,
+            description: <p className="text-[#A5A2A2]">Choose a retreat where shamans or guides have extensive experience, proper training, and a deep understanding of Aya Master Plant traditions to ensure a safe, supportive, and guided journey.</p>,
         },
         {
             badgeText: "Retreat",
@@ -77,7 +77,7 @@ const SafetyPage = () => {
     return (
         <main>
             <PageHeaderWithFullBanner
-                title={["How to have a Safe", "Ayahuasca Experience"]}
+                title={["How to have a Safe", "Aya Master Plant Experience"]}
                 bannerImg="/image/safety-banner.png"
                 className="max-md:h-[80vh]"
                 wrapperClassName="md:h-1/2 md:bg-radial md:from-[#2562A7] md:via-[#2562A700] md:via-[70%] md:to-transparent"
@@ -89,18 +89,18 @@ const SafetyPage = () => {
             <div className="h-48 bg-gradient-to-b from-[#000000] to-[#00000000]" />
             <UPSection className="-mt-44 md:-mt-32 flex flex-col gap-2 inter-font text-white">
                 <div className="max-md:order-2 flex flex-col gap-2">
-                    <h2 className="text-3xl xl:text-4xl mb-3">What is <strong>Ayahuasca?</strong></h2>
-                    <p className="font-medium">Ayahuasca is a sacred plant medicine made from the Psychotria viridis shrub and Banisteriopsis caapi vine. Traditionally used by Amazonian tribes for spiritual and healing ceremonies, it remains a key part of many spiritual practices today.</p>
-                    <p className="font-medium">During preparation, the plants are carefully boiled and reduced into a powerful brew, which is then consumed under the guidance of an experienced healer (curandero) in a ceremonial setting. The drink is known for its deep introspective and transformative effects. <br />Ayahuasca is also referred to as "yagé" or "the medicine" in various traditions.</p>
+                    <h2 className="text-3xl xl:text-4xl mb-3">What is <strong>Aya Master Plant?</strong></h2>
+                    <p className="font-medium">Aya Master Plant is a sacred plant medicine made from the Psychotria viridis shrub and Banisteriopsis caapi vine. Traditionally used by Amazonian tribes for spiritual and healing ceremonies, it remains a key part of many spiritual practices today.</p>
+                    <p className="font-medium">During preparation, the plants are carefully boiled and reduced into a powerful brew, which is then consumed under the guidance of an experienced healer (curandero) in a ceremonial setting. The drink is known for its deep introspective and transformative effects. <br />Aya Master Plant is also referred to as "yagé" or "the medicine" in various traditions.</p>
                 </div>
                 <div className="max-md:order-1 max-md:mb-5 mt-5 flex justify-center md:px-10">
                     <YouTubeBanner className="md:h-100 lg:h-120 md:max-w-full w-full" />
                 </div>
             </UPSection>
             <UPSection className="flex flex-col gap-2 inter-font text-white">
-                <h2 className="text-3xl xl:text-4xl mb-3">Understanding <strong>Ayahuasca</strong></h2>
-                <p className="font-medium">Ayahuasca is a sacred plant medicine originating from the Amazon, made from the Psychotria viridis shrub and Banisteriopsis caapi vine. Traditionally used in spiritual ceremonies, it has gained popularity for personal growth, healing, and transformation.</p>
-                <p className="font-medium">While Ayahuasca can offer profound insights, it is essential to approach it with awareness and preparation to ensure a safe experience.</p>
+                <h2 className="text-3xl xl:text-4xl mb-3">Understanding <strong>Aya Master Plant</strong></h2>
+                <p className="font-medium">Aya Master Plant is a sacred plant medicine originating from the Amazon, made from the Psychotria viridis shrub and Banisteriopsis caapi vine. Traditionally used in spiritual ceremonies, it has gained popularity for personal growth, healing, and transformation.</p>
+                <p className="font-medium">While Aya Master Plant can offer profound insights, it is essential to approach it with awareness and preparation to ensure a safe experience.</p>
             </UPSection>
             <SwiperCardsRowSection
                 cardAnimate
@@ -153,14 +153,14 @@ const SafetyPage = () => {
                 </div>
             </UPSection>
             <UPSection className="flex flex-col gap-5 inter-font text-white">
-                <h2 className="text-3xl xl:text-4xl">Choosing the Right <strong>Ayahuasca Retreat</strong></h2>
+                <h2 className="text-3xl xl:text-4xl">Choosing the Right <strong>Aya Master Plant Retreat</strong></h2>
                 <div className="flex flex-col gap-3">
-                    <p className="font-medium">Selecting the right Ayahuasca retreat is just as important as deciding to take part in the experience itself. Not all retreats or ceremonies are the same, so evaluating your options carefully ensures a safe and meaningful journey. Here are key factors to consider:</p>
+                    <p className="font-medium">Selecting the right Aya Master Plant retreat is just as important as deciding to take part in the experience itself. Not all retreats or ceremonies are the same, so evaluating your options carefully ensures a safe and meaningful journey. Here are key factors to consider:</p>
                     <div className="grid grid-cols-2 max-md:grid-cols-1 gap-10 xl:gap-15">
                         <AnimatedCard
                             title="Legality"
                             className="max-[33rem]:h-86 md:h-96 xl:h-80"
-                            description="Ayahuasca is illegal in some countries, including the U.S., where most retreats operate underground. While some may be reputable, attending an illegal ceremony poses risks. Opting for a legal retreat ensures a safer, more authentic experience."
+                            description="Aya Master Plant is illegal in some countries, including the U.S., where most retreats operate underground. While some may be reputable, attending an illegal ceremony poses risks. Opting for a legal retreat ensures a safer, more authentic experience."
                         />
                         <AnimatedCard
                             title="Location"
@@ -181,7 +181,7 @@ const SafetyPage = () => {
                     />
                 </div>
                 <h2 className="text-3xl xl:text-4xl">Embracing a <strong>Safe & Transformative Journey</strong></h2>
-                <p className="font-medium">A safe and well-prepared Ayahuasca experience has the potential to foster deep personal growth, emotional healing, and spiritual transformation. To fully benefit from this journey, it is essential to choose a reputable retreat center with experienced facilitators, proper health screenings, and established safety protocols. Adequate preparation, including dietary restrictions, mental readiness, and understanding the cultural significance of the brew, can enhance the experience and reduce risks. Equally important is the integration process, where reflecting on insights, seeking support, and applying lessons to daily life help solidify long-term positive changes. By prioritizing these factors, you can approach this sacred journey with confidence, awareness, and deep respect.</p>
+                <p className="font-medium">A safe and well-prepared Aya Master Plant experience has the potential to foster deep personal growth, emotional healing, and spiritual transformation. To fully benefit from this journey, it is essential to choose a reputable retreat center with experienced facilitators, proper health screenings, and established safety protocols. Adequate preparation, including dietary restrictions, mental readiness, and understanding the cultural significance of the brew, can enhance the experience and reduce risks. Equally important is the integration process, where reflecting on insights, seeking support, and applying lessons to daily life help solidify long-term positive changes. By prioritizing these factors, you can approach this sacred journey with confidence, awareness, and deep respect.</p>
             </UPSection>
             <NewsLetter id="newsletter" className="mt-10" />
             <Footer />
