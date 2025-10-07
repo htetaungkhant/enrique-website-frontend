@@ -137,7 +137,7 @@ export default function HomePage() {
 			<FirstCRSection />
 			<InfoSection image="/image/BufosPotential.png">
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Scientific Validation of <strong className="font-semibold">Bufo's Potential</strong></h2>
-				<p className="text-white inter-font">Research into 5-MeO-DMT, one of 21 alkaloids found in Bufo Alvarius venom, has gained remarkable traction. Leading institutions such as Johns Hopkins and the University of London are spearheading studies on its effects. Johns Hopkins has even published <Link href="" target="_blank" className="text-[#fef15c]">ground-breaking</Link> research highlighting its potential in <Link href="https://hub.jhu.edu/magazine/2019/summer/toad-venom-therapy/" target="_blank" className="text-[#fef15c]">addressing depression and anxiety</Link>.</p>
+				<p className="text-white inter-font">Research into 5-MeO-DMT, one of 21 alkaloids found in Toad Medicine venom, has gained remarkable traction. Leading institutions such as Johns Hopkins and the University of London are spearheading studies on its effects. Johns Hopkins has even published <Link href="" target="_blank" className="text-[#fef15c]">ground-breaking</Link> research highlighting its potential in <Link href="https://hub.jhu.edu/magazine/2019/summer/toad-venom-therapy/" target="_blank" className="text-[#fef15c]">addressing depression and anxiety</Link>.</p>
 				<p className="text-white inter-font">These studies seek to uncover the impact of 5-MeO-DMT on mental health, consciousness, and neurological function, reinforcing its therapeutic value. At the same time, mainstream media has amplified interest, with coverage from outlets like Forbes Magazine and Hamilton's Pharmacopeia, reflecting a growing cultural acceptance of this powerful compound.</p>
 			</InfoSection>
 			<SecondCRSection />
@@ -148,12 +148,12 @@ export default function HomePage() {
 			</InfoSection>
 			<InfoSection image="/image/BufoCeremony.png" smallImage={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">Understanding the <strong className="font-semibold">Bufo Ceremony</strong></h2>
-				<p className="text-white inter-font">A Bufo Alvarius ceremony, often called a toad ceremony, involves the use of venom from the Sonoran Desert Toad (Bufo Alvarius), which contains 5-MeO-DMT. The ceremony follows a structured process to enhance the experience while ensuring safety and support.</p>
+				<p className="text-white inter-font">A Toad Medicine ceremony, often called a toad ceremony, involves the use of venom from the Sonoran Desert Toad (Toad Medicine), which contains 5-MeO-DMT. The ceremony follows a structured process to enhance the experience while ensuring safety and support.</p>
 				<p className="text-white inter-font">Known as El Sapo in Spanish, Bufo secretes a milky white substance rich in <Link href="https://www.forbes.com/sites/davidcarpenter/2020/02/02/5-meo-dmt-the-20-minute-psychoactive-toad-experience-thats-transforming-lives/" target="_blank" className="text-[#fef15c]">5-MeO-DMT</Link>. Its effects are fast-acting, and unlike many other powerful psychedelics, it typically does not cause nausea or vomiting. To support ecological conservation, our ceremonies also offer a synthetic 5-MeO-DMT alternative, reducing the impact on the Sonoran Desert Toad and its habitat.</p>
 			</InfoSection>
 			<InfoSection image="/image/SmokingBufo.png" smallImage={true} reverse={true}>
 				<h2 className="text-white text-2xl inter-font font-light lg:text-4xl">The Process of <strong className="font-semibold">Smoking Bufo</strong></h2>
-				<p className="text-white inter-font">The venom of the Bufo Alvarius toad is carefully extracted through a process known as "milking," then dried for use. When smoked through a pipe, the heat neutralizes toxic components, allowing the user to inhale only the active 5-MeO-DMT vapor.</p>
+				<p className="text-white inter-font">The venom of the Toad Medicine toad is carefully extracted through a process known as "milking," then dried for use. When smoked through a pipe, the heat neutralizes toxic components, allowing the user to inhale only the active 5-MeO-DMT vapor.</p>
 				<p className="text-white inter-font">This method induces a short yet intensely powerful psychedelic experience, often described as more profound than traditional DMT. To ensure safety and maximize the benefits, it is essential to have an experienced guide and follow well-established safety protocols.</p>
 			</InfoSection>
 			<CardGridSection

@@ -79,7 +79,7 @@ const SecondCRSection = () => {
                 <AnimatedCard isDragging={isDragging} badgeText="Drawbacks" index={1}>
                     <div className="flex flex-col gap-4 inter-font text-[#022645]">
                         <h2 className="font-normal text-xl md:text-2xl lg:text-4xl"><strong className="font-bold">Ethical</strong> <br />Concerns</h2>
-                        <p className="text-xs md:text-sm font-medium">Rising demand for Bufo alvarius venom is impacting the toad’s population and habitat. Individuals must choose between ethically sourced venom or a lab-synthesized alternative.</p>
+                        <p className="text-xs md:text-sm font-medium">Rising demand for Toad Medicine venom is impacting the toad’s population and habitat. Individuals must choose between ethically sourced venom or a lab-synthesized alternative.</p>
                     </div>
                 </AnimatedCard>
                 <AnimatedCard isDragging={isDragging} badgeText="Drawbacks" index={2}>
@@ -108,7 +108,7 @@ const SecondCRSection = () => {
                     <AnimatedCard isDragging={isDragging} badgeText="Drawbacks" index={1} animate={false}>
                         <div className="flex flex-col gap-4 inter-font text-[#022645]">
                             <h2 className="font-normal text-xl md:text-2xl lg:text-4xl"><strong className="font-bold">Ethical</strong> <br />Concerns</h2>
-                            <p className="text-xs md:text-sm font-medium">Rising demand for Bufo alvarius venom is impacting the toad’s population and habitat. Individuals must choose between ethically sourced venom or a lab-synthesized alternative.</p>
+                            <p className="text-xs md:text-sm font-medium">Rising demand for Toad Medicine venom is impacting the toad’s population and habitat. Individuals must choose between ethically sourced venom or a lab-synthesized alternative.</p>
                         </div>
                     </AnimatedCard>
                     <AnimatedCard isDragging={isDragging} badgeText="Drawbacks" index={2} animate={false}>

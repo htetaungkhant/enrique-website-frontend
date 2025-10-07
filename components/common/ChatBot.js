@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
 const quickActions = [
-    "Learn About Bufo Alvarius (5-MeO-DMT)",
+    "Learn About Toad Medicine (5-MeO-DMT)",
     "Explore Our Private VIP Retreats",
     "Safety & Preparation Guidelines",
     "Healing & Integration Support",

@@ -82,7 +82,7 @@ const PageHeader = ({
                                             <Link href="/kambo" className="w-full py-1 px-3">Kambo</Link>
                                         </li>
                                         <li className="flex rounded-md whitespace-nowrap text-black hover:bg-gray-100">
-                                            <Link href="/bufo-alvarius" className="w-full py-1 px-3">Bufo Alvarius</Link>
+                                            <Link href="/bufo-alvarius" className="w-full py-1 px-3">Toad Medicine</Link>
                                         </li>
                                         <li className="flex rounded-md text-black hover:bg-gray-100">
                                             <Link href="/ayahuasca" className="w-full py-1 px-3">Ayahuasca</Link>
@@ -141,7 +141,7 @@ const PageHeader = ({
                                         <Link href="/kambo" className="w-full py-1 px-3">Kambo</Link>
                                     </li>
                                     <li className="flex rounded-md text-center whitespace-nowrap">
-                                        <Link href="/bufo-alvarius" className="w-full py-1 px-3">Bufo Alvarius</Link>
+                                        <Link href="/bufo-alvarius" className="w-full py-1 px-3">Toad Medicine</Link>
                                     </li>
                                     <li className="flex rounded-md text-center">
                                         <Link href="/ayahuasca" className="w-full py-1 px-3">Ayahuasca</Link>

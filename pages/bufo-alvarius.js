@@ -131,7 +131,7 @@ const cardsRowSectionData5 = {
 const BufoAlvariusPage = () => {
     return (
         <main>
-            <PageHeaderWithBanner title="Bufo Alvarius" />
+            <PageHeaderWithBanner title="Toad Medicine" />
             <div className="h-32 bg-gradient-to-b from-[#000000] to-[#00000000]" />
             <UniformInfoSection image="/image/1.png" imageAspectRatio="portrait" reverse={true} className="-mt-24">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">The Divine Molecule</h2>
@@ -144,7 +144,7 @@ const BufoAlvariusPage = () => {
             <UniformInfoSection image="/image/2.png">
                 <h2 className="text-white text-2xl inter-font font-medium lg:text-3xl xl:text-4xl">Unveiling the Sacred Molecule</h2>
                 <div className="text-white inter-font flex flex-col gap-6">
-                    <p>5-MeO-DMT, often called "The Divine Molecule," belongs to the tryptamine class of psychedelics, alongside DMT and LSD. Unlike DMT, which is known for its intense visual hallucinations, 5-MeO-DMT is celebrated for inducing profound, often indescribable, spiritual experiences. When derived from the Bufo alvarius toad, it is commonly referred to as Bufo, whereas its synthetic form is sometimes called Jaguar.</p>
+                    <p>5-MeO-DMT, often called "The Divine Molecule," belongs to the tryptamine class of psychedelics, alongside DMT and LSD. Unlike DMT, which is known for its intense visual hallucinations, 5-MeO-DMT is celebrated for inducing profound, often indescribable, spiritual experiences. When derived from the Toad Medicine toad, it is commonly referred to as Bufo, whereas its synthetic form is sometimes called Jaguar.</p>
                     <p>This compound is significantly more potent than DMT, estimated to be four to six times stronger. A recent study <Link href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2018.02459/full" target="_blank" className="text-[#fef15c]">published in Frontiers in Psychology</Link> found that a small dose of Bufo produced mystical effects comparable to a high dose of psilocybin.</p>
                     <p>Beyond its potency, what sets 5-MeO-DMT apart is the rapid onset and short duration of its effects. The experience begins almost instantly after inhalation, reaches its peak within minutes, and fades within roughly 30 minutes. Despite its brevity, this intense journey often leaves individuals with lasting insights and an enhanced sense of well-being.</p>
                 </div>
