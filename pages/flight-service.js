@@ -141,7 +141,7 @@ const FlightServicePage = () => {
                     <div className="max-md:order-2 flex-1 text-[#212A63] px-2 py-2 lg:px-3 lg:py-3 xl:px-6 xl:py-8 bg-gradient-to-b from-[#D7F2D5] to-[#5C8959] rounded-xl">
                         <ul className="h-full flex flex-col justify-between font-medium">
                             <li><strong className="text-xl">Kambo Cleansing</strong> – An Amazonian detox ritual for immunity and energy balance</li>
-                            <li><strong className="text-xl">Toad Medicine (5-MeO-DMT)</strong> – A one-on-one journey with the 'God molecule' for profound spiritual awakening.</li>
+                            <li><strong className="text-xl">Toad Medicine (5 MeO)</strong> – A one-on-one journey with the 'God molecule' for profound spiritual awakening.</li>
                             <li><strong className="text-xl">Aya Master Plant Ceremonies</strong> – Sacred plant medicine sessions for deep emotional healing and higher self-connection.</li>
                             <li><strong className="text-xl">Yoga & Meditation</strong> –Daily guided practices to restore balance and mindfulness.</li>
                             <li><strong className="text-xl">Breathwork Therapy</strong> –  Techniques to release trauma, reduce stress, and elevate consciousness.</li>

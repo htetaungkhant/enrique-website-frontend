@@ -97,7 +97,7 @@ const SecondCRSection = () => {
                 <AnimatedCard isDragging={isDragging} badgeText="Drawbacks" index={4} onMouseEnter={handleLastCardHover}>
                     <div className="flex flex-col gap-4 inter-font text-[#022645]">
                         <h2 className="font-normal text-xl md:text-2xl lg:text-4xl"><strong className="font-bold">Mental</strong> <br />Health Risks</h2>
-                        <p className="text-xs md:text-sm font-medium">As with other psychedelics like psilocybin or LSD, 5-MeO-DMT may pose risks for individuals with pre-existing psychological conditions. A health screening is crucial to assess suitability.</p>
+                        <p className="text-xs md:text-sm font-medium">As with other psychedelics like psilocybin or LSD, 5 MeO may pose risks for individuals with pre-existing psychological conditions. A health screening is crucial to assess suitability.</p>
                     </div>
                 </AnimatedCard>
             </div>
@@ -126,7 +126,7 @@ const SecondCRSection = () => {
                     <AnimatedCard isDragging={isDragging} badgeText="Drawbacks" index={4} animate={false}>
                         <div className="flex flex-col gap-4 inter-font text-[#022645]">
                             <h2 className="font-normal text-xl md:text-2xl lg:text-4xl"><strong className="font-bold">Mental</strong> <br />Health Risks</h2>
-                            <p className="text-xs md:text-sm font-medium">As with other psychedelics like psilocybin or LSD, 5-MeO-DMT may pose risks for individuals with pre-existing psychological conditions. A health screening is crucial to assess suitability.</p>
+                            <p className="text-xs md:text-sm font-medium">As with other psychedelics like psilocybin or LSD, 5 MeO may pose risks for individuals with pre-existing psychological conditions. A health screening is crucial to assess suitability.</p>
                         </div>
                     </AnimatedCard>
                 </div>
