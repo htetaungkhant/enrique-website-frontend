@@ -216,7 +216,10 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
             </div>
             <div className="flex flex-col gap-2">
               <h3 className="font-bold text-lg">Session Overview</h3>
-              <p>{course.sessionOverview}</p>
+              <p
+                className="whitespace-pre-wrap"
+                dangerouslySetInnerHTML={{ __html: course.sessionOverview }}
+              />
             </div>
             {Array.isArray(course.extraDetails) &&
               course.extraDetails?.length > 0 &&
@@ -235,30 +238,43 @@ const CourseDetails = ({ course, isAlreadyEnrolled }) => {
                   )}
                 </div>
               ))}
-            {!session || session?.validationFailed || !isAlreadyEnrolled ? (
-              <YouTubeBanner noLink />
-            ) : Array.isArray(course.classes) && course.classes?.length > 0 ? (
-              course.classes?.map((video, index) => (
-                <div
-                  key={`${video.id}-${index}`}
-                  className="flex flex-col gap-2"
-                >
-                  <h3 className="font-bold text-lg">{video.title}</h3>
-                  {Array.isArray(video.points) && video.points?.length > 0 && (
-                    <ul className="list-disc pl-3">
-                      {video.points?.map((point, index) => (
-                        <li key={`${point}-${index}`}>{point}</li>
-                      ))}
-                    </ul>
-                  )}
-                  {video.videoUrl?.video && (
-                    <YouTubeBanner href={video.videoUrl?.video} />
-                  )}
-                </div>
-              ))
-            ) : (
-              <p>Class videos are coming soon...</p>
-            )}
+            {
+              // !session || session?.validationFailed || !isAlreadyEnrolled ? (
+              //   <YouTubeBanner noLink />
+              // ) :
+              Array.isArray(course.classes) && course.classes?.length > 0 ? (
+                course.classes?.map((video, index) => (
+                  <div
+                    key={`${video.id}-${index}`}
+                    className="flex flex-col gap-2"
+                  >
+                    <h3 className="font-bold text-lg">{video.title}</h3>
+                    {Array.isArray(video.points) &&
+                      video.points?.length > 0 && (
+                        <ul className="list-disc pl-3">
+                          {video.points?.map((point, index) => (
+                            <li key={`${point}-${index}`}>{point}</li>
+                          ))}
+                        </ul>
+                      )}
+                    {video.videoUrl?.video && (
+                      <YouTubeBanner href={video.videoUrl?.video} />
+                      // <div className="relative w-full pb-[40%]">
+                      //   <iframe
+                      //     className="absolute top-0 left-0 w-full h-full rounded-2xl"
+                      //     src={video.videoUrl?.video}
+                      //     frameBorder="0"
+                      //     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      //     allowFullScreen
+                      //   ></iframe>
+                      // </div>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p>Class videos are coming soon...</p>
+              )
+            }
           </div>
           <div className="max-lg:w-[calc(100%-120px)] fixed max-lg:left-5 max-lg:bottom-6 lg:top-36 lg:right-20 lg:min-w-68 lg:max-xl:max-w-72 z-10">
             {!isAlreadyEnrolled ? (
