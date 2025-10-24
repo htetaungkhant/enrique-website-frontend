@@ -82,7 +82,7 @@ const cardsRowSectionData2 = {
       badgeText: "Risks",
       title: "Possible Sleep Disturbances",
       description:
-        "Some users have trouble sleeping after 5 MeO or Bufo sessions. Natural aids like 5-HTP, magnesium, melatonin, ashwagandha, and CBD can help; in severe cases, diazepam may be used briefly.",
+        "Some users have trouble sleeping after 5 MeO or Bufo sessions. Natural aids like 5-HTP, magnesium, melatonin, ashwagandha, and CBD can help; tailored prescription by doctor that we will be advise.",
     },
   ],
 };
