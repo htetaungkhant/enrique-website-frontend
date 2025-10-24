@@ -17,6 +17,7 @@ import ceremonyRoute from "@/lib/inhouseAPI/ceremony-route";
 import { useUserAuth } from "@/hooks/userAuth";
 import CheckoutForm from "@/components/CeremoniesPage/CheckoutForm";
 import GuestCheckoutForm from "@/components/common/GuestCheckoutForm";
+import Discount from "@/components/common/Discount";
 import { useDiscount } from "@/providers/DiscountProvider";
 
 const stripePromise = loadStripe(
@@ -26,10 +27,11 @@ const stripePromise = loadStripe(
 export async function getServerSideProps(context) {
   try {
     const { ceremonyTitle } = context.params;
-    const ceremony = await ceremonyRoute.getCeremonyDetailsByTitle({
-      ...context.req,
-      body: { title: ceremonyTitle },
-    });
+    const { ceremony, discountUsers } =
+      await ceremonyRoute.getCeremonyDetailsByTitle({
+        ...context.req,
+        body: { title: ceremonyTitle },
+      });
     if (!ceremony) {
       return {
         notFound: true,
@@ -74,11 +76,12 @@ export async function getServerSideProps(context) {
       const ceremoniesResponse =
         await ceremonyRoute.getRegisteredCeremoniesByUser(context.req);
       const isAlreadyEnrolled = ceremoniesResponse?.ceremonies?.some(
-        (ceremony) => ceremony.id === ceremonyId
+        (c) => c.id === ceremony.id
       );
       return {
         props: {
           ceremony,
+          discountUsers: discountUsers ?? 0,
           isAlreadyEnrolled: isAlreadyEnrolled ? true : false,
         },
       };
@@ -87,6 +90,7 @@ export async function getServerSideProps(context) {
       return {
         props: {
           ceremony,
+          discountUsers: discountUsers ?? 0,
           isAlreadyEnrolled: false,
         },
       };
@@ -99,7 +103,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
+const CeremonyDetails = ({ ceremony, discountUsers, isAlreadyEnrolled }) => {
   if (!ceremony) {
     return null;
   }
@@ -112,7 +116,7 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
   const [guestId, setGuestId] = useState(null);
   const [displayGuestModal, setDisplayGuestModal] = useState(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
-  const { hasDiscount } = useDiscount();
+  const { hasDiscount, setGetDiscount } = useDiscount();
 
   const handleRegisterNow = async () => {
     setIsLoading(true);
@@ -292,6 +296,12 @@ const CeremonyDetails = ({ ceremony, isAlreadyEnrolled }) => {
           className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-40 h-40 lg:w-52 lg:h-52 object-contain"
         />
       )}
+
+      <Discount
+        title={ceremony?.title}
+        discountUsers={discountUsers}
+        onSubmissionSuccess={() => setGetDiscount(true)}
+      />
 
       <GuestCheckoutForm
         ceremony={ceremony}

@@ -21,10 +21,8 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
-import Discount from "@/components/common/Discount";
 import { getCeremonies } from "@/lib/inhouseAPI/ceremony-route";
 import { cn } from "@/lib/utils";
-import { useDiscount } from "@/providers/DiscountProvider";
 
 const SortingType = Object.freeze({
   DATE_ASCENDING: "date-ascending",
@@ -46,7 +44,6 @@ export async function getServerSideProps(context) {
     });
 
     const ceremonies = response?.ceremonies ?? [];
-    const discountUsers = response?.discountUsers ?? 0;
 
     if (ceremonies.length > 0) {
       ceremonies.forEach((ceremony) => {
@@ -94,7 +91,6 @@ export async function getServerSideProps(context) {
     return {
       props: {
         ceremonies,
-        discountUsers,
         total: response?.total ?? 0,
         currentPage: page,
         sortByDate: sortByDate || null,
@@ -105,7 +101,6 @@ export async function getServerSideProps(context) {
     return {
       props: {
         ceremonies: [],
-        discountUsers: 0,
         total: 0,
         currentPage: 1,
         sortByDate: null,
@@ -114,13 +109,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-const CeremoniesPage = ({
-  ceremonies,
-  discountUsers,
-  total,
-  currentPage,
-  sortByDate,
-}) => {
+const CeremoniesPage = ({ ceremonies, total, currentPage, sortByDate }) => {
   const [datePopover, setDatePopover] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCeremonies, setFilteredCeremonies] = useState(ceremonies);
@@ -130,7 +119,6 @@ const CeremoniesPage = ({
     return undefined;
   });
   const [totalPages, setTotalPages] = useState(1);
-  const { setHasDiscount } = useDiscount();
   const router = useRouter();
 
   useEffect(() => {
@@ -197,10 +185,6 @@ const CeremoniesPage = ({
 
   return (
     <>
-      <Discount
-        discountUsers={discountUsers}
-        onSubmissionSuccess={() => setHasDiscount(true)}
-      />
       <main className="min-h-screen flex flex-col">
         <PageHeaderWithBanner title="Ceremonies">
           <p className="inter-font text-sm md:text-base lg:text-lg xl:text-xl font-medium">
