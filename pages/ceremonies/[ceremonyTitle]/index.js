@@ -116,7 +116,7 @@ const CeremonyDetails = ({ ceremony, discountUsers, isAlreadyEnrolled }) => {
   const [guestId, setGuestId] = useState(null);
   const [displayGuestModal, setDisplayGuestModal] = useState(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
-  const { hasDiscount, setGetDiscount } = useDiscount();
+  const { hasDiscount, setHasDiscount } = useDiscount();
 
   const handleRegisterNow = async () => {
     setIsLoading(true);
@@ -300,7 +300,7 @@ const CeremonyDetails = ({ ceremony, discountUsers, isAlreadyEnrolled }) => {
       <Discount
         title={ceremony?.title}
         discountUsers={discountUsers}
-        onSubmissionSuccess={() => setGetDiscount(true)}
+        onSubmissionSuccess={() => setHasDiscount(true)}
       />
 
       <GuestCheckoutForm
