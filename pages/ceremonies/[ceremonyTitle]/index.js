@@ -117,6 +117,7 @@ const CeremonyDetails = ({ ceremony, discountUsers, isAlreadyEnrolled }) => {
   const [displayGuestModal, setDisplayGuestModal] = useState(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const { hasDiscount, setHasDiscount } = useDiscount();
+  const [showDiscountPopup, setShowDiscountPopup] = useState(false);
 
   const handleRegisterNow = async () => {
     setIsLoading(true);
@@ -285,6 +286,14 @@ const CeremonyDetails = ({ ceremony, discountUsers, isAlreadyEnrolled }) => {
     }
   }, [router.query]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowDiscountPopup(true);
+    }, 5 * 60 * 1000); // 5 minutes in milliseconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
       {ceremony.markAsSold && (
@@ -297,11 +306,13 @@ const CeremonyDetails = ({ ceremony, discountUsers, isAlreadyEnrolled }) => {
         />
       )}
 
-      <Discount
-        title={ceremony?.title}
-        discountUsers={discountUsers}
-        onSubmissionSuccess={() => setHasDiscount(true)}
-      />
+      {showDiscountPopup && (
+        <Discount
+          title={ceremony?.title}
+          discountUsers={discountUsers}
+          onSubmissionSuccess={() => setHasDiscount(true)}
+        />
+      )}
 
       <GuestCheckoutForm
         ceremony={ceremony}
